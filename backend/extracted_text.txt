@@ -1,0 +1,519 @@
+ 
+  
+   Programming and Ar tiﬁcial Intelligence
+ 
+Part OneAn Introduction to
+Information and Communication Technology  
+Egyptian Baccalaureate
+2nd Year
+11
+
+The International Baccalaureate™
+has reviewed the pedagogical and assessment approaches underpinning this textbook.
+© 2026  Ministry of Education and Technical Education
+All rights reserved.
+Copyrights and accountability for the content of this textbook remain with the Ministry of Education and 
+Technical Education.
+No part of this publication may be reproduced, stored in a retrieval system,
+or transmitted in any form or by any means - electronic, mechanical, photocopying, recording,
+or otherwise - without the prior written permission of the copyright holders.
+Ministry of Education and Technical Education
+New Administrative Capital
+Cairo, EgyptINTERNATIONAL
+ BACCALAUREATE ®/gid00034/gid00067/gid00085/gid00072/gid00082/gid00068/gid00067/gid00001/gid00065/gid00088Egyptian Baccalaureate
+ 2nd
+ YearProgramming and Artiﬁcial Intelligence
+
+Introduction
+InlightofEgypt’sVision2030andthestate’songoingeffortstodevelop
+education,theMinistryofEducationandTechnicalEducationplacesgreat
+emphasisonupdatingschoolcurriculums—particularlyininformationand
+communicationtechnology—duetoitsvitalroleinfosteringcriticalthinkingskills,
+problem-solving abilities,andafocusonbuildingadeepunderstandingof
+fundamentalconcepts,movingawayfromrotememorization,especiallyintheearly
+stages.Thecontentisorganizedinagradualandsystematicmannerthatenables
+studentstoprogresssmoothlyfromsimpletocomplexconcepts,linkingtechnical
+conceptstoreal-lifesituations,andrelyingoninteractivemethodsthatinclude
+teamworkanddiscussion,makinglearningmoreenjoyable.
+Inthiscontext,theMinistryhasbeenkeentobenefitfromsuccessfulinternational
+experiences.ThishasledtocollaborationbetweentheEgyptianandJapanesesides
+indevelopinginformationandcommunication technologycurriculums,given
+Japan’sglobalexcellenceinthisfield,asevidencedbyitsnotableachievementsin
+internationalcompetitions,whichreflectthestrengthofitscurriculumsandteaching
+methods.
+Fromthisconcern,thisbookistheresultofthecontributionbetweentheMinistry
+ofEducationandTechnicalEducationandtheJapaneseside.
+Thisbookrepresentsafirststepwithinacomprehensive plantodevelop
+informationandcommunicationtechnologycurriculumsacrossallgradelevels,with
+theaimofbuildinganintegratededucationalsystemthatcombinesthebest
+internationalpracticeswithEgypt’sauthenticidentity.
+TheMinistryofEducationandTechnicalEducationfirmlybelievesthatdeveloping
+educationisatrueinvestmentinthenation’sfuture,andthatupdatingcurriculums
+isnotanendinitself,butratherameanstobuildanaware,creativegeneration,
+capableofkeepingpacewithscientificandtechnologicalchangesintoday’sworld.
+
+Contents
+1Information Technology and Society 4
+1-1Development of Information T echnology and Social T ransformation 4
+1-2How AI Works 12
+1-3AI in Daily Life and Industr y 19
+1-4Ethical Issues with AI 26
+2Cybersecurity 33
+2-1Cryptographic Technologies and Authentication 33
+2-2Network Security Design 41
+2-3Incident Response and Risk Management 48
+3Web Applications 55
+3-1The Overall Structure of Web Applications 55
+3-2Web Application Communication Methods 62
+3-3Fundamentals o f Frontend Technology 68
+4Web and Media Design 75
+4-1Types and Charact eristics of Media 75
+4-2Information Design and User Experience for W ebsites 81
+4-3Methods for Ev aluating Websites 88
+4-4The Iterative Improvement Process for Websites 95
+
+1-1 — Development of Information Technology and Social Transformation
+4 1-1 — Development of Information T echnology and Social T ransformationLearning Objectives
+Explain the major stages in the development of information technology and their impact
+on society.•
+Give examples of social changes and emerging technologies brought about by
+information technology, and explain their characteristics.•Lesson 1-1
+Development of
+Information
+Technology and
+Social
+Transformation
+
+1-1 — Development of Information Technology and Social Transformation
+5 1-1 — Development of Information T echnology and Social T ransformationKey Fact:
+At each stage,
+information technology
+introduced a new
+technology or service and
+also changed how society
+communicates, works,
+and does business.
+Key Concepts:
+Moore's Law
+SNS
+e-commerce
+remote work
+online learning
+cashless payment
+edge computing
+autonomous driving
+AR / VR
+quantum computing
+IT adv anced in st ages, each
+smaller and mor e connect ed.
+The f irst comput ers filled a
+whole r oom.?Guiding question: How has information technology developed
+through its major stages, and how has each stage changed society?
+✎  Explore (in pairs)
+With a partner, look at the five time periods in the table below before
+you read on. For each period, name one device or service from that era
+that you still use or hear about today. Then predict which stage
+changed daily life the most, and give one reason.
+📌Point!
+1. The History of Information Technology (IT)
+(1)  The major stages in the development of information technology are
+summarized in the table below.
+Time
+periodMajor technologies and
+eventsImpact on society
+1940s-60s Birth of the computer (ENIA C,
+vacuum tubes)Mainly used for military and scientific
+computation
+1970s-80s Spread of personal computers
+(PCs)Beginning of personal computer use
+1990s Commercialization of the
+Internet; the W ebGlobalization of information; spread
+of email
+2000s Rise of smartphones (iPhone,
+etc.)Explosive spread of mobile Internet
+2010s
+onwar dSpread of cloud computing Large-scale data analysis and AI; "IT as
+a service" becomes widespread
+(2)  (Moore's Law)...the empirical observation that "the number of
+transistors on an integrated circuit doubles approximately every two years."On an ordinary day, a student in Egypt checks messages on an SNS app,
+pays for breakfast with a cashless app, joins a lesson through online
+learning, and orders a book from an e-commerce (EC) shop. Twenty years
+ago, most of this was not possible. Information technology has developed
+through a series of stages — from the first computers to cloud computing
+— and at each stage it has changed the way people communicate, work,
+learn, and pay.
+
+1-1 — Development of Information Technology and Social Transformation
+6 1-1 — Development of Information T echnology and Social T ransformationMoore's Law  — the
+observation that the
+number of transistors on a
+chip roughly doubles about
+every two years.
+This is “the cloud” — r eal
+machines in a r eal plac e.
+💡 PAUSE & THINK
+Of these five changes, which
+would be hardest to give up
+— and why?This remained largely accurate for many years, and computing power
+increased dramatically.
+Moor e's Law: tr ansist or count o ver time
+2. Social Changes Resulting from Information Technology
+(1)  (SNS (Social Networking Service))...services that allow users to
+conne ct with each other and post and share information. They are highly
+effective at spreading information rapidly.
+(2)  (E-commerce (EC))...buying and selling goods and services through the
+Internet.
+e.g., online shops such as Amazon and eBay
+(3)  (Remote work)...a working style in which work is performed from home
+or other remote locations using the Internet.
+(4)  (Online learning)...a learning style in which classes and study materials
+are delivered using the Internet.
+(5)  (Cashless payment)...a system for making payments using electronic
+money, QR codes, etc., without using cash.
+e.g., credit cards, debit cards, mobile payment apps
+Five social changes dr iven by infor mation t echnology .However, in recent years, miniaturization of transistors has been
+approaching a physical limit. If circuits are made any smaller, problems
+arise such as the quantum tunneling effect, in which electrons slip
+through barriers, and leakage current, in which current escapes
+unintentionally, making it difficult to achieve both higher performance
+and lower power consumption at the same time. In response, new
+directions for performance improvement are being pursued, such as
+parallel processing using multiple processor cores, and quantum
+computers based on the principles of quantum mechanics.KEY TERMS
+
+1-1 — Development of Information Technology and Social Transformation
+7 1-1 — Development of Information T echnology and Social T ransformationedge computing  —
+processing data on the
+device itself, instantly,
+instead of sending it to the
+cloud.
+💡 PAUSE & THINK
+In autonomous driving, why
+is it necessary to process data
+instantly on the vehicle side
+using edge computing, rather
+than sending the data to the
+cloud for judgment? Explain
+your answer.3. Notable Emerging Technologies
+(1)  (Autonomous driving)...a technology that uses AI to drive a vehicle
+without human operation. It uses cameras and sensors to recognize the
+surround ings, makes driving decisions, and controls a vehicle. Because a
+delay of even 0.1 seconds can lead to an accident, edge computing, in
+which processing is performed instantly on the vehicle itself rather than
+sending data to the cloud for judgment, is used.
+A self-driving car decides on bo ard (edge c omputing), without waiting for the cloud.
+(2)  AR / VR
+①  (AR (Augmented Reality))...a technology that overlays digital
+information on real-world images.
+②  (VR (Virtual Reality))...a technology that allows users to immerse
+themselves in a virtual space generated by a computer.
+AR adds digit al lay ers to the r eal w orld; VR r eplac es it with a vir tual one.
+(3)  (Quantum computing)...a technology expected to dramatically speed
+up computations that are difficult or impossible for traditional computers,
+by using the principles of quantum mechanics.
+A classical bit holds one st ate; a qubit us es superposition.KEY TERMS
+
+1-1 — Development of Information Technology and Social Transformation
+8 1-1 — Development of Information T echnology and Social T ransformationKEY TERMS
+Moore's Law  —
+transistors per chip roughly
+double every two years.
+edge computing  — data
+processed on the device
+itself, instantly.✎ Worked Example
+(1)  From the following options (A–D), choose the one that lists the
+stages of information technology (IT) development in the correct
+chronological order.
+A Birth of the computer → Rise of smartphones →
+Commercialization of the Internet → Spread of cloud computing
+B Birth of the computer → Commercialization of the Internet →
+Rise of smartphones → Spread of cloud computing
+C Commercialization of the Internet → Birth of the computer →
+Spread of cloud computing → Rise of smartphones
+D Rise of smartphones → Commercialization of the Internet → Birth
+of the computer → Spread of cloud computing
+(2)  Mark each statement (A–D) with ○ if true or × if false.
+A Moore's Law is the empirical observation that "the number of
+transistors on an integrated circuit doubles approximately every
+two years."
+B Moore's Law has been said to be approaching a physical limit in
+recent years.
+C SNS is highly effective at spreading information rapidly.
+D E-commerce (EC) refers to purchasing goods at physical stores
+using cash.
+(3)  Match each description (a–c) with the most appropriate
+technology from the choices below (A–C).
+a A technology that overlays digital information on real-world
+images
+b A technology that uses AI to drive a vehicle without human
+operation
+c A technology that allows users to immerse themselves in a virtual
+space generated by a computer
+[Choices]   A Autonomous driving    B AR    C VR
+✓ Solution
+(1)  The correct order is "Birth of the computer (1940s-60s) →
+Commercialization of the Internet (1990s) → Rise of smartphones
+(2000s) → Spread of cloud computing (2010s onward)." Therefore, B.
+(2)
+A Correct definition of Moore's Law. Therefore, ○.
+B It has been said to be approaching a physical limit in recent
+years. Therefore, ○.
+C SNS is a service highly effective at spreading information rapidly.
+Therefore, ○.
+D E-commerce refers to buying and selling through the Internet,
+not purchases at physical stores using cash. Therefore, ×.
+
+1-1 — Development of Information Technology and Social Transformation
+9 1-1 — Development of Information T echnology and Social T ransformation📝 EXAM-STYLE
+QUESTION
+KEY TERMS
+remote work  — working
+from home or another
+remote location using the
+Internet.
+online learning  — classes
+and materials delivered
+over the Internet.(3)
+a:Overlaying digital information on real-world images is AR
+(Augmented Reality). B
+b:Driving a vehicle without human operation is autonom ous
+driving. A
+c:Immersing oneself in a virtual space is VR (Virtual Reality). C
+Try
+1   Answer the following questions.
+1. What is the name of the empirical observation that "the number of
+transistors on an integrated circuit doubles approximately every two
+years"?
+2. What is the term for the buying and selling of goods and services using
+the Internet?
+3. What is the term for the working style in which one works from home
+or other remote locations using the Internet?
+4. What is the term for the system for making payments using electronic
+money, QR codes, etc., without using cash?
+5. What is the term for the technology that uses AI to drive a vehicle
+without human operation?
+2   Answer the following questions.
+(1)  For each of a–d, indicate which of the following is most closely related:
+A Changes in daily life, B Changes in industry and the econom y, C Changes
+in healthcare and education.
+a
+b Paying for purchases using a mobile payment app on a smartphone.
+c Sharing photos with friends on SNS.
+d A company introducing a work-from-home system.
+(2)  From the following options (A–D), choose the one that is NOT an
+appropriate description of an emerging technology.
+A Autonom ous driving uses AI to drive a vehicle without human
+operation.
+B AR is a technology that overlays digital information on real-world
+images.
+C VR is a technology that dramatically improves the processing speed of
+a computer.
+D Quantum computing is expected to speed up computations that are
+difficult for traditional computers.Analyze  how the spread of
+cloud computing (from the
+2010s onward) has changed
+the way information
+technology is used. [6] In
+your answer, refer to:
+large-scale data analysis, AI,
+and "IT as a service".
+Taking classes through online learning.
+
+1-1 — Development of Information Technology and Social Transformation
+10 1-1 — Development of Information T echnology and Social T ransformation
+💡 PAUSE & THINK
+Cashless payment is
+spreading in many countries.
+If a fully cashless society were
+realized, choose one
+advantage and one possible
+concern, and briefly explain
+the reason for each.
+KEY TERMS
+cloud computing  — IT
+delivered as a service over
+the Internet.
+e-commerce  — buying
+and selling through the
+Internet.⚙ Think as an Engineer — Investigate & Decide
+Start from the advantage and concern you named in the Pause & Think
+note, then investigate further and decide.
+1 · Collect data. Survey ten classmates: do they usually pay with cash
+or with a cashless method (card, mobile app, or QR code)? Record the
+results in a table and identify the most common response.
+2 · Analyze the stakeholders. Using your survey and your own
+reasoning, note one benefit and one drawback of a fully cashless
+society for each group below.
+Group Benefit Drawback
+A cust omer p aying
+A small shop owner
+A per son with no b ank car d
+or smar tphone
+3 · Decide. Using your survey and your table, decide: should your
+community move toward cashless payment? Recommend one step
+and give two reasons.
+Stuck? Start with the customer — one benefit is speed of payment;
+one drawback is needing a card or a phone.
+🌍  In a New Context
+A village that has never had Internet access is connected to high-speed
+Internet and cashless payment for the first time. Using the stages and
+social changes you studied, predict two ways daily life in the village will
+change, and identify one new problem the village may face.
+❓  Lesson Question — Answered
+The lesson question asked how information technology developed and
+how each stage changed society. Information technology advanced
+through a series of stages rather than in a single step, and each stage
+changed much more than the technology itself. As computing spread,
+information became global and then mobile, many everyday activities
+moved online, and information technology grew into a service that
+supports large-scale data analysis and AI. Each stage also brought
+social changes in how people communicate, work, learn, and make
+payments. Overall, the development of information technology is not
+only about faster machines; at every stage it has reshaped daily life,
+industry, and the way society handles information.
+
+1-1 — Development of Information Technology and Social Transformation
+11 1-1 — Development of Information T echnology and Social T ransformation⭐ REFLECT & CHALLENGE
+KEY TERMS
+SNS — connects users to
+post and share information.
+cashless payment  —
+payment without cash (e-
+money, QR).
+⭐ Key takeaway
+Remember:
+Information technology
+developed in stages —
+computers, the Internet,
+smartphones, and cloud
+computing. At each stage
+it introduced a new
+technology or service and
+also changed how society
+communicates, works,
+learns, and pays.Exercise
+1   Cover the Point! section with a red plastic sheet and quiz
+yourself in your notebook in numerical order.
+2   Read the following passage and answer each question.
+Computers were invented in the 1940s and were initially used mainly for
+military and scientific computation. Later, in the 1970s and 1980s, ( a )
+became widespread, allowing individuals to use computers. In the 1990s, ( b
+) was commercialized, advancing the globalization of information. In the
+2000s, ( c ) emerged, leading to the explosive spread of mobile Internet.
+2. What technology, which spread from the 2010s onward, supports large-
+scale data analysis and the use of AI?
+3   Answer the following questions.
+A Email    B Autonomous driving    C Personal computers    D AR    E
+VR    F Quantum computing
+A A service that allows users to conne ct with each other and post and
+share information, and is highly effective at spreading information
+rapidly.
+B A service for buying and selling goods and services through the
+Internet.
+C A working style in which one works from home or other remote
+locations.
+D A system for making payments using electronic money or QR codes
+without using cash.Reflect:  Which stage of
+information technology do
+you think will matter most in
+the next ten years? Give one
+reason. Was your prediction
+at the start of the lesson
+correct? What changed your
+mind? Challenge:  Choose
+one emerging technology
+from this lesson
+(autonomous driving, AR, VR,
+or quantum computing).
+Suggest one way it could
+help solve a real problem,
+and state one risk.
+(2)  From the following options (A–D), choose the one that most
+appropriately describes the characteristics of SNS.(1)  From the following options (A–F), choose all that are emerging
+technologies.1. Fill in the blanks (a)–(c).
+3. According to Moore's Law, about how often does the number of
+transistors on an integrated circuit double?
+
+1-2 — How AI Works
+12 1-2 — H ow AI WorksLearning Objectives
+Explain what AI is. •
+Explain how generative AI is positioned within AI technologies. •Lesson 1-2
+How AI Works
+
+1-2 — How AI Works
+13 1-2 — H ow AI Works
+Three everyday AI examples:
+speech, image, translation.
+Today's AI is narrow — expert at
+one task only.
+💡 THINK IT THROUGH
+Spam filters and product
+recommendations are both
+examples of machine learning,
+but the tasks they perform are
+completely different. From the
+perspective of how AI works,
+explain what these two
+applications have in common.When you use a phone, AI is often at work. A spam filter sorts your email, a store
+recommends products you might buy, a translation app changes one language
+into another, and ChatGPT generates text from a prompt. These are all examples
+of AI, but they are not all the same kind. AI includes machine learning, within
+machine learning is deep learning, and today's generative AI systems are built on
+deep learning — a series of nested technologies, each more specialized than the
+last.
+?Guiding question: What is AI, and how are machine learning, deep
+learning, and generative AI related?
+✎  Explore · In Pairs
+With a partner, list three tasks a phone or computer does for you that seem
+to need "intelligence" (for example, sorting spam, recommending a video,
+or translating text). Then predict: does the computer follow fixed rules, or
+does it learn from examples? Give one reason.
+📌 Point!
+(1)  (AI (Artificial Intelligence))…a general term for technologies that reproduce
+or perform intelligent human behavior (learning, reasoning, judgment, etc.) on a
+computer.
+e.g., speech recognition, image recognition, translation
+2. The Relationship between AI and Machine Learning
+(1)  Within AI technologies, there is machine learning; within machine learning,
+there is deep learning; and within deep learning, there is generative AI. The
+broad field of AI includes increasingly specialized technologies as a series of
+nested categories.1. What is Artificial Intelligence (AI)?
+
+1-2 — How AI Works
+14 1-2 — H ow AI Works
+Fixed hand-written rules versus
+rules learned from data.
+💡 PAUSE & THINK
+Deep learning needs large-
+scale data to learn. Why might
+an AI struggle with something
+it has rarely seen in its data?
+KEY TERMS
+neural network — a system
+modeled after the nerve cells
+(neurons) of the human
+brain, used to learn from data
+and make complex
+judgments.
+KEY TERMS
+generative AI — AI that uses
+deep learning to generate
+new data such as text,
+images, and audio.
+Hierarchy of AI Technologies
+(2)  (Machine Learning)…one of the learning technologies that makes AI work. It
+learns patterns from data to make predictions and judgments.
+e.g., spam filters, product recommendations
+(3)  (Deep Learning)…an advanced technology within machine learning that
+uses neural networks. It learns complex patterns using large-scale data.
+e.g., image analysis for autonomous driving, speech synthesis
+(4)  (Neural network)…a system modeled after the workings of the nerve cells
+(neurons) of the human brain. By connecting many components, it learns from
+data and becomes capable of making complex judgments. It is the core
+technology supporting recent advances in AI.
+A neural network conne cts many simple components.
+(5)  (Generative AI)…AI technology that uses deep learning to generate new
+data (text, images, audio, programs, etc.).
+e.g., ChatGPT, image generation AIs
+Generative AI creates new text, images, and audio.
+

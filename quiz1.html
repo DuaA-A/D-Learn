@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-Learn | Chapter 1 Quiz</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background-color: #1e293b;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+            width: 100%;
+            max-width: 650px;
+            border-top: 6px solid #38bdf8;
+        }
+
+        h2 {
+            color: #38bdf8;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .question-counter {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .question {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .btn-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            background-color: #334155;
+            color: #f8fafc;
+            border: 2px solid transparent;
+            padding: 16px 20px;
+            font-size: 1rem;
+            font-family: inherit;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .btn:hover:not([disabled]) {
+            background-color: #475569;
+            border-color: #38bdf8;
+            transform: translateX(5px);
+        }
+
+        .btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .correct {
+            background-color: rgba(16, 185, 129, 0.2) !important;
+            border-color: #10b981 !important;
+            color: #10b981 !important;
+        }
+
+        .wrong {
+            background-color: rgba(239, 68, 68, 0.2) !important;
+            border-color: #ef4444 !important;
+            color: #ef4444 !important;
+        }
+
+        .explanation {
+            display: none;
+            background-color: rgba(56, 189, 248, 0.1);
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #38bdf8;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .explanation span {
+            font-weight: 800;
+            color: #38bdf8;
+        }
+
+        #next-btn {
+            display: none;
+            background-color: #10b981;
+            color: #0f172a;
+            font-weight: 800;
+            margin-top: 25px;
+            border: none;
+            width: 100%;
+            text-align: center;
+        }
+
+        #next-btn:hover {
+            background-color: #059669;
+            transform: none;
+            color: white;
+        }
+
+        .score-board {
+            text-align: center;
+            display: none;
+        }
+
+        .score-board h2 {
+            color: #10b981;
+            font-size: 2rem;
+        }
+
+        .score-board p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="quiz-container">
+        <div id="quiz-module">
+            <h2>D-Learn Challenge</h2>
+            <div class="question-counter" id="question-counter">Question 1 of 10</div>
+            <div class="question" id="question">Loading question...</div>
+
+            <div class="btn-grid" id="answer-buttons"></div>
+
+            <div class="explanation" id="explanation"></div>
+            <button id="next-btn" class="btn">Next Question ➔</button>
+        </div>
+
+        <div class="score-board" id="score-board">
+            <h2>Challenge Completed!</h2>
+            <p>You scored <strong id="score-text" style="color: white; font-size: 1.5rem;">0</strong> out of <strong
+                    id="total-text" style="color: white; font-size: 1.5rem;">0</strong></p>
+            <button class="btn" onclick="location.reload()"
+                style="background-color: #38bdf8; color:#0f172a; text-align: center;">Try Again 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "According to the stages of IT development, which era introduced the commercialization of the Internet and the globalization of information?",
+                answers: [
+                    { text: "A) 1970s", correct: false },
+                    { text: "B) 1990s", correct: true },
+                    { text: "C) 2000s", correct: false },
+                    { text: "D) 2010s", correct: false }
+                ],
+                explanation: "The 1990s marked the commercialization of the Internet, connecting the world and creating the 'globalization of information'."
+            },
+            {
+                question: "What does Moore's Law state?",
+                answers: [
+                    { text: "A) Computers get slower every two years.", correct: false },
+                    { text: "B) The number of transistors on a chip doubles approximately every two years.", correct: true },
+                    { text: "C) AI will eventually replace human programmers.", correct: false },
+                    { text: "D) Cloud computing is safer than edge computing.", correct: false }
+                ],
+                explanation: "Gordon Moore observed that engineers double the number of transistors on a chip every two years, increasing speed and reducing size."
+            },
+            {
+                question: "A technology that completely immerses the user in a 3D digital environment, disconnecting them from the real world is called:",
+                answers: [
+                    { text: "A) Augmented Reality (AR)", correct: false },
+                    { text: "B) Virtual Reality (VR)", correct: true },
+                    { text: "C) Quantum Computing", correct: false },
+                    { text: "D) Generative AI", correct: false }
+                ],
+                explanation: "Virtual Reality (VR) isolates you in a digital space, whereas Augmented Reality (AR) simply puts digital overlays on the real world."
+            },
+            {
+                question: "What is the primary difference between Traditional Programming and Machine Learning?",
+                answers: [
+                    { text: "A) Traditional programming outputs Rules, while ML outputs Answers.", correct: false },
+                    { text: "B) ML requires no data, while Traditional programming does.", correct: false },
+                    { text: "C) In ML, you provide the Data and Answers, and the computer figures out the Rules.", correct: true },
+                    { text: "D) Traditional programming is only for websites.", correct: false }
+                ],
+                explanation: "In Machine Learning, instead of coding the rules yourself, the AI learns the rules by analyzing past data and answers."
+            },
+            {
+                question: "A user types 'a cat wearing a space helmet' into a prompt, and the system draws a completely new, fake image. Which AI level is this?",
+                answers: [
+                    { text: "A) Traditional Programming", correct: false },
+                    { text: "B) Classical Machine Learning", correct: false },
+                    { text: "C) Generative AI", correct: true },
+                    { text: "D) Edge Computing", correct: false }
+                ],
+                explanation: "Generative AI is the advanced subset of deep learning capable of creating entirely new text, imagery, or code."
+            },
+            {
+                question: "An autonomous vehicle experiences a dangerous 0.5-second delay when sending camera data to the cloud. What is the most appropriate technological solution?",
+                answers: [
+                    { text: "A) Using Augmented Reality (AR).", correct: false },
+                    { text: "B) Relying on Edge Computing to process data instantly inside the car.", correct: true },
+                    { text: "C) Increasing the battery size.", correct: false },
+                    { text: "D) Using the Quantum Tunneling effect.", correct: false }
+                ],
+                explanation: "Edge computing processes data locally on the device instantly, avoiding the dangerous latency of sending data to the cloud."
+            },
+            {
+                question: "A hospital's AI system issues a highly confident report confirming a patient has a rare disease that is NOT present in the X-ray. This is scientifically known as:",
+                answers: [
+                    { text: "A) Algorithmic Bias", correct: false },
+                    { text: "B) The Black-Box Problem", correct: false },
+                    { text: "C) Parallel Processing", correct: false },
+                    { text: "D) AI Hallucination", correct: true }
+                ],
+                explanation: "Hallucination occurs when an AI confidently generates completely false or fabricated information."
+            },
+            {
+                question: "When developers state they cannot trace the exact mathematical steps a Neural Network took to reach a specific diagnosis, they are describing:",
+                answers: [
+                    { text: "A) The Black-Box Problem", correct: true },
+                    { text: "B) A Privacy Breach", correct: false },
+                    { text: "C) The Quantum Tunneling Effect", correct: false },
+                    { text: "D) Generative limits", correct: false }
+                ],
+                explanation: "Deep learning neural networks are often 'black boxes,' meaning humans cannot easily explain how they reached a conclusion, violating Transparency."
+            },
+            {
+                question: "A bank's AI constantly rejects loan applicants from a specific neighborhood based on old historical data. Which AI ethics pillar is violated here?",
+                answers: [
+                    { text: "A) Transparency", correct: false },
+                    { text: "B) Fairness", correct: true },
+                    { text: "C) Privacy", correct: false },
+                    { text: "D) Accountability", correct: false }
+                ],
+                explanation: "The system is making an unfair, prejudiced decision based on historical geographic data. This is 'Algorithmic Bias' and violates the Fairness pillar."
+            },
+            {
+                question: "If a self-driving car algorithm must choose between hitting a pedestrian or swerving into a wall (endangering the driver), the need to determine who is legally responsible falls under which AI pillar?",
+                answers: [
+                    { text: "A) Fairness", correct: false },
+                    { text: "B) Transparency", correct: false },
+                    { text: "C) Privacy", correct: false },
+                    { text: "D) Accountability", correct: true }
+                ],
+                explanation: "Accountability is the ethical pillar focused on defining who takes legal and moral responsibility when AI causes harm or makes a mistake."
+            }
+        ];
+
+        const questionElement = document.getElementById("question");
+        const answerButtons = document.getElementById("answer-buttons");
+        const nextButton = document.getElementById("next-btn");
+        const explanationElement = document.getElementById("explanation");
+        const quizModule = document.getElementById("quiz-module");
+        const scoreBoard = document.getElementById("score-board");
+        const questionCounter = document.getElementById("question-counter");
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            nextButton.style.display = "none";
+            scoreBoard.style.display = "none";
+            quizModule.style.display = "block";
+            showQuestion();
+        }
+
+        function showQuestion() {
+            resetState();
+            let currentQuestion = questions[currentQuestionIndex];
+            questionCounter.innerText = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+            questionElement.innerHTML = currentQuestion.question;
+
+            currentQuestion.answers.forEach(answer => {
+                const button = document.createElement("button");
+                button.innerHTML = answer.text;
+                button.classList.add("btn");
+                if (answer.correct) {
+                    button.dataset.correct = answer.correct;
+                }
+                button.addEventListener("click", selectAnswer);
+                answerButtons.appendChild(button);
+            });
+        }
+
+        function resetState() {
+            nextButton.style.display = "none";
+            explanationElement.style.display = "none";
+            while (answerButtons.firstChild) {
+                answerButtons.removeChild(answerButtons.firstChild);
+            }
+        }
+
+        function selectAnswer(e) {
+            const selectedBtn = e.target;
+            const isCorrect = selectedBtn.dataset.correct === "true";
+
+            if (isCorrect) {
+                selectedBtn.classList.add("correct");
+                score++;
+            } else {
+                selectedBtn.classList.add("wrong");
+            }
+
+            Array.from(answerButtons.children).forEach(button => {
+                if (button.dataset.correct === "true") {
+                    button.classList.add("correct");
+                }
+                button.disabled = true;
+            });
+
+            explanationElement.innerHTML = "<span>Why?</span> " + questions[currentQuestionIndex].explanation;
+            explanationElement.style.display = "block";
+            nextButton.style.display = "block";
+        }
+
+        nextButton.addEventListener("click", () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showScore();
+            }
+        });
+
+        function showScore() {
+            resetState();
+            quizModule.style.display = "none";
+            scoreBoard.style.display = "block";
+            document.getElementById("score-text").innerHTML = score;
+            document.getElementById("total-text").innerHTML = questions.length;
+        }
+
+        startQuiz();
+    </script>
+
+</body>
+
+</html>
