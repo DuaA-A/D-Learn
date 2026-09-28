@@ -1,156 +1,141 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 680" width="100%" height="100%">
   <defs>
     <linearGradient id="mmBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#050811" />
-      <stop offset="50%" stop-color="#0b1120" />
-      <stop offset="100%" stop-color="#0f172a" />
+      <stop offset="0%" stop-color="#0b1120" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
     </linearGradient>
-    <linearGradient id="centerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#6366f1" />
-      <stop offset="100%" stop-color="#a855f7" />
-    </linearGradient>
-    <filter id="nodeGlow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="8" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
     <style>
-      .hdr { font-family: system-ui, sans-serif; font-weight: 900; fill: #ffffff; }
-      .subhdr { font-family: system-ui, sans-serif; font-size: 13px; fill: #94a3b8; }
-      .node-text { font-family: system-ui, sans-serif; font-weight: bold; fill: #ffffff; font-size: 13px; }
-      .node-ar { font-family: system-ui, sans-serif; fill: #93c5fd; font-size: 11px; }
-      .leaf-text { font-family: system-ui, sans-serif; font-size: 11px; fill: #cbd5e1; }
-      .badge { font-family: monospace; font-size: 10px; font-weight: bold; }
+      .hdr { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; fill: #f8fafc; }
+      .subhdr { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #94a3b8; }
+      .node-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 600; fill: #f8fafc; font-size: 13px; }
+      .leaf-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #94a3b8; }
     </style>
   </defs>
 
   <!-- Background -->
-  <rect width="1100" height="680" rx="24" fill="url(#mmBg)" />
-  <rect x="2" y="2" width="1096" height="676" rx="22" fill="none" stroke="#1e293b" stroke-width="1.5" />
+  <rect width="1100" height="680" rx="12" fill="url(#mmBg)" />
+  <rect x="1.5" y="1.5" width="1097" height="677" rx="11" fill="none" stroke="#334155" stroke-width="1" />
 
   <!-- Top Title -->
-  <text x="550" y="42" text-anchor="middle" class="hdr" font-size="22">🧠 Lesson 1.1 Complete Concept Mindmap</text>
-  <text x="550" y="64" text-anchor="middle" class="subhdr">خريطة مفاهيمية شاملة: تطور تكنولوجيا المعلومات، قانون مور، والتحولات الاجتماعية والتقنيات الناشئة</text>
+  <text x="550" y="44" text-anchor="middle" class="hdr" font-size="20">Lesson 1.1 Concept Map: Information Technology &amp; Society</text>
+  <text x="550" y="66" text-anchor="middle" class="subhdr">خريطة مفاهيمية: تطور تكنولوجيا المعلومات، قانون مور، والتحولات الاجتماعية والتقنيات الناشئة</text>
 
-  <!-- Center Hub: IT Evolution & Society -->
+  <!-- Center Hub -->
   <g transform="translate(550, 340)">
-    <circle r="72" fill="url(#centerGrad)" filter="url(#nodeGlow)" opacity="0.3" />
-    <circle r="65" fill="#1e1b4b" stroke="#818cf8" stroke-width="3" />
-    <text y="-14" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="15" fill="#ffffff">IT Evolution</text>
-    <text y="6" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="14" fill="#a5b4fc">&amp; Society</text>
-    <text y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#38bdf8">التحول التكنولوجي</text>
+    <circle r="60" fill="#1e293b" stroke="#3b82f6" stroke-width="2" />
+    <text y="-12" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14" fill="#ffffff">IT Evolution</text>
+    <text y="6" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="13" fill="#93c5fd">&amp; Society</text>
+    <text y="24" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" fill="#38bdf8">التحول التكنولوجي</text>
   </g>
 
-  <!-- Connecting Curved Beziers to 4 Main Hubs -->
-  <!-- Branch 1: Top-Left (IT History Stages) -->
-  <path d="M 485 300 C 350 250, 320 180, 240 160" fill="none" stroke="#3b82f6" stroke-width="3" stroke-opacity="0.8" stroke-dasharray="4" />
-  <!-- Branch 2: Bottom-Left (Moore's Law & Hardware) -->
-  <path d="M 485 380 C 350 430, 320 500, 240 520" fill="none" stroke="#f59e0b" stroke-width="3" stroke-opacity="0.8" stroke-dasharray="4" />
-  <!-- Branch 3: Top-Right (Social Changes) -->
-  <path d="M 615 300 C 750 250, 780 180, 860 160" fill="none" stroke="#ec4899" stroke-width="3" stroke-opacity="0.8" stroke-dasharray="4" />
-  <!-- Branch 4: Bottom-Right (Emerging Tech) -->
-  <path d="M 615 380 C 750 430, 780 500, 860 520" fill="none" stroke="#10b981" stroke-width="3" stroke-opacity="0.8" stroke-dasharray="4" />
+  <!-- Connecting Lines -->
+  <path d="M 490 300 C 370 250, 320 180, 240 160" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="3" />
+  <path d="M 490 380 C 370 430, 320 500, 240 520" fill="none" stroke="#6366f1" stroke-width="1.8" stroke-dasharray="3" />
+  <path d="M 610 300 C 730 250, 780 180, 860 160" fill="none" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="3" />
+  <path d="M 610 380 C 730 430, 780 500, 860 520" fill="none" stroke="#0d9488" stroke-width="1.8" stroke-dasharray="3" />
 
-  <!-- ================= HUB 1: HISTORY STAGES (Top-Left) ================= -->
+  <!-- HUB 1: HISTORY STAGES (Top-Left) -->
   <g transform="translate(60, 80)">
-    <rect width="320" height="175" rx="14" fill="#0f172a" stroke="#3b82f6" stroke-width="2" />
-    <rect x="0" y="0" width="320" height="32" rx="14" fill="#1e3a8a" />
-    <text x="15" y="21" class="node-text">1. IT Historical Stages / مراحل التطور</text>
+    <rect width="320" height="170" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="320" height="30" rx="8" fill="#0f172a" />
+    <text x="14" y="20" class="node-text">1. Historical Stages / مراحل التطور</text>
 
-    <g transform="translate(15, 50)">
-      <circle cx="5" cy="5" r="4" fill="#60a5fa" />
-      <text x="18" y="9" class="leaf-text"><tspan font-weight="bold" fill="#93c5fd">1940s-60s:</tspan> ENIAC, Vacuum tubes, Military calculation</text>
+    <g transform="translate(14, 46)">
+      <circle cx="4" cy="5" r="3" fill="#60a5fa" />
+      <text x="14" y="9" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">1940s-60s:</tspan> ENIAC, Vacuum tubes, Military calculation</text>
 
-      <circle cx="5" cy="30" r="4" fill="#60a5fa" />
-      <text x="18" y="34" class="leaf-text"><tspan font-weight="bold" fill="#93c5fd">1970s-80s:</tspan> Personal PC, Microprocessors begin</text>
+      <circle cx="4" cy="28" r="3" fill="#60a5fa" />
+      <text x="14" y="32" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">1970s-80s:</tspan> Personal PC, Microprocessors begin</text>
 
-      <circle cx="5" cy="55" r="4" fill="#60a5fa" />
-      <text x="18" y="59" class="leaf-text"><tspan font-weight="bold" fill="#93c5fd">1990s:</tspan> Commercial Internet, WWW, Email globalization</text>
+      <circle cx="4" cy="51" r="3" fill="#60a5fa" />
+      <text x="14" y="55" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">1990s:</tspan> Commercial Internet, WWW, Email network</text>
 
-      <circle cx="5" cy="80" r="4" fill="#60a5fa" />
-      <text x="18" y="84" class="leaf-text"><tspan font-weight="bold" fill="#93c5fd">2000s:</tspan> Smartphones, Mobile apps, Always-on net</text>
+      <circle cx="4" cy="74" r="3" fill="#60a5fa" />
+      <text x="14" y="78" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">2000s:</tspan> Smartphones, Mobile apps, Always-on net</text>
 
-      <circle cx="5" cy="105" r="4" fill="#60a5fa" />
-      <text x="18" y="109" class="leaf-text"><tspan font-weight="bold" fill="#93c5fd">2010s+:</tspan> Cloud Computing, AI &amp; Big Data as a service</text>
+      <circle cx="4" cy="97" r="3" fill="#60a5fa" />
+      <text x="14" y="101" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">2010s+:</tspan> Cloud Computing, AI &amp; Big Data as a service</text>
     </g>
   </g>
 
-  <!-- ================= HUB 2: MOORE'S LAW & HARDWARE (Bottom-Left) ================= -->
+  <!-- HUB 2: MOORE'S LAW & HARDWARE (Bottom-Left) -->
   <g transform="translate(60, 440)">
-    <rect width="320" height="175" rx="14" fill="#0f172a" stroke="#f59e0b" stroke-width="2" />
-    <rect x="0" y="0" width="320" height="32" rx="14" fill="#78350f" />
-    <text x="15" y="21" class="node-text">2. Moore's Law &amp; Limits / قانون مور</text>
+    <rect width="320" height="170" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="320" height="30" rx="8" fill="#0f172a" />
+    <text x="14" y="20" class="node-text">2. Moore's Law &amp; Hardware / قانون مور والعتاد</text>
 
-    <g transform="translate(15, 50)">
-      <circle cx="5" cy="5" r="4" fill="#fbbf24" />
-      <text x="18" y="9" class="leaf-text"><tspan font-weight="bold" fill="#fde68a">Observation:</tspan> Transistors double every ~2 years</text>
+    <g transform="translate(14, 46)">
+      <circle cx="4" cy="5" r="3" fill="#818cf8" />
+      <text x="14" y="9" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Observation:</tspan> Transistors double every ~2 years</text>
 
-      <circle cx="5" cy="30" r="4" fill="#ef4444" />
-      <text x="18" y="34" class="leaf-text"><tspan font-weight="bold" fill="#fca5a5">Quantum Tunneling:</tspan> Electrons slip through tiny gates</text>
+      <circle cx="4" cy="28" r="3" fill="#f87171" />
+      <text x="14" y="32" class="leaf-text"><tspan font-weight="600" fill="#fca5a5">Quantum Tunneling:</tspan> Electron leakage at nanoscale</text>
 
-      <circle cx="5" cy="55" r="4" fill="#ef4444" />
-      <text x="18" y="59" class="leaf-text"><tspan font-weight="bold" fill="#fca5a5">Leakage &amp; Heat:</tspan> Excessive power dissipation barrier</text>
+      <circle cx="4" cy="51" r="3" fill="#f87171" />
+      <text x="14" y="55" class="leaf-text"><tspan font-weight="600" fill="#fca5a5">Heat Limits:</tspan> High power density and thermal walls</text>
 
-      <circle cx="5" cy="80" r="4" fill="#34d399" />
-      <text x="18" y="84" class="leaf-text"><tspan font-weight="bold" fill="#6ee7b7">Parallel Multi-core:</tspan> Multiple processing cores</text>
+      <circle cx="4" cy="74" r="3" fill="#34d399" />
+      <text x="14" y="78" class="leaf-text"><tspan font-weight="600" fill="#6ee7b7">Parallel Multi-core:</tspan> Multi-processor workload sharing</text>
 
-      <circle cx="5" cy="105" r="4" fill="#34d399" />
-      <text x="18" y="109" class="leaf-text"><tspan font-weight="bold" fill="#6ee7b7">Quantum Bits (Qubits):</tspan> Superposition computation</text>
+      <circle cx="4" cy="97" r="3" fill="#34d399" />
+      <text x="14" y="101" class="leaf-text"><tspan font-weight="600" fill="#6ee7b7">Quantum Bits (Qubits):</tspan> Superposition computation</text>
     </g>
   </g>
 
-  <!-- ================= HUB 3: SOCIAL CHANGES (Top-Right) ================= -->
+  <!-- HUB 3: SOCIAL CHANGES (Top-Right) -->
   <g transform="translate(720, 80)">
-    <rect width="320" height="175" rx="14" fill="#0f172a" stroke="#ec4899" stroke-width="2" />
-    <rect x="0" y="0" width="320" height="32" rx="14" fill="#831843" />
-    <text x="15" y="21" class="node-text">3. 5 Social Transformations / تحولات المجتمع</text>
+    <rect width="320" height="170" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="320" height="30" rx="8" fill="#0f172a" />
+    <text x="14" y="20" class="node-text">3. Social Transformations / التحولات الاجتماعية</text>
 
-    <g transform="translate(15, 50)">
-      <circle cx="5" cy="5" r="4" fill="#f472b6" />
-      <text x="18" y="9" class="leaf-text"><tspan font-weight="bold" fill="#fbcfe8">1. SNS:</tspan> Social networks, viral rapid sharing</text>
+    <g transform="translate(14, 46)">
+      <circle cx="4" cy="5" r="3" fill="#38bdf8" />
+      <text x="14" y="9" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">1. SNS Platforms:</tspan> Social networks, rapid distribution</text>
 
-      <circle cx="5" cy="30" r="4" fill="#f472b6" />
-      <text x="18" y="34" class="leaf-text"><tspan font-weight="bold" fill="#fbcfe8">2. E-Commerce (EC):</tspan> Online shopping (Amazon, etc.)</text>
+      <circle cx="4" cy="28" r="3" fill="#38bdf8" />
+      <text x="14" y="32" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">2. E-Commerce (EC):</tspan> Online marketplace transactions</text>
 
-      <circle cx="5" cy="55" r="4" fill="#f472b6" />
-      <text x="18" y="59" class="leaf-text"><tspan font-weight="bold" fill="#fbcfe8">3. Remote Work:</tspan> Telecommuting via Cloud/Zoom</text>
+      <circle cx="4" cy="51" r="3" fill="#38bdf8" />
+      <text x="14" y="55" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">3. Remote Work:</tspan> Telecommuting via Cloud collaboration</text>
 
-      <circle cx="5" cy="80" r="4" fill="#f472b6" />
-      <text x="18" y="84" class="leaf-text"><tspan font-weight="bold" fill="#fbcfe8">4. Online Learning:</tspan> Interactive digital curricula</text>
+      <circle cx="4" cy="74" r="3" fill="#38bdf8" />
+      <text x="14" y="78" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">4. Online Learning:</tspan> Interactive digital academic delivery</text>
 
-      <circle cx="5" cy="105" r="4" fill="#f472b6" />
-      <text x="18" y="109" class="leaf-text"><tspan font-weight="bold" fill="#fbcfe8">5. Cashless Payment:</tspan> QR codes, Apple Pay, e-money</text>
+      <circle cx="4" cy="97" r="3" fill="#38bdf8" />
+      <text x="14" y="101" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">5. Cashless Payment:</tspan> QR codes, e-wallets, contactless</text>
     </g>
   </g>
 
-  <!-- ================= HUB 4: EMERGING TECH (Bottom-Right) ================= -->
+  <!-- HUB 4: EMERGING TECH (Bottom-Right) -->
   <g transform="translate(720, 440)">
-    <rect width="320" height="175" rx="14" fill="#0f172a" stroke="#10b981" stroke-width="2" />
-    <rect x="0" y="0" width="320" height="32" rx="14" fill="#064e3b" />
-    <text x="15" y="21" class="node-text">4. Emerging Tech / التقنيات الناشئة</text>
+    <rect width="320" height="170" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="320" height="30" rx="8" fill="#0f172a" />
+    <text x="14" y="20" class="node-text">4. Emerging Technologies / التقنيات الناشئة</text>
 
-    <g transform="translate(15, 50)">
-      <circle cx="5" cy="5" r="4" fill="#34d399" />
-      <text x="18" y="9" class="leaf-text"><tspan font-weight="bold" fill="#a7f3d0">Autonomous Driving:</tspan> AI + sensors navigate cars</text>
+    <g transform="translate(14, 46)">
+      <circle cx="4" cy="5" r="3" fill="#2dd4bf" />
+      <text x="14" y="9" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Autonomous Driving:</tspan> AI + sensor surroundings model</text>
 
-      <circle cx="5" cy="30" r="4" fill="#38bdf8" />
-      <text x="18" y="34" class="leaf-text"><tspan font-weight="bold" fill="#bae6fd">Edge Computing:</tspan> Zero-latency local computing on car</text>
+      <circle cx="4" cy="28" r="3" fill="#2dd4bf" />
+      <text x="14" y="32" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Edge Computing:</tspan> Local vehicle processing (low-latency)</text>
 
-      <circle cx="5" cy="55" r="4" fill="#c084fc" />
-      <text x="18" y="59" class="leaf-text"><tspan font-weight="bold" fill="#e9d5ff">Augmented Reality (AR):</tspan> Overlays digital info on real</text>
+      <circle cx="4" cy="51" r="3" fill="#2dd4bf" />
+      <text x="14" y="55" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Augmented Reality (AR):</tspan> Digital data overlaid on reality</text>
 
-      <circle cx="5" cy="80" r="4" fill="#c084fc" />
-      <text x="18" y="84" class="leaf-text"><tspan font-weight="bold" fill="#e9d5ff">Virtual Reality (VR):</tspan> Fully immerses user in digital space</text>
+      <circle cx="4" cy="74" r="3" fill="#2dd4bf" />
+      <text x="14" y="78" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Virtual Reality (VR):</tspan> Fully immersive simulated space</text>
 
-      <circle cx="5" cy="105" r="4" fill="#fcd34d" />
-      <text x="18" y="109" class="leaf-text"><tspan font-weight="bold" fill="#fef08a">Quantum Computing:</tspan> Qubits in superposition (0 &amp; 1)</text>
+      <circle cx="4" cy="97" r="3" fill="#2dd4bf" />
+      <text x="14" y="101" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Quantum Computing:</tspan> Qubits in superposition (0 and 1)</text>
     </g>
   </g>
 
   <!-- Bottom Synthesis Banner -->
-  <g transform="translate(250, 635)">
-    <rect width="600" height="30" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1" />
-    <text x="300" y="20" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#c7d2fe">
-      🔗 All 4 domains connect: Computing breakthroughs enable social transformations and power emerging AI.
+  <g transform="translate(250, 634)">
+    <rect width="600" height="32" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="300" y="20" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" fill="#cbd5e1">
+      <tspan font-weight="600" fill="#93c5fd">Synthesis:</tspan> Breakthroughs in microelectronics catalyze societal digital infrastructure and modern AI platforms.
     </text>
   </g>
 </svg>

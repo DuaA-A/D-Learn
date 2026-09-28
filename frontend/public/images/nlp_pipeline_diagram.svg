@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="nlpBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; fill: #f8fafc; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #94a3b8; }
+      .step-num { font-family: "SF Mono", Consolas, monospace; font-size: 11px; font-weight: 600; fill: #38bdf8; }
+      .step-title { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 600; font-size: 13px; fill: #f1f5f9; }
+      .step-ar { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 10.5px; fill: #94a3b8; }
+      .token { font-family: "SF Mono", Consolas, monospace; font-size: 11px; fill: #cbd5e1; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="480" rx="12" fill="url(#nlpBg)" />
+  <rect x="1.5" y="1.5" width="997" height="477" rx="11" fill="none" stroke="#334155" stroke-width="1" />
+
+  <!-- Header -->
+  <text x="500" y="44" text-anchor="middle" class="title" font-size="20">Natural Language Processing (NLP): Computational Pipeline</text>
+  <text x="500" y="66" text-anchor="middle" class="subtitle">مسار معالجة اللغات الطبيعية: من النصوص الخام إلى المتجهات والتمثيل الدلالي</text>
+
+  <!-- Pipeline Steps (4 Horizontal Blocks) -->
+
+  <!-- STEP 1: RAW TEXT INPUT -->
+  <g transform="translate(60, 110)">
+    <rect width="190" height="270" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="190" height="30" rx="8" fill="#0f172a" />
+    <text x="14" y="20" class="step-num">STAGE 01</text>
+    <text x="14" y="52" class="step-title">1. Raw Text Input</text>
+    <text x="14" y="68" class="step-ar">النص اللغوي الخام</text>
+    <line x1="14" y1="80" x2="176" y2="80" stroke="#334155" stroke-width="1" />
+
+    <!-- Sample Text Card -->
+    <rect x="14" y="95" width="162" height="70" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1" />
+    <text x="24" y="120" class="token">"AI assists in</text>
+    <text x="24" y="138" class="token">medical imaging"</text>
+    <text x="24" y="154" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#64748b">نص إدخال مستخدم</text>
+
+    <text x="14" y="195" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#94a3b8">• Unstructured string</text>
+    <text x="14" y="215" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#94a3b8">• Unicode characters</text>
+    <text x="14" y="235" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#94a3b8">• Punctuation &amp; casing</text>
+  </g>
+
+  <!-- Arrow 1 to 2 -->
+  <g transform="translate(260, 240)">
+    <line x1="0" y1="0" x2="25" y2="0" stroke="#475569" stroke-width="1.8" />
+    <polygon points="25,-4 32,0 25,4" fill="#475569" />
+  </g>
+
+  <!-- STEP 2: TOKENIZATION -->
+  <g transform="translate(300, 110)">
+    <rect width="190" height="270" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="190" height="30" rx="8" fill="#0f172a" />
+    <text x="14" y="20" class="step-num">STAGE 02</text>
+    <text x="14" y="52" class="step-title">2. Tokenization</text>
+    <text x="14" y="68" class="step-ar">التقطيع والتجزئة (Tokens)</text>
+    <line x1="14" y1="80" x2="176" y2="80" stroke="#334155" stroke-width="1" />
+
+    <!-- Tokens -->
+    <g transform="translate(14, 95)">
+      <rect width="75" height="24" rx="4" fill="#0f172a" stroke="#2563eb" stroke-width="1" />
+      <text x="37" y="16" class="token" text-anchor="middle" fill="#93c5fd">[AI]</text>
+
+      <rect x="85" width="77" height="24" rx="4" fill="#0f172a" stroke="#2563eb" stroke-width="1" />
+      <text x="123" y="16" class="token" text-anchor="middle" fill="#93c5fd">[assists]</text>
+
+      <rect y="32" width="75" height="24" rx="4" fill="#0f172a" stroke="#2563eb" stroke-width="1" />
+      <text x="37" y="48" class="token" text-anchor="middle" fill="#93c5fd">[in]</text>
+
+      <rect x="85" y="32" width="77" height="24" rx="4" fill="#0f172a" stroke="#2563eb" stroke-width="1" />
+      <text x="123" y="48" class="token" text-anchor="middle" fill="#93c5fd">[medical]</text>
+    </g>
+
+    <text x="14" y="195" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#94a3b8">• Subword segmentation</text>
+    <text x="14" y="215" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#94a3b8">• Vocabulary mapping</text>
+    <text x="14" y="235" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#94a3b8">• Token ID lookup</text>
+  </g>
+
+  <!-- Arrow 2 to 3 -->
+  <g transform="translate(500, 240)">
+    <line x1="0" y1="0" x2="25" y2="0" stroke="#475569" stroke-width="1.8" />
+    <polygon points="25,-4 32,0 25,4" fill="#475569" />
+  </g>
+
+  <!-- STEP 3: VECTOR EMBEDDINGS -->
+  <g transform="translate(535, 110)">
+    <rect width="190" height="270" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="190" height="30" rx="8" fill="#0f172a" />
+    <text x="14" y="20" class="step-num">STAGE 03</text>
+    <text x="14" y="52" class="step-title">3. Vector Embeddings</text>
+    <text x="14" y="68" class="step-ar">المتجهات الرقمية والمعنى</text>
+    <line x1="14" y1="80" x2="176" y2="80" stroke="#334155" stroke-width="1" />
+
+    <!-- Vector Matrix preview -->
+    <rect x="14" y="95" width="162" height="70" rx="4" fill="#0f172a" stroke="#8b5cf6" stroke-width="1" />
+    <text x="24" y="118" class="token" fill="#c4b5fd">[0.42, -0.18, 0.91]</text>
+    <text x="24" y="136" class="token" fill="#c4b5fd">[0.12,  0.88, -0.34]</text>
+    <text x="24" y="152" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#64748b">فضاء دلالي متعدد الأبعاد</text>
+
+    <text x="14" y="195" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#94a3b8">• Dense numerical vectors</text>
+    <text x="14" y="215" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#94a3b8">• Contextual embeddings</text>
+    <text x="14" y="235" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#94a3b8">• Semantic proximity</text>
+  </g>
+
+  <!-- Arrow 3 to 4 -->
+  <g transform="translate(735, 240)">
+    <line x1="0" y1="0" x2="25" y2="0" stroke="#475569" stroke-width="1.8" />
+    <polygon points="25,-4 32,0 25,4" fill="#475569" />
+  </g>
+
+  <!-- STEP 4: ATTENTION & TASK OUTPUT -->
+  <g transform="translate(770, 110)">
+    <rect width="170" height="270" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="170" height="30" rx="8" fill="#0f172a" />
+    <text x="14" y="20" class="step-num">STAGE 04</text>
+    <text x="14" y="52" class="step-title">4. Model Inference</text>
+    <text x="14" y="68" class="step-ar">الاستدلال والتنفيذ</text>
+    <line x1="14" y1="80" x2="156" y2="80" stroke="#334155" stroke-width="1" />
+
+    <!-- Tasks -->
+    <rect x="14" y="95" width="142" height="26" rx="4" fill="#065f46" stroke="#10b981" stroke-width="1" />
+    <text x="85" y="112" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#ffffff">Classification</text>
+
+    <rect x="14" y="128" width="142" height="26" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1" />
+    <text x="85" y="145" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#cbd5e1">Translation</text>
+
+    <rect x="14" y="161" width="142" height="26" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1" />
+    <text x="85" y="178" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#cbd5e1">Text Generation</text>
+
+    <text x="14" y="215" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#94a3b8">• Transformer attention</text>
+    <text x="14" y="235" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#94a3b8">• Syntactic comprehension</text>
+  </g>
+
+  <!-- Bottom Synthesis Banner -->
+  <g transform="translate(150, 422)">
+    <rect width="700" height="34" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="350" y="21" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" fill="#cbd5e1">
+      <tspan font-weight="600" fill="#93c5fd">Mathematical Mechanism:</tspan> NLP converts linguistic tokens into continuous vector spaces where semantic relationships can be processed algebraically.
+    </text>
+  </g>
+</svg>

@@ -1,118 +1,112 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="100%" height="100%">
   <defs>
     <linearGradient id="ethBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#090514" />
-      <stop offset="50%" stop-color="#140924" />
-      <stop offset="100%" stop-color="#1f0d38" />
+      <stop offset="0%" stop-color="#0b1120" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
     </linearGradient>
-    <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#18181b" />
-      <stop offset="100%" stop-color="#09090b" />
-    </linearGradient>
-    <filter id="ethGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="6" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
     <style>
-      .eth-title { font-family: system-ui, sans-serif; font-weight: 800; fill: #ffffff; }
-      .eth-sub { font-family: system-ui, sans-serif; font-size: 13px; fill: #d8b4fe; }
-      .b-text { font-family: system-ui, sans-serif; font-weight: bold; font-size: 14px; fill: #ffffff; }
-      .b-sub { font-family: system-ui, sans-serif; font-size: 11px; fill: #cbd5e1; }
+      .eth-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; fill: #f8fafc; }
+      .eth-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #94a3b8; }
+      .b-text { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 600; font-size: 13.5px; fill: #ffffff; }
+      .b-sub { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 11px; fill: #94a3b8; }
     </style>
   </defs>
 
   <!-- Background -->
-  <rect width="1000" height="500" rx="20" fill="url(#ethBg)" />
-  <rect x="2" y="2" width="996" height="496" rx="18" fill="none" stroke="#581c87" stroke-width="1.5" />
+  <rect width="1000" height="500" rx="12" fill="url(#ethBg)" />
+  <rect x="1.5" y="1.5" width="997" height="477" rx="11" fill="none" stroke="#334155" stroke-width="1" />
 
   <!-- Header -->
-  <text x="500" y="42" text-anchor="middle" class="eth-title" font-size="22">⚖️ AI Ethics: Algorithmic Bias &amp; The "Black Box" Problem</text>
-  <text x="500" y="65" text-anchor="middle" class="eth-sub">أخلاقيات الذكاء الاصطناعي: التحيز الخوارزمي، مشكلة الصندوق الأسود، وضرورة الشفافية</text>
+  <text x="500" y="44" text-anchor="middle" class="eth-title" font-size="20">AI Governance: Algorithmic Bias and Explainability</text>
+  <text x="500" y="66" text-anchor="middle" class="eth-sub">أخلاقيات الذكاء الاصطناعي: التحيز الخوارزمي، مشكلة الصندوق الأسود، وضرورة الشفافية</text>
 
   <!-- Left: Biased Training Data Input -->
-  <g transform="translate(60, 120)">
-    <rect width="240" height="260" rx="14" fill="#1e1b4b" stroke="#ec4899" stroke-width="2" />
-    <text x="120" y="32" text-anchor="middle" class="b-text" fill="#f472b6">1. Biased Training Data</text>
-    <text x="120" y="50" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#fbcfe8">بيانات تدريب متحيزة تاريخياً</text>
-    <line x1="20" y1="62" x2="220" y2="62" stroke="#4c1d95" stroke-width="1" />
+  <g transform="translate(60, 115)">
+    <rect width="240" height="260" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="240" height="34" rx="8" fill="#0f172a" />
+    <text x="120" y="22" text-anchor="middle" class="b-text" fill="#fca5a5">1. Biased Training Data</text>
+    <text x="120" y="52" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" fill="#64748b">بيانات تدريب محملة بتحيزات تاريخية</text>
+    <line x1="16" y1="64" x2="224" y2="64" stroke="#334155" stroke-width="1" />
 
     <!-- Details -->
-    <g transform="translate(20, 80)">
-      <circle cx="6" cy="6" r="4" fill="#f472b6" />
-      <text x="18" y="10" class="b-sub">• Historical prejudice</text>
-      <text x="18" y="26" class="b-sub">  (e.g., male hiring bias)</text>
+    <g transform="translate(18, 80)">
+      <circle cx="4" cy="5" r="3" fill="#f87171" />
+      <text x="14" y="9" class="b-sub">• Historical employment disparities</text>
+      <text x="14" y="24" class="b-sub">  (e.g., gender imbalance in tech)</text>
 
-      <circle cx="6" cy="50" r="4" fill="#f472b6" />
-      <text x="18" y="54" class="b-sub">• Unbalanced demographics</text>
-      <text x="18" y="70" class="b-sub">  (facial scans skew white)</text>
+      <circle cx="4" cy="46" r="3" fill="#f87171" />
+      <text x="14" y="50" class="b-sub">• Demographic data underrepresentation</text>
+      <text x="14" y="65" class="b-sub">  (facial recognition accuracy gaps)</text>
 
-      <circle cx="6" cy="94" r="4" fill="#f472b6" />
-      <text x="18" y="98" class="b-sub">• "Garbage In, Garbage Out"</text>
-      <text x="18" y="114" class="b-sub">  المخرجات تعكس عيوب الماضي</text>
+      <circle cx="4" cy="88" r="3" fill="#f87171" />
+      <text x="14" y="92" class="b-sub">• Garbage in, garbage out principle</text>
+      <text x="14" y="107" class="b-sub">  المخرجات تعكس وتضخم عيوب البيانات</text>
     </g>
   </g>
 
   <!-- Arrow Left to Center -->
   <g transform="translate(315, 235)">
-    <line x1="0" y1="15" x2="60" y2="15" stroke="#ec4899" stroke-width="3" stroke-dasharray="4" />
-    <polygon points="60,8 75,15 60,22" fill="#ec4899" />
+    <line x1="0" y1="15" x2="60" y2="15" stroke="#f87171" stroke-width="2" stroke-dasharray="3" />
+    <polygon points="60,10 70,15 60,20" fill="#f87171" />
   </g>
 
   <!-- Center: The Black Box -->
-  <g transform="translate(390, 105)">
-    <rect width="220" height="290" rx="16" fill="url(#boxGrad)" stroke="#a855f7" stroke-width="2.5" filter="url(#ethGlow)" />
-    <!-- Lock Icon / Mystery -->
-    <circle cx="110" cy="50" r="24" fill="#3b0764" stroke="#c084fc" stroke-width="2" />
-    <text x="110" y="56" text-anchor="middle" font-size="18">🔒</text>
+  <g transform="translate(390, 100)">
+    <rect width="220" height="290" rx="8" fill="#0f172a" stroke="#6366f1" stroke-width="1.5" />
+    <circle cx="110" cy="45" r="18" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5" />
+    <!-- Clean Vector Lock Icon -->
+    <rect x="104" y="44" width="12" height="9" rx="1.5" fill="#c7d2fe" />
+    <path d="M 106 44 L 106 40 A 4 4 0 0 1 114 40 L 114 44" fill="none" stroke="#c7d2fe" stroke-width="1.5" />
 
-    <text x="110" y="100" text-anchor="middle" class="b-text" fill="#e9d5ff">The "Black Box"</text>
-    <text x="110" y="118" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#c084fc">مشكلة الصندوق الأسود</text>
-    <line x1="20" y1="130" x2="200" y2="130" stroke="#3b0764" stroke-width="1" />
+    <text x="110" y="92" text-anchor="middle" class="b-text" fill="#e0e7ff">The "Black Box"</text>
+    <text x="110" y="110" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" fill="#818cf8">مشكلة انعدام الشفافية الداخلية</text>
+    <line x1="16" y1="122" x2="204" y2="122" stroke="#1e293b" stroke-width="1" />
 
-    <text x="20" y="155" class="b-sub">• Billions of hidden weights</text>
-    <text x="20" y="175" class="b-sub">• Impossible to explain "why"</text>
-    <text x="20" y="195" class="b-sub">• Lack of transparency</text>
-    <text x="20" y="215" class="b-sub">• High-stakes danger in</text>
-    <text x="20" y="232" class="b-sub">  medicine, law, credit</text>
-    <rect x="25" y="248" width="170" height="26" rx="6" fill="#581c87" />
-    <text x="110" y="265" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#f5d0fe" font-weight="bold">Needs Explainable AI (XAI)</text>
+    <text x="16" y="146" class="b-sub">• Millions of distributed weights</text>
+    <text x="16" y="166" class="b-sub">• Opaque internal reasoning path</text>
+    <text x="16" y="186" class="b-sub">• Accountability challenges in</text>
+    <text x="16" y="202" class="b-sub">  healthcare, credit, &amp; justice</text>
+    <rect x="20" y="222" width="180" height="26" rx="4" fill="#1e1b4b" stroke="#4338ca" stroke-width="1" />
+    <text x="110" y="239" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#a5b4fc" font-weight="600">Requires Explainable AI (XAI)</text>
   </g>
 
   <!-- Arrow Center to Right -->
   <g transform="translate(625, 235)">
-    <line x1="0" y1="15" x2="60" y2="15" stroke="#ef4444" stroke-width="3" stroke-dasharray="4" />
-    <polygon points="60,8 75,15 60,22" fill="#ef4444" />
+    <line x1="0" y1="15" x2="60" y2="15" stroke="#f87171" stroke-width="2" stroke-dasharray="3" />
+    <polygon points="60,10 70,15 60,20" fill="#f87171" />
   </g>
 
   <!-- Right: Unfair Output & Harm -->
-  <g transform="translate(700, 120)">
-    <rect width="240" height="260" rx="14" fill="#1e1b4b" stroke="#ef4444" stroke-width="2" />
-    <text x="120" y="32" text-anchor="middle" class="b-text" fill="#f87171">3. Harmful Outcomes</text>
-    <text x="120" y="50" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#fca5a5">النتائج والقرارات المتحيزة</text>
-    <line x1="20" y1="62" x2="220" y2="62" stroke="#4c1d95" stroke-width="1" />
+  <g transform="translate(700, 115)">
+    <rect width="240" height="260" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="240" height="34" rx="8" fill="#0f172a" />
+    <text x="120" y="22" text-anchor="middle" class="b-text" fill="#fca5a5">3. Disparate Impact</text>
+    <text x="120" y="52" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" fill="#64748b">النتائج والقرارات غير العادلة</text>
+    <line x1="16" y1="64" x2="224" y2="64" stroke="#334155" stroke-width="1" />
 
     <!-- Details -->
-    <g transform="translate(20, 80)">
-      <circle cx="6" cy="6" r="4" fill="#ef4444" />
-      <text x="18" y="10" class="b-sub">• Qualified women filtered out</text>
+    <g transform="translate(18, 80)">
+      <circle cx="4" cy="5" r="3" fill="#f87171" />
+      <text x="14" y="9" class="b-sub">• Automated resume screening bias</text>
 
-      <circle cx="6" cy="35" r="4" fill="#ef4444" />
-      <text x="18" y="39" class="b-sub">• Unfair loan rejections</text>
+      <circle cx="4" cy="30" r="3" fill="#f87171" />
+      <text x="14" y="34" class="b-sub">• Disproportionate loan denials</text>
 
-      <circle cx="6" cy="65" r="4" fill="#ef4444" />
-      <text x="18" y="69" class="b-sub">• False criminal identification</text>
+      <circle cx="4" cy="55" r="3" fill="#f87171" />
+      <text x="14" y="59" class="b-sub">• False positive identification risk</text>
 
-      <circle cx="6" cy="95" r="4" fill="#10b981" />
-      <text x="18" y="99" class="b-sub" font-weight="bold" fill="#6ee7b7">✓ Solution: Human Oversight</text>
-      <text x="18" y="115" class="b-sub" fill="#a7f3d0">  والتدقيق البشري المستمر</text>
+      <circle cx="4" cy="85" r="3" fill="#34d399" />
+      <text x="14" y="89" class="b-sub" font-weight="600" fill="#6ee7b7">Mitigation: Human-in-the-loop</text>
+      <text x="14" y="104" class="b-sub" fill="#6ee7b7">التدقيق والمساءلة البشرية المستمرة</text>
     </g>
   </g>
 
   <!-- Bottom Synthesis Banner -->
-  <g transform="translate(150, 435)">
-    <rect width="700" height="36" rx="8" fill="#3b0764" stroke="#a855f7" stroke-width="1" />
-    <text x="350" y="23" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#f3e8ff">
-      💡 <tspan font-weight="bold">Core Ethics Principle:</tspan> AI must serve humanity fairly; algorithms must be auditable, transparent, and legally accountable.
+  <g transform="translate(150, 436)">
+    <rect width="700" height="34" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="350" y="21" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" fill="#cbd5e1">
+      <tspan font-weight="600" fill="#93c5fd">Governance Standard:</tspan> AI deployments in high-stakes domains require verifiable explainability and independent bias audits.
     </text>
   </g>
 </svg>

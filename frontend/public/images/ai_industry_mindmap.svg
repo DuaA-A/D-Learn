@@ -1,150 +1,137 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 680" width="100%" height="100%">
   <defs>
     <linearGradient id="bgIndMm" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#050811" />
-      <stop offset="50%" stop-color="#0a1322" />
-      <stop offset="100%" stop-color="#064e3b" />
+      <stop offset="0%" stop-color="#0b1120" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
     </linearGradient>
-    <linearGradient id="hub13Grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0284c7" />
-      <stop offset="100%" stop-color="#10b981" />
-    </linearGradient>
-    <filter id="glow13" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="8" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
     <style>
-      .hdr { font-family: system-ui, sans-serif; font-weight: 900; fill: #ffffff; }
-      .subhdr { font-family: system-ui, sans-serif; font-size: 13px; fill: #94a3b8; }
-      .node-text { font-family: system-ui, sans-serif; font-weight: bold; fill: #ffffff; font-size: 13px; }
-      .leaf-text { font-family: system-ui, sans-serif; font-size: 11px; fill: #cbd5e1; }
+      .hdr { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; fill: #f8fafc; }
+      .subhdr { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #94a3b8; }
+      .node-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 600; fill: #f8fafc; font-size: 13px; }
+      .leaf-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #94a3b8; }
     </style>
   </defs>
 
   <!-- Background -->
-  <rect width="1100" height="680" rx="24" fill="url(#bgIndMm)" />
-  <rect x="2" y="2" width="1096" height="676" rx="22" fill="none" stroke="#1e293b" stroke-width="1.5" />
+  <rect width="1100" height="680" rx="12" fill="url(#bgIndMm)" />
+  <rect x="1.5" y="1.5" width="1097" height="677" rx="11" fill="none" stroke="#334155" stroke-width="1" />
 
   <!-- Top Title -->
-  <text x="550" y="42" text-anchor="middle" class="hdr" font-size="22">🏭 Lesson 1.3 Complete Mindmap: The Applied AI Ecosystem</text>
-  <text x="550" y="64" text-anchor="middle" class="subhdr">خريطة مفاهيمية شاملة: منظومة الذكاء الاصطناعي التطبيقي بين المجتمع والصناعات الحيوية</text>
+  <text x="550" y="44" text-anchor="middle" class="hdr" font-size="20">Lesson 1.3 Concept Map: Applied Artificial Intelligence Ecosystem</text>
+  <text x="550" y="66" text-anchor="middle" class="subhdr">خريطة مفاهيمية: منظومة الذكاء الاصطناعي التطبيقي بين المجتمع والقطاعات الصناعية</text>
 
   <!-- Center Hub -->
   <g transform="translate(550, 340)">
-    <circle r="72" fill="url(#hub13Grad)" filter="url(#glow13)" opacity="0.3" />
-    <circle r="65" fill="#0f172a" stroke="#38bdf8" stroke-width="3" />
-    <text y="-14" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="14" fill="#ffffff">Applied AI</text>
-    <text y="6" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="13" fill="#38bdf8">Ecosystem</text>
-    <text y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#a7f3d0">الذكاء التطبيقي</text>
+    <circle r="60" fill="#1e293b" stroke="#0284c7" stroke-width="2" />
+    <text y="-12" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14" fill="#ffffff">Applied AI</text>
+    <text y="6" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="13" fill="#38bdf8">Ecosystem</text>
+    <text y="24" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" fill="#a7f3d0">الذكاء التطبيقي</text>
   </g>
 
   <!-- Connectors -->
-  <!-- Top Left (Daily Life) -->
-  <path d="M 485 300 C 350 250, 320 180, 240 160" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="4" />
-  <!-- Bottom Left (Healthcare & EdTech) -->
-  <path d="M 485 380 C 350 430, 320 500, 240 520" fill="none" stroke="#818cf8" stroke-width="3" stroke-dasharray="4" />
-  <!-- Top Right (Manufacturing & Logistics) -->
-  <path d="M 615 300 C 750 250, 780 180, 860 160" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="4" />
-  <!-- Bottom Right (Agriculture & Finance) -->
-  <path d="M 615 380 C 750 430, 780 500, 860 520" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="4" />
+  <path d="M 490 300 C 370 250, 320 180, 240 160" fill="none" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="3" />
+  <path d="M 490 380 C 370 430, 320 500, 240 520" fill="none" stroke="#6366f1" stroke-width="1.8" stroke-dasharray="3" />
+  <path d="M 610 300 C 730 250, 780 180, 860 160" fill="none" stroke="#059669" stroke-width="1.8" stroke-dasharray="3" />
+  <path d="M 610 380 C 730 430, 780 500, 860 520" fill="none" stroke="#d97706" stroke-width="1.8" stroke-dasharray="3" />
 
   <!-- HUB 1: DAILY CONSUMER & COMMS (Top-Left) -->
   <g transform="translate(60, 80)">
-    <rect width="320" height="175" rx="14" fill="#0f172a" stroke="#38bdf8" stroke-width="2" />
-    <rect width="320" height="32" rx="14" fill="#0369a1" />
-    <text x="15" y="21" class="node-text">1. Consumer &amp; Comms / الاستهلاك اليومي</text>
-    <g transform="translate(15, 50)">
-      <circle cx="5" cy="5" r="4" fill="#38bdf8" />
-      <text x="18" y="9" class="leaf-text"><tspan font-weight="bold" fill="#7dd3fc">Voice Assistants:</tspan> NLP speech recognition (Siri/Alexa)</text>
+    <rect width="320" height="170" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="320" height="30" rx="8" fill="#0f172a" />
+    <text x="14" y="20" class="node-text">1. Consumer &amp; Media / التطبيقات اليومية</text>
+    <g transform="translate(14, 46)">
+      <circle cx="4" cy="5" r="3" fill="#38bdf8" />
+      <text x="14" y="9" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Voice Assistants:</tspan> NLP speech recognition models</text>
 
-      <circle cx="5" cy="30" r="4" fill="#38bdf8" />
-      <text x="18" y="34" class="leaf-text"><tspan font-weight="bold" fill="#7dd3fc">Machine Translation:</tspan> Real-time multilingual text</text>
+      <circle cx="4" cy="28" r="3" fill="#38bdf8" />
+      <text x="14" y="32" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Machine Translation:</tspan> Multilingual seq2seq translation</text>
 
-      <circle cx="5" cy="55" r="4" fill="#38bdf8" />
-      <text x="18" y="59" class="leaf-text"><tspan font-weight="bold" fill="#7dd3fc">Recommendation Engines:</tspan> Netflix &amp; Amazon algorithms</text>
+      <circle cx="4" cy="51" r="3" fill="#38bdf8" />
+      <text x="14" y="55" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Recommendation Systems:</tspan> Collaborative filtering</text>
 
-      <circle cx="5" cy="80" r="4" fill="#38bdf8" />
-      <text x="18" y="84" class="leaf-text"><tspan font-weight="bold" fill="#7dd3fc">Personalized Feeds:</tspan> Social media engagement models</text>
+      <circle cx="4" cy="74" r="3" fill="#38bdf8" />
+      <text x="14" y="78" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Personalized Streams:</tspan> Behavioral engagement algorithms</text>
 
-      <circle cx="5" cy="105" r="4" fill="#38bdf8" />
-      <text x="18" y="109" class="leaf-text"><tspan font-weight="bold" fill="#7dd3fc">Spam &amp; Fraud Filters:</tspan> Real-time transaction defense</text>
+      <circle cx="4" cy="97" r="3" fill="#38bdf8" />
+      <text x="14" y="101" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Spam &amp; Fraud Filters:</tspan> Automated transaction screening</text>
     </g>
   </g>
 
   <!-- HUB 2: HEALTHCARE & EDUCATION (Bottom-Left) -->
   <g transform="translate(60, 440)">
-    <rect width="320" height="175" rx="14" fill="#0f172a" stroke="#818cf8" stroke-width="2" />
-    <rect width="320" height="32" rx="14" fill="#3730a3" />
-    <text x="15" y="21" class="node-text">2. Healthcare &amp; Education / الصحة والتعليم</text>
-    <g transform="translate(15, 50)">
-      <circle cx="5" cy="5" r="4" fill="#818cf8" />
-      <text x="18" y="9" class="leaf-text"><tspan font-weight="bold" fill="#c7d2fe">Medical Imaging:</tspan> Tumor &amp; fracture detection on X-rays</text>
+    <rect width="320" height="170" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="320" height="30" rx="8" fill="#0f172a" />
+    <text x="14" y="20" class="node-text">2. Healthcare &amp; Education / الرعاية والتعليم</text>
+    <g transform="translate(14, 46)">
+      <circle cx="4" cy="5" r="3" fill="#818cf8" />
+      <text x="14" y="9" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Diagnostic Imaging:</tspan> Pathology detection on radiographs</text>
 
-      <circle cx="5" cy="30" r="4" fill="#818cf8" />
-      <text x="18" y="34" class="leaf-text"><tspan font-weight="bold" fill="#c7d2fe">Wearable Monitors:</tspan> ECG &amp; biometric abnormality detection</text>
+      <circle cx="4" cy="28" r="3" fill="#818cf8" />
+      <text x="14" y="32" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Continuous Telemetry:</tspan> Wearable biometric monitors</text>
 
-      <circle cx="5" cy="55" r="4" fill="#818cf8" />
-      <text x="18" y="59" class="leaf-text"><tspan font-weight="bold" fill="#c7d2fe">Drug Discovery:</tspan> Simulating molecular protein bindings</text>
+      <circle cx="4" cy="51" r="3" fill="#818cf8" />
+      <text x="14" y="55" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Biomolecular Discovery:</tspan> Accelerating compound screening</text>
 
-      <circle cx="5" cy="80" r="4" fill="#818cf8" />
-      <text x="18" y="84" class="leaf-text"><tspan font-weight="bold" fill="#c7d2fe">Adaptive Learning:</tspan> Tailoring practice to student pace</text>
+      <circle cx="4" cy="74" r="3" fill="#818cf8" />
+      <text x="14" y="78" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Adaptive Tutoring:</tspan> Personalized learning curves</text>
 
-      <circle cx="5" cy="105" r="4" fill="#818cf8" />
-      <text x="18" y="109" class="leaf-text"><tspan font-weight="bold" fill="#c7d2fe">Automated Grading:</tspan> Objective assessment feedback</text>
+      <circle cx="4" cy="97" r="3" fill="#818cf8" />
+      <text x="14" y="101" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Automated Evaluation:</tspan> Formative assessment support</text>
     </g>
   </g>
 
-  <!-- HUB 3: MANUFACTURING & LOGISTICS (Top-Right) -->
+  <!-- HUB 3: MANUFACTURING & MOBILITY (Top-Right) -->
   <g transform="translate(720, 80)">
-    <rect width="320" height="175" rx="14" fill="#0f172a" stroke="#10b981" stroke-width="2" />
-    <rect width="320" height="32" rx="14" fill="#065f46" />
-    <text x="15" y="21" class="node-text">3. Industry &amp; Mobility / الصناعة واللوجستيات</text>
-    <g transform="translate(15, 50)">
-      <circle cx="5" cy="5" r="4" fill="#10b981" />
-      <text x="18" y="9" class="leaf-text"><tspan font-weight="bold" fill="#a7f3d0">Predictive Maintenance:</tspan> Sensor vibration anomaly alerts</text>
+    <rect width="320" height="170" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="320" height="30" rx="8" fill="#0f172a" />
+    <text x="14" y="20" class="node-text">3. Manufacturing &amp; Mobility / التصنيع والنقل</text>
+    <g transform="translate(14, 46)">
+      <circle cx="4" cy="5" r="3" fill="#34d399" />
+      <text x="14" y="9" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Predictive Maintenance:</tspan> Vibration telemetry sensors</text>
 
-      <circle cx="5" cy="30" r="4" fill="#10b981" />
-      <text x="18" y="34" class="leaf-text"><tspan font-weight="bold" fill="#a7f3d0">Computer Vision QA:</tspan> Detecting micro-defects in parts</text>
+      <circle cx="4" cy="28" r="3" fill="#34d399" />
+      <text x="14" y="32" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Optical Inspection (QA):</tspan> Surface micro-defect detection</text>
 
-      <circle cx="5" cy="55" r="4" fill="#10b981" />
-      <text x="18" y="59" class="leaf-text"><tspan font-weight="bold" fill="#a7f3d0">Robotic Assembly:</tspan> High-precision collaborative cobots</text>
+      <circle cx="4" cy="51" r="3" fill="#34d399" />
+      <text x="14" y="55" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Robotic Assembly:</tspan> High-precision industrial automation</text>
 
-      <circle cx="5" cy="80" r="4" fill="#10b981" />
-      <text x="18" y="84" class="leaf-text"><tspan font-weight="bold" fill="#a7f3d0">Autonomous Fleets:</tspan> LiDAR, Edge compute, pathfinding</text>
+      <circle cx="4" cy="74" r="3" fill="#34d399" />
+      <text x="14" y="78" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Autonomous Fleet:</tspan> LiDAR, radar &amp; edge navigation</text>
 
-      <circle cx="5" cy="105" r="4" fill="#10b981" />
-      <text x="18" y="109" class="leaf-text"><tspan font-weight="bold" fill="#a7f3d0">Traffic Optimization:</tspan> Smart city signal synchronization</text>
+      <circle cx="4" cy="97" r="3" fill="#34d399" />
+      <text x="14" y="101" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Traffic Scheduling:</tspan> Dynamic signal control systems</text>
     </g>
   </g>
 
   <!-- HUB 4: AGRICULTURE & FINTECH (Bottom-Right) -->
   <g transform="translate(720, 440)">
-    <rect width="320" height="175" rx="14" fill="#0f172a" stroke="#f59e0b" stroke-width="2" />
-    <rect width="320" height="32" rx="14" fill="#78350f" />
-    <text x="15" y="21" class="node-text">4. Agriculture &amp; Finance / الزراعة والمالية</text>
-    <g transform="translate(15, 50)">
-      <circle cx="5" cy="5" r="4" fill="#f59e0b" />
-      <text x="18" y="9" class="leaf-text"><tspan font-weight="bold" fill="#fde68a">Crop Disease Vision:</tspan> Instant leaf parasite diagnostics</text>
+    <rect width="320" height="170" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect width="320" height="30" rx="8" fill="#0f172a" />
+    <text x="14" y="20" class="node-text">4. Agriculture &amp; Finance / الزراعة والمالية</text>
+    <g transform="translate(14, 46)">
+      <circle cx="4" cy="5" r="3" fill="#fbbf24" />
+      <text x="14" y="9" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Crop Pathology:</tspan> Computer vision plant health scans</text>
 
-      <circle cx="5" cy="30" r="4" fill="#f59e0b" />
-      <text x="18" y="34" class="leaf-text"><tspan font-weight="bold" fill="#fde68a">Precision Farming:</tspan> Drone multispectral crop analysis</text>
+      <circle cx="4" cy="28" r="3" fill="#fbbf24" />
+      <text x="14" y="32" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Precision Agriculture:</tspan> Multispectral field analysis</text>
 
-      <circle cx="5" cy="55" r="4" fill="#f59e0b" />
-      <text x="18" y="59" class="leaf-text"><tspan font-weight="bold" fill="#fde68a">Algorithmic Trading:</tspan> Millisecond market execution</text>
+      <circle cx="4" cy="51" r="3" fill="#fbbf24" />
+      <text x="14" y="55" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Algorithmic Execution:</tspan> Low-latency automated trading</text>
 
-      <circle cx="5" cy="80" r="4" fill="#f59e0b" />
-      <text x="18" y="84" class="leaf-text"><tspan font-weight="bold" fill="#fde68a">Credit Scoring:</tspan> Risk prediction on loan applications</text>
+      <circle cx="4" cy="74" r="3" fill="#fbbf24" />
+      <text x="14" y="78" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">Risk Assessment:</tspan> Credit scoring and risk classification</text>
 
-      <circle cx="5" cy="105" r="4" fill="#f59e0b" />
-      <text x="18" y="109" class="leaf-text"><tspan font-weight="bold" fill="#fde68a">AML Detection:</tspan> Detecting money laundering rings</text>
+      <circle cx="4" cy="97" r="3" fill="#fbbf24" />
+      <text x="14" y="101" class="leaf-text"><tspan font-weight="600" fill="#f1f5f9">AML Monitoring:</tspan> High-volume transactional profiling</text>
     </g>
   </g>
 
   <!-- Bottom Synthesis Banner -->
-  <g transform="translate(250, 635)">
-    <rect width="600" height="30" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1" />
-    <text x="300" y="20" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#6ee7b7">
-      ⚡ Common Factor: All sectors leverage historical data patterns to automate high-stakes decisions.
+  <g transform="translate(250, 634)">
+    <rect width="600" height="32" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="300" y="20" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" fill="#cbd5e1">
+      <tspan font-weight="600" fill="#93c5fd">Cross-Sector Architecture:</tspan> Industrial and consumer pipelines both convert sensory inputs into automated decisions through trained statistical models.
     </text>
   </g>
 </svg>

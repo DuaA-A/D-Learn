@@ -691,34 +691,34 @@ function LessonViewer() {
     return (
       <div
         key={keyStr}
-        className={`my-8 rounded-2xl overflow-hidden border shadow-xl transition-all duration-300 group ${
+        className={`my-8 rounded-xl overflow-hidden border shadow-sm transition-all duration-200 group ${
           isMindmap
-            ? 'border-indigo-500/50 bg-slate-900 shadow-indigo-500/10'
-            : 'border-slate-200 bg-white hover:border-primary-plum/40 shadow-slate-200/60'
+            ? 'border-indigo-900/60 bg-slate-900 shadow-indigo-950/20'
+            : 'border-slate-200 bg-white hover:border-slate-300'
         }`}
       >
         <div className={`px-4 py-2.5 flex items-center justify-between border-b ${
-          isMindmap ? 'bg-indigo-950 border-indigo-900 text-indigo-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+          isMindmap ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
         }`}>
           <div className="flex items-center gap-2">
-            <span className={`text-[11px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
-              isMindmap ? 'bg-indigo-600 text-white shadow-sm' : 'bg-primary-plum text-white shadow-sm'
+            <span className={`text-[10.5px] font-semibold tracking-wider px-2 py-0.5 rounded ${
+              isMindmap ? 'bg-indigo-700 text-white' : 'bg-slate-800 text-white'
             }`}>
               {badge}
             </span>
-            <span className="text-xs font-bold truncate max-w-[200px] sm:max-w-md">{title}</span>
+            <span className="text-xs font-semibold truncate max-w-[200px] sm:max-w-md">{title}</span>
           </div>
           <button
             type="button"
             onClick={() => setPreviewImage({ src, title, caption: title })}
-            className={`text-xs font-semibold px-2.5 py-1 rounded-lg flex items-center gap-1 transition-colors ${
+            className={`text-xs font-medium px-2.5 py-1 rounded flex items-center gap-1 transition-colors ${
               isMindmap
-                ? 'bg-indigo-900/60 hover:bg-indigo-800 text-indigo-300'
-                : 'bg-slate-200/70 hover:bg-slate-300 text-slate-700'
+                ? 'bg-slate-800 hover:bg-slate-700 text-slate-300'
+                : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
             }`}
           >
-            <Maximize2 size={13} />
-            <span className="hidden sm:inline">{lang === 'ar' ? 'تكبير المخطط' : 'Expand'}</span>
+            <Maximize2 size={12} />
+            <span className="hidden sm:inline">{lang === 'ar' ? 'تكبير' : 'Expand'}</span>
           </button>
         </div>
         <div
@@ -728,16 +728,16 @@ function LessonViewer() {
           <img
             src={src}
             alt={title}
-            className="w-full h-auto object-contain max-h-[500px] group-hover:scale-[1.01] transition-transform duration-500"
+            className="w-full h-auto object-contain max-h-[500px] group-hover:opacity-95 transition-opacity"
           />
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-            <span className="px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md text-white text-xs font-bold flex items-center gap-1.5 shadow-lg border border-white/20">
-              <Maximize2 size={14} /> {lang === 'ar' ? 'انقر لتكبير المخطط بالكامل' : 'Click to inspect full diagram'}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+            <span className="px-3 py-1 rounded bg-black/75 backdrop-blur-sm text-white text-xs font-medium flex items-center gap-1.5 shadow">
+              <Maximize2 size={13} /> {lang === 'ar' ? 'عرض بالحجم الكامل' : 'View Full Diagram'}
             </span>
           </div>
         </div>
-        <div className={`p-3 text-xs font-medium text-center ${
-          isMindmap ? 'bg-indigo-950/90 text-indigo-200 border-t border-indigo-900/60' : 'bg-slate-900 text-slate-200'
+        <div className={`p-2.5 text-xs text-center font-normal ${
+          isMindmap ? 'bg-slate-900 text-slate-300 border-t border-slate-800' : 'bg-slate-900 text-slate-300'
         }`}>
           {title}
         </div>
@@ -782,50 +782,50 @@ function LessonViewer() {
     } else if (isL2 && activeSection === 0) {
       elements.push(
         renderDiagramCard(
-          '/images/machine_learning_concept.jpg',
-          'Machine Learning: Training Algorithms to Discern Patterns from Data',
-          'تعلم الآلة: خوارزميات تتعلم الأنماط والقواعد ذاتياً من البيانات',
-          'AI Concept',
-          'مفهوم الذكاء الاصطناعي',
-          'diag-ml-concept'
+          '/images/ml_workflow_paradigm.svg',
+          'Traditional Programming vs Machine Learning: Conceptual Framework',
+          'البرمجة التقليدية مقابل تعلم الآلة: مقارنة المنهجيتين وطريقة التعلم من البيانات',
+          'Technical Diagram',
+          'مخطط تقني',
+          'diag-ml-paradigm'
         )
       );
       elements.push(
         <div key="diag-nlp-cv-row" className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
           <div
             onClick={() => setPreviewImage({
-              src: '/images/nlp_ai_chat.jpg',
-              title: lang === 'ar' ? 'معالجة اللغات الطبيعية (NLP)' : 'Natural Language Processing (NLP)',
-              caption: lang === 'ar' ? 'تطبيقات معالجة اللغة الطبيعية والترجمة والمحادثة الذكية' : 'NLP speech, chatbots, and translation applications'
+              src: '/images/nlp_pipeline_diagram.svg',
+              title: lang === 'ar' ? 'مسار معالجة اللغات الطبيعية (NLP)' : 'Natural Language Processing (NLP) Pipeline',
+              caption: lang === 'ar' ? 'مراحل معالجة النصوص: التجزئة، التضمين الشعاعي، ونماذج المحولات' : 'Stages of text processing: tokenization, dense embeddings, and transformers'
             })}
-            className="rounded-xl overflow-hidden border border-slate-200 shadow-md group cursor-pointer bg-white"
+            className="rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-slate-300 group cursor-pointer bg-white transition-all"
           >
-            <div className="relative overflow-hidden h-44 bg-slate-950 flex items-center justify-center">
-              <img src="/images/nlp_ai_chat.jpg" alt="NLP" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-primary-plum text-white text-[10px] font-bold">
-                NLP
+            <div className="relative overflow-hidden h-44 bg-slate-950 flex items-center justify-center p-2">
+              <img src="/images/nlp_pipeline_diagram.svg" alt="NLP" className="w-full h-full object-contain group-hover:opacity-95 transition-opacity" />
+              <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 text-[10px] font-semibold tracking-wide">
+                NLP Pipeline
               </div>
             </div>
-            <div className="p-2.5 text-center text-xs font-bold text-primary-navy bg-slate-50">
-              {lang === 'ar' ? 'معالجة اللغات الطبيعية (NLP)' : 'Natural Language Processing (NLP)'}
+            <div className="p-2.5 text-center text-xs font-medium text-slate-700 bg-slate-50 border-t border-slate-100">
+              {lang === 'ar' ? 'مسار معالجة اللغات الطبيعية (NLP)' : 'Natural Language Processing Pipeline'}
             </div>
           </div>
           <div
             onClick={() => setPreviewImage({
-              src: '/images/computer_vision_ai.jpg',
-              title: lang === 'ar' ? 'الرؤية الحاسوبية (Computer Vision)' : 'Computer Vision & Perception',
-              caption: lang === 'ar' ? 'التعرف على الأجسام، التصوير الطبي، والسيارات ذاتية القيادة' : 'Object recognition, medical imaging, and autonomous systems'
+              src: '/images/computer_vision_pipeline.svg',
+              title: lang === 'ar' ? 'مسار الرؤية الحاسوبية (Computer Vision)' : 'Computer Vision (CV) Pipeline',
+              caption: lang === 'ar' ? 'مراحل معالجة الصور: مصفوفات البكسل، مرشحات الالتفاف، وتصنيف الأجسام' : 'Stages of vision: pixel grids, convolutional filtering, and classification'
             })}
-            className="rounded-xl overflow-hidden border border-slate-200 shadow-md group cursor-pointer bg-white"
+            className="rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-slate-300 group cursor-pointer bg-white transition-all"
           >
-            <div className="relative overflow-hidden h-44 bg-slate-950 flex items-center justify-center">
-              <img src="/images/computer_vision_ai.jpg" alt="Computer Vision" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-accent-pink text-white text-[10px] font-bold">
-                Vision
+            <div className="relative overflow-hidden h-44 bg-slate-950 flex items-center justify-center p-2">
+              <img src="/images/computer_vision_pipeline.svg" alt="Computer Vision" className="w-full h-full object-contain group-hover:opacity-95 transition-opacity" />
+              <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 text-[10px] font-semibold tracking-wide">
+                Vision Pipeline
               </div>
             </div>
-            <div className="p-2.5 text-center text-xs font-bold text-primary-navy bg-slate-50">
-              {lang === 'ar' ? 'الرؤية الحاسوبية والتعرف على الأجسام' : 'Computer Vision & Object Recognition'}
+            <div className="p-2.5 text-center text-xs font-medium text-slate-700 bg-slate-50 border-t border-slate-100">
+              {lang === 'ar' ? 'مسار الرؤية الحاسوبية (Computer Vision)' : 'Computer Vision Processing Pipeline'}
             </div>
           </div>
         </div>
@@ -944,15 +944,15 @@ function LessonViewer() {
       i++;
     }
 
-    // Inject Connecting Mindmaps ("صورة تجمع الافكار ببعض تربطهم ببعض")
+    // Inject Connecting Mindmaps
     if (isL1 && (activeSection === 4 || activeSection === lesson.sections.length - 1)) {
       elements.push(
         renderDiagramCard(
           '/images/it_social_mindmap.svg',
-          'Connecting All Ideas: IT History, Moore’s Law, Social Shifts & Emerging Tech',
+          'Connecting Core Concepts: IT Evolution, Moore’s Law, Social Transformation & Emerging Tech',
           'خريطة مفاهيمية شاملة: ربط تاريخ التكنولوجيا، قانون مور، التحولات الاجتماعية، والتقنيات الناشئة',
-          '🗺️ Complete Mindmap',
-          '🗺️ خريطة المفاهيم الرابطة',
+          'Concept Map',
+          'خريطة المفاهيم',
           'diag-it-social-mindmap',
           true
         )
@@ -961,10 +961,10 @@ function LessonViewer() {
       elements.push(
         renderDiagramCard(
           '/images/ai_hierarchy_mindmap.svg',
-          'Connecting All Ideas: The AI Hierarchy (AI ⊃ ML ⊃ DL ⊃ GenAI) & Core Mechanisms',
+          'Connecting Core Concepts: The AI Hierarchy (AI ⊃ ML ⊃ DL ⊃ GenAI) & Working Principles',
           'خريطة مفاهيمية شاملة: هرمية الذكاء الاصطناعي (AI ⊃ ML ⊃ DL ⊃ GenAI) وآليات عمله والمخاطر',
-          '🗺️ Complete Mindmap',
-          '🗺️ خريطة المفاهيم الرابطة',
+          'Concept Map',
+          'خريطة المفاهيم',
           'diag-ai-hierarchy-mindmap',
           true
         )
@@ -973,10 +973,10 @@ function LessonViewer() {
       elements.push(
         renderDiagramCard(
           '/images/ai_industry_mindmap.svg',
-          'Connecting All Ideas: The Applied AI Ecosystem Across Daily Living and Major Industries',
+          'Connecting Core Concepts: The Applied AI Ecosystem Across Consumer Life and Industry',
           'خريطة مفاهيمية شاملة: منظومة الذكاء الاصطناعي التطبيقي بين الحياة اليومية والصناعات الكبرى',
-          '🗺️ Complete Mindmap',
-          '🗺️ خريطة المفاهيم الرابطة',
+          'Concept Map',
+          'خريطة المفاهيم',
           'diag-ai-industry-mindmap',
           true
         )
@@ -985,10 +985,10 @@ function LessonViewer() {
       elements.push(
         renderDiagramCard(
           '/images/ai_ethics_mindmap.svg',
-          'Connecting All Ideas: The 6 Pillars of Responsible AI Ethics & Governance',
+          'Connecting Core Concepts: The 6 Pillars of Responsible AI Ethics & Governance',
           'خريطة مفاهيمية شاملة: الركائز الست لأخلاقيات الذكاء الاصطناعي والحوكمة المسؤولة',
-          '🗺️ Complete Mindmap',
-          '🗺️ خريطة المفاهيم الرابطة',
+          'Concept Map',
+          'خريطة المفاهيم',
           'diag-ai-ethics-mindmap',
           true
         )
