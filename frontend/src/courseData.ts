@@ -596,7 +596,6 @@ The network learns by adjusting these weights through a process called training,
       {
         q_en: "Imagine a farmer wants to use an AI system to distinguish between images of healthy crops and diseased crops. What type of data does the system need for training, and identify one factor that might make its predictions incorrect?",
         q_ar: "افترض أن مزارعًا يريد استخدام نظام ذكاء اصطناعي للتمييز بين صور المحاصيل السليمة والمصابة بالأمراض. ما نوع البيانات التي يحتاجها النظام للتدريب؟ وحدد عاملاً واحدًا قد يجعل تنبؤه خاطئًا.",
-        q_ar: "افترض أن مزارعًا يريد استخدام نظام ذكاء اصطناعي للتمييز بين صور المحاصيل السليمة والمصابة. ما نوع البيانات التي يحتاجها النظام للتدريب وحدد عاملاً قد يجعل تنبؤه خاطئًا؟",
       },
     ],
     exam_style_questions: [],
@@ -705,7 +704,6 @@ Generative AI can create convincing fake videos, audio, and text. This can be us
       {
         q_en: "If a generative AI system produces a false but convincing news article, who should be held responsible — the AI developers, the platform hosting it, or the user who shares it? Justify your answer.",
         q_ar: "إذا أنتج نظام ذكاء اصطناعي توليدي مقالة إخبارية مزيفة لكن مقنعة، من يجب أن يُحاسَب: مطورو الذكاء الاصطناعي، أم المنصة المضيفة لها، أم المستخدم الذي يشاركها؟ بررّ إجابتك.",
-        q_ar: "إذا أنتج نظام ذكاء اصطناعي توليدي مقالة إخبارية مزيفة لكن مقنعة، من يجب أن يُحاسَب؟ بررّ إجابتك.",
       },
     ],
     exam_style_questions: [],

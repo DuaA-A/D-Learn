@@ -2,10 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  BookOpen, Clock, ChevronRight, Menu, X, PlayCircle, CheckCircle, XCircle,
-  Award, LogOut, User, Star, Layers, Cpu, Globe, Shield, Code, AlertTriangle,
+  BookOpen, Menu, X, PlayCircle, CheckCircle, XCircle,
+  Award, LogOut, User, Star, Layers, Globe, Shield, Code, AlertTriangle,
   Lock, Mail, Eye, EyeOff, Home, ChevronDown, BookMarked, Brain, Zap, Target,
-  RotateCcw, ArrowLeft, ArrowRight, Lightbulb, FileText, Search, TrendingUp,
+  RotateCcw, ArrowLeft, ArrowRight, Lightbulb, FileText, Search,
   MessageSquare, Loader
 } from 'lucide-react';
 
@@ -19,12 +19,12 @@ import {
 } from 'firebase/auth';
 import type { User as FirebaseUser } from 'firebase/auth';
 import {
-  doc, setDoc, getDoc, collection, getDocs, updateDoc, addDoc, serverTimestamp, query, where, orderBy
+  doc, setDoc, getDoc, collection, getDocs, updateDoc, addDoc, serverTimestamp, query, orderBy
 } from 'firebase/firestore';
 import { auth, db } from './firebase';
 
 // Course Data
-import { COURSE_METADATA, LESSONS, QUIZ_QUESTIONS as BASE_QUIZ_QUESTIONS, type Lesson, type QuizQuestion } from './courseData';
+import { COURSE_METADATA, LESSONS, QUIZ_QUESTIONS as BASE_QUIZ_QUESTIONS } from './courseData';
 import { EXTRA_QUESTIONS, FLASHCARDS } from './extraData';
 
 const QUIZ_QUESTIONS = [...BASE_QUIZ_QUESTIONS, ...EXTRA_QUESTIONS];

@@ -1,9 +1,10 @@
-import { QuizQuestion } from './courseData';
+import type { QuizQuestion } from './courseData';
 
 export const EXTRA_QUESTIONS: QuizQuestion[] = [
   // 10 Very Hard Questions
   {
     id: "ex_q1",
+    unit: 1,
     lesson: "les_1_1",
     type: "MCQ",
     source: "WEEKLY_ASSESSMENT",
@@ -24,6 +25,7 @@ export const EXTRA_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: "ex_q2",
+    unit: 1,
     lesson: "les_1_1",
     type: "MCQ",
     source: "WEEKLY_ASSESSMENT",
@@ -44,6 +46,7 @@ export const EXTRA_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: "ex_q3",
+    unit: 1,
     lesson: "les_1_2",
     type: "MCQ",
     source: "HOMEWORK",
@@ -64,6 +67,7 @@ export const EXTRA_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: "ex_q4",
+    unit: 1,
     lesson: "les_1_2",
     type: "WRITTEN",
     source: "WEEKLY_ASSESSMENT",
@@ -75,6 +79,7 @@ export const EXTRA_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: "ex_q5",
+    unit: 1,
     lesson: "les_1_3",
     type: "MCQ",
     source: "CLASSROOM",
