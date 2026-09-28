@@ -135,7 +135,7 @@ function Navbar() {
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center" dir={dir(lang)}>
-          <Link to={user ? '/dashboard' : '/'} className="flex items-center gap-3 group">
+          <Link to={user ? (profile?.role === 'TUTOR' ? '/tutor' : '/dashboard') : '/'} className="flex items-center gap-3 group">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-plum to-primary-navy flex items-center justify-center shadow-md shadow-primary-plum/30 group-hover:shadow-primary-plum/50 transition-shadow">
               <Brain size={18} className="text-white" />
             </div>
@@ -159,13 +159,13 @@ function Navbar() {
                   <>
                     <button
                       onClick={() => navigate('/tutor')}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-primary-plum to-primary-navy text-white text-xs font-black shadow-md shadow-primary-plum/30 hover:opacity-95 transition-all"
+                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-primary-plum to-primary-navy text-white text-xs font-black shadow-md shadow-primary-plum/30 hover:opacity-95 transition-all"
                     >
                       <Shield size={14} className="text-accent-pink" />
                       <span>{t('Admin Center', 'لوحة الإدارة', lang)}</span>
                     </button>
                     <button
-                      onClick={() => navigate('/dashboard')}
+                      onClick={() => navigate('/student-preview')}
                       className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-all"
                       title={t('Preview Student Experience', 'معاينة تجربة الطالب', lang)}
                     >
@@ -215,13 +215,22 @@ function Navbar() {
                           </div>
                         </div>
                         {profile.role === 'TUTOR' && (
-                          <button
-                            onClick={() => { navigate('/tutor'); setMenuOpen(false); }}
-                            className="w-full text-left px-4 py-3 text-sm text-primary-plum hover:bg-primary-plum/10 transition-colors flex items-center gap-2 font-bold"
-                          >
-                            <Shield size={14} className="text-accent-pink" />
-                            {t('Master Admin Center', 'مركز إدارة المنصة', lang)}
-                          </button>
+                          <>
+                            <button
+                              onClick={() => { navigate('/tutor'); setMenuOpen(false); }}
+                              className="w-full text-left px-4 py-3 text-sm text-primary-plum hover:bg-primary-plum/10 transition-colors flex items-center gap-2 font-bold"
+                            >
+                              <Shield size={14} className="text-accent-pink" />
+                              {t('Master Admin Center', 'مركز إدارة المنصة والطلاب', lang)}
+                            </button>
+                            <button
+                              onClick={() => { navigate('/student-preview'); setMenuOpen(false); }}
+                              className="w-full text-left px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-2 font-semibold"
+                            >
+                              <Eye size={14} className="text-slate-500" />
+                              {t('Student View Preview', 'معاينة واجهة الطالب', lang)}
+                            </button>
+                          </>
                         )}
                         <button
                           onClick={() => { handleLogout(); setMenuOpen(false); }}
@@ -1931,7 +1940,7 @@ function TutorDashboard() {
                 <span>{t('Refresh Data', 'تحديث البيانات', lang)}</span>
               </button>
               <button
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate('/student-preview')}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-primary-navy text-xs font-black shadow-md hover:bg-slate-100 transition-all"
               >
                 <Eye size={14} className="text-primary-plum" />
@@ -3059,6 +3068,18 @@ function Protected({ children }: { children: React.ReactNode }) {
 }
 
 // ============================================================
+// DASHBOARD ROUTER (DISPATCHES TUTOR TO ADMIN CENTER & STUDENT TO LESSONS)
+// ============================================================
+function DashboardRouter() {
+  const { profile, loadingProfile } = React.useContext(AppContext);
+  if (loadingProfile) return <Spinner />;
+  if (profile?.role === 'TUTOR') {
+    return <TutorDashboard />;
+  }
+  return <StudentDashboard />;
+}
+
+// ============================================================
 // ROOT APP
 // ============================================================
 export default function App() {
@@ -3123,10 +3144,11 @@ export default function App() {
           <AnimatePresence mode="wait">
             <Routes>
               <Route path="/" element={user ? <ProtectedRedirect /> : <AuthPage />} />
-              <Route path="/dashboard" element={<Protected><StudentDashboard /></Protected>} />
+              <Route path="/dashboard" element={<Protected><DashboardRouter /></Protected>} />
+              <Route path="/tutor" element={<Protected><TutorDashboard /></Protected>} />
+              <Route path="/student-preview" element={<Protected><StudentDashboard /></Protected>} />
               <Route path="/lesson/:lessonId" element={<Protected><LessonViewer /></Protected>} />
               <Route path="/assessment/:lessonId" element={<Protected><Assessment /></Protected>} />
-              <Route path="/tutor" element={<Protected><TutorDashboard /></Protected>} />
             </Routes>
           </AnimatePresence>
         </div>
@@ -3149,3 +3171,4 @@ function ProtectedRedirect() {
   }, [user, profile, loadingProfile, navigate]);
   return null;
 }
+
