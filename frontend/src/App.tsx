@@ -16,8 +16,8 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile,
-  User as FirebaseUser,
 } from 'firebase/auth';
+import type { User as FirebaseUser } from 'firebase/auth';
 import {
   doc, setDoc, getDoc, collection, getDocs, updateDoc, addDoc, serverTimestamp, query, where, orderBy
 } from 'firebase/firestore';
@@ -74,10 +74,10 @@ const t = (en: string, ar: string, lang: 'en' | 'ar') => lang === 'ar' ? ar : en
 const dir = (lang: 'en' | 'ar') => lang === 'ar' ? 'rtl' : 'ltr';
 
 const UNIT_COLORS: Record<number, string> = {
-  1: 'from-violet-600 to-purple-800',
-  2: 'from-blue-600 to-cyan-700',
-  3: 'from-emerald-600 to-teal-700',
-  4: 'from-orange-600 to-rose-700',
+  1: 'from-primary-plum to-primary-navy',
+  2: 'from-accent-pink to-primary-plum',
+  3: 'from-accent-mint to-teal-700',
+  4: 'from-blue-500 to-primary-navy',
 };
 const UNIT_ICONS: Record<number, React.ReactNode> = {
   1: <Globe size={20} />,
@@ -92,10 +92,10 @@ const UNIT_ICONS: Record<number, React.ReactNode> = {
 
 function Spinner() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-slate-950">
+    <div className="flex items-center justify-center min-h-screen bg-slate-50">
       <div className="relative">
-        <div className="w-16 h-16 border-4 border-violet-500/30 rounded-full"></div>
-        <div className="w-16 h-16 border-4 border-transparent border-t-violet-500 rounded-full animate-spin absolute inset-0"></div>
+        <div className="w-16 h-16 border-4 border-accent-pink/30 rounded-full"></div>
+        <div className="w-16 h-16 border-4 border-transparent border-t-accent-pink rounded-full animate-spin absolute inset-0"></div>
       </div>
     </div>
   );
@@ -112,23 +112,23 @@ function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-slate-950/95 backdrop-blur-xl border-b border-white/5 shadow-xl">
+    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center" dir={dir(lang)}>
           <Link to={user ? '/dashboard' : '/'} className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center shadow-lg shadow-violet-500/30 group-hover:shadow-violet-500/50 transition-shadow">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-plum to-primary-navy flex items-center justify-center shadow-md shadow-primary-plum/30 group-hover:shadow-primary-plum/50 transition-shadow">
               <Brain size={18} className="text-white" />
             </div>
             <div className="hidden sm:block">
-              <span className="font-black text-xl tracking-tight text-white">D-Learn</span>
-              <span className="block text-[10px] text-violet-400 font-semibold -mt-0.5 tracking-widest uppercase">Baccalaureate</span>
+              <span className="font-black text-xl tracking-tight text-primary-navy">D-Learn</span>
+              <span className="block text-[10px] text-accent-pink font-bold -mt-0.5 tracking-widest uppercase">Baccalaureate</span>
             </div>
           </Link>
 
           <div className="flex items-center gap-3">
             <button
               onClick={toggleLang}
-              className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white text-sm font-bold transition-all border border-white/10"
+              className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-primary-navy text-sm font-bold transition-all border border-slate-200"
             >
               {lang === 'ar' ? 'English' : 'عربي'}
             </button>
@@ -137,22 +137,22 @@ function Navbar() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => navigate('/dashboard')}
-                  className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white text-sm transition-all border border-white/10"
+                  className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-primary-navy text-sm transition-all border border-slate-200"
                 >
                   <Home size={14} />
-                  <span className="font-medium">{t('Home', 'الرئيسية', lang)}</span>
+                  <span className="font-bold">{t('Home', 'الرئيسية', lang)}</span>
                 </button>
 
                 <div className="relative">
                   <button
                     onClick={() => setMenuOpen(!menuOpen)}
-                    className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
+                    className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all"
                   >
-                    <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center font-bold text-white text-xs">
+                    <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-accent-pink to-primary-plum flex items-center justify-center font-bold text-white text-xs shadow-sm">
                       {profile.displayName?.charAt(0)?.toUpperCase() || 'U'}
                     </div>
-                    <span className="hidden sm:block text-sm font-semibold text-white">{profile.displayName}</span>
-                    <ChevronDown size={12} className="text-slate-400" />
+                    <span className="hidden sm:block text-sm font-bold text-primary-navy">{profile.displayName}</span>
+                    <ChevronDown size={12} className="text-slate-500" />
                   </button>
 
                   <AnimatePresence>
@@ -161,15 +161,15 @@ function Navbar() {
                         initial={{ opacity: 0, y: -8 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -8 }}
-                        className="absolute right-0 mt-2 w-52 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+                        className="absolute right-0 mt-2 w-52 bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden"
                       >
-                        <div className="p-4 border-b border-white/5">
-                          <p className="text-white font-bold text-sm">{profile.displayName}</p>
-                          <p className="text-slate-400 text-xs mt-0.5">{profile.email}</p>
+                        <div className="p-4 border-b border-slate-100 bg-slate-50">
+                          <p className="text-primary-navy font-bold text-sm">{profile.displayName}</p>
+                          <p className="text-slate-500 text-xs mt-0.5">{profile.email}</p>
                           <div className="flex items-center gap-1.5 mt-2">
-                            <Star size={12} className="text-yellow-400" />
-                            <span className="text-yellow-400 text-xs font-bold">{profile.xp} XP</span>
-                            <span className="ml-auto px-2 py-0.5 bg-violet-500/20 text-violet-300 rounded-md text-[10px] font-bold uppercase">
+                            <Star size={12} className="text-amber-500" />
+                            <span className="text-amber-600 text-xs font-bold">{profile.xp} XP</span>
+                            <span className="ml-auto px-2 py-0.5 bg-accent-pink/10 text-accent-pink rounded-md text-[10px] font-bold uppercase">
                               {profile.role === 'TUTOR' ? t('Tutor', 'مدرس', lang) : t('Student', 'طالب', lang)}
                             </span>
                           </div>
@@ -177,7 +177,7 @@ function Navbar() {
                         {profile.role === 'TUTOR' && (
                           <button
                             onClick={() => { navigate('/tutor'); setMenuOpen(false); }}
-                            className="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors flex items-center gap-2"
+                            className="w-full text-left px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary-navy transition-colors flex items-center gap-2 font-semibold"
                           >
                             <Target size={14} />
                             {t('Tutor Dashboard', 'لوحة المدرس', lang)}
@@ -185,7 +185,7 @@ function Navbar() {
                         )}
                         <button
                           onClick={() => { handleLogout(); setMenuOpen(false); }}
-                          className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-red-500/10 transition-colors flex items-center gap-2"
+                          className="w-full text-left px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors flex items-center gap-2 font-semibold"
                         >
                           <LogOut size={14} />
                           {t('Sign Out', 'تسجيل الخروج', lang)}
@@ -207,7 +207,7 @@ function Navbar() {
 // AUTH PAGE
 // ============================================================
 function AuthPage() {
-  const { lang } = React.useContext(AppContext);
+  const { lang, toggleLang } = React.useContext(AppContext);
   const navigate = useNavigate();
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [name, setName] = useState('');
@@ -260,14 +260,22 @@ function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden" dir={dir(lang)}>
-      {/* Animated background */}
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 relative overflow-hidden" dir={dir(lang)}>
+      {/* Animated background matching the light theme style */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-violet-600/15 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-900/10 rounded-full blur-3xl"></div>
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+        <div className="absolute top-0 -left-32 w-[600px] h-[600px] bg-accent-pink/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 -right-32 w-[600px] h-[600px] bg-accent-mint/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-plum/5 rounded-full blur-3xl"></div>
+      </div>
+
+      {/* Language Toggle for Auth Page */}
+      <div className="absolute top-6 right-6 z-20">
+        <button
+          onClick={toggleLang}
+          className="px-4 py-2 rounded-lg bg-white shadow-sm text-primary-navy text-sm font-bold transition-all border border-slate-200 hover:bg-slate-50"
+        >
+          {lang === 'ar' ? 'English' : 'عربي'}
+        </button>
       </div>
 
       <motion.div
@@ -277,36 +285,36 @@ function AuthPage() {
       >
         {/* Course header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-700 shadow-2xl shadow-violet-500/30 mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-plum to-primary-navy shadow-lg shadow-primary-plum/20 mb-4">
             <Brain size={28} className="text-white" />
           </div>
-          <h1 className="text-3xl font-black text-white mb-1">D-Learn</h1>
-          <p className="text-violet-400 font-bold text-sm tracking-widest uppercase mb-1">
+          <h1 className="text-3xl font-black text-primary-navy mb-1">D-Learn</h1>
+          <p className="text-accent-pink font-bold text-sm tracking-widest uppercase mb-1">
             {COURSE_METADATA.grade_en}
           </p>
-          <p className="text-slate-400 text-sm font-medium max-w-xs mx-auto leading-relaxed">
+          <p className="text-slate-500 text-sm font-semibold max-w-xs mx-auto leading-relaxed">
             {lang === 'ar'
               ? `${COURSE_METADATA.course_name_ar} — ${COURSE_METADATA.semester_ar}`
               : `${COURSE_METADATA.course_name_en} — ${COURSE_METADATA.semester_en}`}
           </p>
-          <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold">
-            <Star size={12} />
+          <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-mint/20 border border-accent-mint/40 text-teal-800 text-xs font-bold shadow-sm">
+            <Star size={12} className="text-teal-700" />
             {lang === 'ar' ? 'البكالوريا المصرية' : 'Egyptian Baccalaureate'}
           </div>
         </div>
 
-        <div className="bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
+        <div className="bg-white/80 backdrop-blur-xl border border-slate-200 rounded-3xl p-8 shadow-xl shadow-slate-200/50">
           {/* Mode tabs */}
-          <div className="flex rounded-xl bg-slate-800/50 p-1 mb-6 gap-1">
+          <div className="flex rounded-xl bg-slate-100 p-1 mb-6 gap-1 border border-slate-200">
             <button
               onClick={() => { setMode('login'); setError(''); }}
-              className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${mode === 'login' ? 'bg-violet-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+              className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ${mode === 'login' ? 'bg-white text-primary-navy shadow-sm border border-slate-200' : 'text-slate-500 hover:text-primary-navy'}`}
             >
               {t('Sign In', 'تسجيل الدخول', lang)}
             </button>
             <button
               onClick={() => { setMode('register'); setError(''); }}
-              className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${mode === 'register' ? 'bg-violet-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+              className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ${mode === 'register' ? 'bg-white text-primary-navy shadow-sm border border-slate-200' : 'text-slate-500 hover:text-primary-navy'}`}
             >
               {t('Create Account', 'إنشاء حساب', lang)}
             </button>
@@ -315,16 +323,16 @@ function AuthPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {mode === 'register' && (
               <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
                   {t('Full Name', 'الاسم الكامل', lang)}
                 </label>
                 <div className="relative">
-                  <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                   <input
                     type="text"
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    className="w-full bg-slate-800/50 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500/50 transition-all placeholder-slate-600"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-3.5 text-primary-navy text-sm font-medium focus:outline-none focus:border-accent-pink focus:ring-2 focus:ring-accent-pink/20 transition-all placeholder-slate-400"
                     placeholder={t('Your full name', 'اسمك الكامل', lang)}
                   />
                 </div>
@@ -332,16 +340,16 @@ function AuthPage() {
             )}
 
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
                 {t('Email Address', 'البريد الإلكتروني', lang)}
               </label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="w-full bg-slate-800/50 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500/50 transition-all placeholder-slate-600"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-3.5 text-primary-navy text-sm font-medium focus:outline-none focus:border-accent-pink focus:ring-2 focus:ring-accent-pink/20 transition-all placeholder-slate-400"
                   placeholder="you@example.com"
                   required
                 />
@@ -349,20 +357,20 @@ function AuthPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
                 {t('Password', 'كلمة المرور', lang)}
               </label>
               <div className="relative">
-                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type={showPass ? 'text' : 'password'}
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full bg-slate-800/50 border border-white/10 rounded-xl pl-10 pr-10 py-3 text-white text-sm focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500/50 transition-all placeholder-slate-600"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-10 py-3.5 text-primary-navy text-sm font-medium focus:outline-none focus:border-accent-pink focus:ring-2 focus:ring-accent-pink/20 transition-all placeholder-slate-400"
                   placeholder={mode === 'register' ? t('Min. 6 characters', '6 أحرف على الأقل', lang) : '••••••••'}
                   required
                 />
-                <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+                <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary-navy">
                   {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
@@ -370,14 +378,14 @@ function AuthPage() {
 
             {mode === 'register' && (
               <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
                   {t('I am a...', 'أنا...', lang)}
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
                     onClick={() => setRole('STUDENT')}
-                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border-2 font-bold text-sm transition-all ${role === 'STUDENT' ? 'border-violet-500 bg-violet-500/10 text-violet-300' : 'border-white/10 text-slate-500 hover:border-white/20'}`}
+                    className={`flex items-center justify-center gap-2 p-3.5 rounded-xl border-2 font-bold text-sm transition-all ${role === 'STUDENT' ? 'border-primary-plum bg-primary-plum/5 text-primary-plum' : 'border-slate-200 text-slate-500 hover:border-slate-300 bg-slate-50'}`}
                   >
                     <User size={16} />
                     {t('Student', 'طالب', lang)}
@@ -385,7 +393,7 @@ function AuthPage() {
                   <button
                     type="button"
                     onClick={() => setRole('TUTOR')}
-                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border-2 font-bold text-sm transition-all ${role === 'TUTOR' ? 'border-violet-500 bg-violet-500/10 text-violet-300' : 'border-white/10 text-slate-500 hover:border-white/20'}`}
+                    className={`flex items-center justify-center gap-2 p-3.5 rounded-xl border-2 font-bold text-sm transition-all ${role === 'TUTOR' ? 'border-primary-plum bg-primary-plum/5 text-primary-plum' : 'border-slate-200 text-slate-500 hover:border-slate-300 bg-slate-50'}`}
                   >
                     <Target size={16} />
                     {t('Tutor', 'مدرس', lang)}
@@ -395,16 +403,16 @@ function AuthPage() {
             )}
 
             {error && (
-              <div className="flex items-start gap-2 p-3 bg-red-500/10 border border-red-500/30 rounded-xl">
-                <AlertTriangle size={15} className="text-red-400 mt-0.5 flex-shrink-0" />
-                <p className="text-red-300 text-sm">{error}</p>
+              <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-xl">
+                <AlertTriangle size={15} className="text-red-500 mt-0.5 flex-shrink-0" />
+                <p className="text-red-600 text-sm font-medium">{error}</p>
               </div>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-500 hover:to-purple-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-violet-500/25 transform hover:-translate-y-0.5 transition-all disabled:opacity-60 disabled:transform-none mt-2"
+              className="w-full flex items-center justify-center gap-2 bg-primary-navy hover:bg-primary-plum text-white font-bold py-4 px-4 rounded-xl shadow-md transform hover:-translate-y-0.5 transition-all disabled:opacity-60 disabled:transform-none mt-2"
             >
               {loading ? (
                 <><Loader size={16} className="animate-spin" /> {t('Please wait...', 'برجاء الانتظار...', lang)}</>
@@ -417,7 +425,7 @@ function AuthPage() {
           </form>
         </div>
 
-        <p className="text-center text-slate-600 text-xs mt-4">
+        <p className="text-center text-slate-500 text-xs mt-6 font-medium">
           {COURSE_METADATA.publisher_en}
         </p>
       </motion.div>
@@ -429,7 +437,7 @@ function AuthPage() {
 // STUDENT DASHBOARD
 // ============================================================
 function StudentDashboard() {
-  const { user, profile, lang } = React.useContext(AppContext);
+  const { profile, lang } = React.useContext(AppContext);
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
 
@@ -441,79 +449,78 @@ function StudentDashboard() {
 
   const completedCount = profile?.completedLessons?.length || 0;
   const totalLessons = LESSONS.length;
-  const progressPct = Math.round((completedCount / totalLessons) * 100);
+  const progressPct = Math.round((completedCount / Math.max(totalLessons, 1)) * 100);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white" dir={dir(lang)}>
+    <div className="min-h-screen bg-slate-50 text-primary-navy" dir={dir(lang)}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* Welcome Hero */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-violet-900/60 to-purple-900/40 border border-violet-500/20 p-8 md:p-10 mb-8 shadow-2xl"
+          className="relative overflow-hidden rounded-3xl bg-white border border-slate-200 p-8 md:p-10 mb-8 shadow-xl shadow-slate-200/50"
         >
-          <div className="absolute top-0 right-0 w-80 h-80 bg-violet-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-60 h-60 bg-purple-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+          <div className="absolute top-0 right-0 w-80 h-80 bg-accent-pink/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-60 h-60 bg-accent-mint/20 rounded-full blur-3xl"></div>
 
           <div className="relative z-10">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
               <div>
-                <p className="text-violet-400 font-bold text-sm tracking-widest uppercase mb-2">
+                <p className="text-accent-pink font-bold text-sm tracking-widest uppercase mb-2">
                   {lang === 'ar' ? `${COURSE_METADATA.grade_ar} — ${COURSE_METADATA.semester_ar}` : `${COURSE_METADATA.grade_en} — ${COURSE_METADATA.semester_en}`}
                 </p>
-                <h1 className="text-3xl md:text-4xl font-black text-white mb-2 leading-tight">
+                <h1 className="text-3xl md:text-4xl font-black text-primary-navy mb-3 leading-tight">
                   {lang === 'ar'
                     ? `مرحباً، ${profile?.displayName || 'طالب'} 👋`
                     : `Welcome back, ${profile?.displayName || 'Student'} 👋`}
                 </h1>
-                <p className="text-slate-300 text-lg font-semibold mb-1">
+                <p className="text-slate-700 text-lg font-bold mb-2">
                   {lang === 'ar' ? COURSE_METADATA.course_name_ar : COURSE_METADATA.course_name_en}
                 </p>
-                <p className="text-slate-400 text-sm">
+                <p className="text-slate-500 text-sm font-medium">
                   {lang === 'ar' ? COURSE_METADATA.publisher_ar : COURSE_METADATA.publisher_en}
                 </p>
-                <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30">
-                  <Star size={12} className="text-amber-400" />
-                  <span className="text-amber-300 text-xs font-bold">
+                <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-mint/20 border border-accent-mint/40">
+                  <Star size={12} className="text-teal-700" />
+                  <span className="text-teal-800 text-xs font-bold">
                     {lang === 'ar' ? 'البكالوريا المصرية' : 'Egyptian Baccalaureate'}
                   </span>
                 </div>
               </div>
 
-              <div className="flex-shrink-0 text-center">
+              <div className="flex-shrink-0 text-center bg-slate-50 p-6 rounded-3xl border border-slate-100 shadow-sm">
                 <div className="w-32 h-32 relative mx-auto">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="2.5"/>
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#prog)" strokeWidth="2.5" strokeDasharray={`${progressPct}, 100`} strokeLinecap="round"/>
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f1f5f9" strokeWidth="3"/>
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#progLight)" strokeWidth="3" strokeDasharray={`${progressPct}, 100`} strokeLinecap="round"/>
                     <defs>
-                      <linearGradient id="prog" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#8b5cf6"/>
-                        <stop offset="100%" stopColor="#a78bfa"/>
+                      <linearGradient id="progLight" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#62426B"/>
+                        <stop offset="100%" stopColor="#D97398"/>
                       </linearGradient>
                     </defs>
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-3xl font-black text-white">{progressPct}%</span>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{t('Progress', 'التقدم', lang)}</span>
+                    <span className="text-3xl font-black text-primary-navy">{progressPct}%</span>
+                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{t('Progress', 'التقدم', lang)}</span>
                   </div>
                 </div>
-                <p className="text-slate-400 text-xs mt-2">
+                <p className="text-slate-600 text-xs mt-3 font-semibold">
                   {completedCount}/{totalLessons} {t('Lessons Done', 'دروس مكتملة', lang)}
                 </p>
               </div>
             </div>
 
             {/* XP Badge */}
-            <div className="flex flex-wrap items-center gap-3 mt-6">
-              <div className="flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full">
-                <Zap size={14} className="text-yellow-400" />
-                <span className="text-yellow-300 font-bold text-sm">{profile?.xp || 0} XP</span>
+            <div className="flex flex-wrap items-center gap-3 mt-8">
+              <div className="flex items-center gap-2 px-4 py-2 bg-amber-100 border border-amber-200 rounded-full shadow-sm">
+                <Zap size={14} className="text-amber-600" />
+                <span className="text-amber-700 font-bold text-sm">{profile?.xp || 0} XP</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full">
-                <CheckCircle size={14} className="text-green-400" />
-                <span className="text-green-300 font-bold text-sm">{completedCount} {t('completed', 'مكتمل', lang)}</span>
+              <div className="flex items-center gap-2 px-4 py-2 bg-accent-mint/20 border border-accent-mint/40 rounded-full shadow-sm">
+                <CheckCircle size={14} className="text-teal-700" />
+                <span className="text-teal-800 font-bold text-sm">{completedCount} {t('completed', 'مكتمل', lang)}</span>
               </div>
             </div>
           </div>
@@ -521,25 +528,25 @@ function StudentDashboard() {
 
         {/* Search */}
         <div className="relative mb-8 max-w-xl">
-          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder={t('Search lessons...', 'ابحث عن الدروس...', lang)}
-            className="w-full bg-slate-900 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500/30 transition-all placeholder-slate-600"
+            className="w-full bg-white border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-primary-navy text-sm font-medium shadow-sm focus:outline-none focus:border-accent-pink focus:ring-2 focus:ring-accent-pink/20 transition-all placeholder-slate-400"
           />
         </div>
 
         {/* Lessons Grid */}
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-black text-white">
+        <div className="mb-5 flex items-center justify-between">
+          <h2 className="text-2xl font-black text-primary-navy">
             {t('Course Lessons', 'دروس المنهج', lang)}
-            <span className="ml-2 text-sm font-normal text-slate-500">({filteredLessons.length})</span>
+            <span className="ml-2 text-sm font-bold text-slate-400">({filteredLessons.length})</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {filteredLessons.map((lesson, idx) => {
             const isCompleted = profile?.completedLessons?.includes(lesson.id);
             const lessonQuestions = QUIZ_QUESTIONS.filter(q => q.lesson === lesson.id);
@@ -551,67 +558,63 @@ function StudentDashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.05 }}
-                className="bg-slate-900/80 border border-white/5 rounded-2xl overflow-hidden hover:border-violet-500/30 hover:shadow-xl hover:shadow-violet-500/10 transition-all group cursor-pointer"
+                className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-accent-pink/50 hover:shadow-xl hover:shadow-accent-pink/10 transition-all group cursor-pointer flex flex-col"
                 onClick={() => navigate(`/lesson/${lesson.id}`)}
               >
                 {/* Card header gradient */}
-                <div className={`h-2 bg-gradient-to-r ${unitColor}`}></div>
+                <div className={`h-2.5 bg-gradient-to-r ${unitColor}`}></div>
 
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-1">
                   <div className="flex items-start justify-between mb-4">
-                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${unitColor} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform`}>
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${unitColor} flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform`}>
                       {UNIT_ICONS[lesson.unit]}
                     </div>
                     <div className="flex items-center gap-2">
                       {isCompleted && (
-                        <span className="flex items-center gap-1 px-2 py-0.5 bg-green-500/15 border border-green-500/30 rounded-full text-green-400 text-[10px] font-bold">
+                        <span className="flex items-center gap-1 px-2.5 py-1 bg-accent-mint/20 border border-accent-mint/40 rounded-full text-teal-800 text-[10px] font-bold">
                           <CheckCircle size={10} /> {t('Done', 'مكتمل', lang)}
                         </span>
                       )}
-                      <span className="text-slate-600 text-xs font-bold bg-slate-800/50 px-2 py-0.5 rounded-full">
+                      <span className="text-primary-navy text-xs font-bold bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-full">
                         {lesson.lesson_number}
                       </span>
                     </div>
                   </div>
 
-                  <h3 className="font-black text-white text-base mb-1 group-hover:text-violet-300 transition-colors leading-snug">
+                  <h3 className="font-black text-primary-navy text-lg mb-2 group-hover:text-primary-plum transition-colors leading-snug">
                     {lang === 'ar' ? lesson.title_ar : lesson.title_en}
                   </h3>
 
-                  <p className="text-slate-500 text-sm mb-4 line-clamp-2">
+                  <p className="text-slate-600 text-sm mb-5 line-clamp-2 font-medium">
                     {lang === 'ar'
                       ? lesson.learning_objectives_ar[0]
                       : lesson.learning_objectives_en[0]}
                   </p>
 
-                  <div className="flex items-center gap-3 text-xs text-slate-600">
-                    <span className="flex items-center gap-1">
-                      <BookOpen size={11} />
+                  <div className="flex items-center gap-3 text-xs text-slate-500 font-semibold mb-6 mt-auto">
+                    <span className="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+                      <BookOpen size={12} className="text-primary-plum" />
                       {lesson.sections.length} {t('sections', 'أقسام', lang)}
                     </span>
-                    <span className="flex items-center gap-1">
-                      <FileText size={11} />
+                    <span className="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+                      <FileText size={12} className="text-accent-pink" />
                       {lessonQuestions.length} {t('questions', 'سؤال', lang)}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Lightbulb size={11} />
-                      {lesson.key_terms.length} {t('terms', 'مصطلح', lang)}
                     </span>
                   </div>
 
-                  <div className="flex gap-2 mt-4">
+                  <div className="flex gap-2">
                     <button
                       onClick={e => { e.stopPropagation(); navigate(`/lesson/${lesson.id}`); }}
-                      className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-bold transition-all bg-gradient-to-r ${unitColor} text-white shadow-md hover:shadow-lg hover:opacity-90`}
+                      className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r ${unitColor} text-white shadow-md hover:shadow-lg hover:opacity-90`}
                     >
-                      <PlayCircle size={13} />
+                      <PlayCircle size={15} />
                       {t('Study', 'ادرس', lang)}
                     </button>
                     <button
                       onClick={e => { e.stopPropagation(); navigate(`/assessment/${lesson.id}`); }}
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-bold transition-all bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold transition-all bg-slate-100 hover:bg-slate-200 border border-slate-200 text-primary-navy"
                     >
-                      <Award size={13} />
+                      <Award size={15} />
                       {t('Quiz', 'اختبار', lang)}
                     </button>
                   </div>
@@ -651,10 +654,10 @@ function LessonViewer() {
   }, [user, profile, lesson]);
 
   if (!lesson) return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center text-primary-navy">
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-4">{t('Lesson not found', 'الدرس غير موجود', lang)}</h2>
-        <button onClick={() => navigate('/dashboard')} className="px-6 py-2 bg-violet-600 rounded-xl text-white font-bold">
+        <button onClick={() => navigate('/dashboard')} className="px-6 py-2 bg-primary-plum rounded-xl text-white font-bold">
           {t('Back to Dashboard', 'العودة للوحة التحكم', lang)}
         </button>
       </div>
@@ -666,7 +669,7 @@ function LessonViewer() {
   const unitColor = UNIT_COLORS[lesson.unit] || UNIT_COLORS[1];
 
   const renderMarkdown = (text: string) => {
-    // Simple markdown renderer
+    // Simple markdown renderer matching light theme
     const lines = text.split('\n');
     const elements: React.ReactNode[] = [];
     let i = 0;
@@ -675,22 +678,22 @@ function LessonViewer() {
       const line = lines[i];
 
       if (line.startsWith('# ')) {
-        elements.push(<h1 key={i} className="text-2xl font-black text-white mb-4 mt-6">{line.slice(2)}</h1>);
+        elements.push(<h1 key={i} className="text-2xl font-black text-primary-navy mb-4 mt-6">{line.slice(2)}</h1>);
       } else if (line.startsWith('## ')) {
-        elements.push(<h2 key={i} className="text-xl font-black text-violet-300 mb-3 mt-6 border-b border-violet-500/20 pb-2">{line.slice(3)}</h2>);
+        elements.push(<h2 key={i} className="text-xl font-black text-primary-plum mb-3 mt-6 border-b border-slate-200 pb-2">{line.slice(3)}</h2>);
       } else if (line.startsWith('### ')) {
-        elements.push(<h3 key={i} className="text-lg font-bold text-white mb-2 mt-4">{line.slice(4)}</h3>);
+        elements.push(<h3 key={i} className="text-lg font-bold text-primary-navy mb-2 mt-4">{line.slice(4)}</h3>);
       } else if (line.startsWith('**') && line.endsWith('**') && line.length > 4) {
         const bold = line.slice(2, -2);
-        elements.push(<p key={i} className="text-white font-black text-base mt-4 mb-1">{bold}</p>);
+        elements.push(<p key={i} className="text-primary-navy font-black text-base mt-4 mb-2">{bold}</p>);
       } else if (line.startsWith('- ') || line.startsWith('* ')) {
         const content = line.slice(2);
         const parts = content.split(/\*\*(.*?)\*\*/g);
         elements.push(
-          <div key={i} className="flex items-start gap-2 mb-2 ml-4">
-            <div className="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
-            <p className="text-slate-300 text-sm leading-relaxed">
-              {parts.map((part, idx) => idx % 2 === 1 ? <strong key={idx} className="text-white font-bold">{part}</strong> : part)}
+          <div key={i} className="flex items-start gap-2 mb-2.5 ml-4">
+            <div className="w-1.5 h-1.5 rounded-full bg-accent-pink mt-2 flex-shrink-0"></div>
+            <p className="text-slate-700 text-sm leading-relaxed font-medium">
+              {parts.map((part, idx) => idx % 2 === 1 ? <strong key={idx} className="text-primary-navy font-bold">{part}</strong> : part)}
             </p>
           </div>
         );
@@ -704,22 +707,22 @@ function LessonViewer() {
         const headers = tableLines[0]?.split('|').filter(c => c.trim()).map(c => c.trim()) || [];
         const rows = tableLines.slice(2).map(row => row.split('|').filter(c => c.trim()).map(c => c.trim()));
         elements.push(
-          <div key={`table-${i}`} className="overflow-x-auto mb-6 mt-4">
+          <div key={`table-${i}`} className="overflow-x-auto mb-6 mt-4 shadow-sm border border-slate-200 rounded-xl">
             <table className="w-full border-collapse text-sm">
               <thead>
-                <tr>
+                <tr className="bg-slate-50 border-b border-slate-200">
                   {headers.map((h, hi) => (
-                    <th key={hi} className="text-left p-3 bg-violet-900/40 border border-violet-500/20 text-violet-300 font-bold text-xs uppercase tracking-wider">
+                    <th key={hi} className="text-left p-3 text-primary-plum font-bold text-xs uppercase tracking-wider">
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-slate-100 bg-white">
                 {rows.map((row, ri) => (
-                  <tr key={ri} className={ri % 2 === 0 ? 'bg-white/2' : 'bg-white/5'}>
+                  <tr key={ri} className="hover:bg-slate-50 transition-colors">
                     {row.map((cell, ci) => (
-                      <td key={ci} className="p-3 border border-white/5 text-slate-300">{cell}</td>
+                      <td key={ci} className="p-3 text-slate-700 font-medium">{cell}</td>
                     ))}
                   </tr>
                 ))}
@@ -730,19 +733,19 @@ function LessonViewer() {
         continue;
       } else if (line.startsWith('⚡') || line.startsWith('📌') || line.startsWith('💡')) {
         elements.push(
-          <div key={i} className="my-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
-            <p className="text-amber-200 text-sm leading-relaxed">{line}</p>
+          <div key={i} className="my-5 p-4 bg-amber-50 border border-amber-200 rounded-xl shadow-sm">
+            <p className="text-amber-800 text-sm leading-relaxed font-semibold">{line}</p>
           </div>
         );
       } else if (line.trim() === '') {
-        if (elements.length > 0) elements.push(<div key={i} className="h-2"></div>);
+        if (elements.length > 0) elements.push(<div key={i} className="h-3"></div>);
       } else {
         const parts = line.split(/\*\*(.*?)\*\*/g);
         const hasFormatting = parts.length > 1;
         elements.push(
-          <p key={i} className="text-slate-300 text-sm leading-relaxed mb-2">
+          <p key={i} className="text-slate-700 text-sm leading-relaxed mb-3 font-medium">
             {hasFormatting
-              ? parts.map((part, idx) => idx % 2 === 1 ? <strong key={idx} className="text-white font-bold">{part}</strong> : part)
+              ? parts.map((part, idx) => idx % 2 === 1 ? <strong key={idx} className="text-primary-navy font-bold">{part}</strong> : part)
               : line}
           </p>
         );
@@ -753,63 +756,63 @@ function LessonViewer() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex" dir={dir(lang)}>
+    <div className="min-h-screen bg-slate-50 text-primary-navy flex" dir={dir(lang)}>
       {/* Sidebar */}
       <AnimatePresence>
         {(sidebarOpen || true) && (
           <motion.aside
             initial={false}
-            className={`${sidebarOpen ? 'fixed inset-y-0 left-0 z-40 w-72' : 'hidden md:flex md:w-64 lg:w-72'} bg-slate-900/95 backdrop-blur-xl border-r border-white/5 flex-col`}
+            className={`${sidebarOpen ? 'fixed inset-y-0 left-0 z-40 w-72' : 'hidden md:flex md:w-64 lg:w-72'} bg-white border-r border-slate-200 flex-col shadow-lg md:shadow-none`}
           >
             {/* Close button (mobile) */}
             <div className="md:hidden flex justify-end p-4">
-              <button onClick={() => setSidebarOpen(false)} className="p-2 rounded-lg bg-white/5 text-slate-400">
+              <button onClick={() => setSidebarOpen(false)} className="p-2 rounded-lg bg-slate-100 text-slate-500 hover:text-primary-navy">
                 <X size={18} />
               </button>
             </div>
 
             {/* Lesson title */}
-            <div className={`p-4 bg-gradient-to-br ${unitColor} m-4 rounded-2xl`}>
-              <span className="text-white/70 text-xs font-bold uppercase tracking-widest block mb-1">{lesson.lesson_number}</span>
+            <div className={`p-5 bg-gradient-to-br ${unitColor} m-4 rounded-2xl shadow-md`}>
+              <span className="text-white/80 text-xs font-bold uppercase tracking-widest block mb-1.5">{lesson.lesson_number}</span>
               <h3 className="text-white font-black text-sm leading-snug">
                 {lang === 'ar' ? lesson.title_ar : lesson.title_en}
               </h3>
             </div>
 
             {/* Sections */}
-            <div className="flex-1 overflow-y-auto px-3 pb-4">
-              <p className="text-slate-600 text-[10px] font-bold uppercase tracking-widest mb-3 px-2">
+            <div className="flex-1 overflow-y-auto px-4 pb-6">
+              <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-3 px-1">
                 {t('Sections', 'الأقسام', lang)}
               </p>
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 {lesson.sections.map((sec, idx) => (
                   <button
                     key={idx}
                     onClick={() => { setActiveSection(idx); setSidebarOpen(false); }}
-                    className={`w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${activeSection === idx ? 'bg-violet-600/20 text-violet-300 border border-violet-500/30' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}
+                    className={`w-full text-left px-3.5 py-3 rounded-xl text-sm font-bold transition-all ${activeSection === idx ? 'bg-primary-plum/10 text-primary-plum border border-primary-plum/20' : 'text-slate-600 hover:bg-slate-100 hover:text-primary-navy border border-transparent'}`}
                   >
-                    <span className="text-slate-600 text-xs mr-2">{idx + 1}.</span>
+                    <span className="text-slate-400 text-xs mr-2">{idx + 1}.</span>
                     {lang === 'ar' ? sec.heading_ar : sec.heading_en}
                   </button>
                 ))}
               </div>
 
               {/* Key Terms */}
-              <p className="text-slate-600 text-[10px] font-bold uppercase tracking-widest mt-6 mb-3 px-2">
+              <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-8 mb-3 px-1">
                 {t('Key Terms', 'المصطلحات', lang)}
               </p>
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 {lesson.key_terms.map((term, idx) => (
                   <button
                     key={idx}
                     onClick={() => setExpandedTerms(prev => { const n = new Set(prev); n.has(idx) ? n.delete(idx) : n.add(idx); return n; })}
-                    className="w-full text-left px-3 py-2 rounded-xl text-xs text-slate-400 hover:bg-white/5 hover:text-white transition-all"
+                    className="w-full text-left px-3.5 py-2.5 rounded-xl text-sm text-slate-600 hover:bg-slate-100 transition-all border border-transparent hover:border-slate-200"
                   >
-                    <span className="font-bold text-violet-400">
+                    <span className="font-bold text-accent-pink">
                       {lang === 'ar' ? term.term_ar : term.term_en}
                     </span>
                     {expandedTerms.has(idx) && (
-                      <p className="mt-1 text-slate-500 text-[11px] leading-relaxed">
+                      <p className="mt-2 text-slate-500 text-xs leading-relaxed font-medium">
                         {lang === 'ar' ? term.def_ar : term.def_en}
                       </p>
                     )}
@@ -818,10 +821,10 @@ function LessonViewer() {
               </div>
 
               {/* Assessment button */}
-              <div className="mt-6 px-1">
+              <div className="mt-8 px-1">
                 <button
                   onClick={() => navigate(`/assessment/${lesson.id}`)}
-                  className={`w-full py-3 rounded-xl bg-gradient-to-r ${unitColor} text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg hover:opacity-90 transition-all`}
+                  className={`w-full py-3.5 rounded-xl bg-gradient-to-r ${unitColor} text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:opacity-90 transition-all`}
                 >
                   <Award size={15} />
                   {t('Take Assessment', 'ابدأ التقييم', lang)}
@@ -835,53 +838,53 @@ function LessonViewer() {
       {/* Main content */}
       <main className="flex-1 overflow-y-auto">
         {/* Top bar */}
-        <div className="sticky top-0 z-10 bg-slate-950/95 backdrop-blur-xl border-b border-white/5 px-4 md:px-8 py-3 flex items-center gap-4">
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="md:hidden p-2 rounded-lg bg-white/5 text-slate-400">
+        <div className="sticky top-0 z-10 bg-white/90 backdrop-blur-xl border-b border-slate-200 px-4 md:px-8 py-3.5 flex items-center gap-4 shadow-sm">
+          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="md:hidden p-2 rounded-lg bg-slate-100 text-slate-600">
             <Menu size={18} />
           </button>
-          <button onClick={() => navigate('/dashboard')} className="flex items-center gap-2 text-slate-400 hover:text-white text-sm font-medium transition-colors">
+          <button onClick={() => navigate('/dashboard')} className="flex items-center gap-2 text-slate-500 hover:text-primary-navy text-sm font-bold transition-colors">
             <ArrowLeft size={15} />
             {t('Dashboard', 'الرئيسية', lang)}
           </button>
           <div className="ml-auto flex items-center gap-2">
             {isCompleted ? (
-              <span className="flex items-center gap-1.5 px-3 py-1.5 bg-green-500/15 border border-green-500/30 rounded-full text-green-400 text-xs font-bold">
-                <CheckCircle size={12} /> {t('Completed', 'مكتمل', lang)}
+              <span className="flex items-center gap-1.5 px-3 py-1.5 bg-accent-mint/20 border border-accent-mint/40 rounded-full text-teal-800 text-xs font-bold">
+                <CheckCircle size={14} /> {t('Completed', 'مكتمل', lang)}
               </span>
             ) : (
               <button
                 onClick={markComplete}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-600/20 hover:bg-violet-600/30 border border-violet-500/30 rounded-full text-violet-300 text-xs font-bold transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-plum/10 hover:bg-primary-plum/20 border border-primary-plum/30 rounded-full text-primary-plum text-xs font-bold transition-all shadow-sm"
               >
-                <CheckCircle size={12} /> {t('Mark Complete (+50 XP)', 'إتمام (+50 XP)', lang)}
+                <CheckCircle size={14} /> {t('Mark Complete (+50 XP)', 'إتمام (+50 XP)', lang)}
               </button>
             )}
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 md:px-8 py-8">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-10">
           {/* Lesson header */}
-          <div className="mb-8">
-            <div className="flex items-center gap-2 mb-3">
-              <span className={`px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r ${unitColor} text-white`}>
+          <div className="mb-10">
+            <div className="flex items-center gap-2 mb-4">
+              <span className={`px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r ${unitColor} text-white shadow-sm`}>
                 {t('Unit', 'الوحدة', lang)} {lesson.unit}
               </span>
-              <span className="text-slate-600 text-sm">{lesson.lesson_number}</span>
+              <span className="text-slate-500 text-sm font-bold">{lesson.lesson_number}</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-black text-white mb-4 leading-tight">
+            <h1 className="text-3xl md:text-5xl font-black text-primary-navy mb-5 leading-tight">
               {lang === 'ar' ? lesson.title_ar : lesson.title_en}
             </h1>
 
             {/* Learning objectives */}
-            <div className="bg-slate-900/60 border border-white/5 rounded-2xl p-5 mb-6">
-              <h3 className="text-violet-400 font-bold text-xs uppercase tracking-widest mb-3 flex items-center gap-2">
-                <Target size={12} />
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+              <h3 className="text-accent-pink font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2">
+                <Target size={14} />
                 {t('Learning Objectives', 'أهداف التعلم', lang)}
               </h3>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {(lang === 'ar' ? lesson.learning_objectives_ar : lesson.learning_objectives_en).map((obj, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
-                    <CheckCircle size={14} className="text-violet-400 mt-0.5 flex-shrink-0" />
+                  <li key={i} className="flex items-start gap-3 text-sm text-slate-700 font-semibold">
+                    <CheckCircle size={16} className="text-accent-mint mt-0.5 flex-shrink-0" />
                     {obj}
                   </li>
                 ))}
@@ -895,7 +898,7 @@ function LessonViewer() {
               <button
                 key={idx}
                 onClick={() => setActiveSection(idx)}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${activeSection === idx ? `bg-gradient-to-r ${unitColor} text-white shadow-md` : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/10'}`}
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${activeSection === idx ? `bg-gradient-to-r ${unitColor} text-white shadow-md` : 'bg-white text-slate-500 hover:bg-slate-100 hover:text-primary-navy border border-slate-200 shadow-sm'}`}
               >
                 {idx + 1}. {(lang === 'ar' ? sec.heading_ar : sec.heading_en).slice(0, 30)}{(lang === 'ar' ? sec.heading_ar : sec.heading_en).length > 30 ? '...' : ''}
               </button>
@@ -910,9 +913,9 @@ function LessonViewer() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.25 }}
-              className="bg-slate-900/60 border border-white/5 rounded-2xl p-6 md:p-8 mb-8"
+              className="bg-white border border-slate-200 rounded-2xl p-6 md:p-10 mb-10 shadow-lg shadow-slate-200/50"
             >
-              <h2 className={`text-2xl font-black mb-6 bg-gradient-to-r ${unitColor} bg-clip-text text-transparent`}>
+              <h2 className={`text-2xl md:text-3xl font-black mb-8 text-primary-plum`}>
                 {lang === 'ar' ? section.heading_ar : section.heading_en}
               </h2>
               <div className="lesson-content">
@@ -923,19 +926,19 @@ function LessonViewer() {
 
           {/* Pause & Think */}
           {lesson.pause_and_think.length > 0 && (
-            <div className="mb-8">
-              <h3 className="text-violet-400 font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2">
-                <Lightbulb size={12} />
+            <div className="mb-10">
+              <h3 className="text-primary-plum font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2">
+                <Lightbulb size={14} />
                 {t('Pause & Think', 'توقف وفكّر', lang)}
               </h3>
               <div className="space-y-4">
                 {lesson.pause_and_think.map((pq, i) => (
-                  <div key={i} className="p-5 bg-violet-900/20 border border-violet-500/20 rounded-2xl">
-                    <div className="flex items-start gap-3">
-                      <div className="w-7 h-7 rounded-lg bg-violet-600/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-violet-300 font-black text-xs">{i + 1}</span>
+                  <div key={i} className="p-5 bg-primary-plum/5 border border-primary-plum/20 rounded-2xl">
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 rounded-lg bg-primary-plum/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-primary-plum font-black text-sm">{i + 1}</span>
                       </div>
-                      <p className="text-slate-300 text-sm leading-relaxed">
+                      <p className="text-primary-navy font-semibold text-sm md:text-base leading-relaxed">
                         {lang === 'ar' ? pq.q_ar : pq.q_en}
                       </p>
                     </div>
@@ -946,18 +949,18 @@ function LessonViewer() {
           )}
 
           {/* Key Terms Glossary */}
-          <div className="mb-8">
-            <h3 className="text-slate-400 font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2">
-              <BookMarked size={12} />
+          <div className="mb-10">
+            <h3 className="text-slate-500 font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2">
+              <BookMarked size={14} />
               {t('Key Terms Glossary', 'مسرد المصطلحات', lang)}
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {lesson.key_terms.map((term, i) => (
-                <div key={i} className="p-4 bg-slate-900/60 border border-white/5 rounded-xl hover:border-white/10 transition-all">
-                  <p className="text-violet-300 font-black text-sm mb-1">
+                <div key={i} className="p-5 bg-white border border-slate-200 rounded-xl hover:border-accent-pink/40 shadow-sm hover:shadow-md transition-all">
+                  <p className="text-accent-pink font-black text-sm md:text-base mb-2">
                     {lang === 'ar' ? term.term_ar : term.term_en}
                   </p>
-                  <p className="text-slate-400 text-xs leading-relaxed">
+                  <p className="text-slate-600 text-sm leading-relaxed font-medium">
                     {lang === 'ar' ? term.def_ar : term.def_en}
                   </p>
                 </div>
@@ -966,12 +969,12 @@ function LessonViewer() {
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-between pt-6 border-t border-white/5">
+          <div className="flex items-center justify-between pt-8 border-t border-slate-200">
             <div className="flex items-center gap-3">
               {activeSection > 0 && (
                 <button
                   onClick={() => setActiveSection(activeSection - 1)}
-                  className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-slate-300 font-bold text-sm transition-all"
+                  className="flex items-center gap-2 px-5 py-3 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-primary-navy font-bold text-sm transition-all shadow-sm"
                 >
                   <ArrowLeft size={16} /> {t('Previous', 'السابق', lang)}
                 </button>
@@ -979,7 +982,7 @@ function LessonViewer() {
               {activeSection < lesson.sections.length - 1 && (
                 <button
                   onClick={() => setActiveSection(activeSection + 1)}
-                  className={`flex items-center gap-2 px-4 py-2 bg-gradient-to-r ${unitColor} text-white rounded-xl font-bold text-sm shadow-md hover:opacity-90 transition-all`}
+                  className={`flex items-center gap-2 px-5 py-3 bg-gradient-to-r ${unitColor} text-white rounded-xl font-bold text-sm shadow-md hover:opacity-90 transition-all`}
                 >
                   {t('Next Section', 'القسم التالي', lang)} <ArrowRight size={16} />
                 </button>
@@ -987,9 +990,9 @@ function LessonViewer() {
             </div>
             <button
               onClick={() => navigate(`/assessment/${lesson.id}`)}
-              className="flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-slate-300 font-bold text-sm transition-all"
+              className="flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-primary-navy font-bold text-sm transition-all shadow-sm"
             >
-              <Award size={16} />
+              <Award size={16} className="text-accent-pink" />
               {t('Take Assessment', 'ابدأ التقييم', lang)}
             </button>
           </div>
@@ -1071,7 +1074,6 @@ function Assessment() {
 
       await addDoc(collection(db, 'assessment_results'), result);
 
-      // Update XP and completed assessments
       const alreadyDone = profile.completedAssessments?.includes(lessonId || '');
       if (!alreadyDone) {
         await updateDoc(doc(db, 'users', user.uid), {
@@ -1087,7 +1089,7 @@ function Assessment() {
     }
   };
 
-  if (!lesson) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Lesson not found</div>;
+  if (!lesson) return <div className="min-h-screen bg-slate-50 flex items-center justify-center text-primary-navy font-bold">Lesson not found</div>;
 
   const unitColor = UNIT_COLORS[lesson.unit] || UNIT_COLORS[1];
 
@@ -1098,31 +1100,31 @@ function Assessment() {
     const grade = scorePct >= 85 ? '🌟 Excellent' : scorePct >= 70 ? '✅ Good' : scorePct >= 50 ? '📘 Needs Review' : '❌ Try Again';
 
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4" dir={dir(lang)}>
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4" dir={dir(lang)}>
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-lg">
-          <div className="bg-slate-900 border border-white/10 rounded-3xl p-8 text-center shadow-2xl">
-            <div className="relative w-36 h-36 mx-auto mb-6">
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 text-center shadow-2xl shadow-slate-200/50">
+            <div className="relative w-40 h-40 mx-auto mb-8">
               <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="2.5"/>
-                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#resultGrad)" strokeWidth="2.5" strokeDasharray={`${scorePct}, 100`} strokeLinecap="round"/>
+                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f1f5f9" strokeWidth="2.5"/>
+                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#resultGrad2)" strokeWidth="2.5" strokeDasharray={`${scorePct}, 100`} strokeLinecap="round"/>
                 <defs>
-                  <linearGradient id="resultGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor={scorePct >= 70 ? '#22c55e' : '#ef4444'}/>
-                    <stop offset="100%" stopColor={scorePct >= 70 ? '#86efac' : '#fca5a5'}/>
+                  <linearGradient id="resultGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor={scorePct >= 70 ? '#10b981' : '#ef4444'}/>
+                    <stop offset="100%" stopColor={scorePct >= 70 ? '#34d399' : '#f87171'}/>
                   </linearGradient>
                 </defs>
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-4xl font-black text-white">{scorePct}%</span>
-                <span className="text-slate-400 text-xs font-bold">{t('Score', 'النتيجة', lang)}</span>
+                <span className="text-4xl font-black text-primary-navy">{scorePct}%</span>
+                <span className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-1">{t('Score', 'النتيجة', lang)}</span>
               </div>
             </div>
 
-            <h2 className="text-3xl font-black text-white mb-2">{t('Assessment Complete!', 'انتهى التقييم!', lang)}</h2>
-            <p className="text-2xl mb-2">{grade}</p>
-            <p className="text-slate-400 mb-2">{correctCount} / {mcqQs.length} {t('MCQ Correct', 'صح من اختيار متعدد', lang)}</p>
+            <h2 className="text-3xl font-black text-primary-navy mb-3">{t('Assessment Complete!', 'انتهى التقييم!', lang)}</h2>
+            <p className="text-xl font-bold text-primary-plum mb-3">{grade}</p>
+            <p className="text-slate-600 font-medium mb-4">{correctCount} / {mcqQs.length} {t('MCQ Correct', 'صح من اختيار متعدد', lang)}</p>
             {Object.keys(answers).some(k => filtered.find(q => q.id === k && q.type === 'WRITTEN')) && (
-              <p className="text-violet-400 text-sm mb-4">
+              <p className="text-accent-pink text-sm font-semibold mb-6 bg-accent-pink/5 p-3 rounded-xl border border-accent-pink/20">
                 {t('Written answers will be reviewed by your tutor.', 'ستُراجَع الأسئلة المقالية من قِبَل مدرّسك.', lang)}
               </p>
             )}
@@ -1131,12 +1133,12 @@ function Assessment() {
               <button
                 onClick={handleSubmitToFirebase}
                 disabled={submitting}
-                className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r ${unitColor} shadow-lg hover:opacity-90 transition-all mb-3 disabled:opacity-50`}
+                className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white bg-gradient-to-r ${unitColor} shadow-lg hover:opacity-90 transition-all mb-4 disabled:opacity-50`}
               >
                 {submitting ? <><Loader size={16} className="animate-spin" /> {t('Saving...', 'جاري الحفظ...', lang)}</> : <>{t('Save Results & Earn XP', 'احفظ النتائج واكسب XP', lang)} <Zap size={16} /></>}
               </button>
             ) : (
-              <div className="flex items-center justify-center gap-2 py-3.5 mb-3 bg-green-500/15 border border-green-500/30 rounded-xl text-green-400 font-bold">
+              <div className="flex items-center justify-center gap-2 py-4 mb-4 bg-accent-mint/20 border border-accent-mint/40 rounded-xl text-teal-800 font-bold">
                 <CheckCircle size={16} /> {t('Results Saved!', 'تم حفظ النتائج!', lang)}
               </div>
             )}
@@ -1144,15 +1146,15 @@ function Assessment() {
             <div className="flex gap-3">
               <button
                 onClick={() => { setIsFinished(false); setCurrentQ(0); setAnswers({}); setShowFeedback(false); setSubmitted(false); }}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 font-bold text-sm"
+                className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-primary-navy font-bold text-sm shadow-sm"
               >
-                <RotateCcw size={14} /> {t('Retry', 'إعادة', lang)}
+                <RotateCcw size={15} /> {t('Retry', 'إعادة', lang)}
               </button>
               <button
                 onClick={() => navigate('/dashboard')}
-                className="flex-1 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 font-bold text-sm"
+                className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-primary-navy font-bold text-sm shadow-sm"
               >
-                {t('Dashboard', 'الرئيسية', lang)}
+                <Home size={15} /> {t('Dashboard', 'الرئيسية', lang)}
               </button>
             </div>
           </div>
@@ -1162,77 +1164,77 @@ function Assessment() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white" dir={dir(lang)}>
-      <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-slate-50 text-primary-navy" dir={dir(lang)}>
+      <div className="max-w-4xl mx-auto px-4 py-8 md:py-10">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
-          <button onClick={() => navigate(`/lesson/${lessonId}`)} className="flex items-center gap-2 text-slate-400 hover:text-white text-sm font-medium transition-colors">
+        <div className="flex items-center gap-4 mb-8">
+          <button onClick={() => navigate(`/lesson/${lessonId}`)} className="flex items-center gap-2 text-slate-500 hover:text-primary-navy text-sm font-bold transition-colors">
             <ArrowLeft size={15} />
             {lang === 'ar' ? lesson.title_ar : lesson.title_en}
           </button>
         </div>
 
-        <div className="mb-6">
-          <h1 className="text-2xl font-black text-white mb-1">
-            {lang === 'ar' ? lesson.title_ar : lesson.title_en} — {t('Assessment', 'التقييم', lang)}
+        <div className="mb-8 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <h1 className="text-2xl md:text-3xl font-black text-primary-navy mb-2">
+            {lang === 'ar' ? lesson.title_ar : lesson.title_en} — <span className="text-primary-plum">{t('Assessment', 'التقييم', lang)}</span>
           </h1>
-          <p className="text-slate-400 text-sm">{filtered.length} {t('questions', 'أسئلة', lang)}</p>
+          <p className="text-slate-500 font-semibold">{filtered.length} {t('questions', 'أسئلة', lang)}</p>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-3 mb-6">
-          <div className="flex rounded-xl bg-slate-900/80 border border-white/5 p-1 gap-1">
+        <div className="flex flex-wrap gap-4 mb-8">
+          <div className="flex rounded-xl bg-white border border-slate-200 p-1.5 shadow-sm">
             {(['ALL', 'MCQ', 'WRITTEN'] as const).map(type => (
               <button
                 key={type}
                 onClick={() => { setFilterType(type); setCurrentQ(0); setAnswers({}); setShowFeedback(false); }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${filterType === type ? 'bg-violet-600 text-white' : 'text-slate-500 hover:text-white'}`}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${filterType === type ? 'bg-primary-plum text-white shadow-sm' : 'text-slate-500 hover:text-primary-navy'}`}
               >
                 {type === 'MCQ' ? t('MCQ', 'اختيار متعدد', lang) : type === 'WRITTEN' ? t('Written', 'مقالي', lang) : t('All', 'الكل', lang)}
               </button>
             ))}
           </div>
-          <div className="flex rounded-xl bg-slate-900/80 border border-white/5 p-1 gap-1">
+          <div className="flex rounded-xl bg-white border border-slate-200 p-1.5 shadow-sm">
             {(['ALL', 'CLASSROOM', 'HOMEWORK', 'WEEKLY_ASSESSMENT'] as const).map(src => (
               <button
                 key={src}
                 onClick={() => { setFilterSource(src); setCurrentQ(0); setAnswers({}); setShowFeedback(false); }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${filterSource === src ? 'bg-violet-600 text-white' : 'text-slate-500 hover:text-white'}`}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${filterSource === src ? 'bg-accent-pink text-white shadow-sm' : 'text-slate-500 hover:text-primary-navy'}`}
               >
-                {src === 'ALL' ? t('All', 'الكل', lang) : src === 'CLASSROOM' ? t('Classroom', 'صفي', lang) : src === 'HOMEWORK' ? t('Homework', 'منزلي', lang) : t('Weekly Test', 'أسبوعي', lang)}
+                {src === 'ALL' ? t('All', 'الكل', lang) : src === 'CLASSROOM' ? t('Classroom', 'صفي', lang) : src === 'HOMEWORK' ? t('Homework', 'منزلي', lang) : t('Weekly', 'أسبوعي', lang)}
               </button>
             ))}
           </div>
         </div>
 
         {filtered.length === 0 ? (
-          <div className="text-center py-16 text-slate-500">
-            <BookOpen size={40} className="mx-auto mb-3 opacity-30" />
-            <p>{t('No questions match these filters.', 'لا توجد أسئلة تطابق هذه المرشحات.', lang)}</p>
+          <div className="text-center py-20 bg-white rounded-3xl border border-slate-200">
+            <BookOpen size={48} className="mx-auto mb-4 text-slate-300" />
+            <p className="text-slate-500 font-semibold text-lg">{t('No questions match these filters.', 'لا توجد أسئلة تطابق هذه المرشحات.', lang)}</p>
           </div>
         ) : !q ? null : (
           <>
             {/* Progress */}
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-1.5">
-                <span className="text-xs text-slate-500 font-bold">
+            <div className="mb-8">
+              <div className="flex justify-between items-center mb-2.5">
+                <span className="text-sm text-slate-500 font-bold uppercase tracking-wider">
                   {t('Question', 'السؤال', lang)} {currentQ + 1} {t('of', 'من', lang)} {filtered.length}
                 </span>
                 <div className="flex items-center gap-2">
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${q.type === 'MCQ' ? 'bg-blue-500/20 text-blue-300' : 'bg-orange-500/20 text-orange-300'}`}>
+                  <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase ${q.type === 'MCQ' ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}`}>
                     {q.type === 'MCQ' ? t('MCQ', 'اختيار متعدد', lang) : t('Written', 'مقالي', lang)}
                   </span>
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${q.source === 'CLASSROOM' ? 'bg-purple-500/20 text-purple-300' : q.source === 'HOMEWORK' ? 'bg-green-500/20 text-green-300' : 'bg-yellow-500/20 text-yellow-300'}`}>
+                  <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase ${q.source === 'CLASSROOM' ? 'bg-primary-plum/10 text-primary-plum border border-primary-plum/20' : q.source === 'HOMEWORK' ? 'bg-accent-mint/20 text-teal-800 border border-accent-mint/40' : 'bg-accent-pink/10 text-accent-pink border border-accent-pink/20'}`}>
                     {q.source === 'CLASSROOM' ? t('Classroom', 'صفي', lang) : q.source === 'HOMEWORK' ? t('Homework', 'منزلي', lang) : t('Weekly', 'أسبوعي', lang)}
                   </span>
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${q.difficulty === 'EASY' ? 'bg-green-500/20 text-green-300' : q.difficulty === 'MEDIUM' ? 'bg-yellow-500/20 text-yellow-300' : 'bg-red-500/20 text-red-300'}`}>
+                  <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase ${q.difficulty === 'EASY' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : q.difficulty === 'MEDIUM' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-rose-50 text-rose-700 border border-rose-200'}`}>
                     {q.difficulty === 'EASY' ? t('Easy', 'سهل', lang) : q.difficulty === 'MEDIUM' ? t('Medium', 'متوسط', lang) : t('Hard', 'صعب', lang)}
                   </span>
                 </div>
               </div>
-              <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+              <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
                 <div
-                  className={`bg-gradient-to-r ${unitColor} h-full transition-all duration-500`}
+                  className={`bg-gradient-to-r ${unitColor} h-full transition-all duration-500 ease-out`}
                   style={{ width: `${((currentQ + 1) / filtered.length) * 100}%` }}
                 ></div>
               </div>
@@ -1242,29 +1244,40 @@ function Assessment() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${currentQ}-${q.id}`}
-                initial={{ opacity: 0, x: 30 }}
+                initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 }}
+                exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.2 }}
-                className="bg-slate-900/80 border border-white/5 rounded-2xl p-6 md:p-8 mb-6"
+                className="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 mb-8 shadow-xl shadow-slate-200/50"
               >
-                <h2 className="text-xl md:text-2xl font-black text-white mb-8 leading-snug">
+                <h2 className="text-xl md:text-2xl font-black text-primary-navy mb-10 leading-snug">
                   {lang === 'ar' ? q.question_ar : q.question_en}
                 </h2>
 
                 {q.type === 'MCQ' ? (
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {(['A', 'B', 'C', 'D'] as const).map(opt => {
                       const text = lang === 'ar' ? (q as any)[`option_${opt.toLowerCase()}_ar`] : (q as any)[`option_${opt.toLowerCase()}_en`];
                       if (!text) return null;
                       const isSelected = answered === opt;
-                      let cls = 'bg-slate-800/50 border-white/10 hover:border-violet-500/50 text-slate-300 hover:text-white';
+                      let cls = 'bg-white border-slate-200 hover:border-primary-plum hover:bg-slate-50 text-slate-700';
+                      let letterCls = 'bg-slate-100 text-slate-500 border border-slate-200';
+                      
                       if (showFeedback) {
-                        if (opt === q.correct_option) cls = 'bg-green-500/15 border-green-500/50 text-green-200';
-                        else if (isSelected) cls = 'bg-red-500/15 border-red-500/50 text-red-200';
-                        else cls = 'bg-slate-800/30 border-white/5 text-slate-600 opacity-50';
+                        if (opt === q.correct_option) {
+                          cls = 'bg-emerald-50 border-emerald-400 text-emerald-900 shadow-sm';
+                          letterCls = 'bg-emerald-500 text-white border-emerald-500';
+                        }
+                        else if (isSelected) {
+                          cls = 'bg-rose-50 border-rose-400 text-rose-900';
+                          letterCls = 'bg-rose-500 text-white border-rose-500';
+                        }
+                        else {
+                          cls = 'bg-white border-slate-100 text-slate-400 opacity-60';
+                        }
                       } else if (isSelected) {
-                        cls = 'bg-violet-600/20 border-violet-500/70 text-violet-200';
+                        cls = 'bg-primary-plum/5 border-primary-plum text-primary-navy shadow-sm';
+                        letterCls = 'bg-primary-plum text-white border-primary-plum';
                       }
 
                       return (
@@ -1272,15 +1285,15 @@ function Assessment() {
                           key={opt}
                           onClick={() => handleSelect(opt)}
                           disabled={showFeedback}
-                          className={`w-full text-left px-5 py-4 rounded-xl border-2 transition-all duration-200 font-medium flex items-center gap-4 ${cls}`}
+                          className={`w-full text-left px-5 py-4 rounded-xl border-2 transition-all duration-200 font-bold flex items-center gap-4 ${cls}`}
                         >
-                          <span className={`w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center font-black text-xs ${showFeedback && opt === q.correct_option ? 'bg-green-500 text-white' : showFeedback && isSelected && opt !== q.correct_option ? 'bg-red-500 text-white' : isSelected ? 'bg-violet-600 text-white' : 'bg-white/10 text-slate-400'}`}>
+                          <span className={`w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center font-black text-sm transition-colors ${letterCls}`}>
                             {opt}
                           </span>
-                          <span className="text-sm">{text}</span>
+                          <span className="text-base">{text}</span>
                           <span className="ml-auto">
-                            {showFeedback && opt === q.correct_option && <CheckCircle size={16} className="text-green-400" />}
-                            {showFeedback && isSelected && opt !== q.correct_option && <XCircle size={16} className="text-red-400" />}
+                            {showFeedback && opt === q.correct_option && <CheckCircle size={20} className="text-emerald-500" />}
+                            {showFeedback && isSelected && opt !== q.correct_option && <XCircle size={20} className="text-rose-500" />}
                           </span>
                         </button>
                       );
@@ -1289,11 +1302,11 @@ function Assessment() {
                 ) : (
                   <div>
                     {(lang === 'ar' ? q.ideal_answer_ar : q.ideal_answer_en) && (
-                      <div className="mb-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
-                        <p className="text-blue-400 text-xs font-bold mb-1 flex items-center gap-1">
-                          <Lightbulb size={12} /> {t('Model Answer (for study)', 'النموذج المقترح (للدراسة)', lang)}
+                      <div className="mb-6 p-5 bg-blue-50 border border-blue-200 rounded-xl shadow-sm">
+                        <p className="text-blue-700 text-xs font-bold mb-2 flex items-center gap-2 uppercase tracking-wider">
+                          <Lightbulb size={14} /> {t('Model Answer (for study)', 'النموذج المقترح (للدراسة)', lang)}
                         </p>
-                        <p className="text-slate-300 text-sm leading-relaxed">
+                        <p className="text-blue-900 text-sm md:text-base font-semibold leading-relaxed">
                           {lang === 'ar' ? q.ideal_answer_ar : q.ideal_answer_en}
                         </p>
                       </div>
@@ -1302,10 +1315,11 @@ function Assessment() {
                       rows={6}
                       value={answered || ''}
                       onChange={e => handleSelect(e.target.value)}
-                      className="w-full bg-slate-800/50 border-2 border-white/10 rounded-xl p-4 text-white text-sm focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500/30 transition-all resize-none placeholder-slate-600"
+                      className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-5 text-primary-navy text-base font-medium focus:outline-none focus:border-accent-pink focus:ring-2 focus:ring-accent-pink/20 transition-all resize-none placeholder-slate-400"
                       placeholder={t('Type your answer here...', 'اكتب إجابتك هنا...', lang)}
                     />
-                    <p className="text-slate-600 text-xs mt-2">
+                    <p className="text-slate-500 text-sm font-semibold mt-3 flex items-center gap-2">
+                      <Lock size={14} />
                       {t('Your written answer will be saved and reviewed by your tutor.', 'ستُحفَظ إجابتك المكتوبة وتُراجَع من قِبَل مدرّسك.', lang)}
                     </p>
                   </div>
@@ -1315,15 +1329,15 @@ function Assessment() {
                 <AnimatePresence>
                   {showFeedback && q.type === 'MCQ' && (
                     <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className={`mt-5 p-4 rounded-xl border-l-4 ${isCorrect ? 'bg-green-500/10 border-green-400' : 'bg-red-500/10 border-red-400'}`}
+                      initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                      animate={{ opacity: 1, height: 'auto', marginTop: 24 }}
+                      exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                      className={`overflow-hidden rounded-xl border-l-4 p-5 ${isCorrect ? 'bg-emerald-50 border-emerald-500' : 'bg-rose-50 border-rose-500'}`}
                     >
-                      <p className={`font-black mb-1 text-sm ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
-                        {isCorrect ? `✅ ${t('Correct!', 'صحيح!', lang)}` : `❌ ${t('Incorrect', 'خطأ', lang)}`}
+                      <p className={`font-black mb-2 text-lg flex items-center gap-2 ${isCorrect ? 'text-emerald-700' : 'text-rose-700'}`}>
+                        {isCorrect ? <><CheckCircle size={20}/> {t('Correct!', 'صحيح!', lang)}</> : <><XCircle size={20}/> {t('Incorrect', 'خطأ', lang)}</>}
                       </p>
-                      <p className="text-slate-300 text-sm leading-relaxed">
+                      <p className="text-slate-700 text-base font-medium leading-relaxed">
                         {lang === 'ar' ? q.explanation_ar : q.explanation_en}
                       </p>
                     </motion.div>
@@ -1331,22 +1345,22 @@ function Assessment() {
                 </AnimatePresence>
 
                 {/* Action buttons */}
-                <div className="mt-6 flex justify-end gap-3">
+                <div className="mt-8 pt-8 border-t border-slate-100 flex justify-end gap-3">
                   {!showFeedback && q.type === 'MCQ' ? (
                     <button
                       onClick={handleCheck}
                       disabled={!answered}
-                      className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r ${unitColor} shadow-lg hover:opacity-90 transition-all disabled:opacity-40`}
+                      className={`flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r ${unitColor} shadow-lg hover:opacity-90 transition-all disabled:opacity-40`}
                     >
                       {t('Check Answer', 'تحقق من الإجابة', lang)}
                     </button>
                   ) : (
                     <button
                       onClick={handleNext}
-                      className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r ${unitColor} shadow-lg hover:opacity-90 transition-all`}
+                      className={`flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r ${unitColor} shadow-lg hover:opacity-90 transition-all`}
                     >
                       {currentQ === filtered.length - 1 ? t('Finish', 'إنهاء', lang) : t('Next', 'التالي', lang)}
-                      <ArrowRight size={16} />
+                      <ArrowRight size={18} />
                     </button>
                   )}
                 </div>
@@ -1384,80 +1398,80 @@ function TutorDashboard() {
   const lesson = (id: string) => LESSONS.find(l => l.id === id);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white" dir={dir(lang)}>
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-black text-white mb-1">
+    <div className="min-h-screen bg-slate-50 text-primary-navy" dir={dir(lang)}>
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-10">
+        <div className="mb-10 bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+          <h1 className="text-3xl font-black text-primary-navy mb-3">
             {t('Tutor Command Center', 'مركز تحكم المدرس', lang)}
           </h1>
-          <p className="text-slate-400">
+          <p className="text-slate-500 font-semibold text-lg">
             {t('Monitor student progress and evaluate assessments.', 'راقب تقدم الطلاب وقيّم التقييمات.', lang)}
           </p>
         </div>
 
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader size={24} className="animate-spin text-violet-400" />
+            <Loader size={32} className="animate-spin text-accent-pink" />
           </div>
         ) : results.length === 0 ? (
-          <div className="text-center py-20 text-slate-500">
-            <MessageSquare size={40} className="mx-auto mb-3 opacity-30" />
-            <p>{t('No assessment results yet.', 'لا توجد نتائج تقييم بعد.', lang)}</p>
+          <div className="text-center py-24 bg-white rounded-3xl border border-slate-200 shadow-sm">
+            <MessageSquare size={48} className="mx-auto mb-4 text-slate-300" />
+            <p className="text-slate-500 font-bold text-lg">{t('No assessment results yet.', 'لا توجد نتائج تقييم بعد.', lang)}</p>
           </div>
         ) : (
-          <div className="bg-slate-900/80 border border-white/5 rounded-2xl overflow-hidden">
+          <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="border-b border-white/5">
-                    <th className="p-4 text-slate-500 font-bold text-xs uppercase tracking-wider">{t('Student', 'الطالب', lang)}</th>
-                    <th className="p-4 text-slate-500 font-bold text-xs uppercase tracking-wider">{t('Lesson', 'الدرس', lang)}</th>
-                    <th className="p-4 text-slate-500 font-bold text-xs uppercase tracking-wider">{t('Score', 'النتيجة', lang)}</th>
-                    <th className="p-4 text-slate-500 font-bold text-xs uppercase tracking-wider">{t('Written Answers', 'إجابات مقالية', lang)}</th>
-                    <th className="p-4 text-slate-500 font-bold text-xs uppercase tracking-wider">{t('Date', 'التاريخ', lang)}</th>
+                  <tr className="bg-slate-50 border-b border-slate-200">
+                    <th className="p-5 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Student', 'الطالب', lang)}</th>
+                    <th className="p-5 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Lesson', 'الدرس', lang)}</th>
+                    <th className="p-5 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Score', 'النتيجة', lang)}</th>
+                    <th className="p-5 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Written', 'مقالي', lang)}</th>
+                    <th className="p-5 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Date', 'التاريخ', lang)}</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-slate-100">
                   {results.map(res => {
                     const l = lesson(res.lessonId);
                     const writtenCount = Object.keys(res.writtenAnswers || {}).length;
                     return (
-                      <tr key={res.id} className="hover:bg-white/2 transition-colors">
-                        <td className="p-4">
+                      <tr key={res.id} className="hover:bg-slate-50 transition-colors">
+                        <td className="p-5">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-violet-600/30 flex items-center justify-center text-violet-300 font-black text-xs">
+                            <div className="w-9 h-9 rounded-xl bg-accent-pink/10 flex items-center justify-center text-accent-pink font-black text-sm border border-accent-pink/20">
                               {res.userName?.charAt(0)?.toUpperCase() || 'S'}
                             </div>
-                            <span className="text-white font-semibold text-sm">{res.userName}</span>
+                            <span className="text-primary-navy font-bold text-sm">{res.userName}</span>
                           </div>
                         </td>
-                        <td className="p-4">
-                          <span className="text-slate-300 text-sm">{l ? (lang === 'ar' ? l.title_ar : l.title_en) : res.lessonId}</span>
+                        <td className="p-5">
+                          <span className="text-slate-600 font-semibold text-sm">{l ? (lang === 'ar' ? l.title_ar : l.title_en) : res.lessonId}</span>
                         </td>
-                        <td className="p-4">
-                          <div className="flex items-center gap-2">
-                            <div className="w-20 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                        <td className="p-5">
+                          <div className="flex items-center gap-3">
+                            <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                               <div
-                                className={`h-full ${res.score >= 70 ? 'bg-green-400' : res.score >= 50 ? 'bg-yellow-400' : 'bg-red-400'}`}
+                                className={`h-full ${res.score >= 70 ? 'bg-emerald-500' : res.score >= 50 ? 'bg-amber-500' : 'bg-rose-500'}`}
                                 style={{ width: `${res.score}%` }}
                               ></div>
                             </div>
-                            <span className={`font-black text-sm ${res.score >= 70 ? 'text-green-400' : res.score >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
-                              {res.score}% ({res.correctMCQ}/{res.totalMCQ})
+                            <span className={`font-black text-sm ${res.score >= 70 ? 'text-emerald-600' : res.score >= 50 ? 'text-amber-600' : 'text-rose-600'}`}>
+                              {res.score}%
                             </span>
                           </div>
                         </td>
-                        <td className="p-4">
+                        <td className="p-5">
                           {writtenCount > 0 ? (
-                            <button className="px-3 py-1.5 bg-violet-600/20 hover:bg-violet-600/30 border border-violet-500/30 rounded-lg text-violet-300 text-xs font-bold transition-all">
+                            <button className="px-3.5 py-1.5 bg-primary-plum/10 hover:bg-primary-plum/20 border border-primary-plum/30 rounded-lg text-primary-plum text-xs font-bold transition-all">
                               {t('Review', 'مراجعة', lang)} ({writtenCount})
                             </button>
                           ) : (
-                            <span className="text-slate-600 text-xs">—</span>
+                            <span className="text-slate-400 font-bold text-xs">—</span>
                           )}
                         </td>
-                        <td className="p-4">
-                          <span className="text-slate-500 text-xs">
+                        <td className="p-5">
+                          <span className="text-slate-500 font-semibold text-xs">
                             {res.submittedAt?.toDate ? res.submittedAt.toDate().toLocaleDateString() : '—'}
                           </span>
                         </td>
@@ -1496,11 +1510,15 @@ function Protected({ children }: { children: React.ReactNode }) {
 export default function App() {
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [lang, setLang] = useState<'en' | 'ar'>('en');
+  const [lang, setLang] = useState<'en' | 'ar'>('ar'); // Defaulting to Arabic for Egyptian Baccalaureate
   const [loading, setLoading] = useState(true);
   const [loadingProfile, setLoadingProfile] = useState(true);
 
   useEffect(() => {
+    // Default RTL setup
+    document.documentElement.dir = 'rtl';
+    document.documentElement.lang = 'ar';
+
     const unsub = onAuthStateChanged(auth, async (fireUser) => {
       setUser(fireUser);
       if (fireUser) {
@@ -1546,7 +1564,7 @@ export default function App() {
   return (
     <AppContext.Provider value={{ user, profile, lang, toggleLang, loading, loadingProfile }}>
       <Router>
-        <div className="min-h-screen bg-slate-950 font-sans">
+        <div className="min-h-screen bg-slate-50 font-sans">
           {user && <Navbar />}
           <AnimatePresence mode="wait">
             <Routes>

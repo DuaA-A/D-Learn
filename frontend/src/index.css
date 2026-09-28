@@ -3,6 +3,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap');
 
 @theme {
+  --color-primary-navy: #1D1B44;
+  --color-primary-plum: #62426B;
+  --color-accent-pink: #D97398;
+  --color-accent-pink-light: #E685A6;
+  --color-accent-mint: #9BCA94;
   --font-sans: 'Inter', 'Cairo', system-ui, sans-serif;
 }
 
@@ -16,8 +21,8 @@
   }
 
   body {
-    background-color: #020617;
-    color: #f1f5f9;
+    background-color: #f8fafc; /* slate-50 */
+    color: #1D1B44;
     font-family: 'Inter', 'Cairo', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -33,18 +38,18 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0f172a;
+    background: #e2e8f0;
   }
   ::-webkit-scrollbar-thumb {
-    background: #7c3aed;
+    background: #D97398;
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #8b5cf6;
+    background: #62426B;
   }
 
   ::selection {
-    background: rgba(139, 92, 246, 0.3);
-    color: white;
+    background: rgba(217, 115, 152, 0.3);
+    color: #1D1B44;
   }
 }

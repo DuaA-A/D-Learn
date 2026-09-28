@@ -10,21 +10,22 @@
 // 6. Enable Firestore: Build → Firestore Database → Create database (start in test mode)
 // =============================================
 
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 // 🔴 REPLACE THESE VALUES WITH YOUR FIREBASE PROJECT CONFIG
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyD5vt4dI99N8xPul7vrZO7485LcDgm1JY0",
+  authDomain: "d-learn-d6f04.firebaseapp.com",
+  projectId: "d-learn-d6f04",
+  storageBucket: "d-learn-d6f04.firebasestorage.app",
+  messagingSenderId: "937427028335",
+  appId: "1:937427028335:web:64e5944fde3dd54191809a",
+  measurementId: "G-HZDE2L3EKB"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
