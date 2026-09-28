@@ -221,7 +221,6 @@ function AuthPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState<'STUDENT' | 'TUTOR'>('STUDENT');
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -240,7 +239,7 @@ function AuthPage() {
           uid: cred.user.uid,
           displayName: name,
           email,
-          role,
+          role: 'STUDENT',
           xp: 0,
           completedLessons: [],
           completedAssessments: [],
@@ -384,32 +383,6 @@ function AuthPage() {
               </div>
             </div>
 
-            {mode === 'register' && (
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                  {t('I am a...', 'أنا...', lang)}
-                </label>
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setRole('STUDENT')}
-                    className={`flex items-center justify-center gap-2 p-3.5 rounded-xl border-2 font-bold text-sm transition-all ${role === 'STUDENT' ? 'border-primary-plum bg-primary-plum/5 text-primary-plum' : 'border-slate-200 text-slate-500 hover:border-slate-300 bg-slate-50'}`}
-                  >
-                    <User size={16} />
-                    {t('Student', 'طالب', lang)}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setRole('TUTOR')}
-                    className={`flex items-center justify-center gap-2 p-3.5 rounded-xl border-2 font-bold text-sm transition-all ${role === 'TUTOR' ? 'border-primary-plum bg-primary-plum/5 text-primary-plum' : 'border-slate-200 text-slate-500 hover:border-slate-300 bg-slate-50'}`}
-                  >
-                    <Target size={16} />
-                    {t('Tutor', 'مدرس', lang)}
-                  </button>
-                </div>
-              </div>
-            )}
-
             {error && (
               <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-xl">
                 <AlertTriangle size={15} className="text-red-500 mt-0.5 flex-shrink-0" />
@@ -430,6 +403,22 @@ function AuthPage() {
                 <>{t('Create Account', 'إنشاء حساب', lang)} <ArrowRight size={16} /></>
               )}
             </button>
+
+            {mode === 'login' && (
+              <div className="pt-2 text-center">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmail('admin@d-learn.com');
+                    setPassword('Admin@123456');
+                  }}
+                  className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-primary-plum font-semibold py-1.5 px-3 rounded-lg hover:bg-slate-100 transition-colors"
+                >
+                  <Shield size={13} className="text-primary-plum" />
+                  {lang === 'ar' ? 'دخول المشرفة (Admin)' : 'Admin Login (Duaa)'}
+                </button>
+              </div>
+            )}
           </form>
         </div>
 
@@ -1697,9 +1686,16 @@ function Assessment() {
 // TUTOR DASHBOARD
 // ============================================================
 function TutorDashboard() {
-  const { lang } = React.useContext(AppContext);
+  const { lang, profile, loadingProfile } = React.useContext(AppContext);
+  const navigate = useNavigate();
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!loadingProfile && profile && profile.role !== 'TUTOR') {
+      navigate('/dashboard');
+    }
+  }, [profile, loadingProfile, navigate]);
 
   useEffect(() => {
     const fetch = async () => {
