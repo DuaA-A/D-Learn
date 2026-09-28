@@ -26,8 +26,13 @@ import { auth, db } from './firebase';
 // Course Data
 import { COURSE_METADATA, LESSONS, QUIZ_QUESTIONS as BASE_QUIZ_QUESTIONS } from './courseData';
 import { EXTRA_QUESTIONS, FLASHCARDS } from './extraData';
+import { MASSIVE_BANK } from './massiveBank';
+import { MASSIVE_BANK_L1 } from './massiveBank_Lesson1';
+import { MASSIVE_BANK_L2 } from './massiveBank_Lesson2';
+import { MASSIVE_BANK_L3 } from './massiveBank_Lesson3';
+import { MASSIVE_BANK_L4 } from './massiveBank_Lesson4';
 
-const QUIZ_QUESTIONS = [...BASE_QUIZ_QUESTIONS, ...EXTRA_QUESTIONS];
+const QUIZ_QUESTIONS = [...BASE_QUIZ_QUESTIONS, ...EXTRA_QUESTIONS, ...MASSIVE_BANK, ...MASSIVE_BANK_L1, ...MASSIVE_BANK_L2, ...MASSIVE_BANK_L3, ...MASSIVE_BANK_L4];
 
 // ============================================================
 // TYPES
