@@ -24,7 +24,10 @@ import {
 import { auth, db } from './firebase';
 
 // Course Data
-import { COURSE_METADATA, LESSONS, QUIZ_QUESTIONS, type Lesson, type QuizQuestion } from './courseData';
+import { COURSE_METADATA, LESSONS, QUIZ_QUESTIONS as BASE_QUIZ_QUESTIONS, type Lesson, type QuizQuestion } from './courseData';
+import { EXTRA_QUESTIONS, FLASHCARDS } from './extraData';
+
+const QUIZ_QUESTIONS = [...BASE_QUIZ_QUESTIONS, ...EXTRA_QUESTIONS];
 
 // ============================================================
 // TYPES
@@ -674,6 +677,38 @@ function LessonViewer() {
     const elements: React.ReactNode[] = [];
     let i = 0;
 
+    // Optional: inject images based on lesson ID
+    if (lesson.id === 'les_1_1' && activeSection === 0 && elements.length === 0) {
+      elements.push(
+        <div key="img-ml" className="mb-8 rounded-2xl overflow-hidden shadow-lg border border-slate-200 group">
+          <img src="/images/machine_learning_concept.jpg" alt="Machine Learning" className="w-full h-auto object-cover max-h-[400px] group-hover:scale-105 transition-transform duration-700" />
+          <div className="bg-primary-navy p-3 text-white text-xs font-bold text-center">
+            {lang === 'ar' ? 'نموذج ذكاء اصطناعي (تعلم الآلة) يعالج البيانات' : 'AI Machine Learning model processing data'}
+          </div>
+        </div>
+      );
+    }
+    if (lesson.id === 'les_1_2' && activeSection === 0 && elements.length === 0) {
+      elements.push(
+        <div key="img-nlp" className="mb-8 rounded-2xl overflow-hidden shadow-lg border border-slate-200 group">
+          <img src="/images/nlp_ai_chat.jpg" alt="NLP Chat" className="w-full h-auto object-cover max-h-[400px] group-hover:scale-105 transition-transform duration-700" />
+          <div className="bg-primary-navy p-3 text-white text-xs font-bold text-center">
+            {lang === 'ar' ? 'معالجة اللغات الطبيعية (NLP)' : 'Natural Language Processing (NLP)'}
+          </div>
+        </div>
+      );
+    }
+    if (lesson.id === 'les_1_2' && activeSection === 1 && elements.length === 0) {
+      elements.push(
+        <div key="img-cv" className="mb-8 rounded-2xl overflow-hidden shadow-lg border border-slate-200 group">
+          <img src="/images/computer_vision_ai.jpg" alt="Computer Vision" className="w-full h-auto object-cover max-h-[400px] group-hover:scale-105 transition-transform duration-700" />
+          <div className="bg-primary-navy p-3 text-white text-xs font-bold text-center">
+            {lang === 'ar' ? 'الرؤية الحاسوبية والتعرف على الأجسام (Computer Vision)' : 'Computer Vision and Object Recognition'}
+          </div>
+        </div>
+      );
+    }
+
     while (i < lines.length) {
       const line = lines[i];
 
@@ -948,7 +983,7 @@ function LessonViewer() {
             </div>
           )}
 
-          {/* Key Terms Glossary */}
+            {/* Key Terms Glossary */}
           <div className="mb-10">
             <h3 className="text-slate-500 font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2">
               <BookMarked size={14} />
@@ -967,6 +1002,40 @@ function LessonViewer() {
               ))}
             </div>
           </div>
+
+          {/* Flashcards Section */}
+          {FLASHCARDS[lesson.id] && (
+            <div className="mb-10">
+              <h3 className="text-primary-plum font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2">
+                <Brain size={14} />
+                {t('Study Flashcards', 'كروت المراجعة السريعة', lang)}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {FLASHCARDS[lesson.id].map((card, idx) => (
+                  <div key={idx} className="group perspective-1000">
+                    <div className="relative w-full h-40 transition-all duration-500 transform-style-3d group-hover:rotate-y-180 cursor-pointer">
+                      {/* Front */}
+                      <div className="absolute inset-0 backface-hidden bg-gradient-to-br from-primary-navy to-slate-800 rounded-2xl p-6 flex flex-col justify-center items-center text-center shadow-md border border-slate-700">
+                        <Zap size={24} className="text-accent-mint mb-3 opacity-50" />
+                        <h4 className="text-white font-black text-lg">
+                          {lang === 'ar' ? card.front_ar : card.front_en}
+                        </h4>
+                        <p className="text-slate-400 text-xs mt-4 uppercase tracking-wider font-bold">
+                          {t('Hover to flip', 'مرر الماوس للقلب', lang)}
+                        </p>
+                      </div>
+                      {/* Back */}
+                      <div className="absolute inset-0 backface-hidden rotate-y-180 bg-white rounded-2xl p-6 flex items-center justify-center text-center shadow-lg border-2 border-accent-mint">
+                        <p className="text-primary-navy font-bold text-base leading-relaxed">
+                          {lang === 'ar' ? card.back_ar : card.back_en}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Navigation */}
           <div className="flex items-center justify-between pt-8 border-t border-slate-200">
