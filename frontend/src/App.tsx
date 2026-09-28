@@ -403,22 +403,6 @@ function AuthPage() {
                 <>{t('Create Account', 'إنشاء حساب', lang)} <ArrowRight size={16} /></>
               )}
             </button>
-
-            {mode === 'login' && (
-              <div className="pt-2 text-center">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEmail('admin@d-learn.com');
-                    setPassword('Admin@123456');
-                  }}
-                  className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-primary-plum font-semibold py-1.5 px-3 rounded-lg hover:bg-slate-100 transition-colors"
-                >
-                  <Shield size={13} className="text-primary-plum" />
-                  {lang === 'ar' ? 'دخول المشرفة (Admin)' : 'Admin Login (Duaa)'}
-                </button>
-              </div>
-            )}
           </form>
         </div>
 
