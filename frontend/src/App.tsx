@@ -6,7 +6,8 @@ import {
   Award, LogOut, User, Star, Layers, Globe, Shield, Code, AlertTriangle,
   Lock, Mail, Eye, EyeOff, Home, ChevronDown, BookMarked, Brain, Zap, Target,
   RotateCcw, ArrowLeft, ArrowRight, Lightbulb, FileText, Search,
-  MessageSquare, Loader, Maximize2
+  MessageSquare, Loader, Maximize2, Trash2, RefreshCw,
+  BarChart2, Users, FileCheck, Check, Sparkles, HelpCircle
 } from 'lucide-react';
 
 // Firebase
@@ -19,7 +20,7 @@ import {
 } from 'firebase/auth';
 import type { User as FirebaseUser } from 'firebase/auth';
 import {
-  doc, setDoc, getDoc, collection, getDocs, updateDoc, addDoc, serverTimestamp, query, orderBy
+  doc, setDoc, getDoc, collection, getDocs, updateDoc, deleteDoc, addDoc, serverTimestamp, query, orderBy
 } from 'firebase/firestore';
 import { auth, db } from './firebase';
 
@@ -52,11 +53,14 @@ interface AssessmentResult {
   id?: string;
   userId: string;
   userName: string;
+  userEmail?: string;
   lessonId: string;
   score: number;
   totalMCQ: number;
   correctMCQ: number;
-  writtenAnswers: Record<string, string>;
+  answers?: Record<string, string>;
+  writtenAnswers?: Record<string, string>;
+  tutorFeedback?: Record<string, { score?: number; note?: string }>;
   submittedAt: any;
 }
 
@@ -80,6 +84,14 @@ const AppContext = React.createContext<AppCtx>({
 // ============================================================
 const t = (en: string, ar: string, lang: 'en' | 'ar') => lang === 'ar' ? ar : en;
 const dir = (lang: 'en' | 'ar') => lang === 'ar' ? 'rtl' : 'ltr';
+
+const matchLessonId = (qLesson: string, targetId: string) => {
+  if (!qLesson || !targetId) return false;
+  if (qLesson === targetId) return true;
+  const normQ = qLesson.replace(/^les_/, '').replace(/_/g, '-');
+  const normT = targetId.replace(/^les_/, '').replace(/_/g, '-');
+  return normQ === normT;
+};
 
 const UNIT_COLORS: Record<number, string> = {
   1: 'from-primary-plum to-primary-navy',
@@ -143,13 +155,33 @@ function Navbar() {
 
             {!loading && user && profile && (
               <div className="flex items-center gap-2">
-                <button
-                  onClick={() => navigate('/dashboard')}
-                  className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-primary-navy text-sm transition-all border border-slate-200"
-                >
-                  <Home size={14} />
-                  <span className="font-bold">{t('Home', 'الرئيسية', lang)}</span>
-                </button>
+                {profile.role === 'TUTOR' ? (
+                  <>
+                    <button
+                      onClick={() => navigate('/tutor')}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-primary-plum to-primary-navy text-white text-xs font-black shadow-md shadow-primary-plum/30 hover:opacity-95 transition-all"
+                    >
+                      <Shield size={14} className="text-accent-pink" />
+                      <span>{t('Admin Center', 'لوحة الإدارة', lang)}</span>
+                    </button>
+                    <button
+                      onClick={() => navigate('/dashboard')}
+                      className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-all"
+                      title={t('Preview Student Experience', 'معاينة تجربة الطالب', lang)}
+                    >
+                      <Eye size={13} className="text-slate-500" />
+                      <span>{t('Student View', 'واجهة الطالب', lang)}</span>
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => navigate('/dashboard')}
+                    className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-primary-navy text-sm transition-all border border-slate-200"
+                  >
+                    <Home size={14} />
+                    <span className="font-bold">{t('Home', 'الرئيسية', lang)}</span>
+                  </button>
+                )}
 
                 <div className="relative">
                   <button
@@ -178,17 +210,17 @@ function Navbar() {
                             <Star size={12} className="text-amber-500" />
                             <span className="text-amber-600 text-xs font-bold">{profile.xp} XP</span>
                             <span className="ml-auto px-2 py-0.5 bg-accent-pink/10 text-accent-pink rounded-md text-[10px] font-bold uppercase">
-                              {profile.role === 'TUTOR' ? t('Tutor', 'مدرس', lang) : t('Student', 'طالب', lang)}
+                              {profile.role === 'TUTOR' ? t('Admin', 'مشرفة المنصة', lang) : t('Student', 'طالب', lang)}
                             </span>
                           </div>
                         </div>
                         {profile.role === 'TUTOR' && (
                           <button
                             onClick={() => { navigate('/tutor'); setMenuOpen(false); }}
-                            className="w-full text-left px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary-navy transition-colors flex items-center gap-2 font-semibold"
+                            className="w-full text-left px-4 py-3 text-sm text-primary-plum hover:bg-primary-plum/10 transition-colors flex items-center gap-2 font-bold"
                           >
-                            <Target size={14} />
-                            {t('Tutor Dashboard', 'لوحة المدرس', lang)}
+                            <Shield size={14} className="text-accent-pink" />
+                            {t('Master Admin Center', 'مركز إدارة المنصة', lang)}
                           </button>
                         )}
                         <button
@@ -248,8 +280,14 @@ function AuthPage() {
         await setDoc(doc(db, 'users', cred.user.uid), profileData);
         navigate('/dashboard');
       } else {
-        await signInWithEmailAndPassword(auth, email, password);
-        navigate('/dashboard');
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+        const userDoc = await getDoc(doc(db, 'users', cred.user.uid));
+        const uData = userDoc.data();
+        if (uData?.role === 'TUTOR') {
+          navigate('/tutor');
+        } else {
+          navigate('/dashboard');
+        }
       }
     } catch (err: any) {
       const msgs: Record<string, string> = {
@@ -1304,7 +1342,7 @@ function Assessment() {
   const navigate = useNavigate();
 
   const lesson = LESSONS.find(l => l.id === lessonId);
-  const questions = QUIZ_QUESTIONS.filter(q => q.lesson === lessonId);
+  const questions = QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, lessonId || ''));
 
   const [filterType, setFilterType] = useState<'ALL' | 'MCQ' | 'WRITTEN'>('ALL');
   const [filterSource, setFilterSource] = useState<'ALL' | 'CLASSROOM' | 'HOMEWORK' | 'WEEKLY_ASSESSMENT'>('ALL');
@@ -1356,11 +1394,13 @@ function Assessment() {
 
       const result: AssessmentResult = {
         userId: user.uid,
-        userName: profile.displayName,
+        userName: profile.displayName || user.email || 'Student',
+        userEmail: user.email || '',
         lessonId: lessonId || '',
         score: Math.round((correctCount / Math.max(mcqQs.length, 1)) * 100),
         totalMCQ: mcqQs.length,
         correctMCQ: correctCount,
+        answers,
         writtenAnswers,
         submittedAt: serverTimestamp(),
       };
@@ -1667,13 +1707,31 @@ function Assessment() {
 }
 
 // ============================================================
-// TUTOR DASHBOARD
+// TUTOR / MASTER ADMIN CONTROL CENTER
 // ============================================================
 function TutorDashboard() {
   const { lang, profile, loadingProfile } = React.useContext(AppContext);
   const navigate = useNavigate();
-  const [results, setResults] = useState<any[]>([]);
+
+  const [students, setStudents] = useState<UserProfile[]>([]);
+  const [results, setResults] = useState<AssessmentResult[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [activeTab, setActiveTab] = useState<'students' | 'submissions' | 'written'>('students');
+  const [search, setSearch] = useState('');
+  const [filterLesson, setFilterLesson] = useState<string>('ALL');
+  const [filterStatus, setFilterStatus] = useState<'ALL' | 'COMPLETED' | 'IN_PROGRESS' | 'NEEDS_HELP'>('ALL');
+
+  // Modals
+  const [selectedStudent, setSelectedStudent] = useState<UserProfile | null>(null);
+  const [inspectSubmission, setInspectSubmission] = useState<AssessmentResult | null>(null);
+  const [confirmResetStudent, setConfirmResetStudent] = useState<UserProfile | null>(null);
+  const [confirmDeleteStudent, setConfirmDeleteStudent] = useState<UserProfile | null>(null);
+
+  // Written questions grading
+  const [gradeInputs, setGradeInputs] = useState<Record<string, { score: number; note: string }>>({});
+  const [actionLoading, setActionLoading] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   useEffect(() => {
     if (!loadingProfile && profile && profile.role !== 'TUTOR') {
@@ -1681,109 +1739,1305 @@ function TutorDashboard() {
     }
   }, [profile, loadingProfile, navigate]);
 
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        const snap = await getDocs(query(collection(db, 'assessment_results'), orderBy('submittedAt', 'desc')));
-        setResults(snap.docs.map(d => ({ id: d.id, ...d.data() })));
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetch();
-  }, []);
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3500);
+  };
 
-  const lesson = (id: string) => LESSONS.find(l => l.id === id);
+  const fetchData = useCallback(async (isRefresh = false) => {
+    if (isRefresh) setRefreshing(true);
+    else setLoading(true);
+    try {
+      const [usersSnap, resultsSnap] = await Promise.all([
+        getDocs(collection(db, 'users')),
+        getDocs(query(collection(db, 'assessment_results'), orderBy('submittedAt', 'desc')))
+      ]);
+
+      const allUsers = usersSnap.docs.map(d => ({ uid: d.id, ...d.data() } as UserProfile));
+      const studentUsers = allUsers.filter(u => u.role !== 'TUTOR' && u.email !== 'admin@d-learn.com');
+      setStudents(studentUsers);
+
+      const allResults = resultsSnap.docs.map(d => ({ id: d.id, ...d.data() } as AssessmentResult));
+      setResults(allResults);
+
+      if (isRefresh) {
+        showToast(t('Platform data refreshed successfully', 'تم تحديث بيانات المنصة والطلاب بنجاح', lang));
+      }
+    } catch (e) {
+      console.error('Failed to load admin data:', e);
+      showToast(t('Error loading data', 'حدث خطأ أثناء تحميل البيانات', lang));
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, [lang]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // Actions
+  const handleResetStudent = async (student: UserProfile) => {
+    setActionLoading(true);
+    try {
+      await updateDoc(doc(db, 'users', student.uid), {
+        completedLessons: [],
+        completedAssessments: [],
+        xp: 0
+      });
+      setStudents(prev => prev.map(s => s.uid === student.uid ? { ...s, completedLessons: [], completedAssessments: [], xp: 0 } : s));
+      if (selectedStudent?.uid === student.uid) {
+        setSelectedStudent({ ...selectedStudent, completedLessons: [], completedAssessments: [], xp: 0 });
+      }
+      showToast(t(`Progress reset for ${student.displayName}`, `تم إعادة تعيين تقدم الطالب ${student.displayName} بنجاح`, lang));
+      setConfirmResetStudent(null);
+    } catch (err) {
+      console.error(err);
+      showToast(t('Error resetting progress', 'حدث خطأ أثناء إعادة التعيين', lang));
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleDeleteStudent = async (student: UserProfile) => {
+    setActionLoading(true);
+    try {
+      await deleteDoc(doc(db, 'users', student.uid));
+      setStudents(prev => prev.filter(s => s.uid !== student.uid));
+      if (selectedStudent?.uid === student.uid) {
+        setSelectedStudent(null);
+      }
+      showToast(t(`Student ${student.displayName} removed`, `تم حذف بيانات الطالب ${student.displayName} من المنصة`, lang));
+      setConfirmDeleteStudent(null);
+    } catch (err) {
+      console.error(err);
+      showToast(t('Error deleting student', 'حدث خطأ أثناء الحذف', lang));
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleSaveGrading = async (submissionId: string, qId: string) => {
+    const key = `${submissionId}_${qId}`;
+    const input = gradeInputs[key];
+    if (!input) return;
+    setActionLoading(true);
+    try {
+      const sub = results.find(r => r.id === submissionId);
+      const updatedFeedback = {
+        ...(sub?.tutorFeedback || {}),
+        [qId]: { score: input.score, note: input.note }
+      };
+      await updateDoc(doc(db, 'assessment_results', submissionId), {
+        tutorFeedback: updatedFeedback
+      });
+      setResults(prev => prev.map(r => r.id === submissionId ? { ...r, tutorFeedback: updatedFeedback } : r));
+      if (inspectSubmission?.id === submissionId) {
+        setInspectSubmission({ ...inspectSubmission, tutorFeedback: updatedFeedback });
+      }
+      showToast(t('Grading & feedback saved successfully', 'تم حفظ درجة وملاحظة السؤال بنجاح', lang));
+    } catch (err) {
+      console.error(err);
+      showToast(t('Failed to save grading', 'تعذر حفظ التصحيح', lang));
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  // Helper stats
+  const totalStudents = students.length;
+  const completedLessonsTotal = students.reduce((acc, s) => acc + (s.completedLessons?.length || 0), 0);
+  const totalSubmissions = results.length;
+  const avgScore = totalSubmissions > 0
+    ? Math.round(results.reduce((acc, r) => acc + (r.score || 0), 0) / totalSubmissions)
+    : 0;
+
+  // Filtered Students
+  const filteredStudents = students.filter(s => {
+    const matchesSearch = !search ||
+      s.displayName?.toLowerCase().includes(search.toLowerCase()) ||
+      s.email?.toLowerCase().includes(search.toLowerCase());
+    
+    const studentResults = results.filter(r => r.userId === s.uid);
+    const studentAvg = studentResults.length > 0
+      ? studentResults.reduce((acc, r) => acc + (r.score || 0), 0) / studentResults.length
+      : 0;
+
+    if (!matchesSearch) return false;
+    if (filterStatus === 'COMPLETED') return (s.completedLessons?.length || 0) >= LESSONS.length;
+    if (filterStatus === 'IN_PROGRESS') return (s.completedLessons?.length || 0) > 0 && (s.completedLessons?.length || 0) < LESSONS.length;
+    if (filterStatus === 'NEEDS_HELP') return studentResults.length > 0 && studentAvg < 60;
+    return true;
+  });
+
+  // Filtered Submissions
+  const filteredSubmissions = results.filter(r => {
+    const matchesSearch = !search ||
+      r.userName?.toLowerCase().includes(search.toLowerCase()) ||
+      r.userEmail?.toLowerCase().includes(search.toLowerCase());
+    const matchesLesson = filterLesson === 'ALL' || matchLessonId(r.lessonId, filterLesson);
+    return matchesSearch && matchesLesson;
+  });
+
+  // Written Queue Submissions
+  const writtenSubmissions = results.filter(r => r.writtenAnswers && Object.keys(r.writtenAnswers).length > 0);
+
+  const lessonLookup = (id: string) => LESSONS.find(l => matchLessonId(l.id, id));
 
   return (
-    <div className="min-h-screen bg-slate-50 text-primary-navy" dir={dir(lang)}>
-      <div className="max-w-7xl mx-auto px-4 py-8 md:py-10">
-        <div className="mb-10 bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-          <h1 className="text-3xl font-black text-primary-navy mb-3">
-            {t('Tutor Command Center', 'مركز تحكم المدرس', lang)}
-          </h1>
-          <p className="text-slate-500 font-semibold text-lg">
-            {t('Monitor student progress and evaluate assessments.', 'راقب تقدم الطلاب وقيّم التقييمات.', lang)}
-          </p>
+    <div className="min-h-screen bg-slate-50 text-primary-navy pb-16" dir={dir(lang)}>
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-primary-navy text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-accent-pink/30"
+          >
+            <Sparkles size={18} className="text-accent-pink animate-pulse" />
+            <span className="text-sm font-bold">{toastMessage}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Admin Header Banner */}
+        <div className="bg-gradient-to-r from-primary-navy via-primary-plum to-primary-navy rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-primary-plum/15 mb-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-accent-pink/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-accent-pink text-xs font-black uppercase tracking-wider mb-3">
+                <Shield size={14} className="text-accent-pink" />
+                {lang === 'ar' ? 'مركز التحكم والرقابة الشاملة' : 'Master Platform Control'}
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black mb-2 flex items-center gap-3">
+                {t('Academy & Students Command Center', 'مركز إدارة الأكاديمية والطلاب', lang)}
+              </h1>
+              <p className="text-slate-300 text-sm font-medium max-w-2xl leading-relaxed">
+                {lang === 'ar'
+                  ? 'متابعة حية وشاملة لجميع الطلاب المسجلين: تفاصيل تقدم الدروس، فحص أوراق الامتحانات (الأسئلة الصحيحة والخاطئة)، تصحيح الأسئلة المقالية، والتحكم بالبيانات.'
+                  : 'Live surveillance of registered students: lesson completion progress, exam sheet inspection (correct & incorrect questions), written answer grading, and student management.'}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 self-start md:self-center">
+              <button
+                onClick={() => fetchData(true)}
+                disabled={refreshing}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold transition-all disabled:opacity-50"
+              >
+                <RefreshCw size={14} className={refreshing ? 'animate-spin text-accent-pink' : ''} />
+                <span>{t('Refresh Data', 'تحديث البيانات', lang)}</span>
+              </button>
+              <button
+                onClick={() => navigate('/dashboard')}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-primary-navy text-xs font-black shadow-md hover:bg-slate-100 transition-all"
+              >
+                <Eye size={14} className="text-primary-plum" />
+                <span>{t('Student Preview', 'معاينة كطالب', lang)}</span>
+              </button>
+            </div>
+          </div>
         </div>
 
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <Loader size={32} className="animate-spin text-accent-pink" />
+        {/* Metric Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-black">
+              <Users size={22} />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t('Registered Students', 'الطلاب المسجلين', lang)}</p>
+              <p className="text-2xl font-black text-primary-navy mt-0.5">{totalStudents}</p>
+            </div>
           </div>
-        ) : results.length === 0 ? (
-          <div className="text-center py-24 bg-white rounded-3xl border border-slate-200 shadow-sm">
-            <MessageSquare size={48} className="mx-auto mb-4 text-slate-300" />
-            <p className="text-slate-500 font-bold text-lg">{t('No assessment results yet.', 'لا توجد نتائج تقييم بعد.', lang)}</p>
+
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-purple-50 text-primary-plum flex items-center justify-center font-black">
+              <BookOpen size={22} />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t('Completed Lessons', 'الدروس المنجزة', lang)}</p>
+              <p className="text-2xl font-black text-primary-navy mt-0.5">{completedLessonsTotal}</p>
+            </div>
           </div>
-        ) : (
-          <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left">
-                <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200">
-                    <th className="p-5 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Student', 'الطالب', lang)}</th>
-                    <th className="p-5 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Lesson', 'الدرس', lang)}</th>
-                    <th className="p-5 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Score', 'النتيجة', lang)}</th>
-                    <th className="p-5 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Written', 'مقالي', lang)}</th>
-                    <th className="p-5 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Date', 'التاريخ', lang)}</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {results.map(res => {
-                    const l = lesson(res.lessonId);
-                    const writtenCount = Object.keys(res.writtenAnswers || {}).length;
-                    return (
-                      <tr key={res.id} className="hover:bg-slate-50 transition-colors">
-                        <td className="p-5">
+
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-pink-50 text-accent-pink flex items-center justify-center font-black">
+              <FileCheck size={22} />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t('Exams Solved', 'الامتحانات المحلولة', lang)}</p>
+              <p className="text-2xl font-black text-primary-navy mt-0.5">{totalSubmissions}</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-black">
+              <BarChart2 size={22} />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t('Avg Exam Score', 'متوسط درجات الطلاب', lang)}</p>
+              <p className="text-2xl font-black text-emerald-600 mt-0.5">{avgScore}%</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="flex border-b border-slate-200 mb-6 gap-2 sm:gap-4 overflow-x-auto pb-1">
+          <button
+            onClick={() => { setActiveTab('students'); setSearch(''); }}
+            className={`flex items-center gap-2 py-3 px-4 font-bold text-sm border-b-2 transition-all whitespace-nowrap ${
+              activeTab === 'students'
+                ? 'border-primary-plum text-primary-plum bg-primary-plum/5 rounded-t-xl'
+                : 'border-transparent text-slate-500 hover:text-primary-navy'
+            }`}
+          >
+            <Users size={16} />
+            <span>{t('Students Directory & Control', 'دليل الطلاب والتحكم بالتقدم', lang)}</span>
+            <span className="px-2 py-0.5 rounded-full text-xs bg-slate-200 text-slate-700 font-bold">{totalStudents}</span>
+          </button>
+
+          <button
+            onClick={() => { setActiveTab('submissions'); setSearch(''); }}
+            className={`flex items-center gap-2 py-3 px-4 font-bold text-sm border-b-2 transition-all whitespace-nowrap ${
+              activeTab === 'submissions'
+                ? 'border-primary-plum text-primary-plum bg-primary-plum/5 rounded-t-xl'
+                : 'border-transparent text-slate-500 hover:text-primary-navy'
+            }`}
+          >
+            <FileText size={16} />
+            <span>{t('Exam Submissions & Sheets', 'سجل الامتحانات وأوراق الإجابة التفصيلية', lang)}</span>
+            <span className="px-2 py-0.5 rounded-full text-xs bg-slate-200 text-slate-700 font-bold">{totalSubmissions}</span>
+          </button>
+
+          <button
+            onClick={() => { setActiveTab('written'); setSearch(''); }}
+            className={`flex items-center gap-2 py-3 px-4 font-bold text-sm border-b-2 transition-all whitespace-nowrap ${
+              activeTab === 'written'
+                ? 'border-primary-plum text-primary-plum bg-primary-plum/5 rounded-t-xl'
+                : 'border-transparent text-slate-500 hover:text-primary-navy'
+            }`}
+          >
+            <MessageSquare size={16} />
+            <span>{t('Written Questions Queue', 'مركز تصحيح الأسئلة المقالية', lang)}</span>
+            <span className="px-2 py-0.5 rounded-full text-xs bg-accent-pink/20 text-accent-pink font-black">
+              {writtenSubmissions.length}
+            </span>
+          </button>
+        </div>
+
+        {/* Tab 1: Students Management */}
+        {activeTab === 'students' && (
+          <div className="space-y-6">
+            {/* Filter and search bar */}
+            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+              <div className="relative w-full md:w-80">
+                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  placeholder={t('Search by name or email...', 'ابحث باسم الطالب أو الإيميل...', lang)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-sm font-semibold text-primary-navy placeholder-slate-400 focus:outline-none focus:border-primary-plum"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1">
+                {(['ALL', 'COMPLETED', 'IN_PROGRESS', 'NEEDS_HELP'] as const).map(st => (
+                  <button
+                    key={st}
+                    onClick={() => setFilterStatus(st)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
+                      filterStatus === st
+                        ? 'bg-primary-navy text-white shadow-sm'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    {st === 'ALL' && t('All Students', 'جميع الطلاب', lang)}
+                    {st === 'COMPLETED' && t('Completed All (4/4)', 'أتموا جميع الدروس', lang)}
+                    {st === 'IN_PROGRESS' && t('In Progress', 'قيد التعلم', lang)}
+                    {st === 'NEEDS_HELP' && t('Needs Review (<60%)', 'يحتاجون متابعة', lang)}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {loading ? (
+              <div className="flex items-center justify-center py-24">
+                <Loader size={36} className="animate-spin text-accent-pink" />
+              </div>
+            ) : filteredStudents.length === 0 ? (
+              <div className="text-center py-20 bg-white rounded-3xl border border-slate-200 shadow-sm">
+                <Users size={48} className="mx-auto mb-3 text-slate-300" />
+                <p className="text-slate-600 font-bold text-lg">{t('No students match your criteria.', 'لا يوجد طلاب مطابقين للبحث.', lang)}</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filteredStudents.map(student => {
+                  const studentSubmissions = results.filter(r => r.userId === student.uid);
+                  const completedLessonsCount = student.completedLessons?.length || 0;
+                  const progressPct = Math.round((completedLessonsCount / Math.max(LESSONS.length, 1)) * 100);
+                  const studentAvg = studentSubmissions.length > 0
+                    ? Math.round(studentSubmissions.reduce((acc, r) => acc + (r.score || 0), 0) / studentSubmissions.length)
+                    : null;
+
+                  return (
+                    <motion.div
+                      key={student.uid}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+                    >
+                      <div>
+                        {/* Header */}
+                        <div className="flex items-start justify-between gap-3 mb-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl bg-accent-pink/10 flex items-center justify-center text-accent-pink font-black text-sm border border-accent-pink/20">
-                              {res.userName?.charAt(0)?.toUpperCase() || 'S'}
+                            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-accent-pink to-primary-plum text-white font-black text-base flex items-center justify-center shadow-sm">
+                              {student.displayName?.charAt(0)?.toUpperCase() || 'S'}
                             </div>
-                            <span className="text-primary-navy font-bold text-sm">{res.userName}</span>
+                            <div>
+                              <h3 className="font-bold text-primary-navy text-base leading-tight">{student.displayName || t('Student', 'طالب', lang)}</h3>
+                              <p className="text-slate-400 text-xs mt-0.5">{student.email}</p>
+                            </div>
                           </div>
-                        </td>
-                        <td className="p-5">
-                          <span className="text-slate-600 font-semibold text-sm">{l ? (lang === 'ar' ? l.title_ar : l.title_en) : res.lessonId}</span>
-                        </td>
-                        <td className="p-5">
-                          <div className="flex items-center gap-3">
-                            <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
-                              <div
-                                className={`h-full ${res.score >= 70 ? 'bg-emerald-500' : res.score >= 50 ? 'bg-amber-500' : 'bg-rose-500'}`}
-                                style={{ width: `${res.score}%` }}
-                              ></div>
-                            </div>
-                            <span className={`font-black text-sm ${res.score >= 70 ? 'text-emerald-600' : res.score >= 50 ? 'text-amber-600' : 'text-rose-600'}`}>
-                              {res.score}%
+                          <span className="px-2.5 py-1 rounded-md bg-amber-50 border border-amber-200 text-amber-700 text-xs font-bold flex items-center gap-1">
+                            <Star size={11} className="text-amber-500 fill-amber-500" />
+                            {student.xp || 0} XP
+                          </span>
+                        </div>
+
+                        {/* Progress Bar */}
+                        <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100 mb-4">
+                          <div className="flex justify-between items-center text-xs font-bold mb-1.5">
+                            <span className="text-slate-500">{t('Curriculum Progress', 'التقدم في المنهج', lang)}</span>
+                            <span className="text-primary-plum font-black">{completedLessonsCount} / {LESSONS.length} {t('Lessons', 'دروس', lang)}</span>
+                          </div>
+                          <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden mb-3">
+                            <div
+                              className="bg-gradient-to-r from-primary-plum to-accent-pink h-full transition-all duration-500"
+                              style={{ width: `${progressPct}%` }}
+                            ></div>
+                          </div>
+
+                          {/* Lesson Checkpoints */}
+                          <div className="grid grid-cols-4 gap-1.5 text-center">
+                            {LESSONS.map(l => {
+                              const done = student.completedLessons?.includes(l.id);
+                              return (
+                                <div
+                                  key={l.id}
+                                  className={`py-1 rounded-md text-[10px] font-bold border transition-colors ${
+                                    done
+                                      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                      : 'bg-white text-slate-400 border-slate-200'
+                                  }`}
+                                  title={`${l.title_ar} - ${done ? 'مكتمل' : 'غير مكتمل'}`}
+                                >
+                                  {l.lesson_number} {done ? '✓' : '—'}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Exam Stats */}
+                        <div className="grid grid-cols-2 gap-2 text-center mb-5">
+                          <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                            <span className="block text-[10px] font-bold text-slate-400 uppercase">{t('Exams Taken', 'الامتحانات', lang)}</span>
+                            <span className="font-black text-sm text-primary-navy">{studentSubmissions.length}</span>
+                          </div>
+                          <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                            <span className="block text-[10px] font-bold text-slate-400 uppercase">{t('Avg Score', 'المعدل', lang)}</span>
+                            <span className={`font-black text-sm ${studentAvg !== null ? (studentAvg >= 70 ? 'text-emerald-600' : studentAvg >= 50 ? 'text-amber-600' : 'text-rose-600') : 'text-slate-400'}`}>
+                              {studentAvg !== null ? `${studentAvg}%` : '—'}
                             </span>
                           </div>
-                        </td>
-                        <td className="p-5">
-                          {writtenCount > 0 ? (
-                            <button className="px-3.5 py-1.5 bg-primary-plum/10 hover:bg-primary-plum/20 border border-primary-plum/30 rounded-lg text-primary-plum text-xs font-bold transition-all">
-                              {t('Review', 'مراجعة', lang)} ({writtenCount})
-                            </button>
-                          ) : (
-                            <span className="text-slate-400 font-bold text-xs">—</span>
-                          )}
-                        </td>
-                        <td className="p-5">
-                          <span className="text-slate-500 font-semibold text-xs">
-                            {res.submittedAt?.toDate ? res.submittedAt.toDate().toLocaleDateString() : '—'}
-                          </span>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <button
+                          onClick={() => setSelectedStudent(student)}
+                          className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-primary-plum/10 hover:bg-primary-plum/20 text-primary-plum font-bold text-xs transition-colors"
+                        >
+                          <Search size={13} />
+                          <span>{t('View Dossier', 'الملف التفصيلي', lang)}</span>
+                        </button>
+                        <button
+                          onClick={() => setConfirmResetStudent(student)}
+                          className="p-2 rounded-xl bg-slate-100 hover:bg-amber-100 text-slate-600 hover:text-amber-700 transition-colors"
+                          title={t('Reset Student Progress', 'إعادة ضبط تقدم الطالب', lang)}
+                        >
+                          <RotateCcw size={14} />
+                        </button>
+                        <button
+                          onClick={() => setConfirmDeleteStudent(student)}
+                          className="p-2 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 transition-colors"
+                          title={t('Delete Student Data', 'حذف حساب الطالب من النظام', lang)}
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Tab 2: Exam Submissions */}
+        {activeTab === 'submissions' && (
+          <div className="space-y-6">
+            {/* Filter and search bar */}
+            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+              <div className="relative w-full md:w-80">
+                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  placeholder={t('Search by student name or email...', 'ابحث باسم الطالب أو الإيميل...', lang)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-sm font-semibold text-primary-navy placeholder-slate-400 focus:outline-none focus:border-primary-plum"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1">
+                <button
+                  onClick={() => setFilterLesson('ALL')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
+                    filterLesson === 'ALL'
+                      ? 'bg-primary-navy text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  {t('All Lessons', 'جميع الدروس', lang)}
+                </button>
+                {LESSONS.map(l => (
+                  <button
+                    key={l.id}
+                    onClick={() => setFilterLesson(l.id)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
+                      filterLesson === l.id
+                        ? 'bg-primary-plum text-white shadow-sm'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    {l.lesson_number}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            {loading ? (
+              <div className="flex items-center justify-center py-24">
+                <Loader size={36} className="animate-spin text-accent-pink" />
+              </div>
+            ) : filteredSubmissions.length === 0 ? (
+              <div className="text-center py-20 bg-white rounded-3xl border border-slate-200 shadow-sm">
+                <FileText size={48} className="mx-auto mb-3 text-slate-300" />
+                <p className="text-slate-600 font-bold text-lg">{t('No assessment papers found.', 'لا توجد أوراق امتحانية مطابقة.', lang)}</p>
+              </div>
+            ) : (
+              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left" dir={dir(lang)}>
+                    <thead>
+                      <tr className="bg-slate-50 border-b border-slate-200">
+                        <th className="p-4 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Student', 'الطالب', lang)}</th>
+                        <th className="p-4 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Lesson', 'الدرس', lang)}</th>
+                        <th className="p-4 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Result Score', 'الدرجة', lang)}</th>
+                        <th className="p-4 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Breakdown', 'تفصيل الحل', lang)}</th>
+                        <th className="p-4 text-primary-plum font-bold text-xs uppercase tracking-wider">{t('Date', 'التاريخ', lang)}</th>
+                        <th className="p-4 text-primary-plum font-bold text-xs uppercase tracking-wider text-center">{t('Inspection', 'فحص الورقة', lang)}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {filteredSubmissions.map(res => {
+                        const l = lessonLookup(res.lessonId);
+                        const writtenCount = Object.keys(res.writtenAnswers || {}).length;
+
+                        return (
+                          <tr key={res.id} className="hover:bg-slate-50 transition-colors">
+                            <td className="p-4">
+                              <div className="flex items-center gap-3">
+                                <div className="w-9 h-9 rounded-xl bg-accent-pink/10 flex items-center justify-center text-accent-pink font-black text-sm border border-accent-pink/20">
+                                  {res.userName?.charAt(0)?.toUpperCase() || 'S'}
+                                </div>
+                                <div>
+                                  <span className="text-primary-navy font-bold text-sm block leading-tight">{res.userName}</span>
+                                  {res.userEmail && <span className="text-slate-400 text-xs">{res.userEmail}</span>}
+                                </div>
+                              </div>
+                            </td>
+
+                            <td className="p-4">
+                              <span className="text-slate-700 font-bold text-sm block">
+                                {l ? (lang === 'ar' ? l.title_ar : l.title_en) : `Lesson ${res.lessonId}`}
+                              </span>
+                              {l && <span className="text-slate-400 text-xs font-semibold">{t('Unit', 'الوحدة', lang)} {l.unit} • {l.lesson_number}</span>}
+                            </td>
+
+                            <td className="p-4">
+                              <div className="flex items-center gap-2">
+                                <span className={`px-2.5 py-1 rounded-lg font-black text-xs ${
+                                  res.score >= 80 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                                  res.score >= 60 ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+                                  res.score >= 50 ? 'bg-amber-50 text-amber-700 border border-amber-200' :
+                                  'bg-rose-50 text-rose-700 border border-rose-200'
+                                }`}>
+                                  {res.score}%
+                                </span>
+                              </div>
+                            </td>
+
+                            <td className="p-4 text-xs font-semibold text-slate-600">
+                              <span className="text-emerald-700 font-bold">{res.correctMCQ || 0} {t('Correct', 'صح', lang)}</span>
+                              {' / '}
+                              <span className="text-slate-500">{res.totalMCQ || 0} {t('MCQ', 'اختيار', lang)}</span>
+                              {writtenCount > 0 && (
+                                <span className="mr-2 ml-2 px-2 py-0.5 rounded bg-primary-plum/10 text-primary-plum font-bold">
+                                  {writtenCount} {t('written', 'مقالي', lang)}
+                                </span>
+                              )}
+                            </td>
+
+                            <td className="p-4 text-xs font-semibold text-slate-500">
+                              {res.submittedAt?.toDate ? res.submittedAt.toDate().toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US') : '—'}
+                            </td>
+
+                            <td className="p-4 text-center">
+                              <button
+                                onClick={() => setInspectSubmission(res)}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary-navy hover:bg-primary-plum text-white text-xs font-bold transition-all shadow-sm"
+                              >
+                                <Eye size={13} />
+                                <span>{t('Inspect Paper', 'فحص ورقة الإجابة', lang)}</span>
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Tab 3: Written Questions Queue */}
+        {activeTab === 'written' && (
+          <div className="space-y-6">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+              <h2 className="text-lg font-bold text-primary-navy mb-1">{t('Written Answer Evaluation Queue', 'مركز تصحيح ومراجعة الإجابات المقالية', lang)}</h2>
+              <p className="text-slate-500 text-sm font-semibold">
+                {t('Evaluate essay questions submitted by students, assign scores, and provide personalized feedback.', 'مراجعة إجابات الطلاب على الأسئلة المقالية وإعطاء درجات وملاحظات المعلم التوجيهية.', lang)}
+              </p>
+            </div>
+
+            {writtenSubmissions.length === 0 ? (
+              <div className="text-center py-20 bg-white rounded-3xl border border-slate-200 shadow-sm">
+                <CheckCircle size={48} className="mx-auto mb-3 text-slate-300" />
+                <p className="text-slate-600 font-bold text-lg">{t('No written answers in queue.', 'لا توجد إجابات مقالية بانتظار المراجعة.', lang)}</p>
+              </div>
+            ) : (
+              <div className="space-y-5">
+                {writtenSubmissions.map(sub => {
+                  const l = lessonLookup(sub.lessonId);
+                  const writtenEntries = Object.entries(sub.writtenAnswers || {});
+
+                  return (
+                    <div key={sub.id} className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                      <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-4 mb-4 gap-2">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-plum to-primary-navy text-white font-bold flex items-center justify-center">
+                            {sub.userName?.charAt(0)?.toUpperCase() || 'S'}
+                          </div>
+                          <div>
+                            <span className="font-bold text-primary-navy text-sm block">{sub.userName}</span>
+                            <span className="text-slate-400 text-xs">{sub.userEmail || ''} • {l ? (lang === 'ar' ? l.title_ar : l.title_en) : sub.lessonId}</span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => setInspectSubmission(sub)}
+                            className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors flex items-center gap-1.5"
+                          >
+                            <FileText size={13} />
+                            {t('Full Paper', 'الورقة كاملة', lang)}
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Questions List */}
+                      <div className="space-y-4">
+                        {writtenEntries.map(([qId, answerText]) => {
+                          const question = QUIZ_QUESTIONS.find(q => q.id === qId);
+                          const inputKey = `${sub.id}_${qId}`;
+                          const existingFeedback = sub.tutorFeedback?.[qId];
+                          const scoreVal = gradeInputs[inputKey]?.score ?? existingFeedback?.score ?? 10;
+                          const noteVal = gradeInputs[inputKey]?.note ?? existingFeedback?.note ?? '';
+
+                          return (
+                            <div key={qId} className="bg-slate-50 rounded-xl p-4 border border-slate-200/80">
+                              <p className="font-bold text-primary-navy text-sm mb-2">
+                                ❓ {question ? (lang === 'ar' ? question.question_ar : question.question_en) : qId}
+                              </p>
+
+                              {/* Student Answer */}
+                              <div className="mb-3 p-3.5 bg-white rounded-xl border border-slate-200">
+                                <span className="block text-[11px] font-bold text-accent-pink uppercase tracking-wider mb-1">
+                                  {t("Student's Answer:", 'إجابة الطالب:', lang)}
+                                </span>
+                                <p className="text-slate-800 text-sm font-medium leading-relaxed whitespace-pre-wrap">
+                                  {answerText || t('No answer provided', 'لم يُكتب رد', lang)}
+                                </p>
+                              </div>
+
+                              {/* Model Answer Reference */}
+                              {question && (question.ideal_answer_ar || question.ideal_answer_en) && (
+                                <div className="mb-3 p-3 bg-blue-50/70 border border-blue-200/70 rounded-xl">
+                                  <span className="block text-[11px] font-bold text-blue-700 uppercase tracking-wider mb-1 flex items-center gap-1">
+                                    <Lightbulb size={12} /> {t('Model Reference Answer:', 'نموذج الإجابة المقترح للمقارنة:', lang)}
+                                  </span>
+                                  <p className="text-blue-900 text-xs font-medium leading-relaxed">
+                                    {lang === 'ar' ? question.ideal_answer_ar : question.ideal_answer_en}
+                                  </p>
+                                </div>
+                              )}
+
+                              {/* Grading Input Form */}
+                              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                                <div className="flex items-center gap-2">
+                                  <label className="text-xs font-bold text-slate-500 whitespace-nowrap">{t('Grade (out of 10):', 'الدرجة (من 10):', lang)}</label>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    max="10"
+                                    value={scoreVal}
+                                    onChange={e => setGradeInputs({
+                                      ...gradeInputs,
+                                      [inputKey]: { score: Number(e.target.value), note: noteVal }
+                                    })}
+                                    className="w-16 bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-center font-bold text-sm text-primary-navy focus:outline-none focus:border-primary-plum"
+                                  />
+                                </div>
+
+                                <div className="flex-1">
+                                  <input
+                                    type="text"
+                                    value={noteVal}
+                                    onChange={e => setGradeInputs({
+                                      ...gradeInputs,
+                                      [inputKey]: { score: scoreVal, note: e.target.value }
+                                    })}
+                                    placeholder={t('Teacher feedback/comment...', 'ملاحظة أو توجيه الطالب...', lang)}
+                                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-800 focus:outline-none focus:border-primary-plum"
+                                  />
+                                </div>
+
+                                <button
+                                  onClick={() => handleSaveGrading(sub.id!, qId)}
+                                  disabled={actionLoading}
+                                  className="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 shadow-sm whitespace-nowrap"
+                                >
+                                  <Check size={14} />
+                                  <span>{t('Save Review', 'حفظ التقييم', lang)}</span>
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
       </div>
+
+      {/* ========================================================= */}
+      {/* MODAL 1: EXAM PAPER INSPECTION (WHAT THEY GOT RIGHT/WRONG) */}
+      {/* ========================================================= */}
+      <AnimatePresence>
+        {inspectSubmission && (() => {
+          const l = lessonLookup(inspectSubmission.lessonId);
+          const lessonQuestions = QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, inspectSubmission.lessonId));
+          const hasAnswersMap = inspectSubmission.answers && Object.keys(inspectSubmission.answers).length > 0;
+
+          return (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden my-auto"
+                dir={dir(lang)}
+              >
+                {/* Modal Header */}
+                <div className="p-6 border-b border-slate-200 bg-slate-50 flex items-start justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-plum to-primary-navy text-white font-black text-lg flex items-center justify-center shadow-md">
+                      {inspectSubmission.userName?.charAt(0)?.toUpperCase() || 'S'}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h2 className="text-xl font-black text-primary-navy">{inspectSubmission.userName}</h2>
+                        <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary-plum/10 text-primary-plum">
+                          {t('Exam Paper', 'ورقة الإجابة التفصيلية', lang)}
+                        </span>
+                      </div>
+                      <p className="text-slate-500 text-xs font-semibold mt-0.5">
+                        {l ? (lang === 'ar' ? l.title_ar : l.title_en) : inspectSubmission.lessonId}
+                        {inspectSubmission.userEmail ? ` • ${inspectSubmission.userEmail}` : ''}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="text-right">
+                      <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">{t('Score', 'النتيجة', lang)}</span>
+                      <span className={`text-2xl font-black ${
+                        inspectSubmission.score >= 80 ? 'text-emerald-600' :
+                        inspectSubmission.score >= 60 ? 'text-blue-600' :
+                        inspectSubmission.score >= 50 ? 'text-amber-600' : 'text-rose-600'
+                      }`}>
+                        {inspectSubmission.score}%
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => setInspectSubmission(null)}
+                      className="p-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-primary-navy transition-colors"
+                    >
+                      <X size={18} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Score Summary Banner */}
+                <div className="bg-white p-4 border-b border-slate-100 flex flex-wrap items-center justify-around gap-4 text-center">
+                  <div>
+                    <span className="block text-xs font-bold text-slate-400 uppercase">{t('Correct Answers', 'الإجابات الصحيحة', lang)}</span>
+                    <span className="text-lg font-black text-emerald-600">✅ {inspectSubmission.correctMCQ} {t('Correct', 'صح', lang)}</span>
+                  </div>
+                  <div className="h-8 w-px bg-slate-200 hidden sm:block"></div>
+                  <div>
+                    <span className="block text-xs font-bold text-slate-400 uppercase">{t('Incorrect Answers', 'الإجابات الخاطئة', lang)}</span>
+                    <span className="text-lg font-black text-rose-600">❌ {Math.max((inspectSubmission.totalMCQ || 0) - (inspectSubmission.correctMCQ || 0), 0)} {t('Wrong', 'خطأ', lang)}</span>
+                  </div>
+                  <div className="h-8 w-px bg-slate-200 hidden sm:block"></div>
+                  <div>
+                    <span className="block text-xs font-bold text-slate-400 uppercase">{t('Total MCQ Questions', 'إجمالي الأسئلة', lang)}</span>
+                    <span className="text-lg font-black text-primary-navy">{inspectSubmission.totalMCQ} {t('Questions', 'سؤال', lang)}</span>
+                  </div>
+                  <div className="h-8 w-px bg-slate-200 hidden sm:block"></div>
+                  <div>
+                    <span className="block text-xs font-bold text-slate-400 uppercase">{t('Written Questions', 'الأسئلة المقالية', lang)}</span>
+                    <span className="text-lg font-black text-primary-plum">✍️ {Object.keys(inspectSubmission.writtenAnswers || {}).length}</span>
+                  </div>
+                </div>
+
+                {/* Question-by-Question Inspection Scrollable Area */}
+                <div className="p-6 overflow-y-auto space-y-6 flex-1">
+                  {!hasAnswersMap && (
+                    <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-amber-800 text-xs font-semibold flex items-start gap-2.5">
+                      <HelpCircle size={16} className="text-amber-600 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="font-bold">{t('Historical Submission Notice', 'ملاحظة حول هذا التقييم:', lang)}</p>
+                        <p className="mt-0.5">
+                          {lang === 'ar'
+                            ? 'تم إرسال هذا التقييم بنجاح بالنتيجة الموضحة أعلاه، وتظهر بالأسفل قائمة أسئلة ونماذج إجابات الدرس لمطابقتها.'
+                            : 'This submission score is recorded above. The lesson questions and ideal answers are displayed below for reference.'}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {lessonQuestions.map((q, idx) => {
+                    const studentChoice = inspectSubmission.answers?.[q.id];
+                    const isCorrect = q.type === 'MCQ' && studentChoice && studentChoice === q.correct_option;
+                    const isWrong = q.type === 'MCQ' && studentChoice && studentChoice !== q.correct_option;
+                    const isUnanswered = q.type === 'MCQ' && !studentChoice;
+
+                    return (
+                      <div
+                        key={q.id}
+                        className={`p-5 rounded-2xl border-2 transition-all ${
+                          q.type === 'WRITTEN'
+                            ? 'bg-slate-50 border-slate-200'
+                            : isCorrect
+                            ? 'bg-emerald-50/30 border-emerald-300'
+                            : isWrong
+                            ? 'bg-rose-50/30 border-rose-300'
+                            : 'bg-white border-slate-200'
+                        }`}
+                      >
+                        {/* Question Badge and Status Bar */}
+                        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                          <div className="flex items-center gap-2">
+                            <span className="w-7 h-7 rounded-lg bg-primary-navy text-white text-xs font-black flex items-center justify-center">
+                              {idx + 1}
+                            </span>
+                            <span className="text-xs font-bold text-slate-500 uppercase">
+                              {q.type === 'MCQ' ? t('Multiple Choice', 'اختيار من متعدد', lang) : t('Written Essay', 'سؤال مقالي', lang)}
+                            </span>
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                              q.difficulty === 'EASY' ? 'bg-emerald-100 text-emerald-800' :
+                              q.difficulty === 'MEDIUM' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'
+                            }`}>
+                              {q.difficulty}
+                            </span>
+                          </div>
+
+                          {q.type === 'MCQ' && (
+                            <div>
+                              {isCorrect && (
+                                <span className="px-3 py-1 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 font-black text-xs flex items-center gap-1.5 shadow-sm">
+                                  <CheckCircle size={14} className="text-emerald-600" />
+                                  {t('Student Answered Correctly (+1)', 'إجابة الطالب صحيحة (+1 درجة)', lang)}
+                                </span>
+                              )}
+                              {isWrong && (
+                                <span className="px-3 py-1 rounded-full bg-rose-100 border border-rose-300 text-rose-800 font-black text-xs flex items-center gap-1.5 shadow-sm">
+                                  <XCircle size={14} className="text-rose-600" />
+                                  {t(`Student Chose Option (${studentChoice}) — Incorrect`, `إجابة الطالب خاطئة (اختار ${studentChoice} والصحيح ${q.correct_option})`, lang)}
+                                </span>
+                              )}
+                              {isUnanswered && (
+                                <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 font-bold text-xs">
+                                  {t('Not answered', 'لم تتم الإجابة', lang)}
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Question Text */}
+                        <h4 className="text-base font-bold text-primary-navy mb-4 leading-relaxed">
+                          {lang === 'ar' ? q.question_ar : q.question_en}
+                        </h4>
+
+                        {/* MCQ Options Rendering */}
+                        {q.type === 'MCQ' && (
+                          <div className="space-y-2.5 mb-4">
+                            {(['A', 'B', 'C', 'D'] as const).map(opt => {
+                              const text = lang === 'ar' ? (q as any)[`option_${opt.toLowerCase()}_ar`] : (q as any)[`option_${opt.toLowerCase()}_en`];
+                              if (!text) return null;
+
+                              const isModelAnswer = opt === q.correct_option;
+                              const isStudentPick = studentChoice === opt;
+
+                              let optClass = 'bg-white border-slate-200 text-slate-700';
+                              let badge = null;
+
+                              if (isModelAnswer && isStudentPick) {
+                                optClass = 'bg-emerald-100/80 border-emerald-500 text-emerald-950 font-bold shadow-sm';
+                                badge = (
+                                  <span className="ml-auto px-2 py-0.5 rounded bg-emerald-600 text-white text-[11px] font-bold flex items-center gap-1">
+                                    <Check size={12} /> {t('Student Choice & Model Answer ✅', 'اختيار الطالب ومطابق للنموذج ✅', lang)}
+                                  </span>
+                                );
+                              } else if (isModelAnswer) {
+                                optClass = 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold';
+                                badge = (
+                                  <span className="ml-auto px-2 py-0.5 rounded bg-emerald-500 text-white text-[11px] font-bold flex items-center gap-1">
+                                    <Check size={12} /> {t('Correct Model Answer ✅', 'الإجابة النموذجية الصحيحة ✅', lang)}
+                                  </span>
+                                );
+                              } else if (isStudentPick) {
+                                optClass = 'bg-rose-50 border-rose-400 text-rose-950 font-bold';
+                                badge = (
+                                  <span className="ml-auto px-2 py-0.5 rounded bg-rose-500 text-white text-[11px] font-bold flex items-center gap-1">
+                                    <X size={12} /> {t('Student Choice (Wrong) ❌', 'اختيار الطالب (خاطئ) ❌', lang)}
+                                  </span>
+                                );
+                              }
+
+                              return (
+                                <div
+                                  key={opt}
+                                  className={`p-3 rounded-xl border-2 flex items-center gap-3 transition-colors ${optClass}`}
+                                >
+                                  <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-xs ${
+                                    isModelAnswer ? 'bg-emerald-600 text-white' : isStudentPick ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-500'
+                                  }`}>
+                                    {opt}
+                                  </span>
+                                  <span className="text-sm font-semibold">{text}</span>
+                                  {badge}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+
+                        {/* Written Question Content */}
+                        {q.type === 'WRITTEN' && (
+                          <div className="space-y-3 mb-4">
+                            <div className="p-4 bg-white rounded-xl border border-slate-200">
+                              <span className="block text-[11px] font-bold text-accent-pink uppercase tracking-wider mb-1">
+                                {t("Student's Answer:", 'إجابة الطالب:', lang)}
+                              </span>
+                              <p className="text-slate-800 text-sm font-semibold whitespace-pre-wrap">
+                                {inspectSubmission.writtenAnswers?.[q.id] || t('No written response recorded', 'لا توجد إجابة مسجلة', lang)}
+                              </p>
+                            </div>
+
+                            {(q.ideal_answer_ar || q.ideal_answer_en) && (
+                              <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl">
+                                <span className="block text-[11px] font-bold text-blue-700 uppercase tracking-wider mb-1 flex items-center gap-1">
+                                  <Lightbulb size={12} /> {t('Model Answer Reference:', 'النموذج المقترح:', lang)}
+                                </span>
+                                <p className="text-blue-950 text-xs font-medium">
+                                  {lang === 'ar' ? q.ideal_answer_ar : q.ideal_answer_en}
+                                </p>
+                              </div>
+                            )}
+
+                            {/* Tutor grading for this written question */}
+                            {inspectSubmission.id && (
+                              <div className="bg-slate-100 p-3 rounded-xl flex items-center gap-3">
+                                <span className="text-xs font-bold text-slate-600">{t('Assigned Score:', 'درجة السؤال:', lang)}</span>
+                                <input
+                                  type="number"
+                                  min="0"
+                                  max="10"
+                                  defaultValue={inspectSubmission.tutorFeedback?.[q.id]?.score ?? 10}
+                                  onChange={e => setGradeInputs({
+                                    ...gradeInputs,
+                                    [`${inspectSubmission.id}_${q.id}`]: {
+                                      score: Number(e.target.value),
+                                      note: gradeInputs[`${inspectSubmission.id}_${q.id}`]?.note ?? (inspectSubmission.tutorFeedback?.[q.id]?.note || '')
+                                    }
+                                  })}
+                                  className="w-16 bg-white border border-slate-300 rounded px-2 py-1 text-center font-bold text-xs"
+                                />
+                                <input
+                                  type="text"
+                                  defaultValue={inspectSubmission.tutorFeedback?.[q.id]?.note ?? ''}
+                                  onChange={e => setGradeInputs({
+                                    ...gradeInputs,
+                                    [`${inspectSubmission.id}_${q.id}`]: {
+                                      score: gradeInputs[`${inspectSubmission.id}_${q.id}`]?.score ?? (inspectSubmission.tutorFeedback?.[q.id]?.score || 10),
+                                      note: e.target.value
+                                    }
+                                  })}
+                                  placeholder={t('Feedback comment...', 'ملاحظة المعلم...', lang)}
+                                  className="flex-1 bg-white border border-slate-300 rounded px-3 py-1 text-xs"
+                                />
+                                <button
+                                  onClick={() => handleSaveGrading(inspectSubmission.id!, q.id)}
+                                  disabled={actionLoading}
+                                  className="px-3 py-1 rounded bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition-colors"
+                                >
+                                  {t('Save', 'حفظ', lang)}
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Explanation Box */}
+                        {(q.explanation_ar || q.explanation_en) && (
+                          <div className="p-3 bg-amber-50/70 border border-amber-200/70 rounded-xl flex items-start gap-2">
+                            <Lightbulb size={14} className="text-amber-600 mt-0.5 flex-shrink-0" />
+                            <p className="text-amber-900 text-xs font-semibold leading-relaxed">
+                              {lang === 'ar' ? q.explanation_ar : q.explanation_en}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Modal Footer */}
+                <div className="p-4 border-t border-slate-200 bg-slate-50 flex justify-end">
+                  <button
+                    onClick={() => setInspectSubmission(null)}
+                    className="px-6 py-2.5 rounded-xl bg-primary-navy hover:bg-primary-plum text-white font-bold text-xs transition-colors shadow-sm"
+                  >
+                    {t('Close Exam Paper', 'إغلاق ورقة الامتحان', lang)}
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          );
+        })()}
+      </AnimatePresence>
+
+      {/* ========================================================= */}
+      {/* MODAL 2: STUDENT DOSSIER */}
+      {/* ========================================================= */}
+      <AnimatePresence>
+        {selectedStudent && (() => {
+          const studentSubmissions = results.filter(r => r.userId === selectedStudent.uid);
+          const completedCount = selectedStudent.completedLessons?.length || 0;
+          const avg = studentSubmissions.length > 0
+            ? Math.round(studentSubmissions.reduce((acc, r) => acc + (r.score || 0), 0) / studentSubmissions.length)
+            : null;
+
+          return (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden my-auto"
+                dir={dir(lang)}
+              >
+                {/* Header */}
+                <div className="p-6 border-b border-slate-200 bg-slate-50 flex items-start justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-pink to-primary-plum text-white font-black text-xl flex items-center justify-center shadow-md">
+                      {selectedStudent.displayName?.charAt(0)?.toUpperCase() || 'S'}
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-black text-primary-navy">{selectedStudent.displayName}</h2>
+                      <p className="text-slate-500 text-xs font-semibold">{selectedStudent.email}</p>
+                      <div className="flex items-center gap-2 mt-1.5">
+                        <span className="px-2.5 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-xs font-bold flex items-center gap-1">
+                          <Star size={12} className="text-amber-500 fill-amber-500" />
+                          {selectedStudent.xp || 0} XP
+                        </span>
+                        <span className="px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold">
+                          {t('Student Account', 'حساب طالب', lang)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setSelectedStudent(null)}
+                    className="p-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-500"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+
+                {/* Body */}
+                <div className="p-6 overflow-y-auto space-y-6 flex-1">
+                  {/* Progress Checklist */}
+                  <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <h3 className="font-bold text-primary-navy text-sm mb-3 flex items-center justify-between">
+                      <span>{t('Curriculum Lesson Progress', 'حالة دروس المنهج', lang)}</span>
+                      <span className="text-primary-plum font-black">{completedCount} / {LESSONS.length} {t('Completed', 'مكتمل', lang)}</span>
+                    </h3>
+
+                    <div className="space-y-2">
+                      {LESSONS.map(l => {
+                        const done = selectedStudent.completedLessons?.includes(l.id);
+                        return (
+                          <div
+                            key={l.id}
+                            className={`p-3 rounded-xl border flex items-center justify-between text-xs font-bold transition-colors ${
+                              done
+                                ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900'
+                                : 'bg-white border-slate-200 text-slate-500'
+                            }`}
+                          >
+                            <span className="flex items-center gap-2">
+                              <span>{done ? '✅' : '⏳'}</span>
+                              <span>{l.lesson_number} • {lang === 'ar' ? l.title_ar : l.title_en}</span>
+                            </span>
+                            <span className={`px-2 py-0.5 rounded font-black text-[10px] ${done ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-600'}`}>
+                              {done ? t('Completed', 'مكتمل', lang) : t('Pending', 'قيد الانتظار', lang)}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Exam History */}
+                  <div>
+                    <h3 className="font-bold text-primary-navy text-sm mb-3 flex items-center justify-between">
+                      <span>{t('Exam Submissions History', 'سجل أوراق الامتحانات المحلولة', lang)}</span>
+                      {avg !== null && (
+                        <span className="text-xs font-bold text-slate-500">
+                          {t('Overall Average:', 'المعدل العام:', lang)} <strong className="text-emerald-600">{avg}%</strong>
+                        </span>
+                      )}
+                    </h3>
+
+                    {studentSubmissions.length === 0 ? (
+                      <div className="text-center py-8 bg-slate-50 rounded-xl border border-slate-200">
+                        <p className="text-slate-400 font-bold text-xs">{t('No assessments taken yet.', 'لم يقم الطالب بأداء أي تقييمات بعد.', lang)}</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2.5">
+                        {studentSubmissions.map(sub => {
+                          const l = lessonLookup(sub.lessonId);
+                          return (
+                            <div
+                              key={sub.id}
+                              className="p-3.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between gap-3 hover:border-primary-plum transition-all shadow-sm"
+                            >
+                              <div>
+                                <span className="font-bold text-primary-navy text-xs block">
+                                  {l ? (lang === 'ar' ? l.title_ar : l.title_en) : sub.lessonId}
+                                </span>
+                                <span className="text-[11px] text-slate-400">
+                                  {sub.submittedAt?.toDate ? sub.submittedAt.toDate().toLocaleDateString() : '—'} • {sub.correctMCQ}/{sub.totalMCQ} {t('Correct', 'صح', lang)}
+                                </span>
+                              </div>
+
+                              <div className="flex items-center gap-3">
+                                <span className={`px-2.5 py-1 rounded-lg font-black text-xs ${
+                                  sub.score >= 80 ? 'bg-emerald-50 text-emerald-700' :
+                                  sub.score >= 50 ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-700'
+                                }`}>
+                                  {sub.score}%
+                                </span>
+                                <button
+                                  onClick={() => {
+                                    setInspectSubmission(sub);
+                                    setSelectedStudent(null);
+                                  }}
+                                  className="px-3 py-1.5 rounded-lg bg-primary-plum/10 hover:bg-primary-plum text-primary-plum hover:text-white font-bold text-xs transition-colors flex items-center gap-1"
+                                >
+                                  <Eye size={12} />
+                                  <span>{t('Inspect', 'فحص', lang)}</span>
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Footer Controls */}
+                <div className="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setConfirmResetStudent(selectedStudent)}
+                      className="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 font-bold text-xs transition-colors flex items-center gap-1.5"
+                    >
+                      <RotateCcw size={13} />
+                      <span>{t('Reset Progress', 'إعادة ضبط التقدم', lang)}</span>
+                    </button>
+                    <button
+                      onClick={() => setConfirmDeleteStudent(selectedStudent)}
+                      className="px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 font-bold text-xs transition-colors flex items-center gap-1.5"
+                    >
+                      <Trash2 size={13} />
+                      <span>{t('Delete Student', 'حذف الطالب', lang)}</span>
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => setSelectedStudent(null)}
+                    className="px-5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs transition-colors"
+                  >
+                    {t('Close', 'إغلاق', lang)}
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          );
+        })()}
+      </AnimatePresence>
+
+      {/* ========================================================= */}
+      {/* MODAL 3: CONFIRM RESET PROGRESS */}
+      {/* ========================================================= */}
+      <AnimatePresence>
+        {confirmResetStudent && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-md w-full p-6 text-center"
+              dir={dir(lang)}
+            >
+              <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-4 border border-amber-200">
+                <RotateCcw size={24} />
+              </div>
+              <h3 className="text-lg font-black text-primary-navy mb-2">
+                {t(`Reset progress for ${confirmResetStudent.displayName}?`, `هل تريدين إعادة ضبط تقدم الطالب ${confirmResetStudent.displayName}؟`, lang)}
+              </h3>
+              <p className="text-slate-500 text-xs font-semibold mb-6 leading-relaxed">
+                {t(
+                  'This will clear completed lessons, assessments, and reset XP to 0 for this student. They can retake the lessons and exams from scratch.',
+                  'سيتم تصفير الدروس المكتملة ونقاط XP والامتحانات المحلولة لهذا الطالب، مما يتيح له إعادة المنهج من البداية.',
+                  lang
+                )}
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setConfirmResetStudent(null)}
+                  className="flex-1 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors"
+                >
+                  {t('Cancel', 'إلغاء', lang)}
+                </button>
+                <button
+                  onClick={() => handleResetStudent(confirmResetStudent)}
+                  disabled={actionLoading}
+                  className="flex-1 py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition-colors shadow-sm"
+                >
+                  {actionLoading ? t('Resetting...', 'جاري إعادة الضبط...', lang) : t('Confirm Reset', 'تأكيد إعادة الضبط', lang)}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ========================================================= */}
+      {/* MODAL 4: CONFIRM DELETE STUDENT */}
+      {/* ========================================================= */}
+      <AnimatePresence>
+        {confirmDeleteStudent && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-md w-full p-6 text-center"
+              dir={dir(lang)}
+            >
+              <div className="w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto mb-4 border border-rose-200">
+                <Trash2 size={24} />
+              </div>
+              <h3 className="text-lg font-black text-primary-navy mb-2">
+                {t(`Delete student account for ${confirmDeleteStudent.displayName}?`, `حذف حساب الطالب ${confirmDeleteStudent.displayName} نهائياً؟`, lang)}
+              </h3>
+              <p className="text-slate-500 text-xs font-semibold mb-6 leading-relaxed">
+                {t(
+                  'This will permanently delete this student record from Firestore. This action cannot be undone.',
+                  'سيتم حذف سجل وبيانات هذا الطالب نهائياً من قاعدة البيانات. لا يمكن التراجع عن هذا الإجراء.',
+                  lang
+                )}
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setConfirmDeleteStudent(null)}
+                  className="flex-1 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors"
+                >
+                  {t('Cancel', 'إلغاء', lang)}
+                </button>
+                <button
+                  onClick={() => handleDeleteStudent(confirmDeleteStudent)}
+                  disabled={actionLoading}
+                  className="flex-1 py-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs transition-colors shadow-sm"
+                >
+                  {actionLoading ? t('Deleting...', 'جاري الحذف...', lang) : t('Delete Account', 'تأكيد الحذف النهائي', lang)}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -1882,8 +3136,16 @@ export default function App() {
 }
 
 function ProtectedRedirect() {
-  const { user } = React.useContext(AppContext);
+  const { user, profile, loadingProfile } = React.useContext(AppContext);
   const navigate = useNavigate();
-  useEffect(() => { if (user) navigate('/dashboard'); }, [user, navigate]);
+  useEffect(() => {
+    if (user && !loadingProfile) {
+      if (profile?.role === 'TUTOR') {
+        navigate('/tutor');
+      } else {
+        navigate('/dashboard');
+      }
+    }
+  }, [user, profile, loadingProfile, navigate]);
   return null;
 }
