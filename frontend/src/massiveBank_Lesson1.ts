@@ -3,7 +3,7 @@ import type { QuizQuestion } from './courseData';
 export const MASSIVE_BANK_L1: QuizQuestion[] = [
   // ------------------- LESSON 1.1 (20 QUESTIONS) -------------------
   {
-    id: "mb_l1_01", unit: "1", lesson: "les_1_1", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l1_01", unit: "1", lesson: "1-1", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "Which of the following best defines Machine Learning?",
     question_ar: "أي مما يلي يحدد تعلم الآلة (Machine Learning) بشكل أفضل؟",
     option_a_en: "A machine that only follows explicitly programmed instructions.",
@@ -19,7 +19,7 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "يركز تعلم الآلة على الخوارزميات التي تتعلم من البيانات، بشكل منفصل عن البرمجة التقليدية القائمة على القواعد."
   },
   {
-    id: "mb_l1_02", unit: "1", lesson: "les_1_1", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l1_02", unit: "1", lesson: "1-1", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "What is the primary difference between Supervised and Unsupervised learning?",
     question_ar: "ما هو الفرق الأساسي بين التعلم الخاضع للإشراف والتعلم غير الخاضع للإشراف؟",
     option_a_en: "Supervised learning uses labeled data; unsupervised uses unlabeled data.",
@@ -35,7 +35,7 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "البيانات المصنفة (معرفة الإجابات الصحيحة أثناء التدريب) هي السمة المميزة للتعلم الخاضع للإشراف."
   },
   {
-    id: "mb_l1_03", unit: "1", lesson: "les_1_1", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l1_03", unit: "1", lesson: "1-1", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "In a medical context, why might an AI developer choose an interpretable Decision Tree over a highly accurate Deep Neural Network?",
     question_ar: "في السياق الطبي، لماذا قد يختار مطور الذكاء الاصطناعي 'شجرة قرار' قابلة للتفسير بدلاً من شبكة عصبية عميقة عالية الدقة؟",
     option_a_en: "Decision trees are always more accurate.",
@@ -51,7 +51,7 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "قابلية التفسير أمر بالغ الأهمية في المجالات عالية المخاطر مثل الطب لضمان الثقة والمساءلة."
   },
   {
-    id: "mb_l1_04", unit: "1", lesson: "les_1_1", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l1_04", unit: "1", lesson: "1-1", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "Which of the following is the best example of Reinforcement Learning?",
     question_ar: "أي مما يلي هو أفضل مثال على التعلم المعزز (Reinforcement Learning)؟",
     option_a_en: "Predicting house prices based on size.",
@@ -67,14 +67,14 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "يعتمد التعلم المعزز على اتخاذ إجراءات في بيئة لزيادة المكافأة إلى أقصى حد."
   },
   {
-    id: "mb_l1_05", unit: "1", lesson: "les_1_1", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l1_05", unit: "1", lesson: "1-1", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
     question_en: "Describe the concept of 'Overfitting' and give a real-world example.",
     question_ar: "صف مفهوم 'فرط التخصيص' (Overfitting) وأعطِ مثالاً من العالم الحقيقي.",
     ideal_answer_en: "Overfitting happens when a model learns the training data too well, including its noise, but fails to generalize to new data. Example: A model predicting student grades memorizes past test answers perfectly but fails completely on a new, slightly different exam.",
     ideal_answer_ar: "يحدث فرط التخصيص عندما يتعلم النموذج بيانات التدريب بشكل مبالغ فيه (بما في ذلك الضوضاء)، لكنه يفشل في التعميم على بيانات جديدة. مثال: نموذج يتنبأ بدرجات الطلاب، يحفظ إجابات الاختبارات السابقة بشكل مثالي ولكنه يفشل تماماً في امتحان جديد مختلف قليلاً."
   },
   {
-    id: "mb_l1_06", unit: "1", lesson: "les_1_1", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l1_06", unit: "1", lesson: "1-1", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "What happens if you train an ML model on heavily imbalanced data (e.g., 99% healthy, 1% sick) without adjusting class weights?",
     question_ar: "ماذا يحدث إذا قمت بتدريب نموذج تعلم آلة على بيانات غير متوازنة بشدة (مثلاً 99% أصحاء، 1% مرضى) دون تعديل أوزان الفئات؟",
     option_a_en: "The model will become biased towards predicting the majority class to maximize raw accuracy.",
@@ -90,7 +90,7 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "النموذج الساذج سيخمن فقط الفئة الأغلبية ليسجل دقة 99% بسهولة، متجاهلاً الفئة الأقلية تماماً."
   },
   {
-    id: "mb_l1_07", unit: "1", lesson: "les_1_1", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l1_07", unit: "1", lesson: "1-1", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "What is 'Feature Extraction' in the context of Machine Learning?",
     question_ar: "ما هو 'استخراج الميزات' (Feature Extraction) في سياق تعلم الآلة؟",
     option_a_en: "Downloading data from the internet.",
@@ -106,7 +106,7 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "يتضمن استخراج الميزات تحديد أو تحويل المتغيرات (مثل تحويل صورة إلى مصفوفة من قيم البكسل) حتى يتمكن النموذج من معالجتها."
   },
   {
-    id: "mb_l1_08", unit: "1", lesson: "les_1_1", type: "MCQ", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l1_08", unit: "1", lesson: "1-1", type: "MCQ", source: "HOMEWORK", difficulty: "HARD",
     question_en: "Which evaluation metric is MOST appropriate when the cost of a 'False Negative' is extremely high (e.g., failing to detect a bomb)?",
     question_ar: "أي مقياس تقييم هو الأنسب عندما تكون تكلفة 'السلبية الخاطئة' (False Negative) عالية جداً (مثل الفشل في اكتشاف قنبلة)؟",
     option_a_en: "Precision (الدقة المحددة)",
@@ -122,14 +122,14 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "يقيس الاستدعاء عدد الحالات الإيجابية الفعلية التي اكتشفناها. الاستدعاء العالي يضمن عدم تفويت القنابل (تقليل السلبيات الخاطئة)، حتى لو حصلنا على إنذارات كاذبة (انخفاض الدقة المحددة)."
   },
   {
-    id: "mb_l1_09", unit: "1", lesson: "les_1_1", type: "WRITTEN", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
+    id: "mb_l1_09", unit: "1", lesson: "1-1", type: "WRITTEN", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
     question_en: "Briefly explain how Deep Learning differs from traditional Machine Learning in terms of feature engineering.",
     question_ar: "اشرح باختصار كيف يختلف 'التعلم العميق' عن 'تعلم الآلة' التقليدي فيما يتعلق بهندسة الميزات (Feature Engineering).",
     ideal_answer_en: "In traditional ML, a human expert must manually perform feature extraction. In Deep Learning, the neural network automatically extracts its own features directly from raw data (like pixels) across its hidden layers.",
     ideal_answer_ar: "في تعلم الآلة التقليدي، يجب على الخبير البشري استخراج الميزات يدوياً. في التعلم العميق، تقوم الشبكة العصبية تلقائياً باستخراج الميزات الخاصة بها مباشرة من البيانات الخام عبر طبقاتها المخفية."
   },
   {
-    id: "mb_l1_10", unit: "1", lesson: "les_1_1", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l1_10", unit: "1", lesson: "1-1", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "Which algorithm is commonly used for Unsupervised Learning (Clustering)?",
     question_ar: "أي خوارزمية تُستخدم بشكل شائع للتعلم غير الخاضع للإشراف (التجميع - Clustering)؟",
     option_a_en: "Linear Regression",
@@ -145,7 +145,7 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "تجمع خوارزمية K-Means البيانات غير المصنفة في مجموعات 'K' متميزة بناءً على التشابه."
   },
   {
-    id: "mb_l1_11", unit: "1", lesson: "les_1_1", type: "MCQ", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l1_11", unit: "1", lesson: "1-1", type: "MCQ", source: "HOMEWORK", difficulty: "HARD",
     question_en: "You notice your neural network's loss function decreases on training data but drastically increases on validation data over epochs. What is happening?",
     question_ar: "تلاحظ أن دالة الخسارة للشبكة العصبية تنخفض في بيانات التدريب ولكنها ترتفع بشكل كبير في بيانات التحقق عبر الـ Epochs. ماذا يحدث؟",
     option_a_en: "Underfitting",
@@ -161,7 +161,7 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "عندما ينخفض خطأ التدريب ولكن يرتفع خطأ التحقق، فإن النموذج يحفظ مجموعة التدريب ويفشل في التعميم (فرط التخصيص)."
   },
   {
-    id: "mb_l1_12", unit: "1", lesson: "les_1_1", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
+    id: "mb_l1_12", unit: "1", lesson: "1-1", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
     question_en: "What is a 'Dataset' in the context of AI?",
     question_ar: "ما هي 'مجموعة البيانات' (Dataset) في سياق الذكاء الاصطناعي؟",
     option_a_en: "A piece of code that runs the AI.",
@@ -177,14 +177,14 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "مجموعة البيانات هي أساس أي نموذج ML، وتعمل كـ 'التجربة' التي يتعلم منها."
   },
   {
-    id: "mb_l1_13", unit: "1", lesson: "les_1_1", type: "WRITTEN", source: "CLASSROOM", difficulty: "HARD",
+    id: "mb_l1_13", unit: "1", lesson: "1-1", type: "WRITTEN", source: "CLASSROOM", difficulty: "HARD",
     question_en: "Why do we typically split a dataset into Training, Validation, and Testing sets instead of just Training and Testing?",
     question_ar: "لماذا نقوم عادةً بتقسيم مجموعة البيانات إلى مجموعات (تدريب، وتحقق، واختبار) بدلاً من (تدريب واختبار) فقط؟",
     ideal_answer_en: "The Validation set is used to tune the model's hyperparameters during training (preventing overfitting). The Testing set is kept completely unseen until the very end to provide an unbiased evaluation of the final model's real-world performance.",
     ideal_answer_ar: "تُستخدم مجموعة التحقق لضبط المعلمات الفائقة (Hyperparameters) للنموذج أثناء التدريب. يتم إبقاء مجموعة الاختبار مخفية تماماً حتى النهاية لتوفير تقييم غير متحيز لأداء النموذج النهائي في العالم الحقيقي."
   },
   {
-    id: "mb_l1_14", unit: "1", lesson: "les_1_1", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l1_14", unit: "1", lesson: "1-1", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "What type of learning is used by Netflix to recommend movies based on what similar users watched?",
     question_ar: "ما نوع التعلم الذي تستخدمه نتفليكس (Netflix) للتوصية بالأفلام بناءً على ما شاهده المستخدمون المشابهون؟",
     option_a_en: "Supervised Classification",
@@ -200,7 +200,7 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "تستخدم أنظمة التوصية غالباً تقنيات غير خاضعة للإشراف (مثل التصفية التعاونية) للعثور على أنماط وأوجه تشابه خفية بين المستخدمين."
   },
   {
-    id: "mb_l1_15", unit: "1", lesson: "les_1_1", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l1_15", unit: "1", lesson: "1-1", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "In a Neural Network, what is the role of an 'Epoch'?",
     question_ar: "في الشبكة العصبية، ما هو دور 'الحقبة' (Epoch)؟",
     option_a_en: "It represents a single neuron's calculation.",
@@ -216,7 +216,7 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "يعني الـ Epoch أن النموذج قد رأى مجموعة البيانات بأكملها مرة واحدة. عادة ما يتطلب التدريب العديد من الـ Epochs."
   },
   {
-    id: "mb_l1_16", unit: "1", lesson: "les_1_1", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l1_16", unit: "1", lesson: "1-1", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "Which of the following is NOT a typical application of Artificial Intelligence?",
     question_ar: "أي مما يلي لا يعتبر تطبيقاً نموذجياً للذكاء الاصطناعي؟",
     option_a_en: "Self-driving cars",
@@ -232,14 +232,14 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "تعتمد الساعة الميكانيكية كلياً على التروس المادية، وليس البيانات أو الخوارزميات."
   },
   {
-    id: "mb_l1_17", unit: "1", lesson: "les_1_1", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l1_17", unit: "1", lesson: "1-1", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
     question_en: "Explain the 'Bias-Variance Tradeoff' in simple terms.",
     question_ar: "اشرح 'مفاضلة الانحياز والتباين' (Bias-Variance Tradeoff) بعبارات بسيطة.",
     ideal_answer_en: "It's the balance between a model being too simple (High Bias/Underfitting) and a model being too complex and memorizing noise (High Variance/Overfitting). The goal is to find the sweet spot where the model is complex enough to capture patterns but general enough to handle new data.",
     ideal_answer_ar: "إنه التوازن بين أن يكون النموذج بسيطاً جداً (انحياز عالي / نقص تخصيص) وأن يكون معقداً جداً ويحفظ الضوضاء (تباين عالي / فرط تخصيص). الهدف هو إيجاد النقطة المثالية حيث يكون النموذج معقداً بما يكفي لالتقاط الأنماط ولكنه عام بما يكفي للتعامل مع البيانات الجديدة."
   },
   {
-    id: "mb_l1_18", unit: "1", lesson: "les_1_1", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l1_18", unit: "1", lesson: "1-1", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "What is 'Gradient Descent'?",
     question_ar: "ما هو 'انحدار التدرج' (Gradient Descent)؟",
     option_a_en: "An optimization algorithm used to minimize the loss function by iteratively moving towards the steepest descent.",
@@ -255,7 +255,7 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "انحدار التدرج هو كيفية تعلم الشبكات العصبية: عن طريق تعديل الأوزان خطوة بخطوة في الاتجاه الذي يقلل من الخطأ (الخسارة)."
   },
   {
-    id: "mb_l1_19", unit: "1", lesson: "les_1_1", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l1_19", unit: "1", lesson: "1-1", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "Which type of algorithm would you use to predict the exact temperature for tomorrow?",
     question_ar: "ما نوع الخوارزمية التي ستستخدمها للتنبؤ بدرجة الحرارة الدقيقة للغد؟",
     option_a_en: "Classification",
@@ -271,7 +271,7 @@ export const MASSIVE_BANK_L1: QuizQuestion[] = [
     explanation_ar: "يتنبأ الانحدار بقيمة رقمية مستمرة (مثل درجة الحرارة)، بينما يتنبأ التصنيف بفئات منفصلة (مثل 'حار' أو 'بارد')."
   },
   {
-    id: "mb_l1_20", unit: "1", lesson: "les_1_1", type: "MCQ", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l1_20", unit: "1", lesson: "1-1", type: "MCQ", source: "HOMEWORK", difficulty: "HARD",
     question_en: "Why is 'Data Normalization' (or Scaling) important before training a neural network?",
     question_ar: "لماذا تعد 'تسوية البيانات' (Data Normalization / Scaling) مهمة قبل تدريب الشبكة العصبية؟",
     option_a_en: "It converts text data to images.",

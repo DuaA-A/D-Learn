@@ -3,7 +3,7 @@ import type { QuizQuestion } from './courseData';
 export const MASSIVE_BANK_L2: QuizQuestion[] = [
   // ------------------- LESSON 1.2 (20 QUESTIONS) -------------------
   {
-    id: "mb_l2_01", unit: "1", lesson: "les_1_2", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l2_01", unit: "1", lesson: "1-2", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "What is the main goal of Natural Language Processing (NLP)?",
     question_ar: "ما هو الهدف الرئيسي لمعالجة اللغات الطبيعية (NLP)؟",
     option_a_en: "To allow computers to see and understand images.",
@@ -19,7 +19,7 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "يركز الـ NLP على التفاعل بين أجهزة الكمبيوتر واللغات البشرية."
   },
   {
-    id: "mb_l2_02", unit: "1", lesson: "les_1_2", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l2_02", unit: "1", lesson: "1-2", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "Which of the following is a direct application of Computer Vision?",
     question_ar: "أي مما يلي هو تطبيق مباشر للرؤية الحاسوبية (Computer Vision)؟",
     option_a_en: "Translating an English book to Arabic.",
@@ -35,7 +35,7 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "يستخدم التعرف على الوجه الرؤية الحاسوبية لتحليل الميزات المرئية للوجه."
   },
   {
-    id: "mb_l2_03", unit: "1", lesson: "les_1_2", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l2_03", unit: "1", lesson: "1-2", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "In NLP, what is the purpose of 'Tokenization'?",
     question_ar: "في معالجة اللغات الطبيعية، ما هو الغرض من 'التقطيع' (Tokenization)؟",
     option_a_en: "Translating text into another language.",
@@ -51,14 +51,14 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "التقطيع هو الخطوة الأولى في NLP، حيث يقسم النص إلى وحدات (Tokens) قابلة للإدارة للنموذج."
   },
   {
-    id: "mb_l2_04", unit: "1", lesson: "les_1_2", type: "WRITTEN", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l2_04", unit: "1", lesson: "1-2", type: "WRITTEN", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "Explain what 'Sentiment Analysis' is and provide a real-world business use case.",
     question_ar: "اشرح ما هو 'تحليل المشاعر' (Sentiment Analysis) وقدم حالة استخدام تجارية في العالم الحقيقي.",
     ideal_answer_en: "Sentiment Analysis determines the emotional tone (positive, negative, neutral) behind text. Business use case: A company automatically analyzing thousands of Twitter mentions to gauge customer reaction after launching a new product.",
     ideal_answer_ar: "يحدد تحليل المشاعر النغمة العاطفية (إيجابية، سلبية، محايدة) وراء النص. حالة الاستخدام التجاري: تقوم شركة بتحليل الآلاف من الإشارات على تويتر تلقائياً لقياس رد فعل العملاء بعد إطلاق منتج جديد."
   },
   {
-    id: "mb_l2_05", unit: "1", lesson: "les_1_2", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
+    id: "mb_l2_05", unit: "1", lesson: "1-2", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
     question_en: "What type of neural network is traditionally most suited for processing sequential data like sentences in NLP?",
     question_ar: "ما هو نوع الشبكة العصبية الأنسب تقليدياً لمعالجة البيانات المتسلسلة مثل الجمل في الـ NLP؟",
     option_a_en: "Convolutional Neural Networks (CNNs)",
@@ -74,7 +74,7 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "تمتلك RNNs و LSTMs حلقات 'ذاكرة' تسمح لها بمعالجة تسلسلات البيانات بمرور الوقت."
   },
   {
-    id: "mb_l2_06", unit: "1", lesson: "les_1_2", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l2_06", unit: "1", lesson: "1-2", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "In Computer Vision, what mathematical operation is primarily used by a Convolutional Neural Network (CNN) to extract features like edges and textures?",
     question_ar: "في الرؤية الحاسوبية، ما هي العملية الرياضية التي تستخدمها الشبكة التلافيفية (CNN) بشكل أساسي لاستخراج الميزات مثل الحواف والأنسجة؟",
     option_a_en: "Integration",
@@ -90,7 +90,7 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "يتضمن الالتفاف تمرير مرشح صغير (نواة) فوق الصورة لاكتشاف أنماط محددة مثل الخطوط الأفقية أو الرأسية."
   },
   {
-    id: "mb_l2_07", unit: "1", lesson: "les_1_2", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l2_07", unit: "1", lesson: "1-2", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "Which of the following represents an AI hallucination in a Large Language Model?",
     question_ar: "أي مما يلي يمثل 'هلوسة الذكاء الاصطناعي' (AI Hallucination) في نموذج لغة كبير (LLM)؟",
     option_a_en: "The AI refusing to answer a harmful question.",
@@ -106,7 +106,7 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "تحدث الهلوسة عندما يولد الـ LLM معلومات تبدو معقولة ولكنها خاطئة تماماً."
   },
   {
-    id: "mb_l2_08", unit: "1", lesson: "les_1_2", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l2_08", unit: "1", lesson: "1-2", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "What is 'Object Detection'?",
     question_ar: "ما هو 'اكتشاف الأجسام' (Object Detection)؟",
     option_a_en: "Identifying the main subject of an image.",
@@ -122,14 +122,14 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "اكتشاف الأجسام لا يقول فقط 'يوجد كلب'، بل يقول 'هنا كلب (في هذا المربع) وهنا قطة (في هذا المربع)'."
   },
   {
-    id: "mb_l2_09", unit: "1", lesson: "les_1_2", type: "WRITTEN", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l2_09", unit: "1", lesson: "1-2", type: "WRITTEN", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "Why is 'Context' one of the hardest challenges in Natural Language Processing? Give an example.",
     question_ar: "لماذا يُعد 'السياق' (Context) أحد أصعب التحديات في معالجة اللغات الطبيعية؟ أعطِ مثالاً.",
     ideal_answer_en: "Words can have completely different meanings depending on surrounding words. Example: 'I went to the bank to deposit money' vs 'I sat by the river bank'. An NLP model must look at the whole sentence to understand which 'bank' is meant.",
     ideal_answer_ar: "يمكن أن يكون للكلمات معاني مختلفة تماماً اعتماداً على الكلمات المحيطة. مثال: 'عين الماء صافية' مقابل 'عين الرجل تؤلمه'. يجب أن ينظر نموذج NLP إلى الجملة بأكملها لفهم أي 'عين' يُقصد بها."
   },
   {
-    id: "mb_l2_10", unit: "1", lesson: "les_1_2", type: "MCQ", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l2_10", unit: "1", lesson: "1-2", type: "MCQ", source: "HOMEWORK", difficulty: "HARD",
     question_en: "In Computer Vision, what is 'Data Augmentation' used for?",
     question_ar: "في الرؤية الحاسوبية، فيمَ يُستخدم 'تكبير البيانات' (Data Augmentation)؟",
     option_a_en: "To compress image files to save disk space.",
@@ -145,7 +145,7 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "يساعد تكبير البيانات النموذج على التعميم من خلال إظهار نفس الأجسام له من زوايا وإضاءة مختلفة."
   },
   {
-    id: "mb_l2_11", unit: "1", lesson: "les_1_2", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l2_11", unit: "1", lesson: "1-2", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "Which NLP task involves determining who or what a pronoun refers to in a sentence?",
     question_ar: "ما هي مهمة NLP التي تتضمن تحديد من أو ما يشير إليه الضمير في الجملة؟",
     option_a_en: "Named Entity Recognition (NER)",
@@ -161,7 +161,7 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "يربط تحليل المرجعية الضمائر (هو، هي، إياه) بالكيانات التي تصفها في النص."
   },
   {
-    id: "mb_l2_12", unit: "1", lesson: "les_1_2", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l2_12", unit: "1", lesson: "1-2", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "What does 'Zero-Shot Learning' mean in the context of advanced NLP models like GPT-4?",
     question_ar: "ماذا يعني 'التعلم بدون أمثلة' (Zero-Shot Learning) في سياق نماذج NLP المتقدمة مثل GPT-4؟",
     option_a_en: "The model learns instantly in zero seconds.",
@@ -177,7 +177,7 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "يعني Zero-shot إعطاء مهمة للذكاء الاصطناعي (مثل 'ترجم إلى الفرنسية') دون تقديم أمثلة للترجمة في المُوجّه (Prompt)."
   },
   {
-    id: "mb_l2_13", unit: "1", lesson: "les_1_2", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l2_13", unit: "1", lesson: "1-2", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "Which technique allows AI to generate completely new, realistic images (like deepfakes)?",
     question_ar: "ما هي التقنية التي تسمح للذكاء الاصطناعي بتوليد صور واقعية جديدة تماماً (مثل التزييف العميق Deepfakes)؟",
     option_a_en: "Generative Adversarial Networks (GANs) or Diffusion Models.",
@@ -193,14 +193,14 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "GANs ونماذج الانتشار هي بنيات ذكاء اصطناعي توليدي تُستخدم خصيصاً لإنشاء بيانات صور اصطناعية جديدة."
   },
   {
-    id: "mb_l2_14", unit: "1", lesson: "les_1_2", type: "WRITTEN", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l2_14", unit: "1", lesson: "1-2", type: "WRITTEN", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "Explain the concept of 'Word Embeddings' and how it solves the problem of vocabulary mismatch in NLP.",
     question_ar: "اشرح مفهوم 'تضمين الكلمات' (Word Embeddings) وكيف يحل مشكلة عدم تطابق المفردات في NLP.",
     ideal_answer_en: "Word embeddings represent words as dense vectors of numbers in a high-dimensional space where words with similar meanings are mathematically close to each other. It solves mismatch because the model knows 'happy' and 'joyful' are near each other, instead of treating them as completely unrelated strings.",
     ideal_answer_ar: "يمثل 'تضمين الكلمات' الكلمات كمتجهات كثيفة من الأرقام في مساحة عالية الأبعاد حيث تكون الكلمات ذات المعاني المتشابهة قريبة من بعضها رياضياً. يحل عدم التطابق لأن النموذج يعرف أن 'سعيد' و'مبتهج' متقاربان، بدلاً من التعامل معهما كسلاسل نصية غير مرتبطة تماماً."
   },
   {
-    id: "mb_l2_15", unit: "1", lesson: "les_1_2", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l2_15", unit: "1", lesson: "1-2", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "What is 'Optical Character Recognition' (OCR)?",
     question_ar: "ما هو 'التعرف البصري على الحروف' (OCR)؟",
     option_a_en: "Using AI to write essays.",
@@ -216,7 +216,7 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "يُستخدم OCR في الماسحات الضوئية والتطبيقات (مثل Google Lens) لاستخراج نص قابل للنسخ من الصور."
   },
   {
-    id: "mb_l2_16", unit: "1", lesson: "les_1_2", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l2_16", unit: "1", lesson: "1-2", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "If an NLP system is suffering from catastrophic forgetting, what has likely occurred?",
     question_ar: "إذا كان نظام الـ NLP يعاني من 'النسيان الكارثي' (Catastrophic Forgetting)، فما الذي حدث على الأرجح؟",
     option_a_en: "The server lost its memory drive.",
@@ -232,7 +232,7 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "النسيان الكارثي هو مشكلة رئيسية في التعلم المستمر حيث يؤدي التدريب الدقيق لنموذج على بيانات جديدة إلى تدمير معرفته السابقة."
   },
   {
-    id: "mb_l2_17", unit: "1", lesson: "les_1_2", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l2_17", unit: "1", lesson: "1-2", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "Which metric is commonly used to evaluate the overlap between predicted bounding boxes and ground truth boxes in Object Detection?",
     question_ar: "ما هو المقياس الشائع استخدامه لتقييم التداخل بين 'مربعات الإحاطة' المتوقعة ومربعات الحقيقة (Ground Truth) في اكتشاف الأجسام؟",
     option_a_en: "Intersection over Union (IoU)",
@@ -248,7 +248,7 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "يقسم IoU مساحة التداخل على مساحة الاتحاد لتسجيل مدى دقة تغطية المربع المتوقع للجسم الفعلي."
   },
   {
-    id: "mb_l2_18", unit: "1", lesson: "les_1_2", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
+    id: "mb_l2_18", unit: "1", lesson: "1-2", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
     question_en: "In transformers, why is 'Positional Encoding' necessary?",
     question_ar: "في المحولات (Transformers)، لماذا تعتبر 'الترميز الموضعي' (Positional Encoding) ضرورية؟",
     option_a_en: "To translate the text.",
@@ -264,14 +264,14 @@ export const MASSIVE_BANK_L2: QuizQuestion[] = [
     explanation_ar: "على عكس RNNs التي تقرأ الكلمات واحدة تلو الأخرى، تقرأ المحولات كل شيء دفعة واحدة. بدون الترميز الموضعي، ستبدو 'الكلب يعض الرجل' و 'الرجل يعض الكلب' متطابقة رياضياً."
   },
   {
-    id: "mb_l2_19", unit: "1", lesson: "les_1_2", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l2_19", unit: "1", lesson: "1-2", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
     question_en: "Describe the 'Attention Mechanism' intuitively.",
     question_ar: "صف 'آلية الانتباه' (Attention Mechanism) بشكل بديهي.",
     ideal_answer_en: "The Attention Mechanism allows a neural network to 'focus' on specific parts of the input data that are most relevant to predicting the current output, much like how humans pay attention to specific words in a sentence when translating it.",
     ideal_answer_ar: "تسمح 'آلية الانتباه' للشبكة العصبية بـ 'التركيز' على أجزاء محددة من بيانات الإدخال الأكثر صلة بتوقع المخرجات الحالية، تماماً كما ينتبه البشر إلى كلمات معينة في الجملة عند ترجمتها."
   },
   {
-    id: "mb_l2_20", unit: "1", lesson: "les_1_2", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
+    id: "mb_l2_20", unit: "1", lesson: "1-2", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
     question_en: "What does 'Semantic Segmentation' mean in Computer Vision?",
     question_ar: "ماذا يعني 'التجزئة الدلالية' (Semantic Segmentation) في الرؤية الحاسوبية؟",
     option_a_en: "Drawing one large box around everything in an image.",

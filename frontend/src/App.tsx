@@ -24,7 +24,6 @@ import {
 } from 'firebase/firestore';
 import { auth, db } from './firebase';
 
-// Course Data
 import { COURSE_METADATA, LESSONS, QUIZ_QUESTIONS as BASE_QUIZ_QUESTIONS } from './courseData';
 import { EXTRA_QUESTIONS, FLASHCARDS } from './extraData';
 import { MASSIVE_BANK } from './massiveBank';
@@ -32,8 +31,22 @@ import { MASSIVE_BANK_L1 } from './massiveBank_Lesson1';
 import { MASSIVE_BANK_L2 } from './massiveBank_Lesson2';
 import { MASSIVE_BANK_L3 } from './massiveBank_Lesson3';
 import { MASSIVE_BANK_L4 } from './massiveBank_Lesson4';
+import { OFFICIAL_WRITTEN_L1_L2 } from './officialAssessments_Lesson1_2';
+import { OFFICIAL_ASSESSMENTS_L3 } from './officialAssessments_Lesson3';
+import { OFFICIAL_ASSESSMENTS_L4 } from './officialAssessments_Lesson4';
 
-const QUIZ_QUESTIONS = [...BASE_QUIZ_QUESTIONS, ...EXTRA_QUESTIONS, ...MASSIVE_BANK, ...MASSIVE_BANK_L1, ...MASSIVE_BANK_L2, ...MASSIVE_BANK_L3, ...MASSIVE_BANK_L4];
+const QUIZ_QUESTIONS = [
+  ...BASE_QUIZ_QUESTIONS,
+  ...EXTRA_QUESTIONS,
+  ...MASSIVE_BANK,
+  ...MASSIVE_BANK_L1,
+  ...MASSIVE_BANK_L2,
+  ...MASSIVE_BANK_L3,
+  ...MASSIVE_BANK_L4,
+  ...OFFICIAL_WRITTEN_L1_L2,
+  ...OFFICIAL_ASSESSMENTS_L3,
+  ...OFFICIAL_ASSESSMENTS_L4,
+];
 
 // ============================================================
 // TYPES
@@ -577,7 +590,7 @@ function StudentDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {filteredLessons.map((lesson, idx) => {
             const isCompleted = profile?.completedLessons?.includes(lesson.id);
-            const lessonQuestions = QUIZ_QUESTIONS.filter(q => q.lesson === lesson.id);
+            const lessonQuestions = QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, lesson.id));
             const unitColor = UNIT_COLORS[lesson.unit] || UNIT_COLORS[1];
 
             return (

@@ -3,7 +3,7 @@ import type { QuizQuestion } from './courseData';
 export const MASSIVE_BANK_L3: QuizQuestion[] = [
   // ------------------- LESSON 1.3 (20 QUESTIONS) -------------------
   {
-    id: "mb_l3_01", unit: "1", lesson: "les_1_3", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l3_01", unit: "1", lesson: "1-3", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "What does 'IoT' stand for?",
     question_ar: "ماذا يعني اختصار 'IoT'؟",
     option_a_en: "Internet of Technology",
@@ -19,7 +19,7 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "يرمز IoT إلى إنترنت الأشياء، ويشير إلى الأشياء المادية المتصلة بالإنترنت."
   },
   {
-    id: "mb_l3_02", unit: "1", lesson: "les_1_3", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l3_02", unit: "1", lesson: "1-3", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "Which of the following is a primary characteristic of a Smart Home device?",
     question_ar: "أي مما يلي يُعد خاصية أساسية لجهاز 'المنزل الذكي'؟",
     option_a_en: "It must run on solar power.",
@@ -35,7 +35,7 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "الاتصال والأتمتة هما الميزتان المحددتان للأجهزة الذكية."
   },
   {
-    id: "mb_l3_03", unit: "1", lesson: "les_1_3", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l3_03", unit: "1", lesson: "1-3", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "How does 'Edge Computing' differ from traditional 'Cloud Computing' in IoT environments?",
     question_ar: "كيف تختلف 'حوسبة الحافة' (Edge Computing) عن 'الحوسبة السحابية' التقليدية في بيئات الـ IoT؟",
     option_a_en: "Edge computing relies entirely on satellite connections.",
@@ -51,14 +51,14 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "تعتبر حوسبة الحافة حاسمة لتطبيقات إنترنت الأشياء الحساسة للوقت (مثل السيارات ذاتية القيادة) لأنها تتجنب تأخير الرحلة ذهاباً وإياباً إلى السحابة."
   },
   {
-    id: "mb_l3_04", unit: "1", lesson: "les_1_3", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l3_04", unit: "1", lesson: "1-3", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
     question_en: "Provide an example of how IoT and AI combine in 'Smart Agriculture'.",
     question_ar: "قدم مثالاً على كيفية الجمع بين إنترنت الأشياء (IoT) والذكاء الاصطناعي (AI) في 'الزراعة الذكية'.",
     ideal_answer_en: "IoT soil moisture sensors stream real-time data to a central hub. AI algorithms analyze this data alongside weather forecasts to automatically trigger irrigation systems only exactly when needed, saving water and maximizing crop yield.",
     ideal_answer_ar: "تقوم مستشعرات رطوبة التربة (IoT) ببث بيانات في الوقت الفعلي. تقوم خوارزميات الذكاء الاصطناعي بتحليل هذه البيانات مع توقعات الطقس لتشغيل أنظمة الري تلقائياً فقط عند الحاجة بالضبط، مما يوفر المياه ويزيد الغلة."
   },
   {
-    id: "mb_l3_05", unit: "1", lesson: "les_1_3", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l3_05", unit: "1", lesson: "1-3", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "What protocol is commonly used by smart home devices to form low-power mesh networks?",
     question_ar: "ما هو البروتوكول الشائع استخدامه من قبل أجهزة المنزل الذكي لتكوين شبكات متداخلة (Mesh Networks) منخفضة الطاقة؟",
     option_a_en: "HTTP",
@@ -74,7 +74,7 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "Zigbee و Z-Wave هما بروتوكولان قياسيان لأتمتة المنزل الذكي لأنهما يستهلكان طاقة قليلة جداً ويمكنهما توجيه الرسائل عبر بعضهما البعض."
   },
   {
-    id: "mb_l3_06", unit: "1", lesson: "les_1_3", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l3_06", unit: "1", lesson: "1-3", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "Why is 'Interoperability' a major challenge in the Smart Home industry?",
     question_ar: "لماذا يُعد 'التوافقية' (Interoperability) تحدياً رئيسياً في صناعة المنازل الذكية؟",
     option_a_en: "Devices use too much electricity.",
@@ -90,7 +90,7 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "ثلاجة سامسونج قد لا 'تتحدث' بسهولة مع منظم حرارة من آبل بدون جسور وسيطة، مما يخلق أنظمة بيئية مجزأة (على الرغم من أن بروتوكول Matter يحاول حل ذلك)."
   },
   {
-    id: "mb_l3_07", unit: "1", lesson: "les_1_3", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l3_07", unit: "1", lesson: "1-3", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "Which of the following is an example of an IoT 'Actuator'?",
     question_ar: "أي مما يلي يعتبر مثالاً لـ 'المُشغّل' (Actuator) في إنترنت الأشياء؟",
     option_a_en: "A temperature sensor",
@@ -106,7 +106,7 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "المستشعرات تجمع البيانات؛ أما المشغلات فتنفذ إجراءات مادية (تحريك، تشغيل/إيقاف) بناءً على تلك البيانات."
   },
   {
-    id: "mb_l3_08", unit: "1", lesson: "les_1_3", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
+    id: "mb_l3_08", unit: "1", lesson: "1-3", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
     question_en: "In the context of Smart Cities, what is a 'Digital Twin'?",
     question_ar: "في سياق المدن الذكية، ما هو 'التوأم الرقمي' (Digital Twin)؟",
     option_a_en: "A backup server located in another city.",
@@ -122,14 +122,14 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "تسمح التوائم الرقمية لمخططي المدن بمحاكاة تأثير تغيرات المرور أو الكوارث الطبيعية على النموذج الرقمي قبل تجربتها في العالم الحقيقي."
   },
   {
-    id: "mb_l3_09", unit: "1", lesson: "les_1_3", type: "WRITTEN", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l3_09", unit: "1", lesson: "1-3", type: "WRITTEN", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "Explain the security risk of a 'DDoS attack' utilizing IoT smart home devices.",
     question_ar: "اشرح المخاطر الأمنية لـ 'هجوم حجب الخدمة الموزع' (DDoS attack) الذي يستغل أجهزة إنترنت الأشياء المنزلية الذكية.",
     ideal_answer_en: "IoT devices often have weak default passwords. Hackers can infect thousands of smart cameras/fridges with malware, turning them into a 'botnet'. These devices are then commanded simultaneously to flood a target website with traffic, causing it to crash.",
     ideal_answer_ar: "غالباً ما تحتوي أجهزة IoT على كلمات مرور افتراضية ضعيفة. يمكن للقراصنة إصابة الآلاف من الكاميرات/الثلاجات الذكية ببرامج ضارة، وتحويلها إلى 'شبكة روبوت' (botnet). يُطلب من هذه الأجهزة بعد ذلك إغراق موقع ويب مستهدف بحركة المرور في وقت واحد، مما يؤدي إلى تعطله."
   },
   {
-    id: "mb_l3_10", unit: "1", lesson: "les_1_3", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l3_10", unit: "1", lesson: "1-3", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "What role does 5G technology play in the expansion of IoT?",
     question_ar: "ما هو الدور الذي تلعبه تقنية الجيل الخامس (5G) في توسيع نطاق إنترنت الأشياء (IoT)؟",
     option_a_en: "It replaces the need for electricity.",
@@ -145,7 +145,7 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "تحل شبكات الجيل الخامس مشكلة ازدحام الشبكة، مما يسمح للمدن الذكية بامتلاك ملايين المستشعرات التي تنقل البيانات في وقت واحد وفي الوقت الفعلي."
   },
   {
-    id: "mb_l3_11", unit: "1", lesson: "les_1_3", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
+    id: "mb_l3_11", unit: "1", lesson: "1-3", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
     question_en: "What is 'Geofencing' in smart home automation?",
     question_ar: "ما هو السياج الجغرافي (Geofencing) في أتمتة المنزل الذكي؟",
     option_a_en: "Building a physical electronic fence around a house.",
@@ -161,7 +161,7 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "يسمح السياج الجغرافي للمنازل بالاستعداد بشكل استباقي لوصولك من خلال اكتشاف وقت دخول هاتفك إلى نصف قطر 'السياج'."
   },
   {
-    id: "mb_l3_12", unit: "1", lesson: "les_1_3", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
+    id: "mb_l3_12", unit: "1", lesson: "1-3", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
     question_en: "In a smart hospital, what is the main benefit of IoT-enabled patient wristbands?",
     question_ar: "في المستشفى الذكي، ما هي الفائدة الرئيسية لأساور المرضى التي تدعم إنترنت الأشياء؟",
     option_a_en: "They play music to calm the patient.",
@@ -177,14 +177,14 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "المراقبة المستمرة تكتشف التدهور قبل وقت طويل من الفحص اليدوي المجدول من قبل الممرضة."
   },
   {
-    id: "mb_l3_13", unit: "1", lesson: "les_1_3", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l3_13", unit: "1", lesson: "1-3", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
     question_en: "How can Smart Grids (an application of IoT) prevent massive blackouts?",
     question_ar: "كيف يمكن للشبكات الذكية (Smart Grids) - أحد تطبيقات IoT - منع انقطاع التيار الكهربائي الواسع؟",
     ideal_answer_en: "Smart Grids use sensors to monitor real-time electricity consumption and AI to predict demand peaks. They can automatically reroute power around damaged lines or communicate with smart homes to temporarily reduce non-essential power usage (like pausing A/C units) to balance the load and prevent a grid collapse.",
     ideal_answer_ar: "تستخدم الشبكات الذكية مستشعرات لمراقبة استهلاك الكهرباء في الوقت الفعلي والذكاء الاصطناعي لتوقع ذروة الطلب. يمكنها إعادة توجيه الطاقة تلقائياً حول الخطوط التالفة أو التواصل مع المنازل الذكية لتقليل استخدام الطاقة غير الضرورية مؤقتاً (مثل إيقاف المكيفات) لموازنة الحمل ومنع انهيار الشبكة."
   },
   {
-    id: "mb_l3_14", unit: "1", lesson: "les_1_3", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
+    id: "mb_l3_14", unit: "1", lesson: "1-3", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
     question_en: "What is the primary function of a 'Smart Hub' (like Amazon Echo or SmartThings hub) in an IoT ecosystem?",
     question_ar: "ما هي الوظيفة الأساسية لـ 'الموزع الذكي' (مثل Amazon Echo أو SmartThings) في النظام البيئي لإنترنت الأشياء؟",
     option_a_en: "To boost Wi-Fi speed.",
@@ -200,7 +200,7 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "تحل الموزعات مشكلة التوافق من خلال التحدث بجميع 'لغات' الأجهزة الذكية المختلفة وتوحيدها في تطبيق واحد."
   },
   {
-    id: "mb_l3_15", unit: "1", lesson: "les_1_3", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
+    id: "mb_l3_15", unit: "1", lesson: "1-3", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
     question_en: "Which ethical issue is most prominently raised by the proliferation of Smart Home cameras and microphones?",
     question_ar: "ما هي المشكلة الأخلاقية الأبرز التي يثيرها انتشار كاميرات وميكروفونات المنازل الذكية؟",
     option_a_en: "High cost of electricity.",
@@ -216,7 +216,7 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "تشكل الميكروفونات والكاميرات التي تعمل دائماً داخل المساكن الخاصة مخاطر غير مسبوقة على الخصوصية إذا لم يتم تشفير البيانات بشكل آمن."
   },
   {
-    id: "mb_l3_16", unit: "1", lesson: "les_1_3", type: "MCQ", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l3_16", unit: "1", lesson: "1-3", type: "MCQ", source: "HOMEWORK", difficulty: "HARD",
     question_en: "What is 'Predictive Maintenance' in Industrial IoT (IIoT)?",
     question_ar: "ما هي 'الصيانة التنبؤية' (Predictive Maintenance) في إنترنت الأشياء الصناعي (IIoT)؟",
     option_a_en: "Fixing a machine after it breaks completely.",
@@ -232,7 +232,7 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "الصيانة التنبؤية توفر للمصانع الملايين عن طريق منع التوقف غير المتوقع عن العمل."
   },
   {
-    id: "mb_l3_17", unit: "1", lesson: "les_1_3", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l3_17", unit: "1", lesson: "1-3", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "What is an 'RFID tag' commonly used for in IoT?",
     question_ar: "فيم تُستخدم 'علامة RFID' بشكل شائع في إنترنت الأشياء؟",
     option_a_en: "Generating artificial intelligence.",
@@ -248,7 +248,7 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "تسمح علامات RFID للأنظمة الذكية بمعرفة المنتجات الموجودة في المستودع على الفور دون مسح الرموز الشريطية يدوياً."
   },
   {
-    id: "mb_l3_18", unit: "1", lesson: "les_1_3", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l3_18", unit: "1", lesson: "1-3", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "In an IoT architecture, what is the role of a 'Gateway'?",
     question_ar: "في بنية إنترنت الأشياء (IoT)، ما هو دور 'البوابة' (Gateway)؟",
     option_a_en: "It acts as an intermediary that collects data from local sensors, sometimes pre-processes it, and then securely transmits it to the external cloud.",
@@ -264,14 +264,14 @@ export const MASSIVE_BANK_L3: QuizQuestion[] = [
     explanation_ar: "غالباً ما تفتقر المستشعرات إلى الطاقة أو ميزات الأمان للتحدث مباشرة إلى السحابة. تعمل البوابة على سد هذه الفجوة بأمان."
   },
   {
-    id: "mb_l3_19", unit: "1", lesson: "les_1_3", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l3_19", unit: "1", lesson: "1-3", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
     question_en: "Describe how a Smart City utilizes IoT to optimize waste management.",
     question_ar: "صف كيف تستخدم المدينة الذكية إنترنت الأشياء (IoT) لتحسين إدارة النفايات.",
     ideal_answer_en: "Smart trash cans are equipped with ultrasonic fill-level sensors. Instead of garbage trucks driving fixed routes daily (wasting fuel and time), the IoT system calculates a dynamic, optimized route every morning, targeting only the bins that are actually full.",
     ideal_answer_ar: "تم تجهيز صناديق القمامة الذكية بمستشعرات فوق صوتية لقياس مستوى الامتلاء. بدلاً من قيادة شاحنات القمامة في مسارات ثابتة يومياً (مما يهدر الوقود)، يقوم نظام IoT بحساب مسار ديناميكي محسن كل صباح، مستهدفاً فقط الصناديق الممتلئة فعلياً."
   },
   {
-    id: "mb_l3_20", unit: "1", lesson: "les_1_3", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
+    id: "mb_l3_20", unit: "1", lesson: "1-3", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
     question_en: "Which of the following describes a 'Wearable' IoT device?",
     question_ar: "أي مما يلي يصف جهاز إنترنت أشياء 'قابل للارتداء' (Wearable)؟",
     option_a_en: "A smart refrigerator.",

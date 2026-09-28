@@ -3,7 +3,7 @@ import type { QuizQuestion } from './courseData';
 export const MASSIVE_BANK_L4: QuizQuestion[] = [
   // ------------------- LESSON 1.4 (20 QUESTIONS) -------------------
   {
-    id: "mb_l4_01", unit: "1", lesson: "les_1_4", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l4_01", unit: "1", lesson: "1-4", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "What is 'Algorithmic Bias'?",
     question_ar: "ما هو 'التحيز الخوارزمي' (Algorithmic Bias)؟",
     option_a_en: "When an AI system operates too slowly due to complex algorithms.",
@@ -19,7 +19,7 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "عادةً ما ينبع التحيز الخوارزمي من بيانات تدريب متحيزة، مما يعكس الأحكام المسبقة البشرية التاريخية."
   },
   {
-    id: "mb_l4_02", unit: "1", lesson: "les_1_4", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l4_02", unit: "1", lesson: "1-4", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "Which of the following is an example of an AI privacy violation?",
     question_ar: "أي مما يلي هو مثال على 'انتهاك الخصوصية' بواسطة الذكاء الاصطناعي؟",
     option_a_en: "An AI generating a fake landscape image.",
@@ -35,7 +35,7 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "يعد تسجيل البيانات الخاصة دون موافقة مستنيرة لتحقيق مكاسب تجارية انتهاكاً أخلاقياً وقانونياً رئيسياً للخصوصية."
   },
   {
-    id: "mb_l4_03", unit: "1", lesson: "les_1_4", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l4_03", unit: "1", lesson: "1-4", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "What is the 'Alignment Problem' in Artificial Intelligence?",
     question_ar: "ما هي 'مشكلة التوافق' (Alignment Problem) في الذكاء الاصطناعي؟",
     option_a_en: "Aligning text properly in UI design.",
@@ -51,14 +51,14 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "إذا طُلب من ذكاء اصطناعي 'جعل البشر يبتسمون'، فقد يشل عضلات وجه الإنسان في ابتسامة دائمة إذا لم تكن أهدافه متوافقة مع رفاهية الإنسان."
   },
   {
-    id: "mb_l4_04", unit: "1", lesson: "les_1_4", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l4_04", unit: "1", lesson: "1-4", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
     question_en: "Explain how 'Deepfakes' pose a threat to democratic elections.",
     question_ar: "اشرح كيف تشكل تقنية 'التزييف العميق' (Deepfakes) تهديداً للانتخابات الديمقراطية.",
     ideal_answer_en: "Deepfakes can create highly realistic, fabricated videos of political candidates saying or doing things they never did. If released right before an election, they can manipulate public opinion and spread massive misinformation before the truth can be verified.",
     ideal_answer_ar: "يمكن لتقنية التزييف العميق إنشاء مقاطع فيديو واقعية للغاية ومفبركة للمرشحين السياسيين يقولون أو يفعلون أشياء لم يفعلوها أبداً. إذا تم نشرها قبل الانتخابات مباشرة، فيمكنها التلاعب بالرأي العام ونشر معلومات مضللة هائلة قبل التحقق من الحقيقة."
   },
   {
-    id: "mb_l4_05", unit: "1", lesson: "les_1_4", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l4_05", unit: "1", lesson: "1-4", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "What does 'Explainable AI' (XAI) aim to achieve?",
     question_ar: "ما الذي يهدف 'الذكاء الاصطناعي القابل للتفسير' (XAI) إلى تحقيقه؟",
     option_a_en: "To make AI speak with a human voice.",
@@ -74,7 +74,7 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "يحل XAI مشكلة 'الصندوق الأسود'، مما يضمن الشفافية في المجالات الحساسة مثل الرعاية الصحية والقانون."
   },
   {
-    id: "mb_l4_06", unit: "1", lesson: "les_1_4", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l4_06", unit: "1", lesson: "1-4", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "An autonomous weapon system is programmed to identify and eliminate enemy combatants without human intervention. Which ethical principle does this most directly violate?",
     question_ar: "نظام أسلحة مستقل مبرمج لتحديد وقتل مقاتلي العدو دون تدخل بشري. أي مبدأ أخلاقي ينتهك هذا بشكل مباشر؟",
     option_a_en: "Net Neutrality.",
@@ -90,7 +90,7 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "إن تفويض قرارات الحياة أو الموت بالكامل للآلات يزيل المساءلة البشرية، مما أدى إلى دعوات واسعة النطاق لحظر أنظمة الأسلحة المستقلة المميتة (LAWS)."
   },
   {
-    id: "mb_l4_07", unit: "1", lesson: "les_1_4", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l4_07", unit: "1", lesson: "1-4", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "When an AI is generating images from text, why might it only generate images of male doctors and female nurses?",
     question_ar: "عندما يقوم الذكاء الاصطناعي بتوليد صور من النص، لماذا قد يقوم فقط بتوليد صور لأطباء ذكور وممرضات إناث؟",
     option_a_en: "The AI possesses a conscious gender bias.",
@@ -106,7 +106,7 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "تعكس نماذج الذكاء الاصطناعي البيانات التي تتلقاها. إذا كانت بنوك الصور التاريخية تمثل الرجال كأطباء بنسبة أكبر، فإن الذكاء الاصطناعي يتعلم هذا كواقع افتراضي."
   },
   {
-    id: "mb_l4_08", unit: "1", lesson: "les_1_4", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
+    id: "mb_l4_08", unit: "1", lesson: "1-4", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
     question_en: "What does the concept of 'Data Sovereignty' refer to in the context of AI?",
     question_ar: "إلى ماذا يشير مفهوم 'السيادة على البيانات' (Data Sovereignty) في سياق الذكاء الاصطناعي؟",
     option_a_en: "The idea that AI models should rule the government.",
@@ -122,14 +122,14 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "تمثل سيادة البيانات مشكلة كبيرة لشركات الذكاء الاصطناعي متعددة الجنسيات، حيث يجب عليها الامتثال لقوانين الخصوصية المحلية (مثل GDPR في أوروبا) بناءً على مكان تخزين البيانات مادياً."
   },
   {
-    id: "mb_l4_09", unit: "1", lesson: "les_1_4", type: "WRITTEN", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l4_09", unit: "1", lesson: "1-4", type: "WRITTEN", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "Briefly discuss the economic ethical dilemma of AI automation regarding the workforce.",
     question_ar: "ناقش باختصار المعضلة الأخلاقية الاقتصادية لأتمتة الذكاء الاصطناعي فيما يتعلق بالقوى العاملة.",
     ideal_answer_en: "AI automation massively increases productivity and creates new technical jobs, but it simultaneously displaces millions of routine manual and cognitive jobs. The ethical dilemma is how society manages this transition—such as through universal basic income (UBI) or reskilling programs—to prevent extreme wealth inequality.",
     ideal_answer_ar: "تزيد أتمتة الذكاء الاصطناعي الإنتاجية بشكل كبير وتخلق وظائف تقنية جديدة، لكنها تؤدي في الوقت نفسه إلى إزاحة الملايين من الوظائف الروتينية اليدوية والمعرفية. المعضلة الأخلاقية هي كيفية إدارة المجتمع لهذا التحول - مثل الدخل الأساسي الشامل (UBI) أو برامج إعادة التأهيل - لمنع التفاوت الشديد في الثروة."
   },
   {
-    id: "mb_l4_10", unit: "1", lesson: "les_1_4", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l4_10", unit: "1", lesson: "1-4", type: "MCQ", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "Which of the following is a proposed solution to combat AI Bias?",
     question_ar: "أي مما يلي يُعد حلاً مقترحاً لمكافحة تحيز الذكاء الاصطناعي (AI Bias)؟",
     option_a_en: "Building deeper neural networks.",
@@ -145,7 +145,7 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "يضمن التنوع في البيانات تمثيل جميع المجموعات، وتساعد عمليات التدقيق في اكتشاف التحيزات قبل النشر."
   },
   {
-    id: "mb_l4_11", unit: "1", lesson: "les_1_4", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
+    id: "mb_l4_11", unit: "1", lesson: "1-4", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
     question_en: "What is 'Techno-solutionism' in the context of AI?",
     question_ar: "ما هي 'الحلولية التكنولوجية' (Techno-solutionism) في سياق الذكاء الاصطناعي؟",
     option_a_en: "The study of technology.",
@@ -161,7 +161,7 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "تحدث العديد من الإخفاقات الأخلاقية عندما تنشر الشركات الذكاء الاصطناعي لـ 'حل' مشكلات مثل الجريمة أو الفقر، متجاهلة حقيقة أن هذه مشكلات بشرية تتطلب سياسة اجتماعية، وليس مجرد خوارزمية."
   },
   {
-    id: "mb_l4_12", unit: "1", lesson: "les_1_4", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
+    id: "mb_l4_12", unit: "1", lesson: "1-4", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
     question_en: "If an AI generates a beautiful painting, who legally owns the copyright currently in most jurisdictions?",
     question_ar: "إذا قام ذكاء اصطناعي بتوليد لوحة فنية جميلة، فمن يمتلك قانونياً حقوق الطبع والنشر حالياً في معظم السلطات القضائية؟",
     option_a_en: "The AI itself.",
@@ -177,14 +177,14 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "حالياً، تحكم معظم مكاتب حقوق الطبع والنشر (مثل مكتب حقوق الطبع والنشر الأمريكي) بأن المؤلفين البشريين فقط هم من يمكنهم المطالبة بحقوق الطبع والنشر."
   },
   {
-    id: "mb_l4_13", unit: "1", lesson: "les_1_4", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l4_13", unit: "1", lesson: "1-4", type: "WRITTEN", source: "HOMEWORK", difficulty: "HARD",
     question_en: "What is the 'Right to be Forgotten' and why is it difficult to implement in Large Language Models (LLMs)?",
     question_ar: "ما هو 'الحق في النسيان' (Right to be Forgotten) ولماذا يصعب تنفيذه في نماذج اللغات الكبيرة (LLMs)؟",
     ideal_answer_en: "The Right to be Forgotten allows individuals to request the deletion of their personal data. It is extremely difficult in LLMs because data is not stored as discrete files, but rather baked into millions of mathematical weights during training. You cannot simply 'delete a file'; you often have to retrain the entire model from scratch.",
     ideal_answer_ar: "يسمح 'الحق في النسيان' للأفراد بطلب حذف بياناتهم الشخصية. هذا صعب للغاية في نماذج LLM لأن البيانات لا يتم تخزينها كملفات منفصلة، بل يتم دمجها في ملايين الأوزان الرياضية أثناء التدريب. لا يمكنك ببساطة 'حذف ملف'؛ بل تضطر غالباً إلى إعادة تدريب النموذج بأكمله من الصفر."
   },
   {
-    id: "mb_l4_14", unit: "1", lesson: "les_1_4", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
+    id: "mb_l4_14", unit: "1", lesson: "1-4", type: "MCQ", source: "CLASSROOM", difficulty: "HARD",
     question_en: "An insurance company uses an AI that predicts health risks by analyzing users' grocery shopping habits from a partner app. Which ethical principle is breached here?",
     question_ar: "تستخدم شركة تأمين ذكاءً اصطناعياً يتوقع المخاطر الصحية من خلال تحليل عادات تسوق البقالة للمستخدمين من تطبيق شريك. ما هو المبدأ الأخلاقي الذي تم خرقه هنا؟",
     option_a_en: "Energy efficiency.",
@@ -200,7 +200,7 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "وافق المستخدمون على مشاركة بيانات البقالة لتطبيق تسوق، وليس لتصنيفهم سراً لتحديد أسعار التأمين الصحي."
   },
   {
-    id: "mb_l4_15", unit: "1", lesson: "les_1_4", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
+    id: "mb_l4_15", unit: "1", lesson: "1-4", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "MEDIUM",
     question_en: "What is 'Surveillance Capitalism'?",
     question_ar: "ما هي 'رأسمالية المراقبة' (Surveillance Capitalism)؟",
     option_a_en: "Selling physical security cameras.",
@@ -216,7 +216,7 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "تستخدم عمالقة التكنولوجيا الذكاء الاصطناعي لتحليل عوادم بياناتنا (الإعجابات، الموقع، التصفح) لبيع تنبؤات سلوكية مستهدفة للغاية للمعلنين."
   },
   {
-    id: "mb_l4_16", unit: "1", lesson: "les_1_4", type: "MCQ", source: "HOMEWORK", difficulty: "HARD",
+    id: "mb_l4_16", unit: "1", lesson: "1-4", type: "MCQ", source: "HOMEWORK", difficulty: "HARD",
     question_en: "Why is 'Facial Recognition Technology' (FRT) heavily criticized and sometimes banned by city councils?",
     question_ar: "لماذا تتعرض 'تقنية التعرف على الوجه' (FRT) لانتقادات شديدة ويتم حظرها أحياناً من قبل مجالس المدن؟",
     option_a_en: "Because it makes cameras overheat.",
@@ -232,7 +232,7 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "أدت FRT إلى اعتقالات خاطئة بسبب التحيز الخوارزمي، كما أن المسح العام المستمر يدمر عدم الكشف عن الهوية في الأماكن العامة."
   },
   {
-    id: "mb_l4_17", unit: "1", lesson: "les_1_4", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
+    id: "mb_l4_17", unit: "1", lesson: "1-4", type: "MCQ", source: "CLASSROOM", difficulty: "MEDIUM",
     question_en: "What does 'Transparency' in AI ethics mean?",
     question_ar: "ماذا تعني 'الشفافية' (Transparency) في أخلاقيات الذكاء الاصطناعي؟",
     option_a_en: "Making the computer casing out of glass.",
@@ -248,7 +248,7 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "تضمن الشفافية عدم خداع الأشخاص للاعتقاد بأنهم يتحدثون إلى إنسان، وأنهم يفهمون استخدام البيانات."
   },
   {
-    id: "mb_l4_18", unit: "1", lesson: "les_1_4", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l4_18", unit: "1", lesson: "1-4", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "In the context of the AI 'Trolley Problem', what is the doctrine of 'Utilitarianism'?",
     question_ar: "في سياق 'معضلة العربة' الخاصة بالذكاء الاصطناعي، ما هو مبدأ 'النفعية' (Utilitarianism)؟",
     option_a_en: "The AI should always protect the owner of the vehicle.",
@@ -264,14 +264,14 @@ export const MASSIVE_BANK_L4: QuizQuestion[] = [
     explanation_ar: "النفعية هي نظرية أخلاقية تهدف إلى تعظيم الرفاهية العامة، مما يعني أن الذكاء الاصطناعي قد يضحي بحياة شخص واحد لإنقاذ خمسة."
   },
   {
-    id: "mb_l4_19", unit: "1", lesson: "les_1_4", type: "WRITTEN", source: "HOMEWORK", difficulty: "MEDIUM",
+    id: "mb_l4_19", unit: "1", lesson: "1-4", type: "WRITTEN", source: "HOMEWORK", difficulty: "MEDIUM",
     question_en: "What is a 'Botnet' and how does it relate to IoT security?",
     question_ar: "ما هي 'شبكة الروبوت' (Botnet) وكيف ترتبط بأمان إنترنت الأشياء؟",
     ideal_answer_en: "A botnet is a network of private computers or IoT devices infected with malicious software and controlled as a group without the owners' knowledge. IoT devices are prime targets because they often lack built-in security, making them easy to hijack and use for massive cyberattacks.",
     ideal_answer_ar: "شبكة الروبوت هي شبكة من أجهزة الكمبيوتر الخاصة أو أجهزة IoT المصابة ببرامج ضارة ويتم التحكم فيها كمجموعة دون علم أصحابها. تُعد أجهزة IoT أهدافاً رئيسية لأنها غالباً ما تفتقر إلى الأمان المدمج، مما يسهل اختراقها واستخدامها في هجمات إلكترونية ضخمة."
   },
   {
-    id: "mb_l4_20", unit: "1", lesson: "les_1_4", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
+    id: "mb_l4_20", unit: "1", lesson: "1-4", type: "MCQ", source: "WEEKLY_ASSESSMENT", difficulty: "HARD",
     question_en: "What does 'Red Teaming' refer to in AI development?",
     question_ar: "إلى ماذا يشير مصطلح 'الفريق الأحمر' (Red Teaming) في تطوير الذكاء الاصطناعي؟",
     option_a_en: "A team that designs the user interface.",
