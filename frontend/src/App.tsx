@@ -6,7 +6,7 @@ import {
   Award, LogOut, User, Star, Layers, Globe, Shield, Code, AlertTriangle,
   Lock, Mail, Eye, EyeOff, Home, ChevronDown, BookMarked, Brain, Zap, Target,
   RotateCcw, ArrowLeft, ArrowRight, Lightbulb, FileText, Search,
-  MessageSquare, Loader
+  MessageSquare, Loader, Maximize2
 } from 'lucide-react';
 
 // Firebase
@@ -646,6 +646,7 @@ function LessonViewer() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
   const [expandedTerms, setExpandedTerms] = useState<Set<number>>(new Set());
+  const [previewImage, setPreviewImage] = useState<{ src: string; title: string; caption: string } | null>(null);
 
   const lesson = LESSONS.find(l => l.id === lessonId);
 
@@ -676,41 +677,191 @@ function LessonViewer() {
   const section = lesson.sections[activeSection];
   const unitColor = UNIT_COLORS[lesson.unit] || UNIT_COLORS[1];
 
+  const renderDiagramCard = (
+    src: string,
+    titleEn: string,
+    titleAr: string,
+    badgeEn: string,
+    badgeAr: string,
+    keyStr: string,
+    isMindmap = false
+  ) => {
+    const title = lang === 'ar' ? titleAr : titleEn;
+    const badge = lang === 'ar' ? badgeAr : badgeEn;
+    return (
+      <div
+        key={keyStr}
+        className={`my-8 rounded-2xl overflow-hidden border shadow-xl transition-all duration-300 group ${
+          isMindmap
+            ? 'border-indigo-500/50 bg-slate-900 shadow-indigo-500/10'
+            : 'border-slate-200 bg-white hover:border-primary-plum/40 shadow-slate-200/60'
+        }`}
+      >
+        <div className={`px-4 py-2.5 flex items-center justify-between border-b ${
+          isMindmap ? 'bg-indigo-950 border-indigo-900 text-indigo-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+        }`}>
+          <div className="flex items-center gap-2">
+            <span className={`text-[11px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
+              isMindmap ? 'bg-indigo-600 text-white shadow-sm' : 'bg-primary-plum text-white shadow-sm'
+            }`}>
+              {badge}
+            </span>
+            <span className="text-xs font-bold truncate max-w-[200px] sm:max-w-md">{title}</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setPreviewImage({ src, title, caption: title })}
+            className={`text-xs font-semibold px-2.5 py-1 rounded-lg flex items-center gap-1 transition-colors ${
+              isMindmap
+                ? 'bg-indigo-900/60 hover:bg-indigo-800 text-indigo-300'
+                : 'bg-slate-200/70 hover:bg-slate-300 text-slate-700'
+            }`}
+          >
+            <Maximize2 size={13} />
+            <span className="hidden sm:inline">{lang === 'ar' ? 'تكبير المخطط' : 'Expand'}</span>
+          </button>
+        </div>
+        <div
+          className="relative overflow-hidden cursor-pointer bg-slate-950 flex items-center justify-center min-h-[220px]"
+          onClick={() => setPreviewImage({ src, title, caption: title })}
+        >
+          <img
+            src={src}
+            alt={title}
+            className="w-full h-auto object-contain max-h-[500px] group-hover:scale-[1.01] transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+            <span className="px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md text-white text-xs font-bold flex items-center gap-1.5 shadow-lg border border-white/20">
+              <Maximize2 size={14} /> {lang === 'ar' ? 'انقر لتكبير المخطط بالكامل' : 'Click to inspect full diagram'}
+            </span>
+          </div>
+        </div>
+        <div className={`p-3 text-xs font-medium text-center ${
+          isMindmap ? 'bg-indigo-950/90 text-indigo-200 border-t border-indigo-900/60' : 'bg-slate-900 text-slate-200'
+        }`}>
+          {title}
+        </div>
+      </div>
+    );
+  };
+
   const renderMarkdown = (text: string) => {
     // Simple markdown renderer matching light theme
     const lines = text.split('\n');
     const elements: React.ReactNode[] = [];
     let i = 0;
 
-    // Optional: inject images based on lesson ID
-    if (lesson.id === 'les_1_1' && activeSection === 0 && elements.length === 0) {
+    const isL1 = lesson.id === '1-1' || lesson.id === 'les_1_1';
+    const isL2 = lesson.id === '1-2' || lesson.id === 'les_1_2';
+    const isL3 = lesson.id === '1-3' || lesson.id === 'les_1_3';
+    const isL4 = lesson.id === '1-4' || lesson.id === 'les_1_4';
+
+    // Inject Concept Images at the top of relevant sections
+    if (isL1 && activeSection === 0) {
       elements.push(
-        <div key="img-ml" className="mb-8 rounded-2xl overflow-hidden shadow-lg border border-slate-200 group">
-          <img src="/images/machine_learning_concept.jpg" alt="Machine Learning" className="w-full h-auto object-cover max-h-[400px] group-hover:scale-105 transition-transform duration-700" />
-          <div className="bg-primary-navy p-3 text-white text-xs font-bold text-center">
-            {lang === 'ar' ? 'نموذج ذكاء اصطناعي (تعلم الآلة) يعالج البيانات' : 'AI Machine Learning model processing data'}
+        renderDiagramCard(
+          '/images/it_evolution_timeline.svg',
+          'The 5 Major Stages of IT Evolution (From Vacuum Tubes to Cloud Computing)',
+          'المراحل الخمس لتطور تكنولوجيا المعلومات (من الحواسيب الأولى إلى الحوسبة السحابية)',
+          'Concept Timeline',
+          'مخطط زمني للمفاهيم',
+          'diag-it-timeline'
+        )
+      );
+    } else if (isL1 && activeSection === 1) {
+      elements.push(
+        renderDiagramCard(
+          '/images/moores_law_diagram.svg',
+          "Moore's Law: Exponential Transistor Scaling & Quantum Physical Barriers",
+          'قانون مور: تضاعف الترانزستورات، الحدود الفيزيائية، والتحول للمعالجة المتوازية والحواسيب الكمومية',
+          'Concept Diagram',
+          'رسم بياني للمفهوم',
+          'diag-moore-law'
+        )
+      );
+    } else if (isL2 && activeSection === 0) {
+      elements.push(
+        renderDiagramCard(
+          '/images/machine_learning_concept.jpg',
+          'Machine Learning: Training Algorithms to Discern Patterns from Data',
+          'تعلم الآلة: خوارزميات تتعلم الأنماط والقواعد ذاتياً من البيانات',
+          'AI Concept',
+          'مفهوم الذكاء الاصطناعي',
+          'diag-ml-concept'
+        )
+      );
+      elements.push(
+        <div key="diag-nlp-cv-row" className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+          <div
+            onClick={() => setPreviewImage({
+              src: '/images/nlp_ai_chat.jpg',
+              title: lang === 'ar' ? 'معالجة اللغات الطبيعية (NLP)' : 'Natural Language Processing (NLP)',
+              caption: lang === 'ar' ? 'تطبيقات معالجة اللغة الطبيعية والترجمة والمحادثة الذكية' : 'NLP speech, chatbots, and translation applications'
+            })}
+            className="rounded-xl overflow-hidden border border-slate-200 shadow-md group cursor-pointer bg-white"
+          >
+            <div className="relative overflow-hidden h-44 bg-slate-950 flex items-center justify-center">
+              <img src="/images/nlp_ai_chat.jpg" alt="NLP" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-primary-plum text-white text-[10px] font-bold">
+                NLP
+              </div>
+            </div>
+            <div className="p-2.5 text-center text-xs font-bold text-primary-navy bg-slate-50">
+              {lang === 'ar' ? 'معالجة اللغات الطبيعية (NLP)' : 'Natural Language Processing (NLP)'}
+            </div>
+          </div>
+          <div
+            onClick={() => setPreviewImage({
+              src: '/images/computer_vision_ai.jpg',
+              title: lang === 'ar' ? 'الرؤية الحاسوبية (Computer Vision)' : 'Computer Vision & Perception',
+              caption: lang === 'ar' ? 'التعرف على الأجسام، التصوير الطبي، والسيارات ذاتية القيادة' : 'Object recognition, medical imaging, and autonomous systems'
+            })}
+            className="rounded-xl overflow-hidden border border-slate-200 shadow-md group cursor-pointer bg-white"
+          >
+            <div className="relative overflow-hidden h-44 bg-slate-950 flex items-center justify-center">
+              <img src="/images/computer_vision_ai.jpg" alt="Computer Vision" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-accent-pink text-white text-[10px] font-bold">
+                Vision
+              </div>
+            </div>
+            <div className="p-2.5 text-center text-xs font-bold text-primary-navy bg-slate-50">
+              {lang === 'ar' ? 'الرؤية الحاسوبية والتعرف على الأجسام' : 'Computer Vision & Object Recognition'}
+            </div>
           </div>
         </div>
       );
-    }
-    if (lesson.id === 'les_1_2' && activeSection === 0 && elements.length === 0) {
+    } else if (isL2 && activeSection === 1) {
       elements.push(
-        <div key="img-nlp" className="mb-8 rounded-2xl overflow-hidden shadow-lg border border-slate-200 group">
-          <img src="/images/nlp_ai_chat.jpg" alt="NLP Chat" className="w-full h-auto object-cover max-h-[400px] group-hover:scale-105 transition-transform duration-700" />
-          <div className="bg-primary-navy p-3 text-white text-xs font-bold text-center">
-            {lang === 'ar' ? 'معالجة اللغات الطبيعية (NLP)' : 'Natural Language Processing (NLP)'}
-          </div>
-        </div>
+        renderDiagramCard(
+          '/images/ai_neural_network_layers.svg',
+          'Deep Learning Synaptic Architecture: Input Layer, Hidden Weights, and Output Probabilities',
+          'بنية الشبكات العصبية الاصطناعية: طبقات الإدخال، الأوزان المخفية، وطبقة التنبؤ',
+          'Deep Learning Architecture',
+          'بنية التعلم العميق',
+          'diag-neural-nets'
+        )
       );
-    }
-    if (lesson.id === 'les_1_2' && activeSection === 1 && elements.length === 0) {
+    } else if (isL3 && activeSection === 0) {
       elements.push(
-        <div key="img-cv" className="mb-8 rounded-2xl overflow-hidden shadow-lg border border-slate-200 group">
-          <img src="/images/computer_vision_ai.jpg" alt="Computer Vision" className="w-full h-auto object-cover max-h-[400px] group-hover:scale-105 transition-transform duration-700" />
-          <div className="bg-primary-navy p-3 text-white text-xs font-bold text-center">
-            {lang === 'ar' ? 'الرؤية الحاسوبية والتعرف على الأجسام (Computer Vision)' : 'Computer Vision and Object Recognition'}
-          </div>
-        </div>
+        renderDiagramCard(
+          '/images/ai_daily_life_industry.svg',
+          'Applied AI: Daily Consumer Life vs Heavy Industry 4.0 Ecosystem',
+          'تطبيقات الذكاء الاصطناعي: مقارنة بين الحياة اليومية والقطاعات الصناعية الكبرى',
+          'Applications Overview',
+          'خارطة التطبيقات',
+          'diag-daily-industry'
+        )
+      );
+    } else if (isL4 && activeSection === 0) {
+      elements.push(
+        renderDiagramCard(
+          '/images/ai_ethics_blackbox.svg',
+          'The AI Dilemma: Algorithmic Bias & The Black Box Problem vs Explainable AI (XAI)',
+          'المعضلة الأخلاقية: التحيز الخوارزمي، مشكلة الصندوق الأسود، وضرورة الشفافية',
+          'Ethical Dilemma',
+          'المعضلة الأخلاقية',
+          'diag-ethics-blackbox'
+        )
       );
     }
 
@@ -792,6 +943,58 @@ function LessonViewer() {
       }
       i++;
     }
+
+    // Inject Connecting Mindmaps ("صورة تجمع الافكار ببعض تربطهم ببعض")
+    if (isL1 && (activeSection === 4 || activeSection === lesson.sections.length - 1)) {
+      elements.push(
+        renderDiagramCard(
+          '/images/it_social_mindmap.svg',
+          'Connecting All Ideas: IT History, Moore’s Law, Social Shifts & Emerging Tech',
+          'خريطة مفاهيمية شاملة: ربط تاريخ التكنولوجيا، قانون مور، التحولات الاجتماعية، والتقنيات الناشئة',
+          '🗺️ Complete Mindmap',
+          '🗺️ خريطة المفاهيم الرابطة',
+          'diag-it-social-mindmap',
+          true
+        )
+      );
+    } else if (isL2 && activeSection === 1) {
+      elements.push(
+        renderDiagramCard(
+          '/images/ai_hierarchy_mindmap.svg',
+          'Connecting All Ideas: The AI Hierarchy (AI ⊃ ML ⊃ DL ⊃ GenAI) & Core Mechanisms',
+          'خريطة مفاهيمية شاملة: هرمية الذكاء الاصطناعي (AI ⊃ ML ⊃ DL ⊃ GenAI) وآليات عمله والمخاطر',
+          '🗺️ Complete Mindmap',
+          '🗺️ خريطة المفاهيم الرابطة',
+          'diag-ai-hierarchy-mindmap',
+          true
+        )
+      );
+    } else if (isL3 && (activeSection === 1 || activeSection === lesson.sections.length - 1)) {
+      elements.push(
+        renderDiagramCard(
+          '/images/ai_industry_mindmap.svg',
+          'Connecting All Ideas: The Applied AI Ecosystem Across Daily Living and Major Industries',
+          'خريطة مفاهيمية شاملة: منظومة الذكاء الاصطناعي التطبيقي بين الحياة اليومية والصناعات الكبرى',
+          '🗺️ Complete Mindmap',
+          '🗺️ خريطة المفاهيم الرابطة',
+          'diag-ai-industry-mindmap',
+          true
+        )
+      );
+    } else if (isL4 && activeSection === 0) {
+      elements.push(
+        renderDiagramCard(
+          '/images/ai_ethics_mindmap.svg',
+          'Connecting All Ideas: The 6 Pillars of Responsible AI Ethics & Governance',
+          'خريطة مفاهيمية شاملة: الركائز الست لأخلاقيات الذكاء الاصطناعي والحوكمة المسؤولة',
+          '🗺️ Complete Mindmap',
+          '🗺️ خريطة المفاهيم الرابطة',
+          'diag-ai-ethics-mindmap',
+          true
+        )
+      );
+    }
+
     return elements;
   };
 
@@ -1072,6 +1275,49 @@ function LessonViewer() {
           </div>
         </div>
       </main>
+
+      {/* Lightbox / Fullscreen Diagram Modal */}
+      {previewImage && (
+        <div
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center p-3 md:p-6"
+          onClick={() => setPreviewImage(null)}
+        >
+          <div
+            className="relative max-w-5xl w-full bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh]"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-5 py-3.5 bg-slate-800/90 border-b border-slate-700 text-white">
+              <h3 className="font-bold text-sm md:text-base text-slate-100 line-clamp-1">{previewImage.title}</h3>
+              <div className="flex items-center gap-2">
+                <a
+                  href={previewImage.src}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-indigo-300 hover:text-white px-3 py-1.5 rounded-lg bg-indigo-600/30 hover:bg-indigo-600/60 transition-colors flex items-center gap-1 font-semibold"
+                >
+                  {lang === 'ar' ? 'فتح في نافذة مستقلة' : 'Open in New Tab'}
+                </a>
+                <button
+                  onClick={() => setPreviewImage(null)}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 overflow-auto p-4 flex items-center justify-center bg-slate-950 min-h-0">
+              <img
+                src={previewImage.src}
+                alt={previewImage.title}
+                className="max-w-full max-h-[74vh] object-contain rounded-lg shadow-lg"
+              />
+            </div>
+            <div className="px-5 py-3 bg-slate-900 border-t border-slate-800 text-xs text-slate-300 text-center font-medium">
+              {previewImage.caption}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

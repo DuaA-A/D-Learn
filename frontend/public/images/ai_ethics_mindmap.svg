@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 680" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgEthMm" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080312" />
+      <stop offset="50%" stop-color="#120722" />
+      <stop offset="100%" stop-color="#1f0938" />
+    </linearGradient>
+    <linearGradient id="hubEthGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9333ea" />
+      <stop offset="100%" stop-color="#e11d48" />
+    </linearGradient>
+    <filter id="glowEth" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <style>
+      .hdr { font-family: system-ui, sans-serif; font-weight: 900; fill: #ffffff; }
+      .subhdr { font-family: system-ui, sans-serif; font-size: 13px; fill: #e9d5ff; }
+      .node-text { font-family: system-ui, sans-serif; font-weight: bold; fill: #ffffff; font-size: 12.5px; }
+      .leaf-text { font-family: system-ui, sans-serif; font-size: 11px; fill: #cbd5e1; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="680" rx="24" fill="url(#bgEthMm)" />
+  <rect x="2" y="2" width="1096" height="676" rx="22" fill="none" stroke="#3b0764" stroke-width="1.5" />
+
+  <!-- Top Title -->
+  <text x="550" y="42" text-anchor="middle" class="hdr" font-size="22">⚖️ Lesson 1.4 Complete Mindmap: The 6 Pillars of AI Ethics</text>
+  <text x="550" y="64" text-anchor="middle" class="subhdr">خريطة مفاهيمية شاملة: الركائز الست لأخلاقيات الذكاء الاصطناعي والحوكمة المسؤولة</text>
+
+  <!-- Center Hub -->
+  <g transform="translate(550, 340)">
+    <circle r="72" fill="url(#hubEthGrad)" filter="url(#glowEth)" opacity="0.3" />
+    <circle r="65" fill="#1e112a" stroke="#c084fc" stroke-width="3" />
+    <text y="-14" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="14" fill="#ffffff">Responsible</text>
+    <text y="6" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="14" fill="#f472b6">AI Ethics</text>
+    <text y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#e9d5ff">الأخلاقيات والحوكمة</text>
+  </g>
+
+  <!-- Connecting Beziers to 6 Pillars -->
+  <!-- 1. Top-Left: Bias & Fairness -->
+  <path d="M 485 300 C 350 250, 300 170, 240 150" fill="none" stroke="#ec4899" stroke-width="2.5" stroke-dasharray="4" />
+  <!-- 2. Mid-Left: Privacy & Data Rights -->
+  <path d="M 475 340 L 370 340" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="4" />
+  <!-- 3. Bottom-Left: Job Displacement & Reskilling -->
+  <path d="M 485 380 C 350 430, 300 510, 240 530" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4" />
+
+  <!-- 4. Top-Right: Accountability & Liability -->
+  <path d="M 615 300 C 750 250, 800 170, 860 150" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-dasharray="4" />
+  <!-- 5. Mid-Right: Transparency ("Black Box" vs XAI) -->
+  <path d="M 625 340 L 730 340" fill="none" stroke="#10b981" stroke-width="2.5" stroke-dasharray="4" />
+  <!-- 6. Bottom-Right: Misuse & Deepfakes -->
+  <path d="M 615 380 C 750 430, 800 510, 860 530" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4" />
+
+  <!-- ================= PILLAR 1: BIAS & FAIRNESS (Top-Left) ================= -->
+  <g transform="translate(50, 80)">
+    <rect width="310" height="130" rx="12" fill="#180b28" stroke="#ec4899" stroke-width="1.8" />
+    <rect width="310" height="28" rx="12" fill="#831843" />
+    <text x="12" y="19" class="node-text">1. Bias &amp; Fairness / التحيز والعدالة</text>
+    <g transform="translate(12, 42)">
+      <circle cx="5" cy="5" r="4" fill="#ec4899" />
+      <text x="16" y="9" class="leaf-text">• Training data reflects historical prejudice</text>
+      <circle cx="5" cy="27" r="4" fill="#ec4899" />
+      <text x="16" y="31" class="leaf-text">• Example: Automated gender hiring discrimination</text>
+      <circle cx="5" cy="49" r="4" fill="#10b981" />
+      <text x="16" y="53" class="leaf-text" fill="#a7f3d0">✓ Solution: Balanced datasets &amp; fairness audits</text>
+    </g>
+  </g>
+
+  <!-- ================= PILLAR 2: PRIVACY & DATA (Mid-Left) ================= -->
+  <g transform="translate(50, 275)">
+    <rect width="310" height="130" rx="12" fill="#180b28" stroke="#38bdf8" stroke-width="1.8" />
+    <rect width="310" height="28" rx="12" fill="#0369a1" />
+    <text x="12" y="19" class="node-text">2. Privacy &amp; Surveillance / الخصوصية</text>
+    <g transform="translate(12, 42)">
+      <circle cx="5" cy="5" r="4" fill="#38bdf8" />
+      <text x="16" y="9" class="leaf-text">• Massive personal data collection required</text>
+      <circle cx="5" cy="27" r="4" fill="#38bdf8" />
+      <text x="16" y="31" class="leaf-text">• Facial recognition &amp; location tracking threats</text>
+      <circle cx="5" cy="49" r="4" fill="#10b981" />
+      <text x="16" y="53" class="leaf-text" fill="#a7f3d0">✓ Solution: GDPR compliance, encryption &amp; consent</text>
+    </g>
+  </g>
+
+  <!-- ================= PILLAR 3: JOB DISPLACEMENT (Bottom-Left) ================= -->
+  <g transform="translate(50, 470)">
+    <rect width="310" height="130" rx="12" fill="#180b28" stroke="#f59e0b" stroke-width="1.8" />
+    <rect width="310" height="28" rx="12" fill="#78350f" />
+    <text x="12" y="19" class="node-text">3. Job Displacement / التهجير الوظيفي</text>
+    <g transform="translate(12, 42)">
+      <circle cx="5" cy="5" r="4" fill="#f59e0b" />
+      <text x="16" y="9" class="leaf-text">• Automation replaces repetitive routine labor</text>
+      <circle cx="5" cy="27" r="4" fill="#f59e0b" />
+      <text x="16" y="31" class="leaf-text">• Impact on customer service, writing, drivers</text>
+      <circle cx="5" cy="49" r="4" fill="#10b981" />
+      <text x="16" y="53" class="leaf-text" fill="#a7f3d0">✓ Solution: Worker reskilling &amp; safety nets</text>
+    </g>
+  </g>
+
+  <!-- ================= PILLAR 4: ACCOUNTABILITY (Top-Right) ================= -->
+  <g transform="translate(740, 80)">
+    <rect width="310" height="130" rx="12" fill="#180b28" stroke="#a855f7" stroke-width="1.8" />
+    <rect width="310" height="28" rx="12" fill="#581c87" />
+    <text x="12" y="19" class="node-text">4. Accountability &amp; Law / المساءلة والمسؤولية</text>
+    <g transform="translate(12, 42)">
+      <circle cx="5" cy="5" r="4" fill="#c084fc" />
+      <text x="16" y="9" class="leaf-text">• Who is liable when AI fails? (Owner? Coder?)</text>
+      <circle cx="5" cy="27" r="4" fill="#c084fc" />
+      <text x="16" y="31" class="leaf-text">• Self-driving accidents &amp; medical misdiagnosis</text>
+      <circle cx="5" cy="49" r="4" fill="#10b981" />
+      <text x="16" y="53" class="leaf-text" fill="#a7f3d0">✓ Solution: Strict legal liability frameworks</text>
+    </g>
+  </g>
+
+  <!-- ================= PILLAR 5: TRANSPARENCY (Mid-Right) ================= -->
+  <g transform="translate(740, 275)">
+    <rect width="310" height="130" rx="12" fill="#180b28" stroke="#10b981" stroke-width="1.8" />
+    <rect width="310" height="28" rx="12" fill="#065f46" />
+    <text x="12" y="19" class="node-text">5. Transparency &amp; XAI / الشفافية</text>
+    <g transform="translate(12, 42)">
+      <circle cx="5" cy="5" r="4" fill="#10b981" />
+      <text x="16" y="9" class="leaf-text">• "Black Box": Deep nets can't explain their logic</text>
+      <circle cx="5" cy="27" r="4" fill="#10b981" />
+      <text x="16" y="31" class="leaf-text">• Dangerous in parole, healthcare &amp; mortgages</text>
+      <circle cx="5" cy="49" r="4" fill="#38bdf8" />
+      <text x="16" y="53" class="leaf-text" fill="#bae6fd">✓ Solution: Explainable AI (XAI) &amp; algorithmic open logs</text>
+    </g>
+  </g>
+
+  <!-- ================= PILLAR 6: MISUSE & DEEPFAKES (Bottom-Right) ================= -->
+  <g transform="translate(740, 470)">
+    <rect width="310" height="130" rx="12" fill="#180b28" stroke="#ef4444" stroke-width="1.8" />
+    <rect width="310" height="28" rx="12" fill="#7f1d1d" />
+    <text x="12" y="19" class="node-text">6. Misuse &amp; Deepfakes / التزييف والتضليل</text>
+    <g transform="translate(12, 42)">
+      <circle cx="5" cy="5" r="4" fill="#ef4444" />
+      <text x="16" y="9" class="leaf-text">• Generative video/voice cloning impersonation</text>
+      <circle cx="5" cy="27" r="4" fill="#ef4444" />
+      <text x="16" y="31" class="leaf-text">• Viral fake news &amp; democratic election meddling</text>
+      <circle cx="5" cy="49" r="4" fill="#10b981" />
+      <text x="16" y="53" class="leaf-text" fill="#a7f3d0">✓ Solution: Cryptographic watermarks &amp; verification</text>
+    </g>
+  </g>
+
+  <!-- Bottom Synthesis Banner -->
+  <g transform="translate(200, 635)">
+    <rect width="700" height="30" rx="8" fill="#1e112a" stroke="#a855f7" stroke-width="1" />
+    <text x="350" y="20" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#f5d0fe">
+      🛡️ Ethical AI is not optional: Human-in-the-loop and algorithmic transparency protect democratic societies.
+    </text>
+  </g>
+</svg>
