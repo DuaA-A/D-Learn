@@ -20,7 +20,7 @@ import {
 } from 'firebase/auth';
 import type { User as FirebaseUser } from 'firebase/auth';
 import {
-  doc, setDoc, getDoc, collection, getDocs, updateDoc, deleteDoc, addDoc, serverTimestamp, query, orderBy
+  doc, setDoc, getDoc, collection, getDocs, updateDoc, deleteDoc, addDoc, serverTimestamp, query, orderBy, onSnapshot
 } from 'firebase/firestore';
 import { auth, db } from './firebase';
 
@@ -1766,6 +1766,36 @@ function TutorDashboard() {
     setTimeout(() => setToastMessage(null), 3500);
   };
 
+  // Real-time live listeners for actual registered students and submissions
+  useEffect(() => {
+    setLoading(true);
+
+    // Live sync for registered users
+    const unsubUsers = onSnapshot(collection(db, 'users'), (snapshot) => {
+      const allUsers = snapshot.docs.map(d => ({ uid: d.id, ...d.data() } as UserProfile));
+      const studentUsers = allUsers.filter(u => u.role !== 'TUTOR' && u.email !== 'admin@d-learn.com');
+      setStudents(studentUsers);
+      setLoading(false);
+    }, (err) => {
+      console.error('Realtime users listener error:', err);
+      setLoading(false);
+    });
+
+    // Live sync for exam submissions
+    const qResults = query(collection(db, 'assessment_results'), orderBy('submittedAt', 'desc'));
+    const unsubResults = onSnapshot(qResults, (snapshot) => {
+      const allResults = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as AssessmentResult));
+      setResults(allResults);
+    }, (err) => {
+      console.error('Realtime results listener error:', err);
+    });
+
+    return () => {
+      unsubUsers();
+      unsubResults();
+    };
+  }, []);
+
   const fetchData = useCallback(async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true);
     else setLoading(true);
@@ -1793,10 +1823,6 @@ function TutorDashboard() {
       setRefreshing(false);
     }
   }, [lang]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
 
   // Actions
   const handleResetStudent = async (student: UserProfile) => {
@@ -2090,6 +2116,26 @@ function TutorDashboard() {
               <div className="flex items-center justify-center py-24">
                 <Loader size={36} className="animate-spin text-accent-pink" />
               </div>
+            ) : totalStudents === 0 ? (
+              <div className="text-center py-20 bg-white rounded-3xl border border-slate-200 shadow-sm max-w-2xl mx-auto p-8">
+                <div className="w-16 h-16 rounded-2xl bg-primary-plum/10 text-primary-plum flex items-center justify-center mx-auto mb-4">
+                  <Users size={32} />
+                </div>
+                <h3 className="text-xl font-black text-primary-navy mb-2">
+                  {t('No Registered Students Yet', 'لا يوجد طلاب مسجلون حالياً', lang)}
+                </h3>
+                <p className="text-slate-500 text-sm font-medium leading-relaxed mb-6">
+                  {t(
+                    'The system is connected live to Firebase. As soon as students register via "Create Account", their live profiles, curriculum progress, and solved exams will appear here automatically in real-time.',
+                    'المنصة متصلة بشكل حي ومباشر بقاعدة البيانات السحابية (Firebase). بمجرد أن يقوم أي طالب بالتسجيل وحل الدروس والامتحانات، ستظهر بياناته، نقاطه، وإجاباته هنا فوراً وبشكل لايف دون الحاجة للتحديث!',
+                    lang
+                  )}
+                </p>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  {t('Live Firebase Sync Active', 'الربط المباشر اللحظي مفعّل وبانتظار تسجيل الطلاب الحقيقيين', lang)}
+                </div>
+              </div>
             ) : filteredStudents.length === 0 ? (
               <div className="text-center py-20 bg-white rounded-3xl border border-slate-200 shadow-sm">
                 <Users size={48} className="mx-auto mb-3 text-slate-300" />
@@ -2258,10 +2304,26 @@ function TutorDashboard() {
               <div className="flex items-center justify-center py-24">
                 <Loader size={36} className="animate-spin text-accent-pink" />
               </div>
+            ) : totalSubmissions === 0 ? (
+              <div className="text-center py-20 bg-white rounded-3xl border border-slate-200 shadow-sm max-w-2xl mx-auto p-8">
+                <div className="w-16 h-16 rounded-2xl bg-accent-pink/10 text-accent-pink flex items-center justify-center mx-auto mb-4">
+                  <FileText size={32} />
+                </div>
+                <h3 className="text-xl font-black text-primary-navy mb-2">
+                  {t('No Exam Papers Solved Yet', 'لا توجد أوراق امتحانية حتى الآن', lang)}
+                </h3>
+                <p className="text-slate-500 text-sm font-medium leading-relaxed">
+                  {t(
+                    'When real students submit lesson assessments, their full answer papers (including MCQ choices and typed essay answers) will appear here for live inspection and tutor grading.',
+                    'عندما يقوم الطلاب الحقيقيون بحل امتحانات الدروس وحفظ نتائجهم، ستظهر أوراق إجاباتهم الكاملة وتفاصيل كل سؤال (صح وخطأ والمقالي) هنا مباشرة لتتمكني من فحصها ومتابعة أداء كل طالب.',
+                    lang
+                  )}
+                </p>
+              </div>
             ) : filteredSubmissions.length === 0 ? (
               <div className="text-center py-20 bg-white rounded-3xl border border-slate-200 shadow-sm">
                 <FileText size={48} className="mx-auto mb-3 text-slate-300" />
-                <p className="text-slate-600 font-bold text-lg">{t('No assessment papers found.', 'لا توجد أوراق امتحانية مطابقة.', lang)}</p>
+                <p className="text-slate-600 font-bold text-lg">{t('No assessment papers match your search.', 'لا توجد أوراق امتحانية مطابقة للبحث.', lang)}</p>
               </div>
             ) : (
               <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
