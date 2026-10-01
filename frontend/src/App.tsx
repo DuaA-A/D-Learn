@@ -34,6 +34,8 @@ import { MASSIVE_BANK_L4 } from './massiveBank_Lesson4';
 import { OFFICIAL_WRITTEN_L1_L2 } from './officialAssessments_Lesson1_2';
 import { OFFICIAL_ASSESSMENTS_L3 } from './officialAssessments_Lesson3';
 import { OFFICIAL_ASSESSMENTS_L4 } from './officialAssessments_Lesson4';
+import ComprehensiveExam from './ComprehensiveExam';
+import { COMPREHENSIVE_AS_QUIZ_QUESTIONS } from './comprehensiveExamData';
 
 const QUIZ_QUESTIONS = [
   ...BASE_QUIZ_QUESTIONS,
@@ -46,12 +48,13 @@ const QUIZ_QUESTIONS = [
   ...OFFICIAL_WRITTEN_L1_L2,
   ...OFFICIAL_ASSESSMENTS_L3,
   ...OFFICIAL_ASSESSMENTS_L4,
+  ...COMPREHENSIVE_AS_QUIZ_QUESTIONS,
 ];
 
 // ============================================================
 // TYPES
 // ============================================================
-interface UserProfile {
+export interface UserProfile {
   uid: string;
   displayName: string;
   email: string;
@@ -62,7 +65,7 @@ interface UserProfile {
   createdAt: any;
 }
 
-interface AssessmentResult {
+export interface AssessmentResult {
   id?: string;
   userId: string;
   userName: string;
@@ -80,7 +83,7 @@ interface AssessmentResult {
 // ============================================================
 // APP CONTEXT
 // ============================================================
-interface AppCtx {
+export interface AppCtx {
   user: FirebaseUser | null;
   profile: UserProfile | null;
   lang: 'en' | 'ar';
@@ -88,7 +91,7 @@ interface AppCtx {
   loading: boolean;
   loadingProfile: boolean;
 }
-const AppContext = React.createContext<AppCtx>({
+export const AppContext = React.createContext<AppCtx>({
   user: null, profile: null, lang: 'en', toggleLang: () => {}, loading: true, loadingProfile: true
 });
 
@@ -567,6 +570,51 @@ function StudentDashboard() {
           </div>
         </motion.div>
 
+        {/* Featured Comprehensive Exam Card (Lessons 1 to 3) */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-r from-primary-navy via-primary-plum to-primary-navy rounded-3xl p-6 sm:p-7 text-white shadow-xl shadow-primary-plum/20 mb-8 border border-primary-plum/40 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-80 h-80 bg-accent-pink/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-pink text-white text-[11px] font-black uppercase tracking-wider shadow-sm">
+                <Award size={13} />
+                <span>{t('Unit 1 Official Comprehensive Exam', 'الامتحان الشامل الرسمي — أول 3 دروس', lang)}</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-black">
+                {t('Test Your Knowledge: First 3 Lessons Exam', 'اختبر استيعابك: امتحان شامل على أول 3 دروس', lang)}
+              </h3>
+              <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-2xl leading-relaxed">
+                {t(
+                  'Covers Lessons 1, 2, and 3. Real exam mode: no instant feedback during the test. Your final score, correct/incorrect questions, and model explanations are revealed upon submission.',
+                  'يغطي الدروس 1 و 2 و 3. وضع الامتحان الفعلي: لا تظهر الإجابات أثناء الحل، وتظهر نتيجتك النهائية والأسئلة الصحيحة والخاطئة والشرح النموذجي فور تسليم ورقة الامتحان.'
+                , lang)}
+              </p>
+              <div className="flex flex-wrap items-center gap-3 pt-1 text-xs text-slate-300 font-semibold">
+                <span className="flex items-center gap-1.5 bg-white/10 px-2.5 py-1 rounded-lg backdrop-blur-sm border border-white/15">
+                  <FileText size={13} className="text-accent-pink" /> 15 {t('MCQ Questions', 'سؤال شامل', lang)}
+                </span>
+                <span className="flex items-center gap-1.5 bg-white/10 px-2.5 py-1 rounded-lg backdrop-blur-sm border border-white/15">
+                  <Clock size={13} className="text-accent-mint" /> 25 {t('Minutes', 'دقيقة', lang)}
+                </span>
+                <span className="flex items-center gap-1.5 bg-white/10 px-2.5 py-1 rounded-lg backdrop-blur-sm border border-white/15">
+                  <Sparkles size={13} className="text-amber-300" /> +150 XP
+                </span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => navigate('/comprehensive-exam-1-3')}
+              className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-accent-pink to-primary-plum hover:opacity-95 text-white font-black text-xs sm:text-sm shadow-lg shadow-accent-pink/30 transition-all flex items-center gap-2 whitespace-nowrap self-stretch md:self-auto justify-center cursor-pointer"
+            >
+              <span>{t('Start Comprehensive Exam', 'ابدأ الامتحان الشامل الآن', lang)}</span>
+              <ArrowLeft size={16} className={lang === 'ar' ? '' : 'rotate-180'} />
+            </button>
+          </div>
+        </motion.div>
+
         {/* Search */}
         <div className="relative mb-8 max-w-xl">
           <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -680,6 +728,16 @@ function LessonViewer() {
   const [activeSection, setActiveSection] = useState(0);
   const [expandedTerms, setExpandedTerms] = useState<Set<number>>(new Set());
   const [previewImage, setPreviewImage] = useState<{ src: string; title: string; caption: string } | null>(null);
+  const [revealedQuestions, setRevealedQuestions] = useState<Set<string>>(new Set());
+
+  const toggleReveal = (qId: string) => {
+    setRevealedQuestions(prev => {
+      const next = new Set(prev);
+      if (next.has(qId)) next.delete(qId);
+      else next.add(qId);
+      return next;
+    });
+  };
 
   const lesson = LESSONS.find(l => l.id === lessonId);
 
@@ -1276,7 +1334,140 @@ function LessonViewer() {
                 ))}
               </div>
             </div>
-          )}
+          {/* Official Lesson Practice & Ministry Questions Section */}
+          {(() => {
+            const lessonAllQuestions = QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, lesson.id));
+            const previewQuestions = lessonAllQuestions.slice(0, 5);
+
+            return (
+              <div className="mb-10 bg-gradient-to-br from-slate-50 to-white rounded-3xl border border-slate-200 p-6 md:p-8 shadow-sm">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5 mb-6">
+                  <div>
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-plum/10 text-primary-plum text-xs font-bold uppercase tracking-wider mb-2">
+                      <Award size={13} />
+                      <span>{t('Official Curriculum Assessments', 'الأسئلة والتقييمات المعتمدة للدرس', lang)}</span>
+                    </div>
+                    <h3 className="text-xl font-black text-primary-navy">
+                      {t('Practice Questions & Tasks', 'المهام الأدائية والأسئلة المقالية للدرس', lang)}
+                    </h3>
+                    <p className="text-slate-500 text-xs sm:text-sm font-medium mt-1">
+                      {lang === 'ar'
+                        ? `يتضمن هذا الدرس ${lessonAllQuestions.length} سؤالاً وتطبيقاً (مهام صفية، أداءات منزلية، وتقييمات أسبوعية). تدرب عليها أدناه.`
+                        : `This lesson includes ${lessonAllQuestions.length} questions (classroom tasks, homework, and weekly assessments).`}
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => navigate(`/assessment/${lesson.id}`)}
+                    className="px-5 py-3 rounded-2xl bg-gradient-to-r from-primary-plum to-primary-navy hover:opacity-95 text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
+                  >
+                    <Award size={16} className="text-accent-pink" />
+                    <span>{t('Start Full Interactive Quiz', 'خوض التقييم الكامل للدرس', lang)}</span>
+                  </button>
+                </div>
+
+                {/* Sample Questions List */}
+                <div className="space-y-4 mb-6">
+                  {previewQuestions.map((pq, idx) => {
+                    const isRevealed = revealedQuestions.has(pq.id);
+                    return (
+                      <div key={pq.id} className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm">
+                        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="w-6 h-6 rounded-lg bg-primary-navy text-white text-xs font-bold flex items-center justify-center">
+                              {idx + 1}
+                            </span>
+                            <span className="text-[11px] font-bold text-slate-500 uppercase">
+                              {pq.type === 'MCQ' ? t('Multiple Choice', 'اختيار متعدد', lang) : t('Written Question', 'سؤال مقالي', lang)}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-1.5">
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                              pq.source === 'CLASSROOM' ? 'bg-blue-50 text-blue-700' :
+                              pq.source === 'HOMEWORK' ? 'bg-amber-50 text-amber-700' : 'bg-purple-50 text-purple-700'
+                            }`}>
+                              {pq.source === 'CLASSROOM' ? t('Classroom', 'مهمة صفية', lang) :
+                               pq.source === 'HOMEWORK' ? t('Homework', 'أداء منزلي', lang) : t('Weekly', 'تقييم أسبوعي', lang)}
+                            </span>
+                          </div>
+                        </div>
+
+                        <p className="font-bold text-sm sm:text-base text-primary-navy mb-3 leading-relaxed">
+                          {lang === 'ar' ? pq.question_ar : pq.question_en}
+                        </p>
+
+                        {/* Options if MCQ */}
+                        {pq.type === 'MCQ' && (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                            {(['A', 'B', 'C', 'D'] as const).map(opt => {
+                              const text = lang === 'ar' ? (pq as any)[`option_${opt.toLowerCase()}_ar`] : (pq as any)[`option_${opt.toLowerCase()}_en`];
+                              if (!text) return null;
+                              return (
+                                <div key={opt} className="p-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-xs font-semibold text-slate-700 flex items-center gap-2">
+                                  <span className="w-5 h-5 rounded-md bg-white border border-slate-300 text-slate-500 font-bold flex items-center justify-center text-[11px]">
+                                    {opt}
+                                  </span>
+                                  <span>{text}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+
+                        {/* Toggle Reveal Answer Button */}
+                        <div className="pt-2">
+                          <button
+                            onClick={() => toggleReveal(pq.id)}
+                            className="text-xs font-bold text-primary-plum hover:text-accent-pink flex items-center gap-1 transition-colors cursor-pointer"
+                          >
+                            <Lightbulb size={13} />
+                            <span>{isRevealed ? t('Hide Model Answer', 'إخفاء الإجابة النموذجية', lang) : t('Reveal Model Answer & Explanation', 'عرض الإجابة والنموذج المقترح', lang)}</span>
+                          </button>
+
+                          {isRevealed && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              className="mt-3 p-4 bg-emerald-50/70 border border-emerald-200 rounded-xl"
+                            >
+                              {pq.type === 'MCQ' && (
+                                <div className="text-xs font-bold text-emerald-900 mb-1 flex items-center gap-1.5">
+                                  <CheckCircle size={14} className="text-emerald-600" />
+                                  <span>{t('Correct Option:', 'الخيار الصحيح:', lang)} {pq.correct_option}</span>
+                                </div>
+                              )}
+                              {(pq.ideal_answer_ar || pq.ideal_answer_en) && (
+                                <div className="text-xs font-medium text-emerald-950 mb-2 leading-relaxed whitespace-pre-wrap">
+                                  <strong className="block text-emerald-800 font-bold mb-0.5">{t('Model Answer:', 'النموذج المقترح:', lang)}</strong>
+                                  {lang === 'ar' ? pq.ideal_answer_ar : pq.ideal_answer_en}
+                                </div>
+                              )}
+                              {(pq.explanation_ar || pq.explanation_en) && (
+                                <p className="text-[11px] text-emerald-800 font-medium border-t border-emerald-200/60 pt-1.5 mt-1.5">
+                                  <strong>{t('Explanation:', 'الشرح والتعليل:', lang)}</strong> {lang === 'ar' ? pq.explanation_ar : pq.explanation_en}
+                                </p>
+                              )}
+                            </motion.div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="text-center pt-2">
+                  <button
+                    onClick={() => navigate(`/assessment/${lesson.id}`)}
+                    className="inline-flex items-center gap-2 text-xs font-bold text-primary-plum hover:text-primary-navy transition-colors bg-white px-5 py-2.5 rounded-xl border border-slate-200 shadow-sm cursor-pointer"
+                  >
+                    <span>{t(`View all ${lessonAllQuestions.length} questions in interactive exam mode`, `عرض جميع الـ ${lessonAllQuestions.length} سؤالاً في وضع التقييم التفاعلي الكامل` , lang)}</span>
+                    <ArrowLeft size={13} className={lang === 'ar' ? '' : 'rotate-180'} />
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Navigation */}
           <div className="flex items-center justify-between pt-8 border-t border-slate-200">
@@ -1443,6 +1634,12 @@ function Assessment() {
       setSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (isFinished && !submitted && !submitting && user && profile) {
+      handleSubmitToFirebase();
+    }
+  }, [isFinished, submitted, submitting, user, profile]);
 
   if (!lesson) return <div className="min-h-screen bg-slate-50 flex items-center justify-center text-primary-navy font-bold">Lesson not found</div>;
 
@@ -3224,6 +3421,8 @@ export default function App() {
               <Route path="/student-preview" element={<Protected><StudentDashboard /></Protected>} />
               <Route path="/lesson/:lessonId" element={<Protected><LessonViewer /></Protected>} />
               <Route path="/assessment/:lessonId" element={<Protected><Assessment /></Protected>} />
+              <Route path="/comprehensive-exam-1-3" element={<Protected><ComprehensiveExam /></Protected>} />
+              <Route path="/exam/comprehensive-1-3" element={<Protected><ComprehensiveExam /></Protected>} />
             </Routes>
           </AnimatePresence>
         </div>

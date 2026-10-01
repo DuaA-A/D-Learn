@@ -5,6 +5,9 @@
 // Source: Ministry of Education & Technical Education — International Baccalaureate Collaboration
 // =============================================
 
+import { OFFICIAL_ASSESSMENTS_L3 } from './officialAssessments_Lesson3';
+import { OFFICIAL_ASSESSMENTS_L4 } from './officialAssessments_Lesson4';
+
 export const COURSE_METADATA = {
   course_name_en: "Programming and Artificial Intelligence",
   course_name_ar: "البرمجة والذكاء الاصطناعي",
@@ -598,7 +601,23 @@ The network learns by adjusting these weights through a process called training,
         q_ar: "افترض أن مزارعًا يريد استخدام نظام ذكاء اصطناعي للتمييز بين صور المحاصيل السليمة والمصابة بالأمراض. ما نوع البيانات التي يحتاجها النظام للتدريب؟ وحدد عاملاً واحدًا قد يجعل تنبؤه خاطئًا.",
       },
     ],
-    exam_style_questions: [],
+    exam_style_questions: [
+      {
+        q_en: "Compare predictive AI and generative AI in terms of purpose, processing methods, and output, providing a practical example of each in industry or healthcare.",
+        q_ar: "قارن بين الذكاء الاصطناعي التنبؤي والذكاء الاصطناعي التوليدي من حيث الهدف وطريقة المعالجة والمخرجات، مع إعطاء مثال عملي لكل منهما في الصناعة أو الرعاية الصحية.",
+        type: "WRITTEN",
+      },
+      {
+        q_en: "Explain the concept of Predictive Maintenance in manufacturing and how IoT sensors combined with machine learning models prevent costly factory downtime.",
+        q_ar: "اشرح مفهوم الصيانة التنبؤية (Predictive Maintenance) في قطاع التصنيع، وكيف تسهم مستشعرات إنترنت الأشياء المقترنة بنماذج تعلم الآلة في تفادي التوقف المفاجئ لخطوط الإنتاج.",
+        type: "WRITTEN",
+      },
+      {
+        q_en: "Which technology uses deep learning and computer vision to analyze medical scans (such as X-rays and MRI) to assist doctors in early tumor detection?",
+        q_ar: "ما هي التقنية التي تعتمد على التعلم العميق ورؤية الحاسوب لفحص الصور الطبية (مثل الأشعة السينية والرنين المغناطيسي) لمساعدة الأطباء في الاكتشاف المبكر للأورام؟",
+        type: "MCQ",
+      },
+    ],
   },
   {
     id: "1-4",
@@ -706,7 +725,23 @@ Generative AI can create convincing fake videos, audio, and text. This can be us
         q_ar: "إذا أنتج نظام ذكاء اصطناعي توليدي مقالة إخبارية مزيفة لكن مقنعة، من يجب أن يُحاسَب: مطورو الذكاء الاصطناعي، أم المنصة المضيفة لها، أم المستخدم الذي يشاركها؟ بررّ إجابتك.",
       },
     ],
-    exam_style_questions: [],
+    exam_style_questions: [
+      {
+        q_en: "Explain how algorithmic bias arises in AI models, and suggest two practical engineering procedures to mitigate bias and ensure fairness.",
+        q_ar: "وضّح كيف ينشأ التحيز الخوارزمي في نماذج الذكاء الاصطناعي، واقترح إجرائين هندسيين عمليين يمكن لمهندسي النظم اتباعهما للحد من التحيز وضمان العدالة وتكافؤ الفرص.",
+        type: "WRITTEN",
+      },
+      {
+        q_en: "Discuss the 'Black Box' problem in deep learning and explain why Explainable AI (XAI) is essential in high-stakes domains such as medicine and criminal justice.",
+        q_ar: "ناقش مشكلة 'الصندوق الأسود' في نماذج التعلم العميق، واشرح لماذا تُعد تقنيات الذكاء الاصطناعي القابل للتفسير (XAI) مطلباً حاسماً في المجالات الحساسة كالطب والعدالة الجنائية.",
+        type: "WRITTEN",
+      },
+      {
+        q_en: "Which principle of AI ethics requires developers to explain how a model reaches its decisions rather than keeping its internal logic hidden?",
+        q_ar: "أي مبدأ من مبادئ أخلاقيات الذكاء الاصطناعي يُلزم المطورين بإيضاح كيفية وصول النموذج إلى قراراته بدلاً من إبقاء آليات العمل سرية أو غامضة؟",
+        type: "MCQ",
+      },
+    ],
   },
 ];
 
@@ -1594,4 +1629,6 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     explanation_en: "Key distinction: explicit rules vs learning from data/examples.",
     explanation_ar: "الفرق الرئيسي: القواعد الصريحة مقابل التعلم من البيانات/الأمثلة.",
   },
+  ...OFFICIAL_ASSESSMENTS_L3,
+  ...OFFICIAL_ASSESSMENTS_L4,
 ];
