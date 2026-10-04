@@ -6,7 +6,7 @@ import {
   Award, LogOut, User, Star, Layers, Globe, Shield, Code, AlertTriangle,
   Lock, Mail, Eye, EyeOff, Home, ChevronDown, BookMarked, Brain, Zap, Target,
   RotateCcw, ArrowLeft, ArrowRight, Lightbulb, FileText, Search,
-  MessageSquare, Loader, Maximize2, Trash2, RefreshCw,
+  MessageSquare, Loader, Maximize2, Trash2, RefreshCw, Clock,
   BarChart2, Users, FileCheck, Check, Sparkles, HelpCircle
 } from 'lucide-react';
 
@@ -35,6 +35,7 @@ import { OFFICIAL_WRITTEN_L1_L2 } from './officialAssessments_Lesson1_2';
 import { OFFICIAL_ASSESSMENTS_L3 } from './officialAssessments_Lesson3';
 import { OFFICIAL_ASSESSMENTS_L4 } from './officialAssessments_Lesson4';
 import ComprehensiveExam from './ComprehensiveExam';
+import ComprehensiveExamCh1 from './ComprehensiveExamCh1';
 import { COMPREHENSIVE_AS_QUIZ_QUESTIONS } from './comprehensiveExamData';
 
 const QUIZ_QUESTIONS = [
@@ -90,9 +91,10 @@ export interface AppCtx {
   toggleLang: () => void;
   loading: boolean;
   loadingProfile: boolean;
+  ch1ExamUnlocked: boolean;
 }
 export const AppContext = React.createContext<AppCtx>({
-  user: null, profile: null, lang: 'en', toggleLang: () => {}, loading: true, loadingProfile: true
+  user: null, profile: null, lang: 'en', toggleLang: () => {}, loading: true, loadingProfile: true, ch1ExamUnlocked: false
 });
 
 // ============================================================
@@ -481,7 +483,7 @@ function AuthPage() {
 // STUDENT DASHBOARD
 // ============================================================
 function StudentDashboard() {
-  const { profile, lang } = React.useContext(AppContext);
+  const { profile, lang, ch1ExamUnlocked } = React.useContext(AppContext);
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
 
@@ -567,6 +569,52 @@ function StudentDashboard() {
                 <span className="text-teal-800 font-bold text-sm">{completedCount} {t('completed', 'مكتمل', lang)}</span>
               </div>
             </div>
+          </div>
+        </motion.div>
+
+        
+        {/* Featured Comprehensive Exam Card (Chapter 1) */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-6 sm:p-7 text-white shadow-xl mb-8 border border-slate-700 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-80 h-80 bg-accent-mint/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-700 text-white text-[11px] font-black uppercase tracking-wider shadow-sm">
+                <Award size={13} />
+                <span>{t('Chapter 1 Comprehensive Exam', 'الامتحان الشامل — الشابتر الأول', lang)}</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-black">
+                {t('Mastery Test: Full Chapter 1 Exam', 'اختبار التمكن: امتحان شامل على الشابتر الأول بالكامل', lang)}
+              </h3>
+              <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-2xl leading-relaxed">
+                {t(
+                  'Covers Lessons 1 to 4. Contains 50 curated questions (MCQ). This exam is locked by the tutor and can only be accessed when unlocked.',
+                  'يغطي جميع دروس الشابتر الأول (من 1 إلى 4). يحتوي على 50 سؤالاً منتقى من أفضل المصادر. هذا الامتحان مقفول ولا يُفتح إلا بإذن المعلم.'
+                , lang)}
+              </p>
+            </div>
+
+            <button
+              onClick={() => {
+                if (ch1ExamUnlocked) navigate('/comprehensive-exam-ch1');
+              }}
+              className={`px-6 py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg transition-all flex items-center gap-2 whitespace-nowrap self-stretch md:self-auto justify-center ${ch1ExamUnlocked ? 'bg-gradient-to-r from-accent-mint to-teal-600 hover:opacity-95 text-white shadow-accent-mint/30 cursor-pointer' : 'bg-slate-700 text-slate-400 cursor-not-allowed border border-slate-600'}`}
+            >
+              {ch1ExamUnlocked ? (
+                <>
+                  <span>{t('Start Full Exam', 'ابدأ الامتحان الشامل', lang)}</span>
+                  <ArrowLeft size={16} className={lang === 'ar' ? '' : 'rotate-180'} />
+                </>
+              ) : (
+                <>
+                  <Lock size={16} />
+                  <span>{t('Exam Locked', 'الامتحان مقفول حالياً', lang)}</span>
+                </>
+              )}
+            </button>
           </div>
         </motion.div>
 
@@ -1334,6 +1382,7 @@ function LessonViewer() {
                 ))}
               </div>
             </div>
+          )}
           {/* Official Lesson Practice & Ministry Questions Section */}
           {(() => {
             const lessonAllQuestions = QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, lesson.id));
@@ -3319,6 +3368,55 @@ function TutorDashboard() {
           </div>
         )}
       </AnimatePresence>
+
+        {/* Exam Locks Toggle Added Here */}
+        <div className="mt-8 pt-8 border-t border-slate-200">
+          <h3 className="text-lg font-black text-primary-navy mb-4 flex items-center gap-2">
+             <Lock size={18} className="text-primary-plum" />
+            {lang === 'ar' ? 'إدارة الامتحانات الشاملة' : 'Comprehensive Exams Control'}
+          </h3>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-gradient-to-r from-slate-50 to-white border border-slate-200 rounded-2xl shadow-sm gap-4">
+            <div>
+              <h4 className="font-bold text-primary-navy flex items-center gap-2">
+                <Award size={16} className="text-accent-pink" />
+                {lang === 'ar' ? 'الامتحان الشامل للشابتر الأول (50 سؤال)' : 'Chapter 1 Comprehensive Exam (50 Qs)'}
+              </h4>
+              <p className="text-xs text-slate-500 mt-1 font-medium max-w-md">
+                {lang === 'ar' 
+                  ? 'عند تفعيل هذا الخيار، سيظهر زر الدخول للامتحان مفعلاً في لوحة تحكم جميع الطلاب.' 
+                  : 'When enabled, the exam start button will be active in all students\' dashboards.'}
+              </p>
+            </div>
+            <button
+              disabled={actionLoading}
+              onClick={async () => {
+                setActionLoading(true);
+                try {
+                  const { ch1ExamUnlocked } = React.useContext(AppContext);
+                  const { updateDoc, doc } = await import('firebase/firestore');
+                  await updateDoc(doc(db, 'settings', 'exam_locks'), { ch1ExamUnlocked: !ch1ExamUnlocked });
+                } catch (e) {
+                  const { setDoc, doc } = await import('firebase/firestore');
+                  await setDoc(doc(db, 'settings', 'exam_locks'), { ch1ExamUnlocked: true });
+                } finally {
+                  setActionLoading(false);
+                }
+              }}
+              className={`px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-sm ${
+                React.useContext(AppContext).ch1ExamUnlocked
+                  ? 'bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100 hover:shadow-md'
+                  : 'bg-teal-50 text-teal-700 border border-teal-200 hover:bg-teal-100 hover:shadow-md'
+              }`}
+            >
+              {React.useContext(AppContext).ch1ExamUnlocked ? (
+                <><Lock size={16} /> {lang === 'ar' ? 'إغلاق الامتحان للجميع' : 'Lock for All Students'}</>
+              ) : (
+                <><Check size={16} /> {lang === 'ar' ? 'إتاحة الامتحان للجميع' : 'Unlock for All Students'}</>
+              )}
+            </button>
+          </div>
+        </div>
+
     </div>
   );
 }
@@ -3356,10 +3454,21 @@ function DashboardRouter() {
 // ============================================================
 export default function App() {
   const [user, setUser] = useState<FirebaseUser | null>(null);
+  const [ch1ExamUnlocked, setCh1ExamUnlocked] = useState(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [lang, setLang] = useState<'en' | 'ar'>('ar'); // Defaulting to Arabic for Egyptian Baccalaureate
   const [loading, setLoading] = useState(true);
   const [loadingProfile, setLoadingProfile] = useState(true);
+
+  useEffect(() => {
+    const unsub = onSnapshot(doc(db, 'settings', 'exam_locks'), (docSnap) => {
+      if (docSnap.exists()) {
+        setCh1ExamUnlocked(docSnap.data().ch1ExamUnlocked || false);
+      }
+    });
+    return unsub;
+  }, []);
+
 
   useEffect(() => {
     // Default RTL setup
@@ -3409,7 +3518,7 @@ export default function App() {
   if (loading) return <Spinner />;
 
   return (
-    <AppContext.Provider value={{ user, profile, lang, toggleLang, loading, loadingProfile }}>
+    <AppContext.Provider value={{ user, profile, lang, toggleLang, loading, loadingProfile, ch1ExamUnlocked }}>
       <Router>
         <div className="min-h-screen bg-slate-50 font-sans">
           {user && <Navbar />}
@@ -3423,6 +3532,7 @@ export default function App() {
               <Route path="/assessment/:lessonId" element={<Protected><Assessment /></Protected>} />
               <Route path="/comprehensive-exam-1-3" element={<Protected><ComprehensiveExam /></Protected>} />
               <Route path="/exam/comprehensive-1-3" element={<Protected><ComprehensiveExam /></Protected>} />
+              <Route path="/comprehensive-exam-ch1" element={<Protected><ComprehensiveExamCh1 /></Protected>} />
             </Routes>
           </AnimatePresence>
         </div>

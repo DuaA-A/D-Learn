@@ -19,7 +19,8 @@ import {
 import { db } from './firebase';
 import { collection, addDoc, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { AppContext } from './App';
-import { COMPREHENSIVE_EXAM_QUESTIONS, ComprehensiveExamQuestion } from './comprehensiveExamData';
+import { COMPREHENSIVE_EXAM_QUESTIONS } from './comprehensiveExamData';
+import type { ComprehensiveExamQuestion } from './comprehensiveExamData';
 
 export default function ComprehensiveExam() {
   const { user, profile, lang } = React.useContext(AppContext);
