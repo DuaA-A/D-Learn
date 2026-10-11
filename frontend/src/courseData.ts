@@ -8,6 +8,7 @@
 import { OFFICIAL_WRITTEN_L1_L2 } from './officialAssessments_Lesson1_2';
 import { OFFICIAL_ASSESSMENTS_L3 } from './officialAssessments_Lesson3';
 import { OFFICIAL_ASSESSMENTS_L4 } from './officialAssessments_Lesson4';
+import { DEEP_QUESTIONS_CH1 } from './deepQuestions_Ch1';
 
 export const COURSE_METADATA = {
   course_name_en: "Programming and Artificial Intelligence",
@@ -1633,4 +1634,5 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   ...OFFICIAL_WRITTEN_L1_L2,
   ...OFFICIAL_ASSESSMENTS_L3,
   ...OFFICIAL_ASSESSMENTS_L4,
+  ...DEEP_QUESTIONS_CH1,
 ];
