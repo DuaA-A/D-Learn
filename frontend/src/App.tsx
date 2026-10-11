@@ -28,6 +28,7 @@ import { COURSE_METADATA, LESSONS, QUIZ_QUESTIONS } from './courseData';
 import { FLASHCARDS } from './extraData';
 import ComprehensiveExam from './ComprehensiveExam';
 import ComprehensiveExamCh1 from './ComprehensiveExamCh1';
+import Chapter1Workshop from './Chapter1Workshop';
 
 // ============================================================
 // TYPES
@@ -568,8 +569,8 @@ function StudentDashboard() {
               </h3>
               <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-2xl leading-relaxed">
                 {t(
-                  'Covers Lessons 1 to 4. Contains 32 curated MCQs + 8 in-depth analytical written questions with official marking rubrics. Locked until tutor approval.',
-                  'يغطي جميع دروس الشابتر الأول (من 1 إلى 4). يحتوي على 32 سؤال اختيار من متعدد + 8 أسئلة مقالية تحليلية مع نماذج إرشادية رسمية للتصحيح. هذا الامتحان مقفول ولا يُفتح إلا بإذن المعلم.'
+                  'Covers Lessons 1 to 4. Contains exactly 50 questions (25 MCQs + 25 in-depth analytical written questions) with official marking rubrics. Locked until tutor approval.',
+                  'يغطي جميع دروس الشابتر الأول (من 1 إلى 4). يحتوي على 50 سؤالاً بالضبط (25 اختيار من متعدد + 25 سؤالاً مقالياً تحليلياً) مع نماذج إرشادية رسمية للتصحيح. هذا الامتحان مقفول ولا يُفتح إلا بإذن المعلم.'
                 , lang)}
               </p>
             </div>
@@ -582,7 +583,7 @@ function StudentDashboard() {
             >
               {ch1ExamUnlocked ? (
                 <>
-                  <span>{t('Start Full Exam', 'ابدأ الامتحان الشامل', lang)}</span>
+                  <span>{t('Start Full Exam (50 Qs)', 'ابدأ الامتحان الشامل (50 سؤالاً)', lang)}</span>
                   <ArrowLeft size={16} className={lang === 'ar' ? '' : 'rotate-180'} />
                 </>
               ) : (
@@ -591,6 +592,40 @@ function StudentDashboard() {
                   <span>{t('Exam Locked', 'الامتحان مقفول حالياً', lang)}</span>
                 </>
               )}
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Chapter 1 Collaborative Workshop Card (Open Practice - Not Exam) */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-r from-slate-900 via-primary-navy to-slate-900 rounded-3xl p-6 sm:p-7 text-white shadow-xl shadow-slate-900/30 mb-8 border border-slate-700/60 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-80 h-80 bg-primary-plum/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-plum/30 text-accent-pink text-[11px] font-black uppercase tracking-wider border border-primary-plum/40 shadow-sm">
+                <Brain size={13} />
+                <span>{t('Chapter 1 Live Workshop', 'ورشة تدريبات الشابتر الأول — حل مع المعلم', lang)}</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-black">
+                {t('Collaborative Training & Deep Practice Lab', 'ورشة العمل التفاعلية: تدريبات وحل مشترك مع المعلم', lang)}
+              </h3>
+              <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-2xl leading-relaxed">
+                {t(
+                  'Open practice lab containing the chapter workshop questions (MCQs & Essay analytical drills). Not a timed exam — review solutions, explore model answers, and discuss key concepts collaboratively with your tutor.',
+                  'مختبر تدريبات تفاعلي يضم بنك أسئلة ورشة العمل للدروس الأربعة. ليست امتحاناً بمؤقت، بل جلسة تدريب مفتوحة تتيح كتابة الأفكار وإظهار النماذج الإرشادية والشرح ومناقشتها سوياً مع المعلم.'
+                , lang)}
+              </p>
+            </div>
+
+            <button
+              onClick={() => navigate('/workshop-ch1')}
+              className="px-6 py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg transition-all flex items-center gap-2 whitespace-nowrap self-stretch md:self-auto justify-center bg-gradient-to-r from-primary-plum to-accent-pink hover:opacity-95 text-white shadow-primary-plum/30 cursor-pointer"
+            >
+              <span>{t('Open Workshop Lab', 'افتح ورشة التدريبات 💡', lang)}</span>
+              <ArrowLeft size={16} className={lang === 'ar' ? '' : 'rotate-180'} />
             </button>
           </div>
         </motion.div>
@@ -3510,6 +3545,7 @@ export default function App() {
               <Route path="/comprehensive-exam-1-3" element={<Protected><ComprehensiveExam /></Protected>} />
               <Route path="/exam/comprehensive-1-3" element={<Protected><ComprehensiveExam /></Protected>} />
               <Route path="/comprehensive-exam-ch1" element={<Protected><ComprehensiveExamCh1 /></Protected>} />
+              <Route path="/workshop-ch1" element={<Protected><Chapter1Workshop /></Protected>} />
             </Routes>
           </AnimatePresence>
         </div>

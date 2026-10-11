@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Award,
-  ArrowRight,
-  ArrowLeft,
   CheckCircle,
   XCircle,
   Clock,
@@ -14,10 +12,8 @@ import {
   FileText,
   Lightbulb,
   Sparkles,
-  HelpCircle,
   Edit3,
   BookOpen,
-  Check,
   Send
 } from 'lucide-react';
 import { db } from './firebase';
@@ -57,7 +53,7 @@ export default function ComprehensiveExamCh1() {
   const [submitting, setSubmitting] = useState(false);
   const [reviewTab, setReviewTab] = useState<'MCQ' | 'WRITTEN'>('MCQ');
   const [reviewFilter, setReviewFilter] = useState<'ALL' | 'WRONG' | 'CORRECT'>('ALL');
-  const [timeLeft, setTimeLeft] = useState<number>(50 * 60); // 50 minutes for full comprehensive exam
+  const [timeLeft, setTimeLeft] = useState<number>(60 * 60); // 60 minutes for full 50-question exam
 
   // Stats
   const totalMcq = EXAM_MCQS.length;
