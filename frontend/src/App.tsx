@@ -568,8 +568,8 @@ function StudentDashboard() {
               </h3>
               <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-2xl leading-relaxed">
                 {t(
-                  'Covers Lessons 1 to 4. Contains 50 curated questions (MCQ). This exam is locked by the tutor and can only be accessed when unlocked.',
-                  'يغطي جميع دروس الشابتر الأول (من 1 إلى 4). يحتوي على 50 سؤالاً منتقى من أفضل المصادر. هذا الامتحان مقفول ولا يُفتح إلا بإذن المعلم.'
+                  'Covers Lessons 1 to 4. Contains 32 curated MCQs + 8 in-depth analytical written questions with official marking rubrics. Locked until tutor approval.',
+                  'يغطي جميع دروس الشابتر الأول (من 1 إلى 4). يحتوي على 32 سؤال اختيار من متعدد + 8 أسئلة مقالية تحليلية مع نماذج إرشادية رسمية للتصحيح. هذا الامتحان مقفول ولا يُفتح إلا بإذن المعلم.'
                 , lang)}
               </p>
             </div>
