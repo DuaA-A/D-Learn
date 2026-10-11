@@ -94,6 +94,12 @@ export const CH1_WORKSHOP_MCQ_IDS = [
   // Lesson 1-4 (10 MCQs)
   "deep_1_4_q1", "deep_1_4_q2", "deep_1_4_q3", "deep_1_4_q4", "deep_1_4_q5",
   "deep_1_4_q6", "deep_1_4_q7", "deep_1_4_q8", "deep_1_4_q9", "deep_1_4_q10",
+
+  // Additional unique scenario-based MCQs (from advanced review)
+  "ws_extra_1_1_q1", "ws_extra_1_1_q2", "ws_extra_1_1_q4", "ws_extra_1_1_q5", "ws_extra_1_1_q8",
+  "ws_extra_1_2_q4", "ws_extra_1_2_q5", "ws_extra_1_2_q6", "ws_extra_1_2_q8",
+  "ws_extra_1_3_q5", "ws_extra_1_3_q7",
+  "ws_extra_1_4_q4", "ws_extra_1_4_q5", "ws_extra_1_4_q7", "ws_extra_1_4_q8",
 ];
 
 export const CH1_WORKSHOP_WRITTEN_IDS = [
