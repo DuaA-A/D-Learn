@@ -5,6 +5,7 @@
 // Source: Ministry of Education & Technical Education — International Baccalaureate Collaboration
 // =============================================
 
+import { OFFICIAL_WRITTEN_L1_L2 } from './officialAssessments_Lesson1_2';
 import { OFFICIAL_ASSESSMENTS_L3 } from './officialAssessments_Lesson3';
 import { OFFICIAL_ASSESSMENTS_L4 } from './officialAssessments_Lesson4';
 
@@ -1629,6 +1630,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     explanation_en: "Key distinction: explicit rules vs learning from data/examples.",
     explanation_ar: "الفرق الرئيسي: القواعد الصريحة مقابل التعلم من البيانات/الأمثلة.",
   },
+  ...OFFICIAL_WRITTEN_L1_L2,
   ...OFFICIAL_ASSESSMENTS_L3,
   ...OFFICIAL_ASSESSMENTS_L4,
 ];

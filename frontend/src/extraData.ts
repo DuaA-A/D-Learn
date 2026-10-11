@@ -1,152 +1,111 @@
 import type { QuizQuestion } from './courseData';
 
-export const EXTRA_QUESTIONS: QuizQuestion[] = [
-  // 10 Very Hard Questions
-  {
-    id: "ex_q1",
-    unit: "1",
-    lesson: "les_1_1",
-    type: "MCQ",
-    source: "WEEKLY_ASSESSMENT",
-    difficulty: "HARD",
-    question_en: "In a machine learning model, if the training accuracy is 99% but the validation accuracy is 55%, what is the most likely issue and its optimal solution?",
-    question_ar: "في نموذج تعلم الآلة، إذا كانت دقة التدريب 99% ولكن دقة التحقق 55%، فما هي المشكلة الأكثر احتمالاً وما هو الحل الأمثل؟",
-    option_a_en: "Underfitting; decrease model complexity.",
-    option_a_ar: "نقص التخصيص (Underfitting)؛ تقليل تعقيد النموذج.",
-    option_b_en: "Overfitting; apply regularization techniques or collect more data.",
-    option_b_ar: "فرط التخصيص (Overfitting)؛ تطبيق تقنيات التنظيم (Regularization) أو جمع المزيد من البيانات.",
-    option_c_en: "Data leak; remove overlapping data.",
-    option_c_ar: "تسرب البيانات؛ إزالة البيانات المتداخلة.",
-    option_d_en: "High Bias; use a simpler algorithm.",
-    option_d_ar: "انحياز عالي (High Bias)؛ استخدام خوارزمية أبسط.",
-    correct_option: "B",
-    explanation_en: "This is a classic case of overfitting where the model memorizes the training data but fails to generalize. Regularization helps penalize complexity.",
-    explanation_ar: "هذه حالة كلاسيكية لفرط التخصيص (Overfitting) حيث يحفظ النموذج بيانات التدريب ولكنه يفشل في التعميم. استخدام التنظيم (Regularization) يعالج ذلك."
-  },
-  {
-    id: "ex_q2",
-    unit: "1",
-    lesson: "les_1_1",
-    type: "MCQ",
-    source: "WEEKLY_ASSESSMENT",
-    difficulty: "HARD",
-    question_en: "Which of the following neural network architectures is theoretically most suited for translating a paragraph of text contextually without losing long-term dependencies?",
-    question_ar: "أي من بنيات الشبكات العصبية التالية هي الأكثر ملاءمة نظرياً لترجمة فقرة من النص سياقياً دون فقدان التبعيات طويلة المدى؟",
-    option_a_en: "Convolutional Neural Networks (CNNs)",
-    option_a_ar: "الشبكات العصبية التلافيفية (CNNs)",
-    option_b_en: "Standard Feed-Forward Networks",
-    option_b_ar: "الشبكات الأمامية القياسية",
-    option_c_en: "Transformer architecture with Self-Attention",
-    option_c_ar: "بنية المحولات (Transformers) مع الانتباه الذاتي (Self-Attention)",
-    option_d_en: "Generative Adversarial Networks (GANs)",
-    option_d_ar: "شبكات التوليد التنافسية (GANs)",
-    correct_option: "C",
-    explanation_en: "Transformers use self-attention mechanisms that effectively handle long-term dependencies in text, outperforming older RNNs/LSTMs in NLP.",
-    explanation_ar: "تستخدم المحولات (Transformers) آليات الانتباه الذاتي التي تتعامل بكفاءة مع التبعيات الطويلة في النص، متفوقة على الشبكات القديمة في معالجة اللغات الطبيعية."
-  },
-  {
-    id: "ex_q3",
-    unit: "1",
-    lesson: "les_1_2",
-    type: "MCQ",
-    source: "HOMEWORK",
-    difficulty: "HARD",
-    question_en: "How does the vanishing gradient problem primarily affect the training of deep neural networks?",
-    question_ar: "كيف تؤثر مشكلة تلاشي التدرج (Vanishing Gradient) بشكل أساسي على تدريب الشبكات العصبية العميقة؟",
-    option_a_en: "It causes the loss function to fluctuate wildly, preventing convergence.",
-    option_a_ar: "تتسبب في تقلب دالة الخسارة بشدة، مما يمنع التقارب.",
-    option_b_en: "It makes the weights of the earliest layers update extremely slowly, hindering learning in deep layers.",
-    option_b_ar: "تجعل أوزان الطبقات الأولى تتحدث ببطء شديد، مما يعيق التعلم في الطبقات العميقة.",
-    option_c_en: "It forces the network to ignore the bias terms.",
-    option_c_ar: "تجبر الشبكة على تجاهل مصطلحات الانحياز (Bias).",
-    option_d_en: "It only affects Unsupervised Learning models.",
-    option_d_ar: "تؤثر فقط على نماذج التعلم غير الخاضع للإشراف.",
-    correct_option: "B",
-    explanation_en: "In deep networks, gradients can become vanishingly small as they propagate backward, meaning early layers learn almost nothing.",
-    explanation_ar: "في الشبكات العميقة، يمكن أن تصبح التدرجات صغيرة جداً أثناء انتشارها للخلف، مما يعني أن الطبقات الأولى لا تتعلم تقريباً أي شيء."
-  },
-  {
-    id: "ex_q4",
-    unit: "1",
-    lesson: "les_1_2",
-    type: "WRITTEN",
-    source: "WEEKLY_ASSESSMENT",
-    difficulty: "HARD",
-    question_en: "Explain the fundamental difference between K-Means Clustering and K-Nearest Neighbors (KNN), emphasizing their learning paradigms.",
-    question_ar: "اشرح الفرق الأساسي بين خوارزمية التجميع (K-Means) وخوارزمية أقرب جار (KNN)، مع التركيز على نماذج التعلم الخاصة بهما.",
-    ideal_answer_en: "K-Means is an unsupervised learning algorithm used for clustering data into K groups without predefined labels. KNN is a supervised learning algorithm used for classification or regression based on the labels of the K nearest data points in the training set.",
-    ideal_answer_ar: "خوارزمية K-Means هي خوارزمية تعلم غير خاضع للإشراف تُستخدم لتجميع البيانات في K مجموعات بدون تسميات مسبقة. بينما KNN هي خوارزمية تعلم خاضع للإشراف تُستخدم للتصنيف أو الانحدار بناءً على تسميات أقرب K نقاط بيانات في مجموعة التدريب."
-  },
-  {
-    id: "ex_q5",
-    unit: "1",
-    lesson: "les_1_3",
-    type: "MCQ",
-    source: "CLASSROOM",
-    difficulty: "HARD",
-    question_en: "In Natural Language Processing, what is the primary advantage of Word Embeddings (like Word2Vec) over One-Hot Encoding?",
-    question_ar: "في معالجة اللغات الطبيعية، ما هي الميزة الأساسية لتضمين الكلمات (Word Embeddings) مقارنة بالترميز الأحادي (One-Hot Encoding)؟",
-    option_a_en: "Word embeddings capture semantic relationships and context between words in a dense vector space.",
-    option_a_ar: "تضمين الكلمات يلتقط العلاقات الدلالية والسياق بين الكلمات في مساحة متجهات كثيفة.",
-    option_b_en: "Word embeddings use much more memory but are perfectly accurate.",
-    option_b_ar: "يستخدم تضمين الكلمات ذاكرة أكبر بكثير ولكنه دقيق تماماً.",
-    option_c_en: "One-Hot Encoding captures grammar better than Word Embeddings.",
-    option_c_ar: "الترميز الأحادي يلتقط القواعد النحوية بشكل أفضل من تضمين الكلمات.",
-    option_d_en: "There is no difference; they are just different names for the same technique.",
-    option_d_ar: "لا يوجد فرق؛ إنهما اسمان مختلفان لنفس التقنية.",
-    correct_option: "A",
-    explanation_en: "One-hot vectors are sparse and treat all words as completely independent. Embeddings are dense and place semantically similar words close to each other.",
-    explanation_ar: "المتجهات الأحادية متباعدة وتعامل كل كلمة كأنها مستقلة تماماً. أما التضمين فهو كثيف ويضع الكلمات المتشابهة دلالياً بالقرب من بعضها البعض."
-  }
-];
+// All out-of-syllabus extra questions removed in accordance with Egyptian Baccalaureate curriculum
+export const EXTRA_QUESTIONS: QuizQuestion[] = [];
 
-export const FLASHCARDS: Record<string, { front_en: string, front_ar: string, back_en: string, back_ar: string }[]> = {
-  "les_1_1": [
+export const FLASHCARDS: Record<string, { front_en: string; front_ar: string; back_en: string; back_ar: string }[]> = {
+  "1-1": [
     {
-      front_en: "What is Artificial Intelligence (AI)?",
-      front_ar: "ما هو الذكاء الاصطناعي (AI)؟",
-      back_en: "The simulation of human intelligence in machines programmed to think and learn.",
-      back_ar: "محاكاة الذكاء البشري في الآلات المبرمجة للتفكير والتعلم مثل البشر."
+      front_en: "Moore's Law",
+      front_ar: "قانون مور",
+      back_en: "Observation that the number of transistors on an integrated circuit doubles approximately every two years.",
+      back_ar: "ملاحظة تجريبية تفيد بأن عدد الترانزستورات في الدائرة المتكاملة يتضاعف تقريباً كل عامين مع انخفاض التكلفة."
     },
     {
-      front_en: "Machine Learning (ML) vs. Deep Learning (DL)",
-      front_ar: "الفرق بين تعلم الآلة والتعلم العميق",
-      back_en: "ML relies on statistical algorithms; DL uses multi-layered artificial neural networks.",
-      back_ar: "تعلم الآلة يعتمد على الخوارزميات الإحصائية، بينما التعلم العميق يعتمد على الشبكات العصبية الاصطناعية متعددة الطبقات."
+      front_en: "Edge Computing",
+      front_ar: "الحوسبة الطرفية",
+      back_en: "Processing data locally on the device itself in real time instead of sending it to the cloud.",
+      back_ar: "معالجة البيانات محلياً على الجهاز نفسه بصورة فورية ولحظية بدلاً من إرسالها إلى السحابة."
     },
     {
-      front_en: "Supervised Learning",
-      front_ar: "التعلم الخاضع للإشراف (Supervised)",
-      back_en: "Training a model on labeled data (where the answer is known).",
-      back_ar: "تدريب النموذج على بيانات مصنفة مسبقاً (حيث تكون الإجابة معروفة للآلة)."
+      front_en: "Quantum Superposition & Qubit",
+      front_ar: "التراكب الكمي والكيوبت",
+      back_en: "A qubit can represent both 0 and 1 simultaneously thanks to quantum superposition, unlike binary classical bits.",
+      back_ar: "يمكن للكيوبت بفضل التراكب الكمي أن يمثل حالتي (0) و(1) معاً في نفس الوقت، بخلاف البت الكلاسيكي الثنائي."
+    },
+    {
+      front_en: "Societal Transformations",
+      front_ar: "التحولات المجتمعية لتكنولوجيا المعلومات",
+      back_en: "Key shifts include SNS, E-commerce, Remote Work, Online Learning, and Cashless Payments.",
+      back_ar: "تشمل: شبكات التواصل الاجتماعي، التجارة الإلكترونية، العمل عن بُعد، التعلم عبر الإنترنت، والدفع غير النقدي."
     }
   ],
-  "les_1_2": [
+  "1-2": [
     {
-      front_en: "Natural Language Processing (NLP)",
-      front_ar: "معالجة اللغات الطبيعية (NLP)",
-      back_en: "The ability of a computer program to understand human language as it is spoken and written.",
-      back_ar: "قدرة البرنامج الحاسوبي على فهم اللغة البشرية كما تُنطق وتُكتب."
+      front_en: "Narrow AI vs. General AI",
+      front_ar: "الذكاء الاصطناعي الضيق مقابل العام",
+      back_en: "Narrow AI excels at a single specific task (most current AI). General AI (AGI) is hypothetical human-level synthetic intellect.",
+      back_ar: "الذكاء الضيق متخصص في أداء مهمة محددة بكفاءة (الأنظمة الحالية). الذكاء العام يحاكي القدرات الإدراكية البشرية الشاملة."
     },
     {
-      front_en: "Computer Vision (CV)",
-      front_ar: "الرؤية الحاسوبية (CV)",
-      back_en: "A field of AI that enables computers to derive meaningful information from digital images and videos.",
-      back_ar: "مجال من الذكاء الاصطناعي يمكّن الحواسيب من استخراج معلومات ذات معنى من الصور ومقاطع الفيديو."
+      front_en: "Deep Learning (DL)",
+      front_ar: "التعلم العميق",
+      back_en: "A subset of ML based on multi-layered artificial neural networks (Input, Hidden, Output layers) for complex pattern recognition.",
+      back_ar: "فرع من تعلم الآلة يعتمد على شبكات عصبية اصطناعية متعددة الطبقات لاستخراج الأنماط المعقدة مثل تحليل الصور والكلام."
+    },
+    {
+      front_en: "Generative AI (GenAI)",
+      front_ar: "الذكاء الاصطناعي التوليدي",
+      back_en: "AI systems that generate novel content (text, image, audio, video) based on learned patterns from training data.",
+      back_ar: "أنظمة ذكاء اصطناعي تستخدم التعلم العميق لتوليد محتوى جديد أصيل (نصوص، صور، أصوات) بناءً على بيانات التدريب."
+    },
+    {
+      front_en: "AI Hallucination",
+      front_ar: "ظاهرة الهلوسة في الذكاء التوليدي",
+      back_en: "When generative AI produces plausible-sounding statements that are factually incorrect; requires independent verification.",
+      back_ar: "توليد النموذج لنصوص تبدو منطقية ومقنعة ولكنها غير صحيحة علمياً أو واقعياً؛ مما يوجب التحقق الدائم من المصادر الموثوقة."
     }
   ],
-  "les_1_3": [
+  "1-3": [
     {
-      front_en: "Smart Home",
-      front_ar: "المنزل الذكي",
-      back_en: "A home setup where appliances and devices can be automatically controlled remotely from anywhere.",
-      back_ar: "نظام منزلي يتيح التحكم التلقائي في الأجهزة عن بُعد من أي مكان باستخدام الإنترنت."
+      front_en: "Recommendation Systems",
+      front_ar: "أنظمة التوصية",
+      back_en: "Systems that predict user preferences from behavioral patterns (e.g. streaming, e-commerce).",
+      back_ar: "أنظمة تتوقع تفضيلات المستخدم بناءً على سلوكه السابق واهتماماته في منصات البث والتسوق."
     },
     {
-      front_en: "Internet of Things (IoT)",
-      front_ar: "إنترنت الأشياء (IoT)",
-      back_en: "The network of physical objects embedded with sensors and software to connect and exchange data.",
-      back_ar: "شبكة من الأشياء المادية المزودة بمستشعرات وبرامج للاتصال وتبادل البيانات عبر الإنترنت."
+      front_en: "Industrial AI Applications",
+      front_ar: "تطبيقات الذكاء الاصطناعي في الصناعة",
+      back_en: "Healthcare (imaging diagnostics), Agriculture (pest detection, harvest timing), Manufacturing (predictive maintenance), Logistics (route optimization).",
+      back_ar: "الرعاية الصحية (تشخيص صور الأشعة)، الزراعة (اكتشاف الآفات ومواعيد الحصاد)، التصنيع (الصيانة التنبؤية)، واللوجستيات (تحسين المسارات)."
+    },
+    {
+      front_en: "AI Strengths",
+      front_ar: "ما يجيده الذكاء الاصطناعي",
+      back_en: "Extracting complex data patterns, recognizing/generating multimodal media, probabilistic reasoning.",
+      back_ar: "استخراج الأنماط المعقدة، التعرف على الصور والأصوات وتوليدها، والاستدلال الاحتمالي المبني على البيانات."
+    },
+    {
+      front_en: "Cautions in AI Usage",
+      front_ar: "محاذير استخدام الذكاء الاصطناعي",
+      back_en: "Ethical judgments, privacy risks, final critical decisions, biased training data, copyright issues, and black-box opacity.",
+      back_ar: "الأحكام الأخلاقية، الخصوصية، اتخاذ القرار النهائي، تحيز بيانات التدريب، حقوق الملكية الفكرية، ومشكلة الصندوق الأسود."
+    }
+  ],
+  "1-4": [
+    {
+      front_en: "Algorithmic Bias",
+      front_ar: "التحيز الخوارزمي",
+      back_en: "Unfair or discriminatory outputs caused by unrepresentative training data or flawed algorithmic design.",
+      back_ar: "نمط في مخرجات النظام يؤدي إلى نتائج غير عادلة أو تمييزية، ينشأ من بيانات تدريب غير ممثلة أو عيوب في التصميم."
+    },
+    {
+      front_en: "Explainable AI (XAI)",
+      front_ar: "الذكاء الاصطناعي القابل للتفسير (XAI)",
+      back_en: "Techniques enabling humans to understand how an AI reached its decision, overcoming the 'Black Box' problem.",
+      back_ar: "تقنيات تتيح للبشر فهم أسباب وكيفية وصول الذكاء الاصطناعي إلى قراره، لمعالجة مشكلة 'الصندوق الأسود'."
+    },
+    {
+      front_en: "Responsibility vs. Accountability",
+      front_ar: "المسؤولية والمساءلة",
+      back_en: "Responsibility defines role obligations (developer, operator, user); Accountability determines who answers for errors.",
+      back_ar: "المسؤولية تحدد واجبات كل طرف (المطور، المشغل، المستخدم)، بينما المساءلة تعني إمكانية المحاسبة عن القرارات والآثار."
+    },
+    {
+      front_en: "Four Principles of AI Ethics",
+      front_ar: "المبادئ الأربعة لأخلاقيات الذكاء الاصطناعي",
+      back_en: "1. Fairness (non-discrimination), 2. Transparency (clear workings), 3. Privacy Protection, 4. Accountability.",
+      back_ar: "1. العدالة (عدم التمييز ظلماً)، 2. الشفافية (وضوح النظام وحدوده)، 3. حماية الخصوصية (أمان البيانات الشخصية)، 4. المساءلة."
     }
   ]
 };
