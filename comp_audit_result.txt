@@ -1,0 +1,62 @@
+Total questions in comprehensiveExamData: 15
+
+[1] ID: comp_1_1_q1 | Lesson: 1-1 | Correct: B
+Q: ما هي الملاحظة التجريبية التي تصف اتجاهاً تاريخياً لتضاعف عدد الترانزستورات في الدوائر المتكاملة كل عامين تقريباً؟
+Exact match in Workshop: False
+
+[2] ID: comp_1_1_q2 | Lesson: 1-1 | Correct: B
+Q: أي من الخيارات التالية يمثل التقنية أو الحدث التكنولوجي المحوري المرتبط بفترة السبعينيات والثمانينيات من القرن العشرين؟
+Exact match in Workshop: False
+
+[3] ID: comp_1_1_q3 | Lesson: 1-1 | Correct: B
+Q: في أنظمة القيادة الذاتية للمركبات، لماذا يُعد الاعتماد على الحوسبة الطرفية (Edge Computing) ضرورة حتمية بدلاً من إرسال البيانات للسحابة؟
+Exact match in Workshop: False
+
+[4] ID: comp_1_1_q4 | Lesson: 1-1 | Correct: C
+Q: ما هو نمط العمل الذي يمارس فيه الموظف مهامه الوظيفية من المنزل أو مكان آخر خارج المقر التقليدي باستخدام الإنترنت؟
+Exact match in Workshop: False
+
+[5] ID: comp_1_1_q5 | Lesson: 1-1 | Correct: B
+Q: ما الخاصية الفيزيائية الفريدة التي تُميز الكيوبت (Qubit) في الحوسبة الكمومية عن البت التقليدي (Bit)؟
+Exact match in Workshop: False
+
+[6] ID: comp_1_2_q6 | Lesson: 1-2 | Correct: B
+Q: ما هو التعريف الأكاديمي الدقيق للذكاء الاصطناعي (AI)؟
+Exact match in Workshop: False
+
+[7] ID: comp_1_2_q7 | Lesson: 1-2 | Correct: B
+Q: ما هو الفارق الجوهري بين تعلم الآلة (Machine Learning) والبرمجة التقليدية المعتمدة على القواعد الصريحة؟
+Exact match in Workshop: False
+
+[8] ID: comp_1_2_q8 | Lesson: 1-2 | Correct: B
+Q: على ماذا تعتمد خوارزميات التعلم العميق (Deep Learning) في معالجة وتحليل البيانات المعقدة كالصور والصوت؟
+Exact match in Workshop: False
+
+[9] ID: comp_1_2_q9 | Lesson: 1-2 | Correct: A
+Q: ما الميزة الاستثنائية التي ينفرد بها الذكاء الاصطناعي التوليدي (Generative AI) مقارنة بنماذج الذكاء الاصطناعي التقليدية؟
+Exact match in Workshop: False
+
+[10] ID: comp_1_2_q10 | Lesson: 1-2 | Correct: B
+Q: ما المقصود بظاهرة «الهلوسة» (Hallucination) في نماذج الذكاء الاصطناعي التوليدي؟
+Exact match in Workshop: False
+
+[11] ID: comp_1_3_q11 | Lesson: 1-3 | Correct: A
+Q: أي من الأنظمة التالية يُحلل تفضيلات وسجل سلوك المستخدم السابق لعرض مقترحات شراء أو فيديوهات ملائمة؟
+Exact match in Workshop: False
+
+[12] ID: comp_1_3_q12 | Lesson: 1-3 | Correct: B
+Q: كيف تسهم تقنية «الصيانة التنبؤية» (Predictive Maintenance) في تحسين كفاءة خطوط الإنتاج بالمصانع الحديثة؟
+Exact match in Workshop: False
+
+[13] ID: comp_1_3_q13 | Lesson: 1-3 | Correct: A
+Q: ما هو الفرع التكنولوجي في الذكاء الاصطناعي الذي يُمكّن الحواسيب من فحص صور الأشعة الطبية ومراقبة جودة المنتجات بالمصانع؟
+Exact match in Workshop: False
+
+[14] ID: comp_1_3_q14 | Lesson: 1-3 | Correct: B
+Q: في مجال «الزراعة الدقيقة» (Precision Agriculture)، كيف يدعم الذكاء الاصطناعي المزارعين؟
+Exact match in Workshop: False
+
+[15] ID: comp_1_3_q15 | Lesson: 1-3 | Correct: A
+Q: ما هو الفارق الأساسي بين دور الذكاء الاصطناعي التنبؤي (Predictive AI) والذكاء الاصطناعي التوليدي (Generative AI) في الشركات والمؤسسات؟
+Exact match in Workshop: False
+
