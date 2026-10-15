@@ -29,6 +29,7 @@ import { FLASHCARDS } from './extraData';
 import ComprehensiveExam from './ComprehensiveExam';
 import ComprehensiveExamCh1 from './ComprehensiveExamCh1';
 import Chapter1Workshop from './Chapter1Workshop';
+import Chapter2Practice from './Chapter2Practice';
 
 // ============================================================
 // TYPES
@@ -625,6 +626,40 @@ function StudentDashboard() {
               className="px-6 py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg transition-all flex items-center gap-2 whitespace-nowrap self-stretch md:self-auto justify-center bg-gradient-to-r from-primary-plum to-accent-pink hover:opacity-95 text-white shadow-primary-plum/30 cursor-pointer"
             >
               <span>{t('Open Workshop Lab', 'افتح ورشة التدريبات 💡', lang)}</span>
+              <ArrowLeft size={16} className={lang === 'ar' ? '' : 'rotate-180'} />
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Chapter 2 Cybersecurity Question Bank & Practice Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 rounded-3xl p-6 sm:p-7 text-white shadow-xl shadow-teal-950/40 mb-8 border border-teal-700/50 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-[11px] font-black uppercase tracking-wider border border-teal-500/30 shadow-sm">
+                <Shield size={13} />
+                <span>{t('Unit 2: Cybersecurity Question Bank', 'الوحدة الثانية: بنك أسئلة وتدريبات الأمن السيبراني 🛡️', lang)}</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-black">
+                {t('Unit 2 Full Practice Lab (Lessons 1 & 2)', 'بنك أسئلة الوحدة الثانية بالكامل (الدرس الأول + الدرس الثاني)', lang)}
+              </h3>
+              <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-2xl leading-relaxed">
+                {t(
+                  'Over 180 questions with real-time instant grading, concise model answers, study notes, and persistent progress tracking.',
+                  'أكثر من 180 سؤالاً (تقييمات الوزارة الرسمية + أسئلة التحديات ونمط الامتحان للدرسين 1 و2). يتميز بالتصحيح اللحظي لكل سؤال، ونماذج إجابة نموذجية مختصرة يسهل كتابتها، وشرح ونوتات وافية مع حفظ تلقائي لتقدمك.'
+                , lang)}
+              </p>
+            </div>
+
+            <button
+              onClick={() => navigate('/chapter2-practice')}
+              className="px-6 py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg transition-all flex items-center gap-2 whitespace-nowrap self-stretch md:self-auto justify-center bg-gradient-to-r from-teal-500 to-emerald-600 hover:opacity-95 text-white shadow-teal-500/30 cursor-pointer"
+            >
+              <span>{t('Start Practicing Unit 2', 'افتح بنك أسئلة الوحدة الثانية 🚀', lang)}</span>
               <ArrowLeft size={16} className={lang === 'ar' ? '' : 'rotate-180'} />
             </button>
           </div>
@@ -3546,6 +3581,7 @@ export default function App() {
               <Route path="/exam/comprehensive-1-3" element={<Protected><ComprehensiveExam /></Protected>} />
               <Route path="/comprehensive-exam-ch1" element={<Protected><ComprehensiveExamCh1 /></Protected>} />
               <Route path="/workshop-ch1" element={<Protected><Chapter1Workshop /></Protected>} />
+              <Route path="/chapter2-practice" element={<Protected><Chapter2Practice /></Protected>} />
             </Routes>
           </AnimatePresence>
         </div>

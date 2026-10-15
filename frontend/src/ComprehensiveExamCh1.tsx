@@ -38,14 +38,62 @@ export default function ComprehensiveExamCh1() {
   const { user, profile, lang } = React.useContext(AppContext);
   const navigate = useNavigate();
 
+  const STORAGE_KEY = 'DLEARN_CH1_EXAM_STATE_V1';
+
   // Active section: 'MCQ' or 'WRITTEN'
-  const [activeSection, setActiveSection] = useState<'MCQ' | 'WRITTEN'>('MCQ');
-  const [currentMcqIdx, setCurrentMcqIdx] = useState(0);
-  const [currentWrittenIdx, setCurrentWrittenIdx] = useState(0);
+  const [activeSection, setActiveSection] = useState<'MCQ' | 'WRITTEN'>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved).activeSection || 'MCQ';
+    } catch (e) {}
+    return 'MCQ';
+  });
+
+  const [currentMcqIdx, setCurrentMcqIdx] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved && typeof JSON.parse(saved).currentMcqIdx === 'number') {
+        return Math.min(Math.max(0, JSON.parse(saved).currentMcqIdx), EXAM_MCQS.length - 1);
+      }
+    } catch (e) {}
+    return 0;
+  });
+
+  const [currentWrittenIdx, setCurrentWrittenIdx] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved && typeof JSON.parse(saved).currentWrittenIdx === 'number') {
+        return Math.min(Math.max(0, JSON.parse(saved).currentWrittenIdx), EXAM_WRITTEN.length - 1);
+      }
+    } catch (e) {}
+    return 0;
+  });
 
   // Answers state
-  const [mcqAnswers, setMcqAnswers] = useState<Record<string, 'A' | 'B' | 'C' | 'D'>>({});
-  const [writtenAnswers, setWrittenAnswers] = useState<Record<string, string>>({});
+  const [mcqAnswers, setMcqAnswers] = useState<Record<string, 'A' | 'B' | 'C' | 'D'>>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved).mcqAnswers || {};
+    } catch (e) {}
+    return {};
+  });
+
+  const [writtenAnswers, setWrittenAnswers] = useState<Record<string, string>>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved).writtenAnswers || {};
+    } catch (e) {}
+    return {};
+  });
+
+  // Instant practice correction reveal state
+  const [revealedAnswers, setRevealedAnswers] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved).revealedAnswers || {};
+    } catch (e) {}
+    return {};
+  });
 
   // Submission & UI state
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -53,7 +101,34 @@ export default function ComprehensiveExamCh1() {
   const [submitting, setSubmitting] = useState(false);
   const [reviewTab, setReviewTab] = useState<'MCQ' | 'WRITTEN'>('MCQ');
   const [reviewFilter, setReviewFilter] = useState<'ALL' | 'WRONG' | 'CORRECT'>('ALL');
-  const [timeLeft, setTimeLeft] = useState<number>(60 * 60); // 60 minutes for full 50-question exam
+  const [timeLeft, setTimeLeft] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved && typeof JSON.parse(saved).timeLeft === 'number') {
+        return Math.max(JSON.parse(saved).timeLeft, 120);
+      }
+    } catch (e) {}
+    return 60 * 60;
+  });
+
+  // Synchronize state to localStorage so progress is never lost on refresh or navigation
+  useEffect(() => {
+    if (isSubmitted) {
+      try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+      return;
+    }
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        activeSection,
+        currentMcqIdx,
+        currentWrittenIdx,
+        mcqAnswers,
+        writtenAnswers,
+        revealedAnswers,
+        timeLeft,
+      }));
+    } catch (e) {}
+  }, [activeSection, currentMcqIdx, currentWrittenIdx, mcqAnswers, writtenAnswers, revealedAnswers, timeLeft, isSubmitted]);
 
   // Stats
   const totalMcq = EXAM_MCQS.length;
@@ -755,6 +830,67 @@ export default function ComprehensiveExamCh1() {
                       })}
                     </div>
 
+                    {/* Instant Practice Review / Real-time correction */}
+                    <div className="mb-6 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <button
+                          type="button"
+                          onClick={() => setRevealedAnswers(prev => ({ ...prev, [currentMcq.id]: !prev[currentMcq.id] }))}
+                          className="px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 flex items-center gap-2 transition-all cursor-pointer"
+                        >
+                          <Lightbulb size={14} className="text-amber-500" />
+                          <span>
+                            {revealedAnswers[currentMcq.id]
+                              ? (lang === 'ar' ? 'إخفاء الشرح والتصحيح' : 'Hide Explanation')
+                              : (lang === 'ar' ? '🔍 تحقق من الإجابة والتصحيح الفوري' : 'Check Answer & Instant Review')}
+                          </span>
+                        </button>
+                        
+                        {mcqAnswers[currentMcq.id] && (
+                          <span className="text-[11px] font-bold text-slate-400">
+                            {lang === 'ar' ? 'تم حفظ اختيارك تلقائياً 💾' : 'Auto-saved 💾'}
+                          </span>
+                        )}
+                      </div>
+
+                      {revealedAnswers[currentMcq.id] && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className={`p-4 rounded-2xl border text-xs sm:text-sm font-medium leading-relaxed ${
+                            mcqAnswers[currentMcq.id] === currentMcq.correct_option
+                              ? 'bg-emerald-50 border-emerald-200 text-emerald-950'
+                              : mcqAnswers[currentMcq.id]
+                              ? 'bg-rose-50 border-rose-200 text-rose-950'
+                              : 'bg-blue-50 border-blue-200 text-blue-950'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2 font-bold mb-1.5">
+                            {mcqAnswers[currentMcq.id] === currentMcq.correct_option ? (
+                              <>
+                                <CheckCircle size={16} className="text-emerald-600" />
+                                <span>{lang === 'ar' ? 'إجابتك صحيحة! أحسنت 🎯' : 'Correct! Great job 🎯'}</span>
+                              </>
+                            ) : (
+                              <>
+                                <XCircle size={16} className="text-rose-600" />
+                                <span>
+                                  {lang === 'ar'
+                                    ? `إجابة غير صحيحة — الخيار الصحيح هو: (${currentMcq.correct_option})`
+                                    : `Incorrect — Correct option is: (${currentMcq.correct_option})`}
+                                </span>
+                              </>
+                            )}
+                          </div>
+                          {(currentMcq.explanation_ar || currentMcq.explanation_en) && (
+                            <p className="text-slate-700 text-xs sm:text-sm mt-1">
+                              💡 {lang === 'ar' ? currentMcq.explanation_ar : currentMcq.explanation_en}
+                            </p>
+                          )}
+                        </motion.div>
+                      )}
+                    </div>
+
                     {/* Navigation Footer */}
                     <div className="flex items-center justify-between pt-4 border-t border-slate-100">
                       <button
@@ -883,12 +1019,55 @@ export default function ComprehensiveExamCh1() {
                       />
                       <div className="flex justify-between items-center text-xs text-slate-400 mt-2 font-semibold">
                         <span>
-                          {lang === 'ar' ? 'تُحفظ الإجابة تلقائياً' : 'Auto-saved'}
+                          {lang === 'ar' ? 'تُحفظ الإجابة تلقائياً 💾' : 'Auto-saved 💾'}
                         </span>
                         <span>
                           {(writtenAnswers[currentWritten.id] || '').length} {lang === 'ar' ? 'حرف' : 'characters'}
                         </span>
                       </div>
+                    </div>
+
+                    {/* Instant Model Answer & Self-Correction Toggle */}
+                    <div className="pt-2">
+                      <button
+                        type="button"
+                        onClick={() => setRevealedAnswers(prev => ({ ...prev, [currentWritten.id]: !prev[currentWritten.id] }))}
+                        className="px-4 py-2.5 rounded-xl text-xs font-bold bg-primary-plum/10 hover:bg-primary-plum/20 text-primary-plum border border-primary-plum/30 flex items-center gap-2 transition-all cursor-pointer"
+                      >
+                        <Lightbulb size={14} className="text-primary-plum" />
+                        <span>
+                          {revealedAnswers[currentWritten.id]
+                            ? (lang === 'ar' ? 'إخفاء النموذج الإرشادي' : 'Hide Model Answer')
+                            : (lang === 'ar' ? '🔍 إظهار النموذج الإرشادي للتصحيح الفوري والشرح' : 'Show Official Model Answer & Rubric')}
+                        </span>
+                      </button>
+
+                      {revealedAnswers[currentWritten.id] && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="mt-4 space-y-3"
+                        >
+                          <div className="bg-emerald-50/90 border-2 border-emerald-300 rounded-2xl p-4 sm:p-5">
+                            <div className="flex items-center gap-2 text-emerald-900 font-bold text-xs uppercase tracking-wider mb-2">
+                              <CheckCircle size={15} className="text-emerald-600" />
+                              <span>{lang === 'ar' ? 'النموذج الإرشادي الرسمي للإجابة (المختصر المركز):' : 'Official Model Answer:'}</span>
+                            </div>
+                            <p className="text-emerald-950 text-xs sm:text-sm font-semibold whitespace-pre-wrap leading-relaxed">
+                              {lang === 'ar' ? currentWritten.ideal_answer_ar : currentWritten.ideal_answer_en}
+                            </p>
+                          </div>
+
+                          {(currentWritten.explanation_ar || currentWritten.explanation_en) && (
+                            <div className="bg-blue-50 border border-blue-200 rounded-xl p-3.5 text-xs text-blue-950 font-medium">
+                              <span className="font-bold text-blue-900 block mb-1">
+                                💡 {lang === 'ar' ? 'عناصر التقييم والشرح:' : 'Rubric & Explanation:'}
+                              </span>
+                              {lang === 'ar' ? currentWritten.explanation_ar : currentWritten.explanation_en}
+                            </div>
+                          )}
+                        </motion.div>
+                      )}
                     </div>
 
                     {/* Navigation Footer */}
