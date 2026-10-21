@@ -24,14 +24,13 @@ import { CH2_L1_OFFICIAL_WRITTEN_P1, CH2_L1_OFFICIAL_MCQ_P1 } from './ch2_lesson
 import { CH2_L1_OFFICIAL_WRITTEN_P2, CH2_L1_OFFICIAL_MCQ_P2 } from './ch2_lesson1_officialQ_part2';
 import { CH2_L1_HARD_WRITTEN_P1, CH2_L1_HARD_MCQ_P1 } from './ch2_lesson1_hardQ_part1';
 import { CH2_L1_HARD_WRITTEN_P2, CH2_L1_HARD_MCQ_P2 } from './ch2_lesson1_hardQ_part2';
-import { CH2_L1_NOTES } from './ch2_lesson1_notes';
+import Lesson1BookletPdf from './Lesson1BookletPdf';
 
 // Lesson 2 Questions
 import { CH2_L2_OFFICIAL_WRITTEN_P1, CH2_L2_OFFICIAL_MCQ_P1 } from './ch2_lesson2_officialQ_part1';
 import { CH2_L2_OFFICIAL_WRITTEN_P2, CH2_L2_OFFICIAL_MCQ_P2 } from './ch2_lesson2_officialQ_part2';
 import { CH2_L2_HARD_WRITTEN_P1, CH2_L2_HARD_MCQ_P1 } from './ch2_lesson2_hardQ_part1';
 import { CH2_L2_HARD_WRITTEN_P2, CH2_L2_HARD_MCQ_P2 } from './ch2_lesson2_hardQ_part2';
-import { CH2_L2_NOTES } from './ch2_lesson2_notes';
 import type { Ch2QuizQuestion } from './ch2_lesson1_officialQ_part1';
 
 const STORAGE_KEY = 'DLEARN_CH2_PRACTICE_V1';
@@ -45,7 +44,7 @@ export default function Chapter2Practice() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) return JSON.parse(saved).selectedLesson || 'L1';
-    } catch (e) {}
+    } catch (e) { }
     return 'L1';
   });
 
@@ -54,7 +53,7 @@ export default function Chapter2Practice() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) return JSON.parse(saved).selectedSection || 'OFFICIAL';
-    } catch (e) {}
+    } catch (e) { }
     return 'OFFICIAL';
   });
 
@@ -70,7 +69,7 @@ export default function Chapter2Practice() {
       if (saved && typeof JSON.parse(saved).currentIdx === 'number') {
         return JSON.parse(saved).currentIdx;
       }
-    } catch (e) {}
+    } catch (e) { }
     return 0;
   });
 
@@ -79,7 +78,7 @@ export default function Chapter2Practice() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) return JSON.parse(saved).mcqAnswers || {};
-    } catch (e) {}
+    } catch (e) { }
     return {};
   });
 
@@ -87,7 +86,7 @@ export default function Chapter2Practice() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) return JSON.parse(saved).writtenAnswers || {};
-    } catch (e) {}
+    } catch (e) { }
     return {};
   });
 
@@ -96,7 +95,7 @@ export default function Chapter2Practice() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) return JSON.parse(saved).revealedAnswers || {};
-    } catch (e) {}
+    } catch (e) { }
     return {};
   });
 
@@ -105,7 +104,7 @@ export default function Chapter2Practice() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) return JSON.parse(saved).selfGrades || {};
-    } catch (e) {}
+    } catch (e) { }
     return {};
   });
 
@@ -121,7 +120,7 @@ export default function Chapter2Practice() {
         revealedAnswers,
         selfGrades,
       }));
-    } catch (e) {}
+    } catch (e) { }
   }, [selectedLesson, selectedSection, currentIdx, mcqAnswers, writtenAnswers, revealedAnswers, selfGrades]);
 
   // Aggregate questions based on current Lesson & Section
@@ -217,7 +216,7 @@ export default function Chapter2Practice() {
       setRevealedAnswers({});
       setSelfGrades({});
       setCurrentIdx(0);
-      try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+      try { localStorage.removeItem(STORAGE_KEY); } catch (e) { }
     }
   };
 
@@ -274,16 +273,14 @@ export default function Chapter2Practice() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <button
             onClick={() => { setSelectedLesson('L1'); setCurrentIdx(0); }}
-            className={`p-4 rounded-2xl border-2 transition-all flex items-center justify-between text-right cursor-pointer ${
-              selectedLesson === 'L1'
+            className={`p-4 rounded-2xl border-2 transition-all flex items-center justify-between text-right cursor-pointer ${selectedLesson === 'L1'
                 ? 'border-primary-plum bg-white shadow-md ring-2 ring-primary-plum/20'
                 : 'border-slate-200 bg-white/80 hover:bg-white text-slate-600'
-            }`}
+              }`}
           >
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black ${
-                selectedLesson === 'L1' ? 'bg-primary-plum text-white' : 'bg-slate-100 text-slate-500'
-              }`}>
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black ${selectedLesson === 'L1' ? 'bg-primary-plum text-white' : 'bg-slate-100 text-slate-500'
+                }`}>
                 <Lock size={18} />
               </div>
               <div>
@@ -300,16 +297,14 @@ export default function Chapter2Practice() {
 
           <button
             onClick={() => { setSelectedLesson('L2'); setCurrentIdx(0); }}
-            className={`p-4 rounded-2xl border-2 transition-all flex items-center justify-between text-right cursor-pointer ${
-              selectedLesson === 'L2'
+            className={`p-4 rounded-2xl border-2 transition-all flex items-center justify-between text-right cursor-pointer ${selectedLesson === 'L2'
                 ? 'border-teal-600 bg-white shadow-md ring-2 ring-teal-500/20'
                 : 'border-slate-200 bg-white/80 hover:bg-white text-slate-600'
-            }`}
+              }`}
           >
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black ${
-                selectedLesson === 'L2' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-500'
-              }`}>
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black ${selectedLesson === 'L2' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-500'
+                }`}>
                 <Shield size={18} />
               </div>
               <div>
@@ -331,11 +326,10 @@ export default function Chapter2Practice() {
         <div className="bg-white p-2 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-2">
           <button
             onClick={() => { setSelectedSection('OFFICIAL'); setCurrentIdx(0); }}
-            className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${
-              selectedSection === 'OFFICIAL'
+            className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${selectedSection === 'OFFICIAL'
                 ? 'bg-primary-navy text-white shadow-md'
                 : 'text-slate-600 hover:bg-slate-100'
-            }`}
+              }`}
           >
             <Award size={16} />
             <span>{lang === 'ar' ? 'أسئلة الوزارة الرسمية' : 'Official Assessments'}</span>
@@ -343,11 +337,10 @@ export default function Chapter2Practice() {
 
           <button
             onClick={() => { setSelectedSection('HARD'); setCurrentIdx(0); }}
-            className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${
-              selectedSection === 'HARD'
+            className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${selectedSection === 'HARD'
                 ? 'bg-primary-plum text-white shadow-md'
                 : 'text-slate-600 hover:bg-slate-100'
-            }`}
+              }`}
           >
             <Sparkles size={16} />
             <span>{lang === 'ar' ? 'أسئلة التحديات ونمط الامتحان' : 'Exam-Style Challenges'}</span>
@@ -355,90 +348,35 @@ export default function Chapter2Practice() {
 
           <button
             onClick={() => setSelectedSection('NOTES')}
-            className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${
-              selectedSection === 'NOTES'
+            className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${selectedSection === 'NOTES'
                 ? 'bg-teal-700 text-white shadow-md'
                 : 'text-slate-600 hover:bg-slate-100'
-            }`}
+              }`}
           >
             <BookOpen size={16} />
-            <span>{lang === 'ar' ? 'الشرح والنوتات والتشبيهات' : 'Study Notes & Analogies'}</span>
+            <span>{lang === 'ar' ? 'ملزمة الشرح الذكية (PDF)' : 'Study Booklet (PDF)'}</span>
           </button>
         </div>
 
         {/* ========================================================= */}
-        {/* VIEW A: STUDY NOTES TAB                                   */}
+        {/* VIEW A: STUDY NOTES & PDF BOOKLET TAB                     */}
         {/* ========================================================= */}
         {selectedSection === 'NOTES' && (
-          <div className="space-y-6">
-            <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-              <h2 className="text-xl font-black text-primary-navy mb-1 flex items-center gap-2">
-                <BookOpen size={20} className="text-teal-600" />
-                <span>
-                  {selectedLesson === 'L1'
-                    ? (lang === 'ar' ? 'نوتات وشرح الدرس الأول: تقنيات التشفير والمصادقة' : 'Lesson 1 Study Notes: Encryption & Auth')
-                    : (lang === 'ar' ? 'نوتات وشرح الدرس الثاني: تصميم أمان الشبكات' : 'Lesson 2 Study Notes: Network Security Design')}
-                </span>
-              </h2>
-              <p className="text-slate-500 text-xs font-semibold">
+          selectedLesson === 'L1' ? (
+            <Lesson1BookletPdf />
+          ) : (
+            <div className="bg-white p-12 rounded-3xl border border-slate-200 text-center space-y-3">
+              <BookOpen size={40} className="text-teal-600 mx-auto opacity-40" />
+              <h3 className="font-black text-lg text-primary-navy">
+                {lang === 'ar' ? 'ملزمة شرح الدرس الثاني قيد الإعداد' : 'Lesson 2 Study Booklet in progress'}
+              </h3>
+              <p className="text-xs text-slate-500 font-semibold">
                 {lang === 'ar'
-                  ? 'ملخصات سريعة، وتشبيهات ذهنية للتثبيت، وأهم الفخاخ والأخطاء الشائعة في الامتحانات.'
-                  : 'High-yield summaries, mental analogies, and common pitfalls for exam preparation.'}
+                  ? 'يمكنك التبديل إلى "الدرس الأول" للاطلاع على الملزمة التفاعلية ونوتات الامتحانات الذكية.'
+                  : 'Switch to "Lesson 1" to view the interactive booklet and exam capsules.'}
               </p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {(selectedLesson === 'L1' ? CH2_L1_NOTES : CH2_L2_NOTES).map((note: any) => (
-                <div key={note.id} className="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3">
-                  <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                    <span className="text-[11px] font-bold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200">
-                      الجزء {note.part}
-                    </span>
-                    <span className="text-xs font-bold text-slate-400">
-                      {note.type || 'نوتة ذهبية'}
-                    </span>
-                  </div>
-
-                  <h3 className="font-black text-base sm:text-lg text-primary-navy">
-                    {note.title_ar}
-                  </h3>
-
-                  {note.summary_ar && (
-                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-                      {note.summary_ar}
-                    </p>
-                  )}
-
-                  {note.content_ar && (
-                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium whitespace-pre-wrap">
-                      {note.content_ar}
-                    </p>
-                  )}
-
-                  {note.analogy_ar && (
-                    <div className="p-3 bg-amber-50/80 border border-amber-200 rounded-xl text-xs text-amber-950 font-medium">
-                      <span className="font-bold block text-amber-900 mb-0.5">🧠 تشبيه ذهني للتثبيت:</span>
-                      {note.analogy_ar}
-                    </div>
-                  )}
-
-                  {note.exam_tip_ar && (
-                    <div className="p-3 bg-emerald-50/80 border border-emerald-200 rounded-xl text-xs text-emerald-950 font-medium">
-                      <span className="font-bold block text-emerald-900 mb-0.5">🎯 نوتة للحل السريع في الامتحان:</span>
-                      {note.exam_tip_ar}
-                    </div>
-                  )}
-
-                  {note.common_mistake_ar && (
-                    <div className="p-3 bg-rose-50/80 border border-rose-200 rounded-xl text-xs text-rose-950 font-medium">
-                      <span className="font-bold block text-rose-900 mb-0.5">⚠️ خطأ شائع احذر منه:</span>
-                      {note.common_mistake_ar}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
+          )
         )}
 
         {/* ========================================================= */}
@@ -537,13 +475,12 @@ export default function Chapter2Practice() {
                     <button
                       key={q.id}
                       onClick={() => setCurrentIdx(idx)}
-                      className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl font-bold text-xs transition-all flex items-center justify-center cursor-pointer ${
-                        isCurrent
+                      className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl font-bold text-xs transition-all flex items-center justify-center cursor-pointer ${isCurrent
                           ? 'bg-primary-navy text-white ring-2 ring-primary-plum shadow-md scale-105'
                           : isAnswered
-                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                          : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-                      }`}
+                            ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                            : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                        }`}
                     >
                       {idx + 1}
                     </button>
@@ -614,15 +551,14 @@ export default function Chapter2Practice() {
                             onClick={() => handleSelectMcq(activeQuestion.id, opt)}
                             className={`w-full p-4 rounded-2xl border-2 text-right transition-all flex items-center gap-3.5 cursor-pointer ${btnStyle}`}
                           >
-                            <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs transition-colors ${
-                              showCorrection && isCorrectOption
+                            <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs transition-colors ${showCorrection && isCorrectOption
                                 ? 'bg-emerald-600 text-white'
                                 : showCorrection && isSelected
-                                ? 'bg-rose-600 text-white'
-                                : isSelected
-                                ? 'bg-primary-plum text-white'
-                                : 'bg-slate-100 text-slate-500'
-                            }`}>
+                                  ? 'bg-rose-600 text-white'
+                                  : isSelected
+                                    ? 'bg-primary-plum text-white'
+                                    : 'bg-slate-100 text-slate-500'
+                              }`}>
                               {String.fromCharCode(1571 + oIdx)}
                             </span>
                             <span className="text-sm sm:text-base font-semibold flex-1 leading-snug">
@@ -644,11 +580,10 @@ export default function Chapter2Practice() {
                       <motion.div
                         initial={{ opacity: 0, y: 5 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className={`p-4 sm:p-5 rounded-2xl border text-xs sm:text-sm font-medium leading-relaxed ${
-                          mcqAnswers[activeQuestion.id] === activeQuestion.answer
+                        className={`p-4 sm:p-5 rounded-2xl border text-xs sm:text-sm font-medium leading-relaxed ${mcqAnswers[activeQuestion.id] === activeQuestion.answer
                             ? 'bg-emerald-50/90 border-emerald-300 text-emerald-950'
                             : 'bg-rose-50/90 border-rose-300 text-rose-950'
-                        }`}
+                          }`}
                       >
                         <div className="flex items-center gap-2 font-black mb-1.5 text-sm">
                           {mcqAnswers[activeQuestion.id] === activeQuestion.answer ? (
@@ -715,21 +650,19 @@ export default function Chapter2Practice() {
                           <span className="text-slate-400">تقييمك لإجابتك:</span>
                           <button
                             onClick={() => handleGradeSelf(activeQuestion.id, 'CORRECT')}
-                            className={`px-3 py-1.5 rounded-lg border transition-all ${
-                              selfGrades[activeQuestion.id] === 'CORRECT'
+                            className={`px-3 py-1.5 rounded-lg border transition-all ${selfGrades[activeQuestion.id] === 'CORRECT'
                                 ? 'bg-emerald-600 text-white border-emerald-600'
                                 : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
-                            }`}
+                              }`}
                           >
                             أجبت بشكل صحيح ✅
                           </button>
                           <button
                             onClick={() => handleGradeSelf(activeQuestion.id, 'REVIEW')}
-                            className={`px-3 py-1.5 rounded-lg border transition-all ${
-                              selfGrades[activeQuestion.id] === 'REVIEW'
+                            className={`px-3 py-1.5 rounded-lg border transition-all ${selfGrades[activeQuestion.id] === 'REVIEW'
                                 ? 'bg-amber-600 text-white border-amber-600'
                                 : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
-                            }`}
+                              }`}
                           >
                             يحتاج مراجعة ⚠️
                           </button>
