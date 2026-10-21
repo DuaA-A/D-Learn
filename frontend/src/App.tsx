@@ -6,7 +6,7 @@ import {
   Award, LogOut, User, Star, Layers, Globe, Shield, Code, AlertTriangle,
   Lock, Mail, Eye, EyeOff, Home, ChevronDown, BookMarked, Brain, Zap, Target,
   RotateCcw, ArrowLeft, ArrowRight, Lightbulb, FileText, Search,
-  MessageSquare, Loader, Maximize2, Trash2, RefreshCw, Clock,
+  MessageSquare, Loader, Maximize2, Trash2, RefreshCw,
   BarChart2, Users, FileCheck, Check, Sparkles, HelpCircle
 } from 'lucide-react';
 
@@ -30,6 +30,8 @@ import ComprehensiveExam from './ComprehensiveExam';
 import ComprehensiveExamCh1 from './ComprehensiveExamCh1';
 import Chapter1Workshop from './Chapter1Workshop';
 import Chapter2Practice from './Chapter2Practice';
+import Lesson1BookletPdf from './Lesson1BookletPdf';
+import Lesson2BookletPdf from './Lesson2BookletPdf';
 
 // ============================================================
 // TYPES
@@ -472,6 +474,9 @@ function StudentDashboard() {
     l.title_ar.includes(search)
   );
 
+  const chapter1Lessons = filteredLessons.filter(l => l.unit === 1);
+  const chapter2Lessons = filteredLessons.filter(l => l.unit === 2);
+
   const completedCount = profile?.completedLessons?.length || 0;
   const totalLessons = LESSONS.length;
   const progressPct = Math.round((completedCount / Math.max(totalLessons, 1)) * 100);
@@ -551,165 +556,6 @@ function StudentDashboard() {
           </div>
         </motion.div>
 
-        
-        {/* Featured Comprehensive Exam Card (Chapter 1) */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-6 sm:p-7 text-white shadow-xl mb-8 border border-slate-700 relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-80 h-80 bg-accent-mint/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-700 text-white text-[11px] font-black uppercase tracking-wider shadow-sm">
-                <Award size={13} />
-                <span>{t('Chapter 1 Comprehensive Exam', 'الامتحان الشامل — الشابتر الأول', lang)}</span>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-black">
-                {t('Mastery Test: Full Chapter 1 Exam', 'اختبار التمكن: امتحان شامل على الشابتر الأول بالكامل', lang)}
-              </h3>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-2xl leading-relaxed">
-                {t(
-                  'Covers Lessons 1 to 4. Contains exactly 50 questions (25 MCQs + 25 in-depth analytical written questions) with official marking rubrics. Locked until tutor approval.',
-                  'يغطي جميع دروس الشابتر الأول (من 1 إلى 4). يحتوي على 50 سؤالاً بالضبط (25 اختيار من متعدد + 25 سؤالاً مقالياً تحليلياً) مع نماذج إرشادية رسمية للتصحيح. هذا الامتحان مقفول ولا يُفتح إلا بإذن المعلم.'
-                , lang)}
-              </p>
-            </div>
-
-            <button
-              onClick={() => {
-                if (ch1ExamUnlocked) navigate('/comprehensive-exam-ch1');
-              }}
-              className={`px-6 py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg transition-all flex items-center gap-2 whitespace-nowrap self-stretch md:self-auto justify-center ${ch1ExamUnlocked ? 'bg-gradient-to-r from-accent-mint to-teal-600 hover:opacity-95 text-white shadow-accent-mint/30 cursor-pointer' : 'bg-slate-700 text-slate-400 cursor-not-allowed border border-slate-600'}`}
-            >
-              {ch1ExamUnlocked ? (
-                <>
-                  <span>{t('Start Full Exam (50 Qs)', 'ابدأ الامتحان الشامل (50 سؤالاً)', lang)}</span>
-                  <ArrowLeft size={16} className={lang === 'ar' ? '' : 'rotate-180'} />
-                </>
-              ) : (
-                <>
-                  <Lock size={16} />
-                  <span>{t('Exam Locked', 'الامتحان مقفول حالياً', lang)}</span>
-                </>
-              )}
-            </button>
-          </div>
-        </motion.div>
-
-        {/* Chapter 1 Collaborative Workshop Card (Open Practice - Not Exam) */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-slate-900 via-primary-navy to-slate-900 rounded-3xl p-6 sm:p-7 text-white shadow-xl shadow-slate-900/30 mb-8 border border-slate-700/60 relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-80 h-80 bg-primary-plum/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-plum/30 text-accent-pink text-[11px] font-black uppercase tracking-wider border border-primary-plum/40 shadow-sm">
-                <Brain size={13} />
-                <span>{t('Chapter 1 Live Workshop', 'ورشة تدريبات الشابتر الأول — حل مع المعلم', lang)}</span>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-black">
-                {t('Collaborative Training & Deep Practice Lab', 'ورشة العمل التفاعلية: تدريبات وحل مشترك مع المعلم', lang)}
-              </h3>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-2xl leading-relaxed">
-                {t(
-                  'Open practice lab containing the chapter workshop questions (MCQs & Essay analytical drills). Not a timed exam — review solutions, explore model answers, and discuss key concepts collaboratively with your tutor.',
-                  'مختبر تدريبات تفاعلي يضم بنك أسئلة ورشة العمل للدروس الأربعة. ليست امتحاناً بمؤقت، بل جلسة تدريب مفتوحة تتيح كتابة الأفكار وإظهار النماذج الإرشادية والشرح ومناقشتها سوياً مع المعلم.'
-                , lang)}
-              </p>
-            </div>
-
-            <button
-              onClick={() => navigate('/workshop-ch1')}
-              className="px-6 py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg transition-all flex items-center gap-2 whitespace-nowrap self-stretch md:self-auto justify-center bg-gradient-to-r from-primary-plum to-accent-pink hover:opacity-95 text-white shadow-primary-plum/30 cursor-pointer"
-            >
-              <span>{t('Open Workshop Lab', 'افتح ورشة التدريبات 💡', lang)}</span>
-              <ArrowLeft size={16} className={lang === 'ar' ? '' : 'rotate-180'} />
-            </button>
-          </div>
-        </motion.div>
-
-        {/* Chapter 2 Cybersecurity Question Bank & Practice Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 rounded-3xl p-6 sm:p-7 text-white shadow-xl shadow-teal-950/40 mb-8 border border-teal-700/50 relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-[11px] font-black uppercase tracking-wider border border-teal-500/30 shadow-sm">
-                <Shield size={13} />
-                <span>{t('Unit 2: Cybersecurity Question Bank', 'الوحدة الثانية: بنك أسئلة وتدريبات الأمن السيبراني 🛡️', lang)}</span>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-black">
-                {t('Unit 2 Full Practice Lab (Lessons 1 & 2)', 'بنك أسئلة الوحدة الثانية بالكامل (الدرس الأول + الدرس الثاني)', lang)}
-              </h3>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-2xl leading-relaxed">
-                {t(
-                  'Over 180 questions with real-time instant grading, concise model answers, study notes, and persistent progress tracking.',
-                  'أكثر من 180 سؤالاً (تقييمات الوزارة الرسمية + أسئلة التحديات ونمط الامتحان للدرسين 1 و2). يتميز بالتصحيح اللحظي لكل سؤال، ونماذج إجابة نموذجية مختصرة يسهل كتابتها، وشرح ونوتات وافية مع حفظ تلقائي لتقدمك.'
-                , lang)}
-              </p>
-            </div>
-
-            <button
-              onClick={() => navigate('/chapter2-practice')}
-              className="px-6 py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg transition-all flex items-center gap-2 whitespace-nowrap self-stretch md:self-auto justify-center bg-gradient-to-r from-teal-500 to-emerald-600 hover:opacity-95 text-white shadow-teal-500/30 cursor-pointer"
-            >
-              <span>{t('Start Practicing Unit 2', 'افتح بنك أسئلة الوحدة الثانية 🚀', lang)}</span>
-              <ArrowLeft size={16} className={lang === 'ar' ? '' : 'rotate-180'} />
-            </button>
-          </div>
-        </motion.div>
-
-        {/* Featured Comprehensive Exam Card (Lessons 1 to 3) */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-primary-navy via-primary-plum to-primary-navy rounded-3xl p-6 sm:p-7 text-white shadow-xl shadow-primary-plum/20 mb-8 border border-primary-plum/40 relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-80 h-80 bg-accent-pink/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-pink text-white text-[11px] font-black uppercase tracking-wider shadow-sm">
-                <Award size={13} />
-                <span>{t('Unit 1 Official Comprehensive Exam', 'الامتحان الشامل الرسمي — أول 3 دروس', lang)}</span>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-black">
-                {t('Test Your Knowledge: First 3 Lessons Exam', 'اختبر استيعابك: امتحان شامل على أول 3 دروس', lang)}
-              </h3>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-2xl leading-relaxed">
-                {t(
-                  'Covers Lessons 1, 2, and 3. Real exam mode: no instant feedback during the test. Your final score, correct/incorrect questions, and model explanations are revealed upon submission.',
-                  'يغطي الدروس 1 و 2 و 3. وضع الامتحان الفعلي: لا تظهر الإجابات أثناء الحل، وتظهر نتيجتك النهائية والأسئلة الصحيحة والخاطئة والشرح النموذجي فور تسليم ورقة الامتحان.'
-                , lang)}
-              </p>
-              <div className="flex flex-wrap items-center gap-3 pt-1 text-xs text-slate-300 font-semibold">
-                <span className="flex items-center gap-1.5 bg-white/10 px-2.5 py-1 rounded-lg backdrop-blur-sm border border-white/15">
-                  <FileText size={13} className="text-accent-pink" /> 15 {t('MCQ Questions', 'سؤال شامل', lang)}
-                </span>
-                <span className="flex items-center gap-1.5 bg-white/10 px-2.5 py-1 rounded-lg backdrop-blur-sm border border-white/15">
-                  <Clock size={13} className="text-accent-mint" /> 25 {t('Minutes', 'دقيقة', lang)}
-                </span>
-                <span className="flex items-center gap-1.5 bg-white/10 px-2.5 py-1 rounded-lg backdrop-blur-sm border border-white/15">
-                  <Sparkles size={13} className="text-amber-300" /> +150 XP
-                </span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => navigate('/comprehensive-exam-1-3')}
-              className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-accent-pink to-primary-plum hover:opacity-95 text-white font-black text-xs sm:text-sm shadow-lg shadow-accent-pink/30 transition-all flex items-center gap-2 whitespace-nowrap self-stretch md:self-auto justify-center cursor-pointer"
-            >
-              <span>{t('Start Comprehensive Exam', 'ابدأ الامتحان الشامل الآن', lang)}</span>
-              <ArrowLeft size={16} className={lang === 'ar' ? '' : 'rotate-180'} />
-            </button>
-          </div>
-        </motion.div>
-
         {/* Search */}
         <div className="relative mb-8 max-w-xl">
           <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -722,90 +568,251 @@ function StudentDashboard() {
           />
         </div>
 
-        {/* Lessons Grid */}
-        <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-2xl font-black text-primary-navy">
-            {t('Course Lessons', 'دروس المنهج', lang)}
-            <span className="ml-2 text-sm font-bold text-slate-400">({filteredLessons.length})</span>
-          </h2>
-        </div>
+        {/* ============================================================ */}
+        {/* CHAPTER 1 SECTION                                             */}
+        {/* ============================================================ */}
+        <div className="mb-14">
+          <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="px-2.5 py-0.5 rounded-md bg-primary-plum/10 text-primary-plum text-[11px] font-black uppercase tracking-wider">
+                  {t('Chapter 1', 'الفصل الأول', lang)}
+                </span>
+                <span className="text-xs font-bold text-slate-400">
+                  ({chapter1Lessons.length} {t('Lessons', 'دروس', lang)})
+                </span>
+              </div>
+              <h2 className="text-2xl font-black text-primary-navy">
+                {t('IT Evolution & Artificial Intelligence', 'تطور تكنولوجيا المعلومات والذكاء الاصطناعي', lang)}
+              </h2>
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {filteredLessons.map((lesson, idx) => {
-            const isCompleted = profile?.completedLessons?.includes(lesson.id);
-            const lessonQuestions = QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, lesson.id));
-            const unitColor = UNIT_COLORS[lesson.unit] || UNIT_COLORS[1];
-
-            return (
-              <motion.div
-                key={lesson.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.05 }}
-                className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-accent-pink/50 hover:shadow-xl hover:shadow-accent-pink/10 transition-all group cursor-pointer flex flex-col"
-                onClick={() => navigate(`/lesson/${lesson.id}`)}
+            {/* Quick Action Pills for Chapter 1 */}
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => navigate('/workshop-ch1')}
+                className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-xs font-bold text-primary-navy shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
               >
-                {/* Card header gradient */}
-                <div className={`h-2.5 bg-gradient-to-r ${unitColor}`}></div>
+                <Brain size={14} className="text-primary-plum" />
+                <span>{t('Live Workshop', 'ورشة تدريبات الشابتر 💡', lang)}</span>
+              </button>
 
-                <div className="p-6 flex flex-col flex-1">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${unitColor} flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform`}>
-                      {UNIT_ICONS[lesson.unit]}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {isCompleted && (
-                        <span className="flex items-center gap-1 px-2.5 py-1 bg-accent-mint/20 border border-accent-mint/40 rounded-full text-teal-800 text-[10px] font-bold">
-                          <CheckCircle size={10} /> {t('Done', 'مكتمل', lang)}
+              <button
+                onClick={() => { if (ch1ExamUnlocked) navigate('/comprehensive-exam-ch1'); }}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 ${
+                  ch1ExamUnlocked
+                    ? 'bg-gradient-to-r from-accent-mint to-teal-600 text-white shadow-sm hover:opacity-95 cursor-pointer border-transparent'
+                    : 'bg-slate-100 text-slate-400 cursor-not-allowed border-slate-200'
+                }`}
+              >
+                {ch1ExamUnlocked ? <Award size={14} /> : <Lock size={14} />}
+                <span>{t('Full Chapter Exam (50 Qs)', 'الامتحان الشامل (50 س)', lang)}</span>
+              </button>
+
+              <button
+                onClick={() => navigate('/comprehensive-exam-1-3')}
+                className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-xs font-bold text-primary-navy shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+              >
+                <FileText size={14} className="text-accent-pink" />
+                <span>{t('Exam: Lessons 1-3', 'امتحان أول 3 دروس', lang)}</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Chapter 1 Lessons Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {chapter1Lessons.map((lesson, idx) => {
+              const isCompleted = profile?.completedLessons?.includes(lesson.id);
+              const lessonQuestions = QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, lesson.id));
+              const unitColor = UNIT_COLORS[lesson.unit] || UNIT_COLORS[1];
+
+              return (
+                <motion.div
+                  key={lesson.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-primary-plum/50 hover:shadow-xl hover:shadow-primary-plum/10 transition-all group flex flex-col cursor-pointer"
+                  onClick={() => navigate(`/lesson/${lesson.id}`)}
+                >
+                  <div className={`h-2.5 bg-gradient-to-r ${unitColor}`}></div>
+
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${unitColor} flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform`}>
+                        {UNIT_ICONS[lesson.unit]}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {isCompleted && (
+                          <span className="flex items-center gap-1 px-2.5 py-1 bg-accent-mint/20 border border-accent-mint/40 rounded-full text-teal-800 text-[10px] font-bold">
+                            <CheckCircle size={10} /> {t('Done', 'مكتمل', lang)}
+                          </span>
+                        )}
+                        <span className="text-primary-navy text-xs font-bold bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-full">
+                          {lesson.lesson_number}
                         </span>
-                      )}
-                      <span className="text-primary-navy text-xs font-bold bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-full">
-                        {lesson.lesson_number}
+                      </div>
+                    </div>
+
+                    <h3 className="font-black text-primary-navy text-base sm:text-lg mb-2 group-hover:text-primary-plum transition-colors leading-snug">
+                      {lang === 'ar' ? lesson.title_ar : lesson.title_en}
+                    </h3>
+
+                    <p className="text-slate-600 text-xs sm:text-sm mb-5 line-clamp-2 font-medium">
+                      {lang === 'ar'
+                        ? lesson.learning_objectives_ar[0]
+                        : lesson.learning_objectives_en[0]}
+                    </p>
+
+                    <div className="flex items-center gap-3 text-xs text-slate-500 font-semibold mb-6 mt-auto">
+                      <span className="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+                        <BookOpen size={12} className="text-primary-plum" />
+                        {lesson.sections.length} {t('sections', 'أقسام', lang)}
+                      </span>
+                      <span className="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+                        <FileText size={12} className="text-accent-pink" />
+                        {lessonQuestions.length} {t('questions', 'سؤال', lang)}
                       </span>
                     </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        onClick={e => { e.stopPropagation(); navigate(`/lesson/${lesson.id}`); }}
+                        className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r ${unitColor} text-white shadow-md hover:shadow-lg hover:opacity-90 cursor-pointer`}
+                      >
+                        <PlayCircle size={15} />
+                        {t('Study', 'ادرس', lang)}
+                      </button>
+                      <button
+                        onClick={e => { e.stopPropagation(); navigate(`/assessment/${lesson.id}`); }}
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold transition-all bg-slate-100 hover:bg-slate-200 border border-slate-200 text-primary-navy cursor-pointer"
+                      >
+                        <Award size={15} />
+                        {t('Quiz', 'اختبار', lang)}
+                      </button>
+                    </div>
                   </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
 
-                  <h3 className="font-black text-primary-navy text-lg mb-2 group-hover:text-primary-plum transition-colors leading-snug">
-                    {lang === 'ar' ? lesson.title_ar : lesson.title_en}
-                  </h3>
+        {/* ============================================================ */}
+        {/* CHAPTER 2 SECTION                                             */}
+        {/* ============================================================ */}
+        <div className="mb-14">
+          <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="px-2.5 py-0.5 rounded-md bg-teal-50 text-teal-700 border border-teal-200 text-[11px] font-black uppercase tracking-wider">
+                  {t('Chapter 2', 'الفصل الثاني', lang)}
+                </span>
+                <span className="text-xs font-bold text-slate-400">
+                  ({chapter2Lessons.length} {t('Lessons', 'دروس', lang)})
+                </span>
+              </div>
+              <h2 className="text-2xl font-black text-primary-navy">
+                {t('Cybersecurity & Network Security Design', 'الأمن السيبراني وتصميم أمان الشبكات', lang)}
+              </h2>
+            </div>
 
-                  <p className="text-slate-600 text-sm mb-5 line-clamp-2 font-medium">
-                    {lang === 'ar'
-                      ? lesson.learning_objectives_ar[0]
-                      : lesson.learning_objectives_en[0]}
-                  </p>
+            {/* Quick Action Pill for Chapter 2 */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => navigate('/chapter2-practice')}
+                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 hover:opacity-95 text-white text-xs font-black shadow-md shadow-teal-600/20 transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <Shield size={15} />
+                <span>{t('Full Chapter 2 Question Bank (180+ Qs) 🚀', 'بنك أسئلة وتدريبات الشابتر كاملاً (180+ س) 🚀', lang)}</span>
+              </button>
+            </div>
+          </div>
 
-                  <div className="flex items-center gap-3 text-xs text-slate-500 font-semibold mb-6 mt-auto">
-                    <span className="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
-                      <BookOpen size={12} className="text-primary-plum" />
-                      {lesson.sections.length} {t('sections', 'أقسام', lang)}
-                    </span>
-                    <span className="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
-                      <FileText size={12} className="text-accent-pink" />
-                      {lessonQuestions.length} {t('questions', 'سؤال', lang)}
-                    </span>
+          {/* Chapter 2 Lessons Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {chapter2Lessons.map((lesson, idx) => {
+              const isCompleted = profile?.completedLessons?.includes(lesson.id);
+              const lessonQuestions = QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, lesson.id));
+              const unitColor = 'from-teal-600 to-emerald-700';
+
+              const questionCountDisplay = lesson.id === '2-1' ? '80+' : lesson.id === '2-2' ? '70+' : lessonQuestions.length;
+
+              return (
+                <motion.div
+                  key={lesson.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-teal-500/50 hover:shadow-xl hover:shadow-teal-500/10 transition-all group flex flex-col cursor-pointer"
+                  onClick={() => navigate(`/lesson/${lesson.id}`)}
+                >
+                  <div className={`h-2.5 bg-gradient-to-r ${unitColor}`}></div>
+
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${unitColor} flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform`}>
+                        <Shield size={20} />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {isCompleted && (
+                          <span className="flex items-center gap-1 px-2.5 py-1 bg-accent-mint/20 border border-accent-mint/40 rounded-full text-teal-800 text-[10px] font-bold">
+                            <CheckCircle size={10} /> {t('Done', 'مكتمل', lang)}
+                          </span>
+                        )}
+                        <span className="text-primary-navy text-xs font-bold bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-full">
+                          {lesson.lesson_number}
+                        </span>
+                      </div>
+                    </div>
+
+                    <h3 className="font-black text-primary-navy text-base sm:text-lg mb-2 group-hover:text-teal-700 transition-colors leading-snug">
+                      {lang === 'ar' ? lesson.title_ar : lesson.title_en}
+                    </h3>
+
+                    <p className="text-slate-600 text-xs sm:text-sm mb-5 line-clamp-2 font-medium">
+                      {lang === 'ar'
+                        ? lesson.learning_objectives_ar[0]
+                        : lesson.learning_objectives_en[0]}
+                    </p>
+
+                    <div className="flex items-center gap-3 text-xs text-slate-500 font-semibold mb-6 mt-auto">
+                      <span className="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+                        <BookOpen size={12} className="text-teal-700" />
+                        {lesson.sections.length} {t('sections', 'أقسام', lang)}
+                      </span>
+                      <span className="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+                        <FileText size={12} className="text-accent-pink" />
+                        {questionCountDisplay} {t('questions', 'سؤال', lang)}
+                      </span>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        onClick={e => { e.stopPropagation(); navigate(`/lesson/${lesson.id}`); }}
+                        className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r ${unitColor} text-white shadow-md hover:shadow-lg hover:opacity-90 cursor-pointer`}
+                      >
+                        <PlayCircle size={15} />
+                        {t('Study', 'ادرس', lang)}
+                      </button>
+                      <button
+                        onClick={e => {
+                          e.stopPropagation();
+                          if (lesson.id === '2-1') navigate('/chapter2-practice?lesson=L1');
+                          else if (lesson.id === '2-2') navigate('/chapter2-practice?lesson=L2');
+                          else navigate(`/assessment/${lesson.id}`);
+                        }}
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold transition-all bg-slate-100 hover:bg-slate-200 border border-slate-200 text-primary-navy cursor-pointer"
+                      >
+                        <Award size={15} />
+                        {t('Quiz', 'اختبار', lang)}
+                      </button>
+                    </div>
                   </div>
-
-                  <div className="flex gap-2">
-                    <button
-                      onClick={e => { e.stopPropagation(); navigate(`/lesson/${lesson.id}`); }}
-                      className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r ${unitColor} text-white shadow-md hover:shadow-lg hover:opacity-90`}
-                    >
-                      <PlayCircle size={15} />
-                      {t('Study', 'ادرس', lang)}
-                    </button>
-                    <button
-                      onClick={e => { e.stopPropagation(); navigate(`/assessment/${lesson.id}`); }}
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold transition-all bg-slate-100 hover:bg-slate-200 border border-slate-200 text-primary-navy"
-                    >
-                      <Award size={15} />
-                      {t('Quiz', 'اختبار', lang)}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
@@ -860,6 +867,109 @@ function LessonViewer() {
   );
 
   const isCompleted = profile?.completedLessons?.includes(lesson.id);
+
+  if (lesson.id === '2-1' || lesson.id === 'les_2_1') {
+    return (
+      <div className="min-h-screen bg-slate-50 text-primary-navy" dir={dir(lang)}>
+        {/* Sticky Action Bar */}
+        <div className="sticky top-16 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-sm">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-primary-navy text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+            >
+              <ArrowRight size={14} className={lang === 'ar' ? '' : 'rotate-180'} />
+              <span>{t('Back to Dashboard', 'الرئيسية', lang)}</span>
+            </button>
+            <div className="hidden sm:flex items-center gap-2">
+              <span className="text-xs font-bold text-slate-400">|</span>
+              <span className="text-xs font-black text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200">
+                {t('Unit 2 · Lesson 1', 'الوحدة الثانية — الدرس الأول', lang)}
+              </span>
+              <span className="text-xs font-bold text-slate-700">
+                {t('Cryptographic Technologies & Authentication', 'تقنيات التشفير والمصادقة', lang)}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {!isCompleted && (
+              <button
+                onClick={markComplete}
+                className="px-3.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+              >
+                <CheckCircle size={14} />
+                <span>{t('Mark Completed (+50 XP)', 'تحديد كمكتمل (+50 XP)', lang)}</span>
+              </button>
+            )}
+            <button
+              onClick={() => navigate('/chapter2-practice?lesson=L1')}
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 hover:opacity-95 text-white text-xs font-black shadow-md shadow-teal-600/20 flex items-center gap-1.5 transition-all cursor-pointer"
+            >
+              <Award size={15} />
+              <span>{t('Practice Questions (80+ Qs)', 'الانتقال إلى حل الأسئلة (80+ سؤال)', lang)}</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <Lesson1BookletPdf />
+        </div>
+      </div>
+    );
+  }
+
+  if (lesson.id === '2-2' || lesson.id === 'les_2_2') {
+    return (
+      <div className="min-h-screen bg-slate-50 text-primary-navy" dir={dir(lang)}>
+        {/* Sticky Action Bar */}
+        <div className="sticky top-16 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-sm">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-primary-navy text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+            >
+              <ArrowRight size={14} className={lang === 'ar' ? '' : 'rotate-180'} />
+              <span>{t('Back to Dashboard', 'الرئيسية', lang)}</span>
+            </button>
+            <div className="hidden sm:flex items-center gap-2">
+              <span className="text-xs font-bold text-slate-400">|</span>
+              <span className="text-xs font-black text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200">
+                {t('Unit 2 · Lesson 2', 'الوحدة الثانية — الدرس الثاني', lang)}
+              </span>
+              <span className="text-xs font-bold text-slate-700">
+                {t('Network Security Design', 'تصميم أمان الشبكات', lang)}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {!isCompleted && (
+              <button
+                onClick={markComplete}
+                className="px-3.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+              >
+                <CheckCircle size={14} />
+                <span>{t('Mark Completed (+50 XP)', 'تحديد كمكتمل (+50 XP)', lang)}</span>
+              </button>
+            )}
+            <button
+              onClick={() => navigate('/chapter2-practice?lesson=L2')}
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 hover:opacity-95 text-white text-xs font-black shadow-md shadow-teal-600/20 flex items-center gap-1.5 transition-all cursor-pointer"
+            >
+              <Award size={15} />
+              <span>{t('Practice Questions (70+ Qs)', 'الانتقال إلى حل الأسئلة (70+ سؤال)', lang)}</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <Lesson2BookletPdf />
+        </div>
+      </div>
+    );
+  }
+
   const section = lesson.sections[activeSection];
   const unitColor = UNIT_COLORS[lesson.unit] || UNIT_COLORS[1];
 

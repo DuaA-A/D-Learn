@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Shield,
@@ -24,7 +24,6 @@ import { CH2_L1_OFFICIAL_WRITTEN_P1, CH2_L1_OFFICIAL_MCQ_P1 } from './ch2_lesson
 import { CH2_L1_OFFICIAL_WRITTEN_P2, CH2_L1_OFFICIAL_MCQ_P2 } from './ch2_lesson1_officialQ_part2';
 import { CH2_L1_HARD_WRITTEN_P1, CH2_L1_HARD_MCQ_P1 } from './ch2_lesson1_hardQ_part1';
 import { CH2_L1_HARD_WRITTEN_P2, CH2_L1_HARD_MCQ_P2 } from './ch2_lesson1_hardQ_part2';
-import Lesson1BookletPdf from './Lesson1BookletPdf';
 
 // Lesson 2 Questions
 import { CH2_L2_OFFICIAL_WRITTEN_P1, CH2_L2_OFFICIAL_MCQ_P1 } from './ch2_lesson2_officialQ_part1';
@@ -38,6 +37,7 @@ const STORAGE_KEY = 'DLEARN_CH2_PRACTICE_V1';
 export default function Chapter2Practice() {
   const { lang } = React.useContext(AppContext);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   // Primary Lesson Switcher: 'L1' (تقنيات التشفير والمصادقة) or 'L2' (تصميم أمان الشبكات)
   const [selectedLesson, setSelectedLesson] = useState<'L1' | 'L2'>(() => {
@@ -48,11 +48,23 @@ export default function Chapter2Practice() {
     return 'L1';
   });
 
-  // Section: 'OFFICIAL' (وزارة) | 'HARD' (تحديات ونمط الامتحان) | 'NOTES' (شرح ونوتات)
-  const [selectedSection, setSelectedSection] = useState<'OFFICIAL' | 'HARD' | 'NOTES'>(() => {
+  // Check URL query params for ?lesson=L1 or ?lesson=L2
+  useEffect(() => {
+    const qLesson = searchParams.get('lesson');
+    if (qLesson === 'L1' || qLesson === 'L2') {
+      setSelectedLesson(qLesson);
+      setCurrentIdx(0);
+    }
+  }, [searchParams]);
+
+  // Section: 'OFFICIAL' (وزارة) | 'HARD' (تحديات ونمط الامتحان)
+  const [selectedSection, setSelectedSection] = useState<'OFFICIAL' | 'HARD'>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return JSON.parse(saved).selectedSection || 'OFFICIAL';
+      if (saved) {
+        const sec = JSON.parse(saved).selectedSection;
+        if (sec === 'OFFICIAL' || sec === 'HARD') return sec;
+      }
     } catch (e) { }
     return 'OFFICIAL';
   });
@@ -125,8 +137,6 @@ export default function Chapter2Practice() {
 
   // Aggregate questions based on current Lesson & Section
   const currentQuestions: Ch2QuizQuestion[] = useMemo(() => {
-    if (selectedSection === 'NOTES') return [];
-
     if (selectedLesson === 'L1') {
       if (selectedSection === 'OFFICIAL') {
         return [
@@ -321,69 +331,46 @@ export default function Chapter2Practice() {
         </div>
 
         {/* ========================================================= */}
-        {/* SECTION SELECTOR: OFFICIAL vs HARD vs NOTES               */}
+        {/* SECTION SELECTOR: OFFICIAL vs HARD                        */}
         {/* ========================================================= */}
-        <div className="bg-white p-2 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-2">
-          <button
-            onClick={() => { setSelectedSection('OFFICIAL'); setCurrentIdx(0); }}
-            className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${selectedSection === 'OFFICIAL'
-                ? 'bg-primary-navy text-white shadow-md'
-                : 'text-slate-600 hover:bg-slate-100'
-              }`}
-          >
-            <Award size={16} />
-            <span>{lang === 'ar' ? 'أسئلة الوزارة الرسمية' : 'Official Assessments'}</span>
-          </button>
+        <div className="bg-white p-2 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2 flex-1">
+            <button
+              onClick={() => { setSelectedSection('OFFICIAL'); setCurrentIdx(0); }}
+              className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${selectedSection === 'OFFICIAL'
+                  ? 'bg-primary-navy text-white shadow-md'
+                  : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              <Award size={16} />
+              <span>{lang === 'ar' ? 'أسئلة الوزارة الرسمية' : 'Official Assessments'}</span>
+            </button>
+
+            <button
+              onClick={() => { setSelectedSection('HARD'); setCurrentIdx(0); }}
+              className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${selectedSection === 'HARD'
+                  ? 'bg-primary-plum text-white shadow-md'
+                  : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              <Sparkles size={16} />
+              <span>{lang === 'ar' ? 'أسئلة التحديات ونمط الامتحان' : 'Exam-Style Challenges'}</span>
+            </button>
+          </div>
 
           <button
-            onClick={() => { setSelectedSection('HARD'); setCurrentIdx(0); }}
-            className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${selectedSection === 'HARD'
-                ? 'bg-primary-plum text-white shadow-md'
-                : 'text-slate-600 hover:bg-slate-100'
-              }`}
+            onClick={() => navigate(`/lesson/${selectedLesson === 'L1' ? '2-1' : '2-2'}`)}
+            className="py-3 px-4 rounded-xl font-bold text-xs sm:text-sm text-teal-800 bg-teal-50 hover:bg-teal-100 border border-teal-200 transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer whitespace-nowrap"
           >
-            <Sparkles size={16} />
-            <span>{lang === 'ar' ? 'أسئلة التحديات ونمط الامتحان' : 'Exam-Style Challenges'}</span>
-          </button>
-
-          <button
-            onClick={() => setSelectedSection('NOTES')}
-            className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${selectedSection === 'NOTES'
-                ? 'bg-teal-700 text-white shadow-md'
-                : 'text-slate-600 hover:bg-slate-100'
-              }`}
-          >
-            <BookOpen size={16} />
-            <span>{lang === 'ar' ? 'ملزمة الشرح الذكية (PDF)' : 'Study Booklet (PDF)'}</span>
+            <BookOpen size={16} className="text-teal-700" />
+            <span>{lang === 'ar' ? 'ملزمة الشرح والخرائط 📖' : 'Study Booklet & Maps 📖'}</span>
           </button>
         </div>
 
         {/* ========================================================= */}
-        {/* VIEW A: STUDY NOTES & PDF BOOKLET TAB                     */}
+        {/* QUESTION PRACTICE MODE                                    */}
         {/* ========================================================= */}
-        {selectedSection === 'NOTES' && (
-          selectedLesson === 'L1' ? (
-            <Lesson1BookletPdf />
-          ) : (
-            <div className="bg-white p-12 rounded-3xl border border-slate-200 text-center space-y-3">
-              <BookOpen size={40} className="text-teal-600 mx-auto opacity-40" />
-              <h3 className="font-black text-lg text-primary-navy">
-                {lang === 'ar' ? 'ملزمة شرح الدرس الثاني قيد الإعداد' : 'Lesson 2 Study Booklet in progress'}
-              </h3>
-              <p className="text-xs text-slate-500 font-semibold">
-                {lang === 'ar'
-                  ? 'يمكنك التبديل إلى "الدرس الأول" للاطلاع على الملزمة التفاعلية ونوتات الامتحانات الذكية.'
-                  : 'Switch to "Lesson 1" to view the interactive booklet and exam capsules.'}
-              </p>
-            </div>
-          )
-        )}
-
-        {/* ========================================================= */}
-        {/* VIEW B: QUESTION PRACTICE MODE                            */}
-        {/* ========================================================= */}
-        {selectedSection !== 'NOTES' && (
-          <div className="space-y-6">
+        <div className="space-y-6">
 
             {/* Filter Bar */}
             <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
@@ -744,7 +731,6 @@ export default function Chapter2Practice() {
             )}
 
           </div>
-        )}
 
       </div>
     </div>
