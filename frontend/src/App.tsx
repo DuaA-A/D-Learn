@@ -75,7 +75,7 @@ export interface AppCtx {
   ch1ExamUnlocked: boolean;
 }
 export const AppContext = React.createContext<AppCtx>({
-  user: null, profile: null, lang: 'en', toggleLang: () => {}, loading: true, loadingProfile: true, ch1ExamUnlocked: false
+  user: null, profile: null, lang: 'en', toggleLang: () => { }, loading: true, loadingProfile: true, ch1ExamUnlocked: false
 });
 
 // ============================================================
@@ -522,12 +522,12 @@ function StudentDashboard() {
               <div className="flex-shrink-0 text-center bg-slate-50 p-6 rounded-3xl border border-slate-100 shadow-sm">
                 <div className="w-32 h-32 relative mx-auto">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f1f5f9" strokeWidth="3"/>
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#progLight)" strokeWidth="3" strokeDasharray={`${progressPct}, 100`} strokeLinecap="round"/>
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f1f5f9" strokeWidth="3" />
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#progLight)" strokeWidth="3" strokeDasharray={`${progressPct}, 100`} strokeLinecap="round" />
                     <defs>
                       <linearGradient id="progLight" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#62426B"/>
-                        <stop offset="100%" stopColor="#D97398"/>
+                        <stop offset="0%" stopColor="#62426B" />
+                        <stop offset="100%" stopColor="#D97398" />
                       </linearGradient>
                     </defs>
                   </svg>
@@ -599,11 +599,10 @@ function StudentDashboard() {
 
               <button
                 onClick={() => { if (ch1ExamUnlocked) navigate('/comprehensive-exam-ch1'); }}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 ${
-                  ch1ExamUnlocked
-                    ? 'bg-gradient-to-r from-accent-mint to-teal-600 text-white shadow-sm hover:opacity-95 cursor-pointer border-transparent'
-                    : 'bg-slate-100 text-slate-400 cursor-not-allowed border-slate-200'
-                }`}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 ${ch1ExamUnlocked
+                  ? 'bg-gradient-to-r from-accent-mint to-teal-600 text-white shadow-sm hover:opacity-95 cursor-pointer border-transparent'
+                  : 'bg-slate-100 text-slate-400 cursor-not-allowed border-slate-200'
+                  }`}
               >
                 {ch1ExamUnlocked ? <Award size={14} /> : <Lock size={14} />}
                 <span>{t('Full Chapter Exam (50 Qs)', 'الامتحان الشامل (50 س)', lang)}</span>
@@ -717,14 +716,21 @@ function StudentDashboard() {
               </h2>
             </div>
 
-            {/* Quick Action Pill for Chapter 2 */}
-            <div className="flex items-center gap-2">
+            {/* Quick Action Pills for Chapter 2 */}
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => navigate('/chapter2-practice')}
                 className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 hover:opacity-95 text-white text-xs font-black shadow-md shadow-teal-600/20 transition-all flex items-center gap-2 cursor-pointer"
               >
                 <Shield size={15} />
-                <span>{t('Full Chapter 2 Question Bank (180+ Qs) 🚀', 'بنك أسئلة وتدريبات الشابتر كاملاً (180+ س) 🚀', lang)}</span>
+                <span>{t('Full Chapter 2 Question Bank (180+ Qs) ', 'بنك أسئلة وتدريبات الشابتر كاملاً (180+ س) ', lang)}</span>
+              </button>
+              <button
+                onClick={() => navigate('/chapter2-practice?section=MIXED')}
+                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 hover:opacity-95 text-white text-xs font-black shadow-md shadow-violet-600/20 transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <FileText size={15} />
+                <span>{t('Mixed Quiz: L1 + L2 ', 'اختبار شامل: الدرسان معاً', lang)}</span>
               </button>
             </div>
           </div>
@@ -977,19 +983,16 @@ function LessonViewer() {
     return (
       <div
         key={keyStr}
-        className={`my-8 rounded-xl overflow-hidden border shadow-sm transition-all duration-200 group ${
-          isMindmap
-            ? 'border-indigo-900/60 bg-slate-900 shadow-indigo-950/20'
-            : 'border-slate-200 bg-white hover:border-slate-300'
-        }`}
+        className={`my-8 rounded-xl overflow-hidden border shadow-sm transition-all duration-200 group ${isMindmap
+          ? 'border-indigo-900/60 bg-slate-900 shadow-indigo-950/20'
+          : 'border-slate-200 bg-white hover:border-slate-300'
+          }`}
       >
-        <div className={`px-4 py-2.5 flex items-center justify-between border-b ${
-          isMindmap ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
-        }`}>
+        <div className={`px-4 py-2.5 flex items-center justify-between border-b ${isMindmap ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+          }`}>
           <div className="flex items-center gap-2">
-            <span className={`text-[10.5px] font-semibold tracking-wider px-2 py-0.5 rounded ${
-              isMindmap ? 'bg-indigo-700 text-white' : 'bg-slate-800 text-white'
-            }`}>
+            <span className={`text-[10.5px] font-semibold tracking-wider px-2 py-0.5 rounded ${isMindmap ? 'bg-indigo-700 text-white' : 'bg-slate-800 text-white'
+              }`}>
               {badge}
             </span>
             <span className="text-xs font-semibold truncate max-w-[200px] sm:max-w-md">{title}</span>
@@ -997,11 +1000,10 @@ function LessonViewer() {
           <button
             type="button"
             onClick={() => setPreviewImage({ src, title, caption: title })}
-            className={`text-xs font-medium px-2.5 py-1 rounded flex items-center gap-1 transition-colors ${
-              isMindmap
-                ? 'bg-slate-800 hover:bg-slate-700 text-slate-300'
-                : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
-            }`}
+            className={`text-xs font-medium px-2.5 py-1 rounded flex items-center gap-1 transition-colors ${isMindmap
+              ? 'bg-slate-800 hover:bg-slate-700 text-slate-300'
+              : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
+              }`}
           >
             <Maximize2 size={12} />
             <span className="hidden sm:inline">{lang === 'ar' ? 'تكبير' : 'Expand'}</span>
@@ -1022,9 +1024,8 @@ function LessonViewer() {
             </span>
           </div>
         </div>
-        <div className={`p-2.5 text-xs text-center font-normal ${
-          isMindmap ? 'bg-slate-900 text-slate-300 border-t border-slate-800' : 'bg-slate-900 text-slate-300'
-        }`}>
+        <div className={`p-2.5 text-xs text-center font-normal ${isMindmap ? 'bg-slate-900 text-slate-300 border-t border-slate-800' : 'bg-slate-900 text-slate-300'
+          }`}>
           {title}
         </div>
       </div>
@@ -1468,7 +1469,7 @@ function LessonViewer() {
                     {t(
                       'Key rules to remember, pitfalls to avoid, and model answers for exam success',
                       'قواعد أساسية للتذكر السريع، وأخطاء يجب الحذر منها، وإجابات نموذجية لتثبيت الفهم'
-                    , lang)}
+                      , lang)}
                   </p>
                 </div>
               </div>
@@ -1553,7 +1554,7 @@ function LessonViewer() {
             </div>
           )}
 
-            {/* Key Terms Glossary */}
+          {/* Key Terms Glossary */}
           <div className="mb-10">
             <h3 className="text-slate-500 font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2">
               <BookMarked size={14} />
@@ -1622,7 +1623,7 @@ function LessonViewer() {
                   {t(
                     'Jump to the interactive quiz and assessment lab to practice all official ministry tasks, MCQs, and written questions with instant feedback.',
                     'انتقل الآن إلى وضع الاختبار والتدريبات التفاعلي لحل كافة أسئلة الوزارة، والمهام الأدائية، والتقييمات الأسبوعية مع التصحيح الفوري.'
-                  , lang)}
+                    , lang)}
                 </p>
               </div>
 
@@ -1828,12 +1829,12 @@ function Assessment() {
           <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 text-center shadow-2xl shadow-slate-200/50">
             <div className="relative w-40 h-40 mx-auto mb-8">
               <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f1f5f9" strokeWidth="2.5"/>
-                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#resultGrad2)" strokeWidth="2.5" strokeDasharray={`${scorePct}, 100`} strokeLinecap="round"/>
+                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f1f5f9" strokeWidth="2.5" />
+                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#resultGrad2)" strokeWidth="2.5" strokeDasharray={`${scorePct}, 100`} strokeLinecap="round" />
                 <defs>
                   <linearGradient id="resultGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor={scorePct >= 70 ? '#10b981' : '#ef4444'}/>
-                    <stop offset="100%" stopColor={scorePct >= 70 ? '#34d399' : '#f87171'}/>
+                    <stop offset="0%" stopColor={scorePct >= 70 ? '#10b981' : '#ef4444'} />
+                    <stop offset="100%" stopColor={scorePct >= 70 ? '#34d399' : '#f87171'} />
                   </linearGradient>
                 </defs>
               </svg>
@@ -1985,7 +1986,7 @@ function Assessment() {
                       const isSelected = answered === opt;
                       let cls = 'bg-white border-slate-200 hover:border-primary-plum hover:bg-slate-50 text-slate-700';
                       let letterCls = 'bg-slate-100 text-slate-500 border border-slate-200';
-                      
+
                       if (showFeedback) {
                         if (opt === q.correct_option) {
                           cls = 'bg-emerald-50 border-emerald-400 text-emerald-900 shadow-sm';
@@ -2058,7 +2059,7 @@ function Assessment() {
                       className={`overflow-hidden rounded-xl border-l-4 p-5 ${isCorrect ? 'bg-emerald-50 border-emerald-500' : 'bg-rose-50 border-rose-500'}`}
                     >
                       <p className={`font-black mb-2 text-lg flex items-center gap-2 ${isCorrect ? 'text-emerald-700' : 'text-rose-700'}`}>
-                        {isCorrect ? <><CheckCircle size={20}/> {t('Correct!', 'صحيح!', lang)}</> : <><XCircle size={20}/> {t('Incorrect', 'خطأ', lang)}</>}
+                        {isCorrect ? <><CheckCircle size={20} /> {t('Correct!', 'صحيح!', lang)}</> : <><XCircle size={20} /> {t('Incorrect', 'خطأ', lang)}</>}
                       </p>
                       <p className="text-slate-700 text-base font-medium leading-relaxed">
                         {lang === 'ar' ? q.explanation_ar : q.explanation_en}
@@ -2273,7 +2274,7 @@ function TutorDashboard() {
     const matchesSearch = !search ||
       s.displayName?.toLowerCase().includes(search.toLowerCase()) ||
       s.email?.toLowerCase().includes(search.toLowerCase());
-    
+
     const studentResults = results.filter(r => r.userId === s.uid);
     const studentAvg = studentResults.length > 0
       ? studentResults.reduce((acc, r) => acc + (r.score || 0), 0) / studentResults.length
@@ -2404,11 +2405,10 @@ function TutorDashboard() {
         <div className="flex border-b border-slate-200 mb-6 gap-2 sm:gap-4 overflow-x-auto pb-1">
           <button
             onClick={() => { setActiveTab('students'); setSearch(''); }}
-            className={`flex items-center gap-2 py-3 px-4 font-bold text-sm border-b-2 transition-all whitespace-nowrap ${
-              activeTab === 'students'
-                ? 'border-primary-plum text-primary-plum bg-primary-plum/5 rounded-t-xl'
-                : 'border-transparent text-slate-500 hover:text-primary-navy'
-            }`}
+            className={`flex items-center gap-2 py-3 px-4 font-bold text-sm border-b-2 transition-all whitespace-nowrap ${activeTab === 'students'
+              ? 'border-primary-plum text-primary-plum bg-primary-plum/5 rounded-t-xl'
+              : 'border-transparent text-slate-500 hover:text-primary-navy'
+              }`}
           >
             <Users size={16} />
             <span>{t('Students Directory & Control', 'دليل الطلاب والتحكم بالتقدم', lang)}</span>
@@ -2417,11 +2417,10 @@ function TutorDashboard() {
 
           <button
             onClick={() => { setActiveTab('submissions'); setSearch(''); }}
-            className={`flex items-center gap-2 py-3 px-4 font-bold text-sm border-b-2 transition-all whitespace-nowrap ${
-              activeTab === 'submissions'
-                ? 'border-primary-plum text-primary-plum bg-primary-plum/5 rounded-t-xl'
-                : 'border-transparent text-slate-500 hover:text-primary-navy'
-            }`}
+            className={`flex items-center gap-2 py-3 px-4 font-bold text-sm border-b-2 transition-all whitespace-nowrap ${activeTab === 'submissions'
+              ? 'border-primary-plum text-primary-plum bg-primary-plum/5 rounded-t-xl'
+              : 'border-transparent text-slate-500 hover:text-primary-navy'
+              }`}
           >
             <FileText size={16} />
             <span>{t('Exam Submissions & Sheets', 'سجل الامتحانات وأوراق الإجابة التفصيلية', lang)}</span>
@@ -2430,11 +2429,10 @@ function TutorDashboard() {
 
           <button
             onClick={() => { setActiveTab('written'); setSearch(''); }}
-            className={`flex items-center gap-2 py-3 px-4 font-bold text-sm border-b-2 transition-all whitespace-nowrap ${
-              activeTab === 'written'
-                ? 'border-primary-plum text-primary-plum bg-primary-plum/5 rounded-t-xl'
-                : 'border-transparent text-slate-500 hover:text-primary-navy'
-            }`}
+            className={`flex items-center gap-2 py-3 px-4 font-bold text-sm border-b-2 transition-all whitespace-nowrap ${activeTab === 'written'
+              ? 'border-primary-plum text-primary-plum bg-primary-plum/5 rounded-t-xl'
+              : 'border-transparent text-slate-500 hover:text-primary-navy'
+              }`}
           >
             <MessageSquare size={16} />
             <span>{t('Written Questions Queue', 'مركز تصحيح الأسئلة المقالية', lang)}</span>
@@ -2465,11 +2463,10 @@ function TutorDashboard() {
                   <button
                     key={st}
                     onClick={() => setFilterStatus(st)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
-                      filterStatus === st
-                        ? 'bg-primary-navy text-white shadow-sm'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                    }`}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${filterStatus === st
+                      ? 'bg-primary-navy text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      }`}
                   >
                     {st === 'ALL' && t('All Students', 'جميع الطلاب', lang)}
                     {st === 'COMPLETED' && t('Completed All (4/4)', 'أتموا جميع الدروس', lang)}
@@ -2564,11 +2561,10 @@ function TutorDashboard() {
                               return (
                                 <div
                                   key={l.id}
-                                  className={`py-1 rounded-md text-[10px] font-bold border transition-colors ${
-                                    done
-                                      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                                      : 'bg-white text-slate-400 border-slate-200'
-                                  }`}
+                                  className={`py-1 rounded-md text-[10px] font-bold border transition-colors ${done
+                                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                    : 'bg-white text-slate-400 border-slate-200'
+                                    }`}
                                   title={`${l.title_ar} - ${done ? 'مكتمل' : 'غير مكتمل'}`}
                                 >
                                   {l.lesson_number} {done ? '✓' : '—'}
@@ -2644,11 +2640,10 @@ function TutorDashboard() {
               <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1">
                 <button
                   onClick={() => setFilterLesson('ALL')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
-                    filterLesson === 'ALL'
-                      ? 'bg-primary-navy text-white shadow-sm'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  }`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${filterLesson === 'ALL'
+                    ? 'bg-primary-navy text-white shadow-sm'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
                 >
                   {t('All Lessons', 'جميع الدروس', lang)}
                 </button>
@@ -2656,11 +2651,10 @@ function TutorDashboard() {
                   <button
                     key={l.id}
                     onClick={() => setFilterLesson(l.id)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
-                      filterLesson === l.id
-                        ? 'bg-primary-plum text-white shadow-sm'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                    }`}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${filterLesson === l.id
+                      ? 'bg-primary-plum text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      }`}
                   >
                     {l.lesson_number}
                   </button>
@@ -2735,12 +2729,11 @@ function TutorDashboard() {
 
                             <td className="p-4">
                               <div className="flex items-center gap-2">
-                                <span className={`px-2.5 py-1 rounded-lg font-black text-xs ${
-                                  res.score >= 80 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                                <span className={`px-2.5 py-1 rounded-lg font-black text-xs ${res.score >= 80 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
                                   res.score >= 60 ? 'bg-blue-50 text-blue-700 border border-blue-200' :
-                                  res.score >= 50 ? 'bg-amber-50 text-amber-700 border border-amber-200' :
-                                  'bg-rose-50 text-rose-700 border border-rose-200'
-                                }`}>
+                                    res.score >= 50 ? 'bg-amber-50 text-amber-700 border border-amber-200' :
+                                      'bg-rose-50 text-rose-700 border border-rose-200'
+                                  }`}>
                                   {res.score}%
                                 </span>
                               </div>
@@ -2956,11 +2949,10 @@ function TutorDashboard() {
                   <div className="flex items-center gap-3">
                     <div className="text-right">
                       <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">{t('Score', 'النتيجة', lang)}</span>
-                      <span className={`text-2xl font-black ${
-                        inspectSubmission.score >= 80 ? 'text-emerald-600' :
+                      <span className={`text-2xl font-black ${inspectSubmission.score >= 80 ? 'text-emerald-600' :
                         inspectSubmission.score >= 60 ? 'text-blue-600' :
-                        inspectSubmission.score >= 50 ? 'text-amber-600' : 'text-rose-600'
-                      }`}>
+                          inspectSubmission.score >= 50 ? 'text-amber-600' : 'text-rose-600'
+                        }`}>
                         {inspectSubmission.score}%
                       </span>
                     </div>
@@ -3021,15 +3013,14 @@ function TutorDashboard() {
                     return (
                       <div
                         key={q.id}
-                        className={`p-5 rounded-2xl border-2 transition-all ${
-                          q.type === 'WRITTEN'
-                            ? 'bg-slate-50 border-slate-200'
-                            : isCorrect
+                        className={`p-5 rounded-2xl border-2 transition-all ${q.type === 'WRITTEN'
+                          ? 'bg-slate-50 border-slate-200'
+                          : isCorrect
                             ? 'bg-emerald-50/30 border-emerald-300'
                             : isWrong
-                            ? 'bg-rose-50/30 border-rose-300'
-                            : 'bg-white border-slate-200'
-                        }`}
+                              ? 'bg-rose-50/30 border-rose-300'
+                              : 'bg-white border-slate-200'
+                          }`}
                       >
                         {/* Question Badge and Status Bar */}
                         <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
@@ -3040,10 +3031,9 @@ function TutorDashboard() {
                             <span className="text-xs font-bold text-slate-500 uppercase">
                               {q.type === 'MCQ' ? t('Multiple Choice', 'اختيار من متعدد', lang) : t('Written Essay', 'سؤال مقالي', lang)}
                             </span>
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                              q.difficulty === 'EASY' ? 'bg-emerald-100 text-emerald-800' :
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${q.difficulty === 'EASY' ? 'bg-emerald-100 text-emerald-800' :
                               q.difficulty === 'MEDIUM' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'
-                            }`}>
+                              }`}>
                               {q.difficulty}
                             </span>
                           </div>
@@ -3117,9 +3107,8 @@ function TutorDashboard() {
                                   key={opt}
                                   className={`p-3 rounded-xl border-2 flex items-center gap-3 transition-colors ${optClass}`}
                                 >
-                                  <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-xs ${
-                                    isModelAnswer ? 'bg-emerald-600 text-white' : isStudentPick ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-500'
-                                  }`}>
+                                  <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-xs ${isModelAnswer ? 'bg-emerald-600 text-white' : isStudentPick ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-500'
+                                    }`}>
                                     {opt}
                                   </span>
                                   <span className="text-sm font-semibold">{text}</span>
@@ -3289,11 +3278,10 @@ function TutorDashboard() {
                         return (
                           <div
                             key={l.id}
-                            className={`p-3 rounded-xl border flex items-center justify-between text-xs font-bold transition-colors ${
-                              done
-                                ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900'
-                                : 'bg-white border-slate-200 text-slate-500'
-                            }`}
+                            className={`p-3 rounded-xl border flex items-center justify-between text-xs font-bold transition-colors ${done
+                              ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900'
+                              : 'bg-white border-slate-200 text-slate-500'
+                              }`}
                           >
                             <span className="flex items-center gap-2">
                               <span>{done ? '✅' : '⏳'}</span>
@@ -3342,10 +3330,9 @@ function TutorDashboard() {
                               </div>
 
                               <div className="flex items-center gap-3">
-                                <span className={`px-2.5 py-1 rounded-lg font-black text-xs ${
-                                  sub.score >= 80 ? 'bg-emerald-50 text-emerald-700' :
+                                <span className={`px-2.5 py-1 rounded-lg font-black text-xs ${sub.score >= 80 ? 'bg-emerald-50 text-emerald-700' :
                                   sub.score >= 50 ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-700'
-                                }`}>
+                                  }`}>
                                   {sub.score}%
                                 </span>
                                 <button
@@ -3491,53 +3478,52 @@ function TutorDashboard() {
         )}
       </AnimatePresence>
 
-        {/* Exam Locks Toggle Added Here */}
-        <div className="mt-8 pt-8 border-t border-slate-200">
-          <h3 className="text-lg font-black text-primary-navy mb-4 flex items-center gap-2">
-             <Lock size={18} className="text-primary-plum" />
-            {lang === 'ar' ? 'إدارة الامتحانات الشاملة' : 'Comprehensive Exams Control'}
-          </h3>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-gradient-to-r from-slate-50 to-white border border-slate-200 rounded-2xl shadow-sm gap-4">
-            <div>
-              <h4 className="font-bold text-primary-navy flex items-center gap-2">
-                <Award size={16} className="text-accent-pink" />
-                {lang === 'ar' ? 'الامتحان الشامل للشابتر الأول (50 سؤال)' : 'Chapter 1 Comprehensive Exam (50 Qs)'}
-              </h4>
-              <p className="text-xs text-slate-500 mt-1 font-medium max-w-md">
-                {lang === 'ar' 
-                  ? 'عند تفعيل هذا الخيار، سيظهر زر الدخول للامتحان مفعلاً في لوحة تحكم جميع الطلاب.' 
-                  : 'When enabled, the exam start button will be active in all students\' dashboards.'}
-              </p>
-            </div>
-            <button
-              disabled={actionLoading}
-              onClick={async () => {
-                setActionLoading(true);
-                try {
-                  const { ch1ExamUnlocked } = React.useContext(AppContext);
-                  const { updateDoc, doc } = await import('firebase/firestore');
-                  await updateDoc(doc(db, 'settings', 'exam_locks'), { ch1ExamUnlocked: !ch1ExamUnlocked });
-                } catch (e) {
-                  const { setDoc, doc } = await import('firebase/firestore');
-                  await setDoc(doc(db, 'settings', 'exam_locks'), { ch1ExamUnlocked: true });
-                } finally {
-                  setActionLoading(false);
-                }
-              }}
-              className={`px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-sm ${
-                React.useContext(AppContext).ch1ExamUnlocked
-                  ? 'bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100 hover:shadow-md'
-                  : 'bg-teal-50 text-teal-700 border border-teal-200 hover:bg-teal-100 hover:shadow-md'
-              }`}
-            >
-              {React.useContext(AppContext).ch1ExamUnlocked ? (
-                <><Lock size={16} /> {lang === 'ar' ? 'إغلاق الامتحان للجميع' : 'Lock for All Students'}</>
-              ) : (
-                <><Check size={16} /> {lang === 'ar' ? 'إتاحة الامتحان للجميع' : 'Unlock for All Students'}</>
-              )}
-            </button>
+      {/* Exam Locks Toggle Added Here */}
+      <div className="mt-8 pt-8 border-t border-slate-200">
+        <h3 className="text-lg font-black text-primary-navy mb-4 flex items-center gap-2">
+          <Lock size={18} className="text-primary-plum" />
+          {lang === 'ar' ? 'إدارة الامتحانات الشاملة' : 'Comprehensive Exams Control'}
+        </h3>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-gradient-to-r from-slate-50 to-white border border-slate-200 rounded-2xl shadow-sm gap-4">
+          <div>
+            <h4 className="font-bold text-primary-navy flex items-center gap-2">
+              <Award size={16} className="text-accent-pink" />
+              {lang === 'ar' ? 'الامتحان الشامل للشابتر الأول (50 سؤال)' : 'Chapter 1 Comprehensive Exam (50 Qs)'}
+            </h4>
+            <p className="text-xs text-slate-500 mt-1 font-medium max-w-md">
+              {lang === 'ar'
+                ? 'عند تفعيل هذا الخيار، سيظهر زر الدخول للامتحان مفعلاً في لوحة تحكم جميع الطلاب.'
+                : 'When enabled, the exam start button will be active in all students\' dashboards.'}
+            </p>
           </div>
+          <button
+            disabled={actionLoading}
+            onClick={async () => {
+              setActionLoading(true);
+              try {
+                const { ch1ExamUnlocked } = React.useContext(AppContext);
+                const { updateDoc, doc } = await import('firebase/firestore');
+                await updateDoc(doc(db, 'settings', 'exam_locks'), { ch1ExamUnlocked: !ch1ExamUnlocked });
+              } catch (e) {
+                const { setDoc, doc } = await import('firebase/firestore');
+                await setDoc(doc(db, 'settings', 'exam_locks'), { ch1ExamUnlocked: true });
+              } finally {
+                setActionLoading(false);
+              }
+            }}
+            className={`px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-sm ${React.useContext(AppContext).ch1ExamUnlocked
+              ? 'bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100 hover:shadow-md'
+              : 'bg-teal-50 text-teal-700 border border-teal-200 hover:bg-teal-100 hover:shadow-md'
+              }`}
+          >
+            {React.useContext(AppContext).ch1ExamUnlocked ? (
+              <><Lock size={16} /> {lang === 'ar' ? 'إغلاق الامتحان للجميع' : 'Lock for All Students'}</>
+            ) : (
+              <><Check size={16} /> {lang === 'ar' ? 'إتاحة الامتحان للجميع' : 'Unlock for All Students'}</>
+            )}
+          </button>
         </div>
+      </div>
 
     </div>
   );
