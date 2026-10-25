@@ -502,8 +502,8 @@ function StudentDashboard() {
                 </p>
                 <h1 className="text-3xl md:text-4xl font-black text-primary-navy mb-3 leading-tight">
                   {lang === 'ar'
-                    ? `مرحباً، ${profile?.displayName || 'طالب'} 👋`
-                    : `Welcome back, ${profile?.displayName || 'Student'} 👋`}
+                    ? `مرحباً، ${profile?.displayName || 'طالب'}`
+                    : `Welcome back, ${profile?.displayName || 'Student'}`}
                 </h1>
                 <p className="text-slate-700 text-lg font-bold mb-2">
                   {lang === 'ar' ? COURSE_METADATA.course_name_ar : COURSE_METADATA.course_name_en}
@@ -594,7 +594,7 @@ function StudentDashboard() {
                 className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-xs font-bold text-primary-navy shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
               >
                 <Brain size={14} className="text-primary-plum" />
-                <span>{t('Live Workshop', 'ورشة تدريبات الشابتر 💡', lang)}</span>
+                <span>{t('Live Workshop', 'ورشة تدريبات الشابتر', lang)}</span>
               </button>
 
               <button
@@ -1494,7 +1494,7 @@ function LessonViewer() {
                           </div>
                           <div>
                             <span className="block text-xs font-black text-teal-800 uppercase tracking-wide mb-1">
-                              {lang === 'ar' ? '🧠 تذكّر دائماً (Remember):' : '🧠 Remember:'}
+                              {lang === 'ar' ? 'تذكّر دائماً (Remember):' : 'Remember:'}
                             </span>
                             <p className="text-xs sm:text-sm font-bold text-teal-950 leading-relaxed">
                               {rememberText}
@@ -1511,7 +1511,7 @@ function LessonViewer() {
                           </div>
                           <div>
                             <span className="block text-xs font-black text-amber-800 uppercase tracking-wide mb-1">
-                              {lang === 'ar' ? '⚠️ انتبه جيداً (Be careful):' : '⚠️ Be careful:'}
+                              {lang === 'ar' ? 'انتبه جيداً (Be careful):' : 'Be careful:'}
                             </span>
                             <p className="text-xs sm:text-sm font-bold text-amber-950 leading-relaxed">
                               {carefulText}
@@ -1635,7 +1635,7 @@ function LessonViewer() {
                 }}
                 className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-accent-pink to-primary-plum hover:opacity-95 text-white font-black text-xs sm:text-sm shadow-lg shadow-accent-pink/30 transition-all flex items-center gap-2 whitespace-nowrap self-stretch md:self-auto justify-center cursor-pointer"
               >
-                <span>{t('Start Interactive Quiz Now 🚀', 'ابدأ الاختبار والتدريبات الآن 🚀', lang)}</span>
+                <span>{t('Start Interactive Quiz Now', 'ابدأ الاختبار والتدريبات الآن', lang)}</span>
                 <ArrowLeft size={16} className={lang === 'ar' ? '' : 'rotate-180'} />
               </button>
             </div>
@@ -1821,7 +1821,7 @@ function Assessment() {
     const mcqQs = filtered.filter(q => q.type === 'MCQ');
     const correctCount = mcqQs.filter(q => answers[q.id] === q.correct_option).length;
     const scorePct = mcqQs.length > 0 ? Math.round((correctCount / mcqQs.length) * 100) : 100;
-    const grade = scorePct >= 85 ? '🌟 Excellent' : scorePct >= 70 ? '✅ Good' : scorePct >= 50 ? '📘 Needs Review' : '❌ Try Again';
+    const grade = scorePct >= 85 ? 'Excellent' : scorePct >= 70 ? 'Good' : scorePct >= 50 ? 'Needs Review' : 'Try Again';
 
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4" dir={dir(lang)}>
@@ -2831,7 +2831,7 @@ function TutorDashboard() {
                           return (
                             <div key={qId} className="bg-slate-50 rounded-xl p-4 border border-slate-200/80">
                               <p className="font-bold text-primary-navy text-sm mb-2">
-                                ❓ {question ? (lang === 'ar' ? question.question_ar : question.question_en) : qId}
+                                {question ? (lang === 'ar' ? question.question_ar : question.question_en) : qId}
                               </p>
 
                               {/* Student Answer */}
@@ -2969,12 +2969,12 @@ function TutorDashboard() {
                 <div className="bg-white p-4 border-b border-slate-100 flex flex-wrap items-center justify-around gap-4 text-center">
                   <div>
                     <span className="block text-xs font-bold text-slate-400 uppercase">{t('Correct Answers', 'الإجابات الصحيحة', lang)}</span>
-                    <span className="text-lg font-black text-emerald-600">✅ {inspectSubmission.correctMCQ} {t('Correct', 'صح', lang)}</span>
+                    <span className="text-lg font-black text-emerald-600">{inspectSubmission.correctMCQ} {t('Correct', 'صح', lang)}</span>
                   </div>
                   <div className="h-8 w-px bg-slate-200 hidden sm:block"></div>
                   <div>
                     <span className="block text-xs font-bold text-slate-400 uppercase">{t('Incorrect Answers', 'الإجابات الخاطئة', lang)}</span>
-                    <span className="text-lg font-black text-rose-600">❌ {Math.max((inspectSubmission.totalMCQ || 0) - (inspectSubmission.correctMCQ || 0), 0)} {t('Wrong', 'خطأ', lang)}</span>
+                    <span className="text-lg font-black text-rose-600">{Math.max((inspectSubmission.totalMCQ || 0) - (inspectSubmission.correctMCQ || 0), 0)} {t('Wrong', 'خطأ', lang)}</span>
                   </div>
                   <div className="h-8 w-px bg-slate-200 hidden sm:block"></div>
                   <div>
@@ -2984,7 +2984,7 @@ function TutorDashboard() {
                   <div className="h-8 w-px bg-slate-200 hidden sm:block"></div>
                   <div>
                     <span className="block text-xs font-bold text-slate-400 uppercase">{t('Written Questions', 'الأسئلة المقالية', lang)}</span>
-                    <span className="text-lg font-black text-primary-plum">✍️ {Object.keys(inspectSubmission.writtenAnswers || {}).length}</span>
+                    <span className="text-lg font-black text-primary-plum">{Object.keys(inspectSubmission.writtenAnswers || {}).length}</span>
                   </div>
                 </div>
 
@@ -3083,21 +3083,21 @@ function TutorDashboard() {
                                 optClass = 'bg-emerald-100/80 border-emerald-500 text-emerald-950 font-bold shadow-sm';
                                 badge = (
                                   <span className="ml-auto px-2 py-0.5 rounded bg-emerald-600 text-white text-[11px] font-bold flex items-center gap-1">
-                                    <Check size={12} /> {t('Student Choice & Model Answer ✅', 'اختيار الطالب ومطابق للنموذج ✅', lang)}
+                                    <Check size={12} /> {t('Student Choice & Model Answer', 'اختيار الطالب ومطابق للنموذج', lang)}
                                   </span>
                                 );
                               } else if (isModelAnswer) {
                                 optClass = 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold';
                                 badge = (
                                   <span className="ml-auto px-2 py-0.5 rounded bg-emerald-500 text-white text-[11px] font-bold flex items-center gap-1">
-                                    <Check size={12} /> {t('Correct Model Answer ✅', 'الإجابة النموذجية الصحيحة ✅', lang)}
+                                    <Check size={12} /> {t('Correct Model Answer', 'الإجابة النموذجية الصحيحة', lang)}
                                   </span>
                                 );
                               } else if (isStudentPick) {
                                 optClass = 'bg-rose-50 border-rose-400 text-rose-950 font-bold';
                                 badge = (
                                   <span className="ml-auto px-2 py-0.5 rounded bg-rose-500 text-white text-[11px] font-bold flex items-center gap-1">
-                                    <X size={12} /> {t('Student Choice (Wrong) ❌', 'اختيار الطالب (خاطئ) ❌', lang)}
+                                    <X size={12} /> {t('Student Choice (Wrong)', 'اختيار الطالب (خاطئ)', lang)}
                                   </span>
                                 );
                               }

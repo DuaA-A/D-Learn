@@ -636,7 +636,7 @@ export default function Chapter2Practice() {
                             (activeQuestion.answer_en && mcqAnswers[activeQuestion.id] === activeQuestion.answer_en)) ? (
                             <>
                               <CheckCircle size={18} className="text-emerald-600 flex-shrink-0" />
-                              <span>{lang === 'ar' ? 'إجابة صحيحة! أحسنت 🎯' : 'Correct answer! Excellent 🎯'}</span>
+                              <span>{lang === 'ar' ? 'إجابة صحيحة! أحسنت' : 'Correct answer! Excellent'}</span>
                             </>
                           ) : (
                             <>
@@ -653,7 +653,7 @@ export default function Chapter2Practice() {
                         {(activeQuestion.explanation_ar || activeQuestion.explanation_en) && (
                           <div className="mt-2 pt-2 border-t border-slate-200/50 text-slate-800 text-xs sm:text-sm">
                             <span className="font-bold text-slate-900 block mb-0.5">
-                              {lang === 'ar' ? '💡 الشرح والتعليل:' : '💡 Explanation & Reasoning:'}
+                              {lang === 'ar' ? 'الشرح والتعليل:' : 'Explanation & Reasoning:'}
                             </span>
                             {lang === 'en' && activeQuestion.explanation_en
                               ? activeQuestion.explanation_en
@@ -680,7 +680,7 @@ export default function Chapter2Practice() {
                         className={`w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 sm:p-5 text-primary-navy text-sm sm:text-base font-medium focus:outline-none focus:border-primary-plum focus:ring-2 focus:ring-primary-plum/20 transition-all resize-y leading-relaxed ${lang === 'ar' ? 'text-right' : 'text-left'}`}
                       />
                       <div className="flex justify-between items-center text-xs text-slate-400 mt-1.5 font-semibold">
-                        <span>{lang === 'ar' ? 'تُحفظ إجابتك تلقائياً لحظياً 💾' : '💾 Your answer is saved automatically in real-time'}</span>
+                        <span>{lang === 'ar' ? 'تُحفظ إجابتك تلقائياً لحظياً' : 'Your answer is saved automatically in real-time'}</span>
                         <span>{lang === 'ar' ? `${(writtenAnswers[activeQuestion.id] || '').length} حرف` : `${(writtenAnswers[activeQuestion.id] || '').length} characters`}</span>
                       </div>
                     </div>
@@ -696,7 +696,7 @@ export default function Chapter2Practice() {
                         <span>
                           {revealedAnswers[activeQuestion.id]
                             ? (lang === 'ar' ? 'إخفاء النموذج الإرشادي' : 'Hide Model Answer')
-                            : (lang === 'ar' ? '🔍 إظهار النموذج الإرشادي للتصحيح الفوري والشرح' : '🔍 Reveal Model Answer & Detailed Explanation')}
+                            : (lang === 'ar' ? 'إظهار النموذج الإرشادي للتصحيح الفوري والشرح' : 'Reveal Model Answer & Detailed Explanation')}
                         </span>
                       </button>
 
@@ -712,7 +712,7 @@ export default function Chapter2Practice() {
                                 : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
                               }`}
                           >
-                            {lang === 'ar' ? 'أجبت بشكل صحيح ✅' : 'Answered Correctly ✅'}
+                            {lang === 'ar' ? 'أجبت بشكل صحيح' : 'Answered Correctly'}
                           </button>
                           <button
                             onClick={() => handleGradeSelf(activeQuestion.id, 'REVIEW')}
@@ -721,7 +721,7 @@ export default function Chapter2Practice() {
                                 : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
                               }`}
                           >
-                            {lang === 'ar' ? 'يحتاج مراجعة ⚠️' : 'Needs Review ⚠️'}
+                            {lang === 'ar' ? 'يحتاج مراجعة' : 'Needs Review'}
                           </button>
                         </div>
                       )}
@@ -755,7 +755,7 @@ export default function Chapter2Practice() {
                         {(activeQuestion.explanation_ar || activeQuestion.explanation_en) && (
                           <div className="bg-blue-50/90 border border-blue-200 rounded-2xl p-4 text-xs sm:text-sm text-blue-950 font-medium">
                             <span className="font-bold text-blue-900 block mb-1">
-                              {lang === 'ar' ? '💡 الشرح والتعليل وعناصر التقييم:' : '💡 Detailed Explanation & Key Grading Points:'}
+                              {lang === 'ar' ? 'الشرح والتعليل وعناصر التقييم:' : 'Detailed Explanation & Key Grading Points:'}
                             </span>
                             <p className="leading-relaxed">
                               {lang === 'en' && activeQuestion.explanation_en

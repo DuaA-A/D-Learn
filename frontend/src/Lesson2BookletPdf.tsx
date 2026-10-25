@@ -360,7 +360,7 @@ export default function Lesson2BookletPdf() {
                 <AlertTriangle size={18} className="text-amber-600 mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-black text-amber-900 text-xs sm:text-sm">
-                    {lang === 'ar' ? '💡 كبسولة الامتحان الذكية: القاعدة الذهبية' : '💡 Exam Capsule: Golden Rule'}
+                    {lang === 'ar' ? 'كبسولة الامتحان الذكية: القاعدة الذهبية' : 'Exam Capsule: Golden Rule'}
                   </h4>
                   <p className="text-xs text-amber-800 leading-relaxed font-semibold mt-1">
                     {lang === 'ar'
@@ -412,7 +412,7 @@ export default function Lesson2BookletPdf() {
 
                 <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs space-y-1.5 mb-4 font-semibold text-slate-700">
                   <div className="text-primary-navy font-black">
-                    {lang === 'ar' ? '🔍 معايير الفحص في جدار الحماية:' : '🔍 Firewall Inspection Criteria:'}
+                    {lang === 'ar' ? 'معايير الفحص في جدار الحماية:' : 'Firewall Inspection Criteria:'}
                   </div>
                   <div>• {lang === 'ar' ? 'عنوان IP المصدر والوجهة (Source & Dest IP)' : 'Source and destination IP addresses'}</div>
                   <div>• {lang === 'ar' ? 'أرقام المنافذ (Port Numbers مثل 80 للـ HTTP و 443 للـ HTTPS)' : 'Port numbers (e.g. 80 HTTP, 443 HTTPS)'}</div>
@@ -420,7 +420,7 @@ export default function Lesson2BookletPdf() {
                 </div>
 
                 <div className="mt-auto p-3 bg-teal-50 border border-teal-200 rounded-xl text-xs text-teal-900 font-semibold">
-                  <strong>{lang === 'ar' ? '🎯 التشبيه التوضيحي:' : '🎯 Analogy:'}</strong>{' '}
+                  <strong>{lang === 'ar' ? 'التشبيه التوضيحي:' : 'Analogy:'}</strong>{' '}
                   {lang === 'ar'
                     ? 'حارس أمن المبنى الذي يتحقق من بطاقة كل زائر ومطابقتها مع قائمة المصرح لهم بالدخول.'
                     : 'A building security guard checking visitor IDs against an authorized entry list.'}
@@ -451,7 +451,7 @@ export default function Lesson2BookletPdf() {
 
                 <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs space-y-1.5 mb-4 font-semibold text-slate-700">
                   <div className="text-primary-navy font-black">
-                    {lang === 'ar' ? '🔒 فوائد الـ VPN الأساسية في الامتحان:' : '🔒 Core VPN Benefits for Exams:'}
+                    {lang === 'ar' ? 'فوائد الـ VPN الأساسية في الامتحان:' : 'Core VPN Benefits for Exams:'}
                   </div>
                   <div>• {lang === 'ar' ? 'حماية بيانات الموظفين أثناء العمل عن بُعد (Telework)' : 'Securing telework and remote employee connections'}</div>
                   <div>• {lang === 'ar' ? 'الحماية من التنصت عند استخدام شبكات Wi-Fi العامة المفتوحة' : 'Protection against sniffing on public Wi-Fi'}</div>
@@ -459,7 +459,7 @@ export default function Lesson2BookletPdf() {
                 </div>
 
                 <div className="mt-auto p-3 bg-primary-plum/10 border border-primary-plum/30 rounded-xl text-xs text-primary-navy font-semibold">
-                  <strong>{lang === 'ar' ? '🎯 التشبيه التوضيحي:' : '🎯 Analogy:'}</strong>{' '}
+                  <strong>{lang === 'ar' ? 'التشبيه التوضيحي:' : 'Analogy:'}</strong>{' '}
                   {lang === 'ar'
                     ? 'سيارة مصفحة تسير في نفق سري معزول تحت طريق عام مزدحم يراك فيه الجميع.'
                     : 'An armored vehicle driving through an exclusive tunnel beneath a crowded public highway.'}
@@ -657,7 +657,7 @@ export default function Lesson2BookletPdf() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-semibold text-slate-800">
                 <div className="p-3 bg-white rounded-xl border border-slate-200">
                   <div className="font-bold text-teal-700 mb-1">
-                    ☁️ {lang === 'ar' ? '1. الحوسبة السحابية (Cloud)' : '1. Cloud Computing'}
+                    {lang === 'ar' ? '1. الحوسبة السحابية (Cloud)' : '1. Cloud Computing'}
                   </div>
                   <div>
                     {lang === 'ar'
@@ -667,7 +667,7 @@ export default function Lesson2BookletPdf() {
                 </div>
                 <div className="p-3 bg-white rounded-xl border border-slate-200">
                   <div className="font-bold text-teal-700 mb-1">
-                    🏠 {lang === 'ar' ? '2. العمل عن بُعد (Telework)' : '2. Remote & Mobile Work'}
+                    {lang === 'ar' ? '2. العمل عن بُعد (Telework)' : '2. Remote & Mobile Work'}
                   </div>
                   <div>
                     {lang === 'ar'
@@ -776,8 +776,8 @@ export default function Lesson2BookletPdf() {
               <Sparkles size={20} className="text-teal-700" />
               <span>
                 {lang === 'ar'
-                  ? 'كبسولات الامتحان الذكية: إذا سألك كذا قل كذا 🎯'
-                  : 'Smart Exam Capsules: "If Asked This, Say That" 🎯'}
+                  ? 'كبسولات الامتحان الذكية: إذا سألك كذا قل كذا'
+                  : 'Smart Exam Capsules: "If Asked This, Say That"'}
               </span>
             </h2>
 

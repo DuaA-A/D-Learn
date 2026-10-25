@@ -223,7 +223,7 @@ A system for making payments using electronic money, QR codes, etc., without usi
 **1. Autonomous Driving**
 A technology that uses AI to drive a vehicle without human operation. It uses cameras and sensors to recognize the surroundings, makes driving decisions, and controls the vehicle.
 
-⚡ **Why Edge Computing matters here:** Because a delay of even 0.1 seconds can lead to an accident, edge computing (processing performed instantly on the vehicle itself rather than sending data to the cloud) is used. This ensures zero-latency decision making.
+**Why Edge Computing matters here:** Because a delay of even 0.1 seconds can lead to an accident, edge computing (processing performed instantly on the vehicle itself rather than sending data to the cloud) is used. This ensures zero-latency decision making.
 
 **2. AR / VR**
 - **AR (Augmented Reality):** A technology that overlays digital information on real-world images. Example: apps that show furniture in your room before you buy it, or navigation arrows overlaid on the road.
@@ -243,7 +243,7 @@ This gives quantum computers the potential to process vast amounts of informatio
 **1. القيادة الذاتية**
 تقنية تستخدم الذكاء الاصطناعي لقيادة المركبة دون تدخل بشري. تستخدم الكاميرات والمستشعرات لإدراك المحيط واتخاذ قرارات القيادة والتحكم في المركبة.
 
-⚡ **لماذا تُهم الحوسبة الطرفية هنا:** لأن تأخيرًا قدره 0.1 ثانية قد يؤدي إلى حادث، تُستخدم الحوسبة الطرفية (المعالجة الفورية على المركبة نفسها بدلاً من إرسال البيانات إلى السحابة). يضمن ذلك اتخاذ القرار دون زمن استجابة.
+**لماذا تُهم الحوسبة الطرفية هنا:** لأن تأخيرًا قدره 0.1 ثانية قد يؤدي إلى حادث، تُستخدم الحوسبة الطرفية (المعالجة الفورية على المركبة نفسها بدلاً من إرسال البيانات إلى السحابة). يضمن ذلك اتخاذ القرار دون زمن استجابة.
 
 **2. الواقع المعزز / الافتراضي**
 - **الواقع المعزز (AR):** تقنية تضيف معلومات رقمية فوق صور العالم الحقيقي. مثال: تطبيقات تعرض الأثاث في غرفتك قبل شرائه، أو أسهم الملاحة المتراكبة على الطريق.

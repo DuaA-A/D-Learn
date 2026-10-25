@@ -310,10 +310,10 @@ export default function ComprehensiveExamCh1() {
                 <span className={`font-black text-sm ${
                   scorePct >= 85 ? 'text-emerald-600' : scorePct >= 70 ? 'text-blue-600' : scorePct >= 50 ? 'text-amber-600' : 'text-rose-600'
                 }`}>
-                  {scorePct >= 85 ? (lang === 'ar' ? '🌟 ممتاز ومتفوق' : '🌟 Excellent') :
-                   scorePct >= 70 ? (lang === 'ar' ? '🥇 جيد جداً' : '🥇 Very Good') :
-                   scorePct >= 50 ? (lang === 'ar' ? '📘 جيد ومقبول' : '📘 Passing') :
-                   (lang === 'ar' ? '⚠️ يحتاج مراجعة' : '⚠️ Needs Study')}
+                  {scorePct >= 85 ? (lang === 'ar' ? 'ممتاز ومتفوق' : 'Excellent') :
+                   scorePct >= 70 ? (lang === 'ar' ? 'جيد جداً' : 'Very Good') :
+                   scorePct >= 50 ? (lang === 'ar' ? 'جيد ومقبول' : 'Passing') :
+                   (lang === 'ar' ? 'يحتاج مراجعة' : 'Needs Study')}
                 </span>
               </div>
 
@@ -842,13 +842,13 @@ export default function ComprehensiveExamCh1() {
                           <span>
                             {revealedAnswers[currentMcq.id]
                               ? (lang === 'ar' ? 'إخفاء الشرح والتصحيح' : 'Hide Explanation')
-                              : (lang === 'ar' ? '🔍 تحقق من الإجابة والتصحيح الفوري' : 'Check Answer & Instant Review')}
+                              : (lang === 'ar' ? 'تحقق من الإجابة والتصحيح الفوري' : 'Check Answer & Instant Review')}
                           </span>
                         </button>
                         
                         {mcqAnswers[currentMcq.id] && (
                           <span className="text-[11px] font-bold text-slate-400">
-                            {lang === 'ar' ? 'تم حفظ اختيارك تلقائياً 💾' : 'Auto-saved 💾'}
+                            {lang === 'ar' ? 'تم حفظ اختيارك تلقائياً' : 'Auto-saved'}
                           </span>
                         )}
                       </div>
@@ -869,7 +869,7 @@ export default function ComprehensiveExamCh1() {
                             {mcqAnswers[currentMcq.id] === currentMcq.correct_option ? (
                               <>
                                 <CheckCircle size={16} className="text-emerald-600" />
-                                <span>{lang === 'ar' ? 'إجابتك صحيحة! أحسنت 🎯' : 'Correct! Great job 🎯'}</span>
+                                <span>{lang === 'ar' ? 'إجابتك صحيحة! أحسنت' : 'Correct! Great job'}</span>
                               </>
                             ) : (
                               <>
@@ -884,7 +884,7 @@ export default function ComprehensiveExamCh1() {
                           </div>
                           {(currentMcq.explanation_ar || currentMcq.explanation_en) && (
                             <p className="text-slate-700 text-xs sm:text-sm mt-1">
-                              💡 {lang === 'ar' ? currentMcq.explanation_ar : currentMcq.explanation_en}
+                              {lang === 'ar' ? currentMcq.explanation_ar : currentMcq.explanation_en}
                             </p>
                           )}
                         </motion.div>
@@ -913,7 +913,7 @@ export default function ComprehensiveExamCh1() {
                           onClick={() => setActiveSection('WRITTEN')}
                           className="px-5 py-2.5 rounded-xl bg-primary-plum hover:opacity-90 text-white font-bold text-xs flex items-center gap-1.5"
                         >
-                          <span>{lang === 'ar' ? 'الانتقال للقسم المقالي ✏️' : 'Go to Essays ✏️'}</span>
+                          <span>{lang === 'ar' ? 'الانتقال للقسم المقالي' : 'Go to Essays'}</span>
                         </button>
                       )}
                     </div>
@@ -983,7 +983,7 @@ export default function ComprehensiveExamCh1() {
                       </div>
 
                       <span className="text-[11px] font-bold text-primary-plum bg-primary-plum/10 px-2.5 py-1 rounded-md border border-primary-plum/20">
-                        {lang === 'ar' ? 'سؤال مقالي تحليلي ✍️' : 'Analytical Essay'}
+                        {lang === 'ar' ? 'سؤال مقالي تحليلي' : 'Analytical Essay'}
                       </span>
                     </div>
 
@@ -1019,7 +1019,7 @@ export default function ComprehensiveExamCh1() {
                       />
                       <div className="flex justify-between items-center text-xs text-slate-400 mt-2 font-semibold">
                         <span>
-                          {lang === 'ar' ? 'تُحفظ الإجابة تلقائياً 💾' : 'Auto-saved 💾'}
+                          {lang === 'ar' ? 'تُحفظ الإجابة تلقائياً' : 'Auto-saved'}
                         </span>
                         <span>
                           {(writtenAnswers[currentWritten.id] || '').length} {lang === 'ar' ? 'حرف' : 'characters'}
@@ -1038,7 +1038,7 @@ export default function ComprehensiveExamCh1() {
                         <span>
                           {revealedAnswers[currentWritten.id]
                             ? (lang === 'ar' ? 'إخفاء النموذج الإرشادي' : 'Hide Model Answer')
-                            : (lang === 'ar' ? '🔍 إظهار النموذج الإرشادي للتصحيح الفوري والشرح' : 'Show Official Model Answer & Rubric')}
+                            : (lang === 'ar' ? 'إظهار النموذج الإرشادي للتصحيح الفوري والشرح' : 'Show Official Model Answer & Rubric')}
                         </span>
                       </button>
 
@@ -1061,7 +1061,7 @@ export default function ComprehensiveExamCh1() {
                           {(currentWritten.explanation_ar || currentWritten.explanation_en) && (
                             <div className="bg-blue-50 border border-blue-200 rounded-xl p-3.5 text-xs text-blue-950 font-medium">
                               <span className="font-bold text-blue-900 block mb-1">
-                                💡 {lang === 'ar' ? 'عناصر التقييم والشرح:' : 'Rubric & Explanation:'}
+                                {lang === 'ar' ? 'عناصر التقييم والشرح:' : 'Rubric & Explanation:'}
                               </span>
                               {lang === 'ar' ? currentWritten.explanation_ar : currentWritten.explanation_en}
                             </div>

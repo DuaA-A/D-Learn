@@ -194,10 +194,10 @@ export default function ComprehensiveExam() {
                 <span className={`font-black text-sm ${
                   scorePct >= 85 ? 'text-emerald-600' : scorePct >= 70 ? 'text-blue-600' : scorePct >= 50 ? 'text-amber-600' : 'text-rose-600'
                 }`}>
-                  {scorePct >= 85 ? (lang === 'ar' ? '🌟 ممتاز ومتفوق' : '🌟 Excellent') :
-                   scorePct >= 70 ? (lang === 'ar' ? '🥇 جيد جداً' : '🥇 Very Good') :
-                   scorePct >= 50 ? (lang === 'ar' ? '📘 جيد ومقبول' : '📘 Passing') :
-                   (lang === 'ar' ? '⚠️ يحتاج مراجعة' : '⚠️ Needs Study')}
+                  {scorePct >= 85 ? (lang === 'ar' ? 'ممتاز ومتفوق' : 'Excellent') :
+                   scorePct >= 70 ? (lang === 'ar' ? 'جيد جداً' : 'Very Good') :
+                   scorePct >= 50 ? (lang === 'ar' ? 'جيد ومقبول' : 'Passing') :
+                   (lang === 'ar' ? 'يحتاج مراجعة' : 'Needs Study')}
                 </span>
               </div>
 

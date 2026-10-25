@@ -382,7 +382,7 @@ export default function Chapter1Workshop() {
             onClick={() => navigate('/comprehensive-exam-ch1')}
             className="px-6 py-3 rounded-xl bg-gradient-to-r from-primary-plum to-primary-navy hover:opacity-95 text-white font-bold text-xs flex items-center gap-2 shadow-md"
           >
-            <span>{lang === 'ar' ? 'الذهاب للامتحان الشامل (50 سؤالاً) 📝' : 'Go to Comprehensive Exam (50 Qs) 📝'}</span>
+            <span>{lang === 'ar' ? 'الذهاب للامتحان الشامل (50 سؤالاً)' : 'Go to Comprehensive Exam (50 Qs)'}</span>
           </button>
         </div>
 

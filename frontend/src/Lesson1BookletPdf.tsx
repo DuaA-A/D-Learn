@@ -226,7 +226,7 @@ export default function Lesson1BookletPdf() {
               <Sparkles size={22} className="text-amber-600 shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-xs font-black text-amber-900 uppercase tracking-wider">
-                  {lang === 'ar' ? '📌 حقيقة ذهبية من كتاب الوزارة (Key Fact):' : '📌 Official Textbook Key Fact:'}
+                  {lang === 'ar' ? 'حقيقة ذهبية من كتاب الوزارة (Key Fact):' : 'Official Textbook Key Fact:'}
                 </h4>
                 <p className="text-xs sm:text-sm font-bold text-amber-950 mt-1 leading-relaxed">
                   {lang === 'ar'
@@ -286,7 +286,7 @@ export default function Lesson1BookletPdf() {
               {/* Exact Visual Box from Whiteboard Notes */}
               <div className="p-5 rounded-2xl bg-gradient-to-br from-indigo-50/60 to-purple-50/60 border border-indigo-200 space-y-3">
                 <span className="text-xs font-black text-indigo-900 block">
-                  {lang === 'ar' ? '🎨 مثال توضيحي عملي (من دفتر الشرح):' : '🎨 Practical Transformation Diagram (from whiteboard):'}
+                  {lang === 'ar' ? 'مثال توضيحي عملي (من دفتر الشرح):' : 'Practical Transformation Diagram (from whiteboard):'}
                 </span>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -316,7 +316,7 @@ export default function Lesson1BookletPdf() {
                 <CheckCircle2 size={20} className="text-emerald-600 shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-xs font-black text-emerald-900 uppercase">
-                    {lang === 'ar' ? '🎯 نوتة ذكية للامتحان (إذا سألك كذا.. قل كذا):' : '🎯 Smart Exam Tip (If asked this, say that):'}
+                    {lang === 'ar' ? 'نوتة ذكية للامتحان (إذا سألك كذا.. قل كذا):' : 'Smart Exam Tip (If asked this, say that):'}
                   </h4>
                   <p className="text-xs text-emerald-950 font-bold mt-0.5 leading-relaxed">
                     {lang === 'ar'
@@ -356,7 +356,7 @@ export default function Lesson1BookletPdf() {
             {/* Guiding Question */}
             <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 font-medium">
               <strong className="text-primary-navy font-bold">
-                {lang === 'ar' ? '🌐 سيناريو عملي:' : '🌐 Real-world Scenario:'}
+                {lang === 'ar' ? 'سيناريو عملي:' : 'Real-world Scenario:'}
               </strong>{' '}
               {lang === 'ar'
                 ? 'عندما تفتح متصفحك وتكتب https://www.amazon.com، كيف يضمن المتصفح أن الموقع ليس منتحلاً، وكيف يتبادل معه المفاتيح المشفرة بأمان؟'
@@ -476,7 +476,7 @@ export default function Lesson1BookletPdf() {
               {/* Step-by-Step Flow Stages */}
               <div className="border-t border-white/10 pt-4 space-y-3">
                 <span className="text-xs font-black text-slate-300 block">
-                  {lang === 'ar' ? '🔄 خطوات مصافحة TLS الثلاث (اضغط للتفاصيل):' : '🔄 The 3 Stages of TLS Handshake (Click for details):'}
+                  {lang === 'ar' ? 'خطوات مصافحة TLS الثلاث (اضغط للتفاصيل):' : 'The 3 Stages of TLS Handshake (Click for details):'}
                 </span>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -604,10 +604,10 @@ export default function Lesson1BookletPdf() {
                       {lang === 'ar' ? 'وجه المقارنة (Feature)' : 'Comparison Feature'}
                     </th>
                     <th className="p-4 font-black border-b border-primary-plum bg-teal-800 text-teal-50 text-right">
-                      {lang === 'ar' ? 'التشفير بالمفتاح المشترك (المتماثل) 🔑' : 'Common-key Cryptography (Symmetric) 🔑'}
+                      {lang === 'ar' ? 'التشفير بالمفتاح المشترك (المتماثل)' : 'Common-key Cryptography (Symmetric)'}
                     </th>
                     <th className="p-4 font-black border-b border-primary-plum bg-purple-950 text-purple-100 text-right">
-                      {lang === 'ar' ? 'التشفير بالمفتاح العام (غير المتماثل) 🔐' : 'Public-key Cryptography (Asymmetric) 🔐'}
+                      {lang === 'ar' ? 'التشفير بالمفتاح العام (غير المتماثل)' : 'Public-key Cryptography (Asymmetric)'}
                     </th>
                   </tr>
                 </thead>
@@ -630,10 +630,10 @@ export default function Lesson1BookletPdf() {
                     </td>
                     <td className="p-4 text-emerald-700 font-black flex items-center gap-1.5">
                       <Sparkles size={16} />
-                      <span>{lang === 'ar' ? '⚡ سريع جداً وفائق الكفاءة' : '⚡ Very fast and computationally efficient'}</span>
+                      <span>{lang === 'ar' ? 'سريع جداً وفائق الكفاءة' : 'Very fast and computationally efficient'}</span>
                     </td>
                     <td className="p-4 text-amber-700 font-bold">
-                      <span>{lang === 'ar' ? '🐌 بطيء نسبياً (عمليات حسابية معقدة)' : '🐌 Relatively slow (heavy mathematical computations)'}</span>
+                      <span>{lang === 'ar' ? 'بطيء نسبياً (عمليات حسابية معقدة)' : 'Relatively slow (heavy mathematical computations)'}</span>
                     </td>
                   </tr>
 
@@ -680,7 +680,7 @@ export default function Lesson1BookletPdf() {
             <div className="p-5 rounded-2xl bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 space-y-3">
               <span className="text-xs font-black text-purple-900 uppercase flex items-center gap-2">
                 <FileText size={16} />
-                <span>{lang === 'ar' ? '📝 نموذج إجابة مقالي وزاري معتمد (6 درجات):' : '📝 Official Model Essay Answer (6 Marks):'}</span>
+                <span>{lang === 'ar' ? 'نموذج إجابة مقالي وزاري معتمد (6 درجات):' : 'Official Model Essay Answer (6 Marks):'}</span>
               </span>
 
               <div className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium space-y-2">
@@ -839,7 +839,7 @@ export default function Lesson1BookletPdf() {
               {/* Combination Formulas: 2FA vs MFA */}
               <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <span className="text-xs font-black text-primary-navy block">
-                  {lang === 'ar' ? '⚖️ معادلات وتطبيقات المصادقة المعتمدة في كتاب الوزارة:' : '⚖️ Official Authentication Formulas & Combinations:'}
+                  {lang === 'ar' ? 'معادلات وتطبيقات المصادقة المعتمدة في كتاب الوزارة:' : 'Official Authentication Formulas & Combinations:'}
                 </span>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
@@ -868,7 +868,7 @@ export default function Lesson1BookletPdf() {
                 <AlertTriangle size={20} className="text-blue-600 shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-xs font-black text-blue-900 uppercase">
-                    {lang === 'ar' ? '💡 سؤال تفكير وتثبيت (Pause & Think ص 36):' : '💡 Pause & Think Official Question (p. 36):'}
+                    {lang === 'ar' ? 'سؤال تفكير وتثبيت (Pause & Think ص 36):' : 'Pause & Think Official Question (p. 36):'}
                   </h4>
                   <p className="text-xs text-blue-950 font-bold mt-0.5 leading-relaxed">
                     {lang === 'ar'
@@ -987,7 +987,7 @@ export default function Lesson1BookletPdf() {
             {/* Practical Shopping Example Box (ص 36 كتاب الوزارة) */}
             <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
               <span className="text-xs font-black text-primary-navy block">
-                {lang === 'ar' ? '🛒 كيف تعمل هذه التقنيات مجتمعة في سيناريو شراء حقيقي؟' : '🛒 How these technologies combine in an Online Purchase:'}
+                {lang === 'ar' ? 'كيف تعمل هذه التقنيات مجتمعة في سيناريو شراء حقيقي؟' : 'How these technologies combine in an Online Purchase:'}
               </span>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
@@ -1184,7 +1184,7 @@ export default function Lesson1BookletPdf() {
 
                 {revealedQuestions['Q1'] && (
                   <div className="p-3 rounded-xl bg-teal-50 border border-teal-200 text-xs text-teal-950 font-medium">
-                    <strong className="font-bold block mb-0.5">{lang === 'ar' ? '💡 التعليل الوزاري المعتمد:' : '💡 Official Justification:'}</strong>
+                    <strong className="font-bold block mb-0.5">{lang === 'ar' ? 'التعليل الوزاري المعتمد:' : 'Official Justification:'}</strong>
                     {lang === 'ar'
                       ? 'الفقرة 1 خاطئة لأن تبادل كل البيانات بالمفتاح العام سيكون بطيئاً جداً، لذا يُستخدم المفتاح المشترك لبيانات الجلسة. الفقرة 3 خاطئة لأن كلمتي المرور كلاهما من فئة "المعرفة".'
                       : 'Item 1 is false because encrypting all data with public key would be slow; common key is used instead. Item 3 is false because both passwords are "knowledge" factors.'}
