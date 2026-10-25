@@ -10,6 +10,7 @@ export interface Ch2QuizQuestion {
   type: 'WRITTEN' | 'MCQ';
   difficulty: 'MEDIUM' | 'HARD' | 'VERY_HARD';
   question_ar: string;
+  question_en?: string;          // bilingual support
   options?: string[];          // MCQ فقط
   answer?: string;             // MCQ فقط — الخيار الصحيح
   ideal_answer_ar?: string;    // WRITTEN — نموذج الإجابة

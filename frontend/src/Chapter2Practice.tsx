@@ -31,6 +31,8 @@ import { CH2_L2_OFFICIAL_WRITTEN_P2, CH2_L2_OFFICIAL_MCQ_P2 } from './ch2_lesson
 import { CH2_L2_HARD_WRITTEN_P1, CH2_L2_HARD_MCQ_P1 } from './ch2_lesson2_hardQ_part1';
 import { CH2_L2_HARD_WRITTEN_P2, CH2_L2_HARD_MCQ_P2 } from './ch2_lesson2_hardQ_part2';
 import type { Ch2QuizQuestion } from './ch2_lesson1_officialQ_part1';
+// Mixed L1+L2 Assessment
+import { CH2_MIXED_ASSESSMENT } from './ch2_mixed_assessment';
 
 const STORAGE_KEY = 'DLEARN_CH2_PRACTICE_V1';
 
@@ -57,13 +59,13 @@ export default function Chapter2Practice() {
     }
   }, [searchParams]);
 
-  // Section: 'OFFICIAL' (وزارة) | 'HARD' (تحديات ونمط الامتحان)
-  const [selectedSection, setSelectedSection] = useState<'OFFICIAL' | 'HARD'>(() => {
+  // Section: 'OFFICIAL' (وزارة) | 'HARD' (تحديات ونمط الامتحان) | 'MIXED' (تقييم شامل)
+  const [selectedSection, setSelectedSection] = useState<'OFFICIAL' | 'HARD' | 'MIXED'>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const sec = JSON.parse(saved).selectedSection;
-        if (sec === 'OFFICIAL' || sec === 'HARD') return sec;
+        if (sec === 'OFFICIAL' || sec === 'HARD' || sec === 'MIXED') return sec;
       }
     } catch (e) { }
     return 'OFFICIAL';
@@ -137,6 +139,10 @@ export default function Chapter2Practice() {
 
   // Aggregate questions based on current Lesson & Section
   const currentQuestions: Ch2QuizQuestion[] = useMemo(() => {
+    // Mixed Assessment spans both lessons
+    if (selectedSection === 'MIXED') {
+      return CH2_MIXED_ASSESSMENT;
+    }
     if (selectedLesson === 'L1') {
       if (selectedSection === 'OFFICIAL') {
         return [
@@ -334,7 +340,7 @@ export default function Chapter2Practice() {
         {/* SECTION SELECTOR: OFFICIAL vs HARD                        */}
         {/* ========================================================= */}
         <div className="bg-white p-2 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2 flex-1">
+          <div className="flex items-center gap-2 flex-1 flex-wrap">
             <button
               onClick={() => { setSelectedSection('OFFICIAL'); setCurrentIdx(0); }}
               className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${selectedSection === 'OFFICIAL'
@@ -356,6 +362,17 @@ export default function Chapter2Practice() {
               <Sparkles size={16} />
               <span>{lang === 'ar' ? 'أسئلة التحديات ونمط الامتحان' : 'Exam-Style Challenges'}</span>
             </button>
+
+            <button
+              onClick={() => { setSelectedSection('MIXED'); setCurrentIdx(0); }}
+              className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${selectedSection === 'MIXED'
+                  ? 'bg-teal-700 text-white shadow-md'
+                  : 'text-slate-600 hover:bg-slate-100'
+                }`}
+            >
+              <FileText size={16} />
+              <span>{lang === 'ar' ? 'تقييم شامل: الدرسان معاً' : 'Mixed Assessment: L1 + L2'}</span>
+            </button>
           </div>
 
           <button
@@ -363,7 +380,7 @@ export default function Chapter2Practice() {
             className="py-3 px-4 rounded-xl font-bold text-xs sm:text-sm text-teal-800 bg-teal-50 hover:bg-teal-100 border border-teal-200 transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer whitespace-nowrap"
           >
             <BookOpen size={16} className="text-teal-700" />
-            <span>{lang === 'ar' ? 'ملزمة الشرح والخرائط 📖' : 'Study Booklet & Maps 📖'}</span>
+            <span>{lang === 'ar' ? 'ملزمة الشرح والخرائط' : 'Study Booklet & Maps'}</span>
           </button>
         </div>
 
@@ -509,7 +526,9 @@ export default function Chapter2Practice() {
 
                 {/* Question Text */}
                 <h3 className="text-lg sm:text-xl font-bold text-primary-navy leading-relaxed whitespace-pre-wrap">
-                  {activeQuestion.question_ar}
+                  {lang === 'en' && (activeQuestion as any).question_en
+                    ? (activeQuestion as any).question_en
+                    : activeQuestion.question_ar}
                 </h3>
 
                 {/* ─── CASE 1: MCQ QUESTION ─── */}

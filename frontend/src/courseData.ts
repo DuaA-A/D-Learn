@@ -41,7 +41,16 @@ export interface Lesson {
     key_points?: string[];
     examples?: string[];
   }[];
-  pause_and_think: { q_en: string; q_ar: string }[];
+  pause_and_think: {
+    q_en: string;
+    q_ar: string;
+    a_en?: string;
+    a_ar?: string;
+    remember_en?: string;
+    remember_ar?: string;
+    be_careful_en?: string;
+    be_careful_ar?: string;
+  }[];
   exam_style_questions: { q_en: string; q_ar: string; type: "MCQ" | "WRITTEN" }[];
 }
 
@@ -273,14 +282,32 @@ Overall, the development of information technology is not only about faster mach
       {
         q_en: "Of the five social changes (SNS, e-commerce, remote work, online learning, cashless payment), which would be hardest to give up — and why?",
         q_ar: "من التغيرات الاجتماعية الخمسة (شبكات التواصل، التجارة الإلكترونية، العمل عن بُعد، التعلم الإلكتروني، الدفع غير النقدي)، أيّها سيكون الأصعب التخلي عنه ولماذا؟",
+        remember_en: "Remember: IT evolution does not just make computers faster; each technological phase reshaped society across 5 key areas (SNS, EC, Telework, Online Learning, Cashless).",
+        remember_ar: "تذكّر: تطور تكنولوجيا المعلومات لم يقتصر على تسريع الحواسيب؛ بل أحدث في كل مرحلة 5 تحولات مجتمعية كبرى (شبكات التواصل، التجارة الإلكترونية، العمل عن بُعد، التعلم الإلكتروني، الدفع غير النقدي).",
+        be_careful_en: "Be careful: Always connect each technology stage (Computers → Internet → Smartphones → Cloud) with its matching social transformation.",
+        be_careful_ar: "انتبه: في الامتحان اربط دائماً كل مرحلة تقنية (الحواسيب ← الإنترنت ← الهواتف الذكية ← السحابة) بالتحول المجتمعي المقابل لها.",
+        a_en: "Cashless payment and e-commerce are critical because daily commerce and financial supply chains depend on instant digital transactions without physical cash.",
+        a_ar: "الدفع غير النقدي والتجارة الإلكترونية هما الأكثر تأثيراً في الاقتصاد المعاصر، حيث تعتمد عليهما المعاملات المالية والتجارية اليومية بدون تداول للنقد الورقي.",
       },
       {
         q_en: "In autonomous driving, why is it necessary to process data instantly on the vehicle side using edge computing, rather than sending the data to the cloud for judgment?",
         q_ar: "في القيادة الذاتية، لماذا من الضروري معالجة البيانات فورًا على جانب المركبة باستخدام الحوسبة الطرفية، بدلاً من إرسالها إلى السحابة لاتخاذ القرار؟",
+        remember_en: "Remember: Edge computing performs processing locally right on the device to achieve near-zero latency, which is life-critical for autonomous vehicles.",
+        remember_ar: "تذكّر: الحوسبة الطرفية (Edge Computing) تعالج البيانات فورياً على المركبة بدون أي تأخير زمني، وهو أمر حاسم للسلامة واتخاذ القرار اللحظي.",
+        be_careful_en: "Be careful: Sending data to the cloud introduces network transmission latency; even a 0.1-second delay can result in a fatal collision.",
+        be_careful_ar: "انتبه: إرسال بيانات القيادة إلى السحابة يستغرق وقتاً للنقل (زمن استجابة)؛ وأي تأخير قدره 0.1 ثانية قد يؤدي لحادث سير مميت.",
+        a_en: "Because cloud transmission introduces latency. A fraction of a second delay can cause an accident. Edge computing guarantees zero-latency, instantaneous real-time braking and steering decisions.",
+        a_ar: "لأن إرسال البيانات إلى السحابة يستغرق وقتاً للنقل (زمن استجابة)، وأي تأخير بمقدار 0.1 ثانية قد يؤدي لحادث سير. الحوسبة الطرفية تضمن اتخاذ قرارات الكبح والتوجيه لحظياً دون أي تأخير.",
       },
       {
         q_en: "Cashless payment is spreading in many countries. If a fully cashless society were realized, choose one advantage and one possible concern, and briefly explain the reason for each.",
         q_ar: "ينتشر الدفع غير النقدي في كثير من البلدان. إذا تحقق مجتمع خالٍ تمامًا من النقد، اختر ميزة واحدة وقلقًا محتملاً واحدًا، واشرح بإيجاز سبب كل منهما.",
+        remember_en: "Remember: Cashless payments maximize transaction speed, accounting accuracy, and reduce robbery, but depend entirely on network infrastructure.",
+        remember_ar: "تذكّر: الدفع غير النقدي يوفر سرعة وأمان المعاملات ويحد من السرقات، لكنه يفرض اعتماداً كاملاً على استقرار شبكات الاتصال والكهرباء.",
+        be_careful_en: "Be careful: Distinguish between financial efficiency benefits (traceability, speed) and vulnerability risks (blackouts, digital exclusion).",
+        be_careful_ar: "انتبه: فرّق بين المزايا التشغيلية (سرعة، تتبع السجلات) والسلبيات المحتملة (الفجوة الرقمية، انقطاع الكهرباء والإنترنت).",
+        a_en: "Advantage: Speed and security against physical cash theft. Concern: Service disruption during telecommunication failures or electrical blackouts, halting basic purchases.",
+        a_ar: "الميزة: السرعة وتقليل مخاطر سرقة الأموال الورقية. القلق: توقف عمليات الشراء بالكامل في حال حدوث عطل في شبكة الاتصالات أو انقطاع التيار الكهربائي.",
       },
     ],
     exam_style_questions: [
@@ -457,10 +484,22 @@ The network learns by adjusting these weights through a process called training,
       {
         q_en: "Spam filters and product recommendations are both examples of machine learning, but the tasks they perform are completely different. From the perspective of how AI works, explain what these two applications have in common.",
         q_ar: "مرشحات الرسائل المزعجة وتوصيات المنتجات كلاهما من أمثلة تعلم الآلة، لكن المهام التي يؤديانها مختلفة تمامًا. من منظور كيفية عمل الذكاء الاصطناعي، اشرح ما يشتركان فيه.",
+        remember_en: "Remember: Both applications extract statistical patterns from large datasets rather than executing human hand-coded rules.",
+        remember_ar: "تذكّر: كلا التطبيقين يستخرجان أنماطاً وعلاقات إحصائية من كميات هائلة من البيانات السابقة، دون الحاجة لقواعد برمجية يدوية.",
+        be_careful_en: "Be careful: Traditional programming requires human rules; Machine Learning learns patterns directly from data.",
+        be_careful_ar: "انتبه: البرمجة التقليدية يكتب فيها المبرمج القواعد يدوياً؛ أما تعلم الآلة فيستنتج القواعد بنفسه من البيانات.",
+        a_en: "Both utilize machine learning to extract patterns from historical data (word frequencies in spam vs user purchase histories) to predict future classifications.",
+        a_ar: "كلاهما يعتمد على تعلم الآلة لتحليل كميات ضخمة من البيانات السابقة واستخراج أنماط إحصائية لإجراء تنبؤات أو تصنيفات دقيقة.",
       },
       {
         q_en: "Deep learning needs large-scale data to learn. Why might an AI struggle with something it has rarely seen in its training data?",
         q_ar: "يحتاج التعلم العميق إلى بيانات ضخمة للتعلم. لماذا قد يعاني الذكاء الاصطناعي مع شيء نادرًا ما رآه في بيانات تدريبه؟",
+        remember_en: "Remember: Neural networks adjust synaptic weights based on pattern frequency; unseen edge cases cause misclassification or hallucinations.",
+        remember_ar: "تذكّر: الشبكات العصبية تضبط أوزانها بناءً على تكرار الأنماط في بيانات التدريب؛ لذا البيانات النادرة تؤدي لقرارات خاطئة أو هلوسة.",
+        be_careful_en: "Be careful: AI lacks human reasoning; it only mirrors the statistical distribution of what it was trained on.",
+        be_careful_ar: "انتبه: الذكاء الاصطناعي لا يمتلك حساً أو منطقاً بشرياً؛ بل يعتمد كلياً على التوزيع الإحصائي لبيانات التدريب.",
+        a_en: "Because its deep neural weights were not tuned on those rare features, preventing the model from generalizing accurately outside its training domain.",
+        a_ar: "لأن الشبكات العصبية لم تُدرَّب على أوزان تمثل تلك الحالات النادرة، مما يؤدي إلى عدم التعرف عليها أو تقديم تخمينات غير دقيقة.",
       },
     ],
     exam_style_questions: [
@@ -603,6 +642,12 @@ The network learns by adjusting these weights through a process called training,
       {
         q_en: "Imagine a farmer wants to use an AI system to distinguish between images of healthy crops and diseased crops. What type of data does the system need for training, and identify one factor that might make its predictions incorrect?",
         q_ar: "افترض أن مزارعًا يريد استخدام نظام ذكاء اصطناعي للتمييز بين صور المحاصيل السليمة والمصابة بالأمراض. ما نوع البيانات التي يحتاجها النظام للتدريب؟ وحدد عاملاً واحدًا قد يجعل تنبؤه خاطئًا.",
+        remember_en: "Remember: Computer Vision requires thousands of diverse labeled images (different leaf angles, growth phases, and sunlight conditions).",
+        remember_ar: "تذكّر: الرؤية الحاسوبية تتطلب آلاف الصور المصنفة (Labeled Images) للمحاصيل السليمة والمصابة في ظروف إضاءة وزوايا تصوير متنوعة.",
+        be_careful_en: "Be careful: An AI trained only in controlled indoor lighting will fail in outdoor agricultural fields due to shadows, mud, and weather variations.",
+        be_careful_ar: "انتبه: تدريب النموذج على صور مثالية في المختبر فقط يجعله يفشل عند تطبيقه في الحقل الحقيقي بسبب الغبار وتغير الإضاءة والظلال.",
+        a_en: "Training data needed: Thousands of high-resolution, labeled leaf images of both healthy and diseased crops across diverse lighting and growth stages. Error factor: Field lighting shadows, overlapping leaves, or dirt obscuring leaf symptoms.",
+        a_ar: "البيانات المطلوبة: آلاف الصور المصنفة للأوراق السليمة والمصابة في مختلف مراحل النمو. عامل الخطأ: اختلاف درجات الإضاءة في الحقل، أو وجود ظلال أو أوساخ على الأوراق تحجب أعراض المرض.",
       },
     ],
     exam_style_questions: [
@@ -727,6 +772,12 @@ Generative AI can create convincing fake videos, audio, and text. This can be us
       {
         q_en: "If a generative AI system produces a false but convincing news article, who should be held responsible — the AI developers, the platform hosting it, or the user who shares it? Justify your answer.",
         q_ar: "إذا أنتج نظام ذكاء اصطناعي توليدي مقالة إخبارية مزيفة لكن مقنعة، من يجب أن يُحاسَب: مطورو الذكاء الاصطناعي، أم المنصة المضيفة لها، أم المستخدم الذي يشاركها؟ بررّ إجابتك.",
+        remember_en: "Remember: Ethical AI enforces shared legal liability: developers must install safety guardrails, platforms must moderate synthetic media, and users are accountable for distribution.",
+        remember_ar: "تذكّر: أخلاقيات وحوكمة الذكاء الاصطناعي تفرض مسؤولية مشتركة: المطور يضع قيود الأمان، والمنصة تفحص المحتوى، والمستخدم مسؤول قانونياً عما ينشره.",
+        be_careful_en: "Be careful: The 'Black Box' problem does not excuse creators from harm; Explainable AI (XAI) and audit trails are regulatory imperatives.",
+        be_careful_ar: "انتبه: مشكلة 'الصندوق الأسود' لا تعفي المطورين من المسؤولية القانونية؛ الشفافية وقابلية التفسير (XAI) التزام أخلاقي وتنظيمي حتمي.",
+        a_en: "Responsibility is shared: developers must engineer watermarking and safety guardrails, hosting platforms must employ automated detection to take down deepfakes, and users are legally responsible for malicious amplification.",
+        a_ar: "المسؤولية مشتركة وتضامنية: على المطور وضع ضوابط أمنية وعلامات مائية تمنع التضليل، والمنصة ملزمة بكشف التزييف وإزالته فوراً، والمستخدم يُحاسب جنائياً على ترويج الشائعات المغرضة.",
       },
     ],
     exam_style_questions: [
@@ -939,6 +990,12 @@ By layering these technologies, organizations protect systems against eavesdropp
       {
         q_en: "If a password is leaked, why can a second factor sent to a phone still keep the account safe?",
         q_ar: "إذا تسربت كلمة المرور، فلماذا يمكن لعامل ثانٍ يُرسل إلى الهاتف أن يحافظ على أمان الحساب؟",
+        remember_en: "Remember: True Multi-Factor Authentication (MFA) requires distinct factor categories: Knowledge (what you know) + Possession (what you have) + Inherence (who you are).",
+        remember_ar: "تذكّر: المصادقة متعددة العوامل الحقيقية (MFA) تتطلب فئات مختلفة: المعرفة (ما تعرفه) + الحيازة (ما تملكه) + السمات الحيوية (ما أنت عليه).",
+        be_careful_en: "Be careful: Using two passwords or password + security question is NOT 2FA/MFA; both belong to the Knowledge factor category!",
+        be_careful_ar: "انتبه: استخدام كلمتي مرور أو كلمة مرور + سؤال سري ليس مصادقة ثنائية، لأن كلاهما يندرج تحت فئة 'المعرفة' فقط!",
+        a_en: "Because the attacker possesses only the knowledge factor (leaked password). The second factor requires physical possession of the user's phone to receive the one-time passcode (OTP). Without the device, unauthorized login is blocked.",
+        a_ar: "لأن المهاجم يمتلك فقط عامل المعرفة (كلمة المرور المسربة)، ولكنه لا يحوز الهاتف الفعلي للمستخدم (عامل الحيازة) لتلقي رمز التحقق المؤقت OTP؛ وبدون الجهاز يفشل المهاجم تماماً في الدخول.",
       },
     ],
     exam_style_questions: [
@@ -1108,6 +1165,12 @@ Under Zero Trust, the network does NOT grant trust to any device or user automat
       {
         q_en: "Why is it safer to place a public web server in a DMZ rather than inside the internal network?",
         q_ar: "لماذا يعد وضع خادم ويب عام في منطقة معزولة (DMZ) أكثر أماناً من وضعه داخل الشبكة الداخلية للمؤسسة؟",
+        remember_en: "Remember: The DMZ is a quarantine buffer zone. Public-facing servers (Web & Mail) belong in the DMZ, while confidential assets (Databases) must strictly reside inside the protected internal LAN.",
+        remember_ar: "تذكّر: الـ DMZ منطقة عازلة ومحصورة؛ خوادم الويب والبريد المتاحة للجمهور توضع في الـ DMZ، بينما قواعد البيانات الحساسة تبقى حصراً داخل الشبكة الداخلية المحمية.",
+        be_careful_en: "Be careful: Never put a database server in the DMZ! The DMZ isolates web servers so that even if a hacker breaches them, the internal firewall prevents them from accessing internal company databases.",
+        be_careful_ar: "انتبه جيداً: إياك أن تضع خادم قواعد البيانات في الـ DMZ! الـ DMZ تعزل خادم الويب بحيث إذا تم اختراقه، يمنعه جدار الحماية الداخلي من الوصول لقواعد البيانات والشبكة الداخلية.",
+        a_en: "Because placing public web servers in an isolated DMZ contains any potential breach. If an attacker compromises the web server, they remain trapped within the DMZ and cannot directly access internal network resources or confidential databases.",
+        a_ar: "لأن وضع خوادم الويب في منطقة معزولة (DMZ) يحصر أثر الاختراق؛ فإذا نجح مهاجم في اختراق خادم الويب، يظل محاصراً داخل الـ DMZ ويعجز عن التسلل المباشر للشبكة الداخلية أو قواعد البيانات الحساسة للمؤسسة.",
       },
     ],
     exam_style_questions: [
@@ -1289,6 +1352,12 @@ $$\text{حجم الخطر} = \text{التأثير} \times \text{الاحتمال
       {
         q_en: "Why must containment come before eradication in the six-stage incident response?",
         q_ar: "لماذا يجب أن تسبق مرحلة الاحتواء مرحلة الاستئصال في الاستجابة للحوادث المكونة من 6 مراحل؟",
+        remember_en: "Remember: The 6 stages of incident response must strictly follow chronological order: Preparation → Detection/Analysis → Containment → Eradication → Recovery → Post-Incident Activity.",
+        remember_ar: "تذكّر: مراحل الاستجابة الست للحوادث السيبرانية يجب أن تُنفذ بترتيبها الزمني الصارم: الإعداد ← الاكتشاف ← الاحتواء ← الاستئصال ← الاستعادة ← الدروس المستفادة.",
+        be_careful_en: "Be careful: Never rush into eradication before containment! If you try to clean infected files without isolating devices from the network, malware will spread to other nodes.",
+        be_careful_ar: "انتبه: إياك أن تبدأ بالاستئصال قبل الاحتواء! إذا حاولت تنظيف الملفات قبل عزل الأجهزة المصابة عن الشبكة، فسيقوم المهاجم بنشر الإصابة لباقي أجهزة المؤسسة فوراً.",
+        a_en: "Because containment isolates infected machines to prevent the attack from spreading across the organization. Attempting eradication first without isolation allows malware to propagate freely while under remediation.",
+        a_ar: "لأن الاحتواء يعزل الأنظمة المصابة فوراً ويمنع انتشار الهجوم لباقي الشبكة. لو بدأنا بالاستئصال دون عزل، لتحرك المهاجم وأصاب أجهزة أخرى قبل القضاء عليه.",
       },
     ],
     exam_style_questions: [

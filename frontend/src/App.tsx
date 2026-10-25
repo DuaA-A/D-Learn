@@ -830,16 +830,6 @@ function LessonViewer() {
   const [activeSection, setActiveSection] = useState(0);
   const [expandedTerms, setExpandedTerms] = useState<Set<number>>(new Set());
   const [previewImage, setPreviewImage] = useState<{ src: string; title: string; caption: string } | null>(null);
-  const [revealedQuestions, setRevealedQuestions] = useState<Set<string>>(new Set());
-
-  const toggleReveal = (qId: string) => {
-    setRevealedQuestions(prev => {
-      const next = new Set(prev);
-      if (next.has(qId)) next.delete(qId);
-      else next.add(qId);
-      return next;
-    });
-  };
 
   const lesson = LESSONS.find(l => l.id === lessonId);
 
@@ -1463,26 +1453,102 @@ function LessonViewer() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Pause & Think */}
+          {/* Smart Concept Anchors & Memory Notes (instead of raw Pause & Think) */}
           {lesson.pause_and_think.length > 0 && (
-            <div className="mb-10">
-              <h3 className="text-primary-plum font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2">
-                <Lightbulb size={14} />
-                {t('Pause & Think', 'توقف وفكّر', lang)}
-              </h3>
-              <div className="space-y-4">
-                {lesson.pause_and_think.map((pq, i) => (
-                  <div key={i} className="p-5 bg-primary-plum/5 border border-primary-plum/20 rounded-2xl">
-                    <div className="flex items-start gap-4">
-                      <div className="w-8 h-8 rounded-lg bg-primary-plum/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-primary-plum font-black text-sm">{i + 1}</span>
-                      </div>
-                      <p className="text-primary-navy font-semibold text-sm md:text-base leading-relaxed">
-                        {lang === 'ar' ? pq.q_ar : pq.q_en}
-                      </p>
+            <div className="mb-12">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-teal-600 to-primary-navy text-white flex items-center justify-center shadow-sm">
+                  <Brain size={18} />
+                </div>
+                <div>
+                  <h3 className="text-primary-navy font-black text-lg">
+                    {t('Smart Memory Notes & Concept Anchors', 'نوتات ذكية لتثبيت المفاهيم وتذكر الدرس', lang)}
+                  </h3>
+                  <p className="text-slate-500 text-xs font-semibold">
+                    {t(
+                      'Key rules to remember, pitfalls to avoid, and model answers for exam success',
+                      'قواعد أساسية للتذكر السريع، وأخطاء يجب الحذر منها، وإجابات نموذجية لتثبيت الفهم'
+                    , lang)}
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-5">
+                {lesson.pause_and_think.map((pq, i) => {
+                  const rememberText = lang === 'ar' ? pq.remember_ar : pq.remember_en;
+                  const carefulText = lang === 'ar' ? pq.be_careful_ar : pq.be_careful_en;
+                  const questionText = lang === 'ar' ? pq.q_ar : pq.q_en;
+                  const answerText = lang === 'ar' ? pq.a_ar : pq.a_en;
+
+                  return (
+                    <div
+                      key={i}
+                      className="p-6 bg-gradient-to-br from-white to-slate-50/80 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all space-y-4"
+                    >
+                      {/* Remember Box */}
+                      {rememberText && (
+                        <div className="p-4 rounded-xl bg-teal-50/70 border border-teal-200/80 flex items-start gap-3">
+                          <div className="p-1 rounded-lg bg-teal-600 text-white flex-shrink-0 mt-0.5">
+                            <Sparkles size={14} />
+                          </div>
+                          <div>
+                            <span className="block text-xs font-black text-teal-800 uppercase tracking-wide mb-1">
+                              {lang === 'ar' ? '🧠 تذكّر دائماً (Remember):' : '🧠 Remember:'}
+                            </span>
+                            <p className="text-xs sm:text-sm font-bold text-teal-950 leading-relaxed">
+                              {rememberText}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Be Careful Box */}
+                      {carefulText && (
+                        <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                          <div className="p-1 rounded-lg bg-amber-600 text-white flex-shrink-0 mt-0.5">
+                            <AlertTriangle size={14} />
+                          </div>
+                          <div>
+                            <span className="block text-xs font-black text-amber-800 uppercase tracking-wide mb-1">
+                              {lang === 'ar' ? '⚠️ انتبه جيداً (Be careful):' : '⚠️ Be careful:'}
+                            </span>
+                            <p className="text-xs sm:text-sm font-bold text-amber-950 leading-relaxed">
+                              {carefulText}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Concept Question & Model Answer */}
+                      {questionText && (
+                        <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5">
+                          <div className="flex items-start gap-2">
+                            <span className="px-2 py-0.5 rounded bg-primary-plum text-white text-[10px] font-black shrink-0 mt-0.5">
+                              {lang === 'ar' ? 'سؤال المفهوم' : 'Concept Question'}
+                            </span>
+                            <p className="text-xs sm:text-sm font-bold text-primary-navy leading-relaxed">
+                              {questionText}
+                            </p>
+                          </div>
+
+                          {answerText && (
+                            <div className="p-3 rounded-lg bg-emerald-50/80 border border-emerald-200 flex items-start gap-2.5">
+                              <CheckCircle size={16} className="text-emerald-600 shrink-0 mt-0.5" />
+                              <div>
+                                <span className="block text-[11px] font-black text-emerald-800 uppercase mb-0.5">
+                                  {lang === 'ar' ? 'الإجابة النموذجية الفورية:' : 'Model Answer:'}
+                                </span>
+                                <p className="text-xs font-semibold text-emerald-950 leading-relaxed">
+                                  {answerText}
+                                </p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
@@ -1540,140 +1606,39 @@ function LessonViewer() {
               </div>
             </div>
           )}
-          {/* Official Lesson Practice & Ministry Questions Section */}
-          {(() => {
-            const lessonAllQuestions = QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, lesson.id));
-            const previewQuestions = lessonAllQuestions.slice(0, 5);
-
-            return (
-              <div className="mb-10 bg-gradient-to-br from-slate-50 to-white rounded-3xl border border-slate-200 p-6 md:p-8 shadow-sm">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5 mb-6">
-                  <div>
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-plum/10 text-primary-plum text-xs font-bold uppercase tracking-wider mb-2">
-                      <Award size={13} />
-                      <span>{t('Official Curriculum Assessments', 'الأسئلة والتقييمات المعتمدة للدرس', lang)}</span>
-                    </div>
-                    <h3 className="text-xl font-black text-primary-navy">
-                      {t('Practice Questions & Tasks', 'المهام الأدائية والأسئلة المقالية للدرس', lang)}
-                    </h3>
-                    <p className="text-slate-500 text-xs sm:text-sm font-medium mt-1">
-                      {lang === 'ar'
-                        ? `يتضمن هذا الدرس ${lessonAllQuestions.length} سؤالاً وتطبيقاً (مهام صفية، أداءات منزلية، وتقييمات أسبوعية). تدرب عليها أدناه.`
-                        : `This lesson includes ${lessonAllQuestions.length} questions (classroom tasks, homework, and weekly assessments).`}
-                    </p>
-                  </div>
-
-                  <button
-                    onClick={() => navigate(`/assessment/${lesson.id}`)}
-                    className="px-5 py-3 rounded-2xl bg-gradient-to-r from-primary-plum to-primary-navy hover:opacity-95 text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
-                  >
-                    <Award size={16} className="text-accent-pink" />
-                    <span>{t('Start Full Interactive Quiz', 'خوض التقييم الكامل للدرس', lang)}</span>
-                  </button>
+          {/* Practice Transition CTA (Keeping Questions in Quiz Mode, Not Study Mode) */}
+          <div className="mb-12 bg-gradient-to-r from-primary-navy via-slate-900 to-primary-plum rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-accent-pink/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-accent-pink text-xs font-black uppercase tracking-wider backdrop-blur-sm border border-white/10">
+                  <Award size={13} />
+                  <span>{t('Finished Studying?', 'أنهيت استيعاب الدرس والنوتات؟', lang)}</span>
                 </div>
-
-                {/* Sample Questions List */}
-                <div className="space-y-4 mb-6">
-                  {previewQuestions.map((pq, idx) => {
-                    const isRevealed = revealedQuestions.has(pq.id);
-                    return (
-                      <div key={pq.id} className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm">
-                        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                          <div className="flex items-center gap-2">
-                            <span className="w-6 h-6 rounded-lg bg-primary-navy text-white text-xs font-bold flex items-center justify-center">
-                              {idx + 1}
-                            </span>
-                            <span className="text-[11px] font-bold text-slate-500 uppercase">
-                              {pq.type === 'MCQ' ? t('Multiple Choice', 'اختيار متعدد', lang) : t('Written Question', 'سؤال مقالي', lang)}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center gap-1.5">
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                              pq.source === 'CLASSROOM' ? 'bg-blue-50 text-blue-700' :
-                              pq.source === 'HOMEWORK' ? 'bg-amber-50 text-amber-700' : 'bg-purple-50 text-purple-700'
-                            }`}>
-                              {pq.source === 'CLASSROOM' ? t('Classroom', 'مهمة صفية', lang) :
-                               pq.source === 'HOMEWORK' ? t('Homework', 'أداء منزلي', lang) : t('Weekly', 'تقييم أسبوعي', lang)}
-                            </span>
-                          </div>
-                        </div>
-
-                        <p className="font-bold text-sm sm:text-base text-primary-navy mb-3 leading-relaxed">
-                          {lang === 'ar' ? pq.question_ar : pq.question_en}
-                        </p>
-
-                        {/* Options if MCQ */}
-                        {pq.type === 'MCQ' && (
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
-                            {(['A', 'B', 'C', 'D'] as const).map(opt => {
-                              const text = lang === 'ar' ? (pq as any)[`option_${opt.toLowerCase()}_ar`] : (pq as any)[`option_${opt.toLowerCase()}_en`];
-                              if (!text) return null;
-                              return (
-                                <div key={opt} className="p-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-xs font-semibold text-slate-700 flex items-center gap-2">
-                                  <span className="w-5 h-5 rounded-md bg-white border border-slate-300 text-slate-500 font-bold flex items-center justify-center text-[11px]">
-                                    {opt}
-                                  </span>
-                                  <span>{text}</span>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
-
-                        {/* Toggle Reveal Answer Button */}
-                        <div className="pt-2">
-                          <button
-                            onClick={() => toggleReveal(pq.id)}
-                            className="text-xs font-bold text-primary-plum hover:text-accent-pink flex items-center gap-1 transition-colors cursor-pointer"
-                          >
-                            <Lightbulb size={13} />
-                            <span>{isRevealed ? t('Hide Model Answer', 'إخفاء الإجابة النموذجية', lang) : t('Reveal Model Answer & Explanation', 'عرض الإجابة والنموذج المقترح', lang)}</span>
-                          </button>
-
-                          {isRevealed && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: 'auto' }}
-                              className="mt-3 p-4 bg-emerald-50/70 border border-emerald-200 rounded-xl"
-                            >
-                              {pq.type === 'MCQ' && (
-                                <div className="text-xs font-bold text-emerald-900 mb-1 flex items-center gap-1.5">
-                                  <CheckCircle size={14} className="text-emerald-600" />
-                                  <span>{t('Correct Option:', 'الخيار الصحيح:', lang)} {pq.correct_option}</span>
-                                </div>
-                              )}
-                              {(pq.ideal_answer_ar || pq.ideal_answer_en) && (
-                                <div className="text-xs font-medium text-emerald-950 mb-2 leading-relaxed whitespace-pre-wrap">
-                                  <strong className="block text-emerald-800 font-bold mb-0.5">{t('Model Answer:', 'النموذج المقترح:', lang)}</strong>
-                                  {lang === 'ar' ? pq.ideal_answer_ar : pq.ideal_answer_en}
-                                </div>
-                              )}
-                              {(pq.explanation_ar || pq.explanation_en) && (
-                                <p className="text-[11px] text-emerald-800 font-medium border-t border-emerald-200/60 pt-1.5 mt-1.5">
-                                  <strong>{t('Explanation:', 'الشرح والتعليل:', lang)}</strong> {lang === 'ar' ? pq.explanation_ar : pq.explanation_en}
-                                </p>
-                              )}
-                            </motion.div>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="text-center pt-2">
-                  <button
-                    onClick={() => navigate(`/assessment/${lesson.id}`)}
-                    className="inline-flex items-center gap-2 text-xs font-bold text-primary-plum hover:text-primary-navy transition-colors bg-white px-5 py-2.5 rounded-xl border border-slate-200 shadow-sm cursor-pointer"
-                  >
-                    <span>{t(`View all ${lessonAllQuestions.length} questions in interactive exam mode`, `عرض جميع الـ ${lessonAllQuestions.length} سؤالاً في وضع التقييم التفاعلي الكامل` , lang)}</span>
-                    <ArrowLeft size={13} className={lang === 'ar' ? '' : 'rotate-180'} />
-                  </button>
-                </div>
+                <h3 className="text-xl sm:text-2xl font-black">
+                  {t('Ready to Test Your Understanding?', 'هل أنت مستعد لاختبار فهمك؟', lang)}
+                </h3>
+                <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-xl leading-relaxed">
+                  {t(
+                    'Jump to the interactive quiz and assessment lab to practice all official ministry tasks, MCQs, and written questions with instant feedback.',
+                    'انتقل الآن إلى وضع الاختبار والتدريبات التفاعلي لحل كافة أسئلة الوزارة، والمهام الأدائية، والتقييمات الأسبوعية مع التصحيح الفوري.'
+                  , lang)}
+                </p>
               </div>
-            );
-          })()}
+
+              <button
+                onClick={() => {
+                  if (lesson.id === '2-1') navigate('/chapter2-practice?lesson=L1');
+                  else if (lesson.id === '2-2') navigate('/chapter2-practice?lesson=L2');
+                  else navigate(`/assessment/${lesson.id}`);
+                }}
+                className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-accent-pink to-primary-plum hover:opacity-95 text-white font-black text-xs sm:text-sm shadow-lg shadow-accent-pink/30 transition-all flex items-center gap-2 whitespace-nowrap self-stretch md:self-auto justify-center cursor-pointer"
+              >
+                <span>{t('Start Interactive Quiz Now 🚀', 'ابدأ الاختبار والتدريبات الآن 🚀', lang)}</span>
+                <ArrowLeft size={16} className={lang === 'ar' ? '' : 'rotate-180'} />
+              </button>
+            </div>
+          </div>
 
           {/* Navigation */}
           <div className="flex items-center justify-between pt-8 border-t border-slate-200">
