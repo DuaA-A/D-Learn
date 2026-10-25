@@ -40,17 +40,7 @@ export default function Chapter2Practice() {
   const { lang } = React.useContext(AppContext);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  // New state to control submission
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const { lang } = React.useContext(AppContext);
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  // New state to control submission
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const { lang } = React.useContext(AppContext);
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
 
   // Primary Lesson Switcher: 'L1' (تقنيات التشفير والمصادقة) or 'L2' (تصميم أمان الشبكات)
   const [selectedLesson, setSelectedLesson] = useState<'L1' | 'L2'>(() => {
@@ -202,7 +192,7 @@ export default function Chapter2Practice() {
       if (selectedPart !== 'ALL' && q.part !== selectedPart) return false;
       if (selectedType !== 'ALL' && q.type !== selectedType) return false;
       if (searchQuery.trim()) {
-        const text = `${q.question_ar} ${q.explanation_ar || ''} ${q.ideal_answer_ar || ''}`.toLowerCase();
+        const text = `${q.question_ar} ${q.question_en || ''} ${q.explanation_ar || ''} ${q.explanation_en || ''} ${q.ideal_answer_ar || ''} ${q.ideal_answer_en || ''}`.toLowerCase();
         if (!text.includes(searchQuery.toLowerCase())) return false;
       }
       return true;
@@ -243,7 +233,9 @@ export default function Chapter2Practice() {
   };
 
   const handleClearProgress = () => {
-    if (window.confirm('هل أنت متأكد من رغبتك في إعادة تعيين كافة الإجابات لهذا الدرس والبدء من جديد؟')) {
+    if (window.confirm(lang === 'ar'
+      ? 'هل أنت متأكد من رغبتك في إعادة تعيين كافة الإجابات لهذا الدرس والبدء من جديد؟'
+      : 'Are you sure you want to reset all your answers for this section and start over?')) {
       setMcqAnswers({});
       setWrittenAnswers({});
       setRevealedAnswers({});
@@ -306,7 +298,7 @@ export default function Chapter2Practice() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <button
             onClick={() => { setSelectedLesson('L1'); setCurrentIdx(0); }}
-            className={`p-4 rounded-2xl border-2 transition-all flex items-center justify-between text-right cursor-pointer ${selectedLesson === 'L1'
+            className={`p-4 rounded-2xl border-2 transition-all flex items-center justify-between ${lang === 'ar' ? 'text-right' : 'text-left'} cursor-pointer ${selectedLesson === 'L1'
                 ? 'border-primary-plum bg-white shadow-md ring-2 ring-primary-plum/20'
                 : 'border-slate-200 bg-white/80 hover:bg-white text-slate-600'
               }`}
@@ -330,7 +322,7 @@ export default function Chapter2Practice() {
 
           <button
             onClick={() => { setSelectedLesson('L2'); setCurrentIdx(0); }}
-            className={`p-4 rounded-2xl border-2 transition-all flex items-center justify-between text-right cursor-pointer ${selectedLesson === 'L2'
+            className={`p-4 rounded-2xl border-2 transition-all flex items-center justify-between ${lang === 'ar' ? 'text-right' : 'text-left'} cursor-pointer ${selectedLesson === 'L2'
                 ? 'border-teal-600 bg-white shadow-md ring-2 ring-teal-500/20'
                 : 'border-slate-200 bg-white/80 hover:bg-white text-slate-600'
               }`}
@@ -415,19 +407,19 @@ export default function Chapter2Practice() {
                     onClick={() => { setSelectedPart('ALL'); setCurrentIdx(0); }}
                     className={`px-3 py-1.5 rounded-lg transition-colors ${selectedPart === 'ALL' ? 'bg-white text-primary-navy shadow-sm' : ''}`}
                   >
-                    كل الأجزاء
+                    {lang === 'ar' ? 'كل الأجزاء' : 'All Parts'}
                   </button>
                   <button
                     onClick={() => { setSelectedPart(1); setCurrentIdx(0); }}
                     className={`px-3 py-1.5 rounded-lg transition-colors ${selectedPart === 1 ? 'bg-white text-primary-navy shadow-sm' : ''}`}
                   >
-                    الجزء 1
+                    {lang === 'ar' ? 'الجزء 1' : 'Part 1'}
                   </button>
                   <button
                     onClick={() => { setSelectedPart(2); setCurrentIdx(0); }}
                     className={`px-3 py-1.5 rounded-lg transition-colors ${selectedPart === 2 ? 'bg-white text-primary-navy shadow-sm' : ''}`}
                   >
-                    الجزء 2
+                    {lang === 'ar' ? 'الجزء 2' : 'Part 2'}
                   </button>
                 </div>
 
@@ -437,7 +429,7 @@ export default function Chapter2Practice() {
                     onClick={() => { setSelectedType('ALL'); setCurrentIdx(0); }}
                     className={`px-3 py-1.5 rounded-lg transition-colors ${selectedType === 'ALL' ? 'bg-white text-primary-navy shadow-sm' : ''}`}
                   >
-                    الكل
+                    {lang === 'ar' ? 'الكل' : 'All'}
                   </button>
                   <button
                     onClick={() => { setSelectedType('MCQ'); setCurrentIdx(0); }}
@@ -449,20 +441,20 @@ export default function Chapter2Practice() {
                     onClick={() => { setSelectedType('WRITTEN'); setCurrentIdx(0); }}
                     className={`px-3 py-1.5 rounded-lg transition-colors ${selectedType === 'WRITTEN' ? 'bg-white text-primary-navy shadow-sm' : ''}`}
                   >
-                    مقالي
+                    {lang === 'ar' ? 'مقالي' : 'Written'}
                   </button>
                 </div>
               </div>
 
               {/* Search Box */}
               <div className="relative w-full md:w-64">
-                <Search size={15} className="absolute right-3 top-3 text-slate-400" />
+                <Search size={15} className={`absolute ${lang === 'ar' ? 'right-3' : 'left-3'} top-3 text-slate-400`} />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={e => { setSearchQuery(e.target.value); setCurrentIdx(0); }}
-                  placeholder="ابحث في الأسئلة والمفاهيم..."
-                  className="w-full pl-3 pr-9 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-primary-plum"
+                  placeholder={lang === 'ar' ? 'ابحث في الأسئلة والمفاهيم...' : 'Search questions and concepts...'}
+                  className={`w-full ${lang === 'ar' ? 'pl-3 pr-9' : 'pr-3 pl-9'} py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:border-primary-plum`}
                 />
               </div>
             </div>
@@ -470,25 +462,17 @@ export default function Chapter2Practice() {
             {/* Questions Navigator Grid */}
             <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
               <div className="flex items-center justify-between text-xs font-bold text-slate-500 mb-2.5">
-            {isSubmitted && (
-              <div className="text-sm font-medium text-primary-navy">
-                {(() => {
-                  const total = filteredQuestions.length;
-                  const correct = filteredQuestions.filter(q => {
-                    if (q.type === 'MCQ') return mcqAnswers[q.id] === q.answer;
-                    return selfGrades[q.id] === 'CORRECT';
-                  }).length;
-                  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
-                  return `Score: ${correct} / ${total} (${pct}%)`;
-                })()}
-              </div>
-            )}
+
 
                 <span>
-                  السؤال {totalInFilter > 0 ? currentIdx + 1 : 0} من {totalInFilter}
+                  {lang === 'ar'
+                    ? `السؤال ${totalInFilter > 0 ? currentIdx + 1 : 0} من ${totalInFilter}`
+                    : `Question ${totalInFilter > 0 ? currentIdx + 1 : 0} of ${totalInFilter}`}
                 </span>
                 <span>
-                  {answeredCount} مجاب • {totalInFilter - answeredCount} متبقي ({progressPct}%)
+                  {lang === 'ar'
+                    ? `${answeredCount} مجاب • ${totalInFilter - answeredCount} متبقي (${progressPct}%)`
+                    : `${answeredCount} Answered • ${totalInFilter - answeredCount} Remaining (${progressPct}%)`}
                 </span>
               </div>
 
@@ -539,18 +523,22 @@ export default function Chapter2Practice() {
                       {currentIdx + 1}
                     </span>
                     <span className="text-xs font-bold text-slate-500">
-                      الجزء {activeQuestion.part} • {activeQuestion.difficulty}
+                      {lang === 'ar'
+                        ? `الجزء ${activeQuestion.part} • ${activeQuestion.difficulty}`
+                        : `Part ${activeQuestion.part} • ${activeQuestion.difficulty}`}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-2">
                     {activeQuestion.marks && (
                       <span className="text-[11px] font-bold text-primary-plum bg-primary-plum/10 px-2.5 py-0.5 rounded-full border border-primary-plum/20">
-                        [{activeQuestion.marks} درجات]
+                        {lang === 'ar' ? `[${activeQuestion.marks} درجات]` : `[${activeQuestion.marks} Marks]`}
                       </span>
                     )}
                     <span className="text-[11px] font-bold text-slate-500 bg-slate-50 px-2.5 py-0.5 rounded-md border border-slate-200">
-                      {activeQuestion.type === 'MCQ' ? 'اختيار من متعدد' : 'سؤال مقالي'}
+                      {activeQuestion.type === 'MCQ'
+                        ? (lang === 'ar' ? 'اختيار من متعدد' : 'Multiple Choice')
+                        : (lang === 'ar' ? 'سؤال مقالي' : 'Written Essay')}
                     </span>
                   </div>
                 </div>
@@ -566,103 +554,110 @@ export default function Chapter2Practice() {
                 {activeQuestion.type === 'MCQ' && (
                   <div className="space-y-4">
                     <div className="space-y-3">
-                      {(activeQuestion.options || []).map((opt, oIdx) => {
-                        const isSelected = mcqAnswers[activeQuestion.id] === opt;
-                        const isCorrectOption = opt === activeQuestion.answer;
-                        const showCorrection = !!mcqAnswers[activeQuestion.id] || revealedAnswers[activeQuestion.id];
+                      {(() => {
+                        const rawOptions = (lang === 'en' && activeQuestion.options_en && activeQuestion.options_en.length > 0)
+                          ? activeQuestion.options_en
+                          : (activeQuestion.options || []);
 
-                        let btnStyle = 'border-slate-200 bg-white hover:border-slate-300 text-slate-700';
-                        if (showCorrection) {
-                          if (isCorrectOption) {
-                            btnStyle = 'border-emerald-500 bg-emerald-50 text-emerald-950 shadow-sm';
-                          } else if (isSelected) {
-                            btnStyle = 'border-rose-400 bg-rose-50 text-rose-950 shadow-sm';
+                        const isEn = lang === 'en';
+                        const correctAnswer = (isEn && activeQuestion.answer_en)
+                          ? activeQuestion.answer_en
+                          : activeQuestion.answer;
+
+                        return rawOptions.map((opt, oIdx) => {
+                          let displayOpt = opt;
+                          if (isEn && !activeQuestion.options_en && opt.includes(' / ')) {
+                            displayOpt = opt.split(' / ')[1] || opt;
+                          } else if (isEn && !activeQuestion.options_en && opt.includes(' | ')) {
+                            displayOpt = opt.split(' | ')[1] || opt;
                           }
-                        } else if (isSelected) {
-                          btnStyle = 'border-primary-plum bg-primary-plum/5 text-primary-navy shadow-sm ring-1 ring-primary-plum/30';
-                        }
 
-                        return (
-                    // MCQ options without instant feedback
-                    {(activeQuestion.options || []).map((opt, oIdx) => {
-                      const isSelected = mcqAnswers[activeQuestion.id] === opt;
-                      const btnStyle = isSelected ? 'border-primary-plum bg-primary-plum/5 text-primary-navy shadow-sm ring-1 ring-primary-plum/30' : 'border-slate-200 bg-white hover:border-slate-300 text-slate-700';
-                      return (
-                        <button
-                          key={oIdx}
-                          onClick={() => handleSelectMcq(activeQuestion.id, opt)}
-                          className={`w-full p-4 rounded-2xl border-2 text-right transition-all flex items-center gap-3.5 cursor-pointer ${btnStyle}`}
-                        >
-                          <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs transition-colors ${isSelected ? 'bg-primary-plum text-white' : 'bg-slate-100 text-slate-500'}`}
-                          >
-                            {String.fromCharCode(1571 + oIdx)}
-                          </span>
-                          <span className="text-sm sm:text-base font-semibold flex-1 leading-snug">
-                            {opt}
-                          </span>
-                        </button>
-                      );
-                    })}
+                          const arOriginalOpt = activeQuestion.options?.[oIdx] || opt;
+                          const isSelected = mcqAnswers[activeQuestion.id] === opt || mcqAnswers[activeQuestion.id] === arOriginalOpt;
+                          const isCorrectOption = opt === correctAnswer || arOriginalOpt === activeQuestion.answer;
+                          const showCorrection = !!mcqAnswers[activeQuestion.id] || revealedAnswers[activeQuestion.id];
 
-                          <button
-                            key={oIdx}
-                            onClick={() => handleSelectMcq(activeQuestion.id, opt)}
-                            className={`w-full p-4 rounded-2xl border-2 text-right transition-all flex items-center gap-3.5 cursor-pointer ${btnStyle}`}
-                          >
-                            <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs transition-colors ${showCorrection && isCorrectOption
-                                ? 'bg-emerald-600 text-white'
-                                : showCorrection && isSelected
-                                  ? 'bg-rose-600 text-white'
-                                  : isSelected
-                                    ? 'bg-primary-plum text-white'
-                                    : 'bg-slate-100 text-slate-500'
-                              }`}>
-                              {String.fromCharCode(1571 + oIdx)}
-                            </span>
-                            <span className="text-sm sm:text-base font-semibold flex-1 leading-snug">
-                              {opt}
-                            </span>
-                            {showCorrection && isCorrectOption && (
-                              <CheckCircle size={18} className="text-emerald-600 flex-shrink-0" />
-                            )}
-                            {showCorrection && isSelected && !isCorrectOption && (
-                              <XCircle size={18} className="text-rose-600 flex-shrink-0" />
-                            )}
-                          </button>
-                        );
-                      })}
+                          let btnStyle = 'border-slate-200 bg-white hover:border-slate-300 text-slate-700';
+                          if (showCorrection) {
+                            if (isCorrectOption) {
+                              btnStyle = 'border-emerald-500 bg-emerald-50 text-emerald-950 shadow-sm';
+                            } else if (isSelected) {
+                              btnStyle = 'border-rose-400 bg-rose-50 text-rose-950 shadow-sm';
+                            }
+                          } else if (isSelected) {
+                            btnStyle = 'border-primary-plum bg-primary-plum/5 text-primary-navy shadow-sm ring-1 ring-primary-plum/30';
+                          }
+
+                          return (
+                            <button
+                              key={oIdx}
+                              onClick={() => handleSelectMcq(activeQuestion.id, opt)}
+                              className={`w-full p-4 rounded-2xl border-2 transition-all flex items-center gap-3.5 cursor-pointer ${lang === 'ar' ? 'text-right' : 'text-left'} ${btnStyle}`}
+                            >
+                              <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs transition-colors flex-shrink-0 ${showCorrection && isCorrectOption
+                                  ? 'bg-emerald-600 text-white'
+                                  : showCorrection && isSelected
+                                    ? 'bg-rose-600 text-white'
+                                    : isSelected
+                                      ? 'bg-primary-plum text-white'
+                                      : 'bg-slate-100 text-slate-500'
+                                }`}>
+                                {lang === 'ar' ? String.fromCharCode(1571 + oIdx) : ['A', 'B', 'C', 'D'][oIdx]}
+                              </span>
+                              <span className="text-sm sm:text-base font-semibold flex-1 leading-snug">
+                                {displayOpt}
+                              </span>
+                              {showCorrection && isCorrectOption && (
+                                <CheckCircle size={18} className="text-emerald-600 flex-shrink-0" />
+                              )}
+                              {showCorrection && isSelected && !isCorrectOption && (
+                                <XCircle size={18} className="text-rose-600 flex-shrink-0" />
+                              )}
+                            </button>
+                          );
+                        });
+                      })()}
                     </div>
 
                     {/* Instant Correction Feedback Box */}
-                    {/* Instant feedback removed; will be shown after submission */}
+                    {(!!mcqAnswers[activeQuestion.id] || revealedAnswers[activeQuestion.id]) && (
                       <motion.div
                         initial={{ opacity: 0, y: 5 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className={`p-4 sm:p-5 rounded-2xl border text-xs sm:text-sm font-medium leading-relaxed ${mcqAnswers[activeQuestion.id] === activeQuestion.answer
+                        className={`p-4 sm:p-5 rounded-2xl border text-xs sm:text-sm font-medium leading-relaxed ${
+                          (mcqAnswers[activeQuestion.id] === activeQuestion.answer ||
+                           (activeQuestion.answer_en && mcqAnswers[activeQuestion.id] === activeQuestion.answer_en))
                             ? 'bg-emerald-50/90 border-emerald-300 text-emerald-950'
                             : 'bg-rose-50/90 border-rose-300 text-rose-950'
-                          }`}
+                        }`}
                       >
                         <div className="flex items-center gap-2 font-black mb-1.5 text-sm">
-                          {mcqAnswers[activeQuestion.id] === activeQuestion.answer ? (
+                          {(mcqAnswers[activeQuestion.id] === activeQuestion.answer ||
+                            (activeQuestion.answer_en && mcqAnswers[activeQuestion.id] === activeQuestion.answer_en)) ? (
                             <>
-                              <CheckCircle size={18} className="text-emerald-600" />
-                              <span>إجابة صحيحة! أحسنت 🎯</span>
+                              <CheckCircle size={18} className="text-emerald-600 flex-shrink-0" />
+                              <span>{lang === 'ar' ? 'إجابة صحيحة! أحسنت 🎯' : 'Correct answer! Excellent 🎯'}</span>
                             </>
                           ) : (
                             <>
-                              <XCircle size={18} className="text-rose-600" />
+                              <XCircle size={18} className="text-rose-600 flex-shrink-0" />
                               <span>
-                                إجابة غير صحيحة — الإجابة الصحيحة هي: ({activeQuestion.answer})
+                                {lang === 'ar'
+                                  ? `إجابة غير صحيحة — الإجابة الصحيحة هي: (${activeQuestion.answer})`
+                                  : `Incorrect answer — The correct answer is: (${activeQuestion.answer_en || activeQuestion.answer})`}
                               </span>
                             </>
                           )}
                         </div>
 
-                        {activeQuestion.explanation_ar && (
+                        {(activeQuestion.explanation_ar || activeQuestion.explanation_en) && (
                           <div className="mt-2 pt-2 border-t border-slate-200/50 text-slate-800 text-xs sm:text-sm">
-                            <span className="font-bold text-slate-900 block mb-0.5">💡 الشرح والتعليل:</span>
-                            {activeQuestion.explanation_ar}
+                            <span className="font-bold text-slate-900 block mb-0.5">
+                              {lang === 'ar' ? '💡 الشرح والتعليل:' : '💡 Explanation & Reasoning:'}
+                            </span>
+                            {lang === 'en' && activeQuestion.explanation_en
+                              ? activeQuestion.explanation_en
+                              : activeQuestion.explanation_ar}
                           </div>
                         )}
                       </motion.div>
@@ -679,12 +674,14 @@ export default function Chapter2Practice() {
                         rows={7}
                         value={writtenAnswers[activeQuestion.id] || ''}
                         onChange={e => handleWriteAnswer(activeQuestion.id, e.target.value)}
-                        placeholder="اكتب إجابتك هنا بيدك ثم اضغط زر التحقق لمطابقتها مع النموذج الإرشادي..."
-                        className="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 sm:p-5 text-primary-navy text-sm sm:text-base font-medium focus:outline-none focus:border-primary-plum focus:ring-2 focus:ring-primary-plum/20 transition-all resize-y leading-relaxed"
+                        placeholder={lang === 'ar'
+                          ? '...اكتب إجابتك هنا بيدك ثم اضغط زر التحقق لمطابقتها مع النموذج الإرشادي'
+                          : 'Write your answer here in your own words, then reveal the official model answer to evaluate...'}
+                        className={`w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 sm:p-5 text-primary-navy text-sm sm:text-base font-medium focus:outline-none focus:border-primary-plum focus:ring-2 focus:ring-primary-plum/20 transition-all resize-y leading-relaxed ${lang === 'ar' ? 'text-right' : 'text-left'}`}
                       />
                       <div className="flex justify-between items-center text-xs text-slate-400 mt-1.5 font-semibold">
-                        <span>تُحفظ إجابتك تلقائياً لحظياً 💾</span>
-                        <span>{(writtenAnswers[activeQuestion.id] || '').length} حرف</span>
+                        <span>{lang === 'ar' ? 'تُحفظ إجابتك تلقائياً لحظياً 💾' : '💾 Your answer is saved automatically in real-time'}</span>
+                        <span>{lang === 'ar' ? `${(writtenAnswers[activeQuestion.id] || '').length} حرف` : `${(writtenAnswers[activeQuestion.id] || '').length} characters`}</span>
                       </div>
                     </div>
 
@@ -692,20 +689,22 @@ export default function Chapter2Practice() {
                     <div className="flex flex-wrap items-center gap-3">
                       <button
                         type="button"
-                        /* Reveal button removed in quiz mode */
+                        onClick={() => toggleReveal(activeQuestion.id)}
                         className="px-5 py-2.5 rounded-xl text-xs font-bold bg-primary-plum/10 hover:bg-primary-plum/20 text-primary-plum border border-primary-plum/30 flex items-center gap-2 transition-all cursor-pointer"
                       >
                         <Lightbulb size={15} className="text-primary-plum" />
                         <span>
                           {revealedAnswers[activeQuestion.id]
-                            ? 'إخفاء النموذج الإرشادي'
-                            : '🔍 إظهار النموذج الإرشادي للتصحيح الفوري والشرح'}
+                            ? (lang === 'ar' ? 'إخفاء النموذج الإرشادي' : 'Hide Model Answer')
+                            : (lang === 'ar' ? '🔍 إظهار النموذج الإرشادي للتصحيح الفوري والشرح' : '🔍 Reveal Model Answer & Detailed Explanation')}
                         </span>
                       </button>
 
                       {revealedAnswers[activeQuestion.id] && (
                         <div className="flex items-center gap-2 text-xs font-bold">
-                          <span className="text-slate-400">تقييمك لإجابتك:</span>
+                          <span className="text-slate-400">
+                            {lang === 'ar' ? 'تقييمك لإجابتك:' : 'Self-Assessment:'}
+                          </span>
                           <button
                             onClick={() => handleGradeSelf(activeQuestion.id, 'CORRECT')}
                             className={`px-3 py-1.5 rounded-lg border transition-all ${selfGrades[activeQuestion.id] === 'CORRECT'
@@ -713,7 +712,7 @@ export default function Chapter2Practice() {
                                 : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
                               }`}
                           >
-                            أجبت بشكل صحيح ✅
+                            {lang === 'ar' ? 'أجبت بشكل صحيح ✅' : 'Answered Correctly ✅'}
                           </button>
                           <button
                             onClick={() => handleGradeSelf(activeQuestion.id, 'REVIEW')}
@@ -722,7 +721,7 @@ export default function Chapter2Practice() {
                                 : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
                               }`}
                           >
-                            يحتاج مراجعة ⚠️
+                            {lang === 'ar' ? 'يحتاج مراجعة ⚠️' : 'Needs Review ⚠️'}
                           </button>
                         </div>
                       )}
@@ -739,21 +738,29 @@ export default function Chapter2Practice() {
                         <div className="bg-emerald-50/90 border-2 border-emerald-300 rounded-2xl p-4 sm:p-5">
                           <div className="flex items-center gap-2 text-emerald-900 font-black text-xs sm:text-sm uppercase tracking-wider mb-2">
                             <CheckCircle size={16} className="text-emerald-600 flex-shrink-0" />
-                            <span>النموذج الإرشادي الرسمي للإجابة (المختصر المركز للامتحان):</span>
+                            <span>
+                              {lang === 'ar'
+                                ? 'النموذج الإرشادي الرسمي للإجابة (المختصر المركز للامتحان):'
+                                : 'Official Model Answer (Exam-Focused Summary):'}
+                            </span>
                           </div>
                           <p className="text-emerald-950 text-xs sm:text-sm font-semibold whitespace-pre-wrap leading-relaxed">
-                            {activeQuestion.ideal_answer_ar}
+                            {lang === 'en' && activeQuestion.ideal_answer_en
+                              ? activeQuestion.ideal_answer_en
+                              : activeQuestion.ideal_answer_ar}
                           </p>
                         </div>
 
                         {/* 2. Deep Explanation (Why this answer) */}
-                        {activeQuestion.explanation_ar && (
+                        {(activeQuestion.explanation_ar || activeQuestion.explanation_en) && (
                           <div className="bg-blue-50/90 border border-blue-200 rounded-2xl p-4 text-xs sm:text-sm text-blue-950 font-medium">
                             <span className="font-bold text-blue-900 block mb-1">
-                              💡 الشرح والتعليل وعناصر التقييم:
+                              {lang === 'ar' ? '💡 الشرح والتعليل وعناصر التقييم:' : '💡 Detailed Explanation & Key Grading Points:'}
                             </span>
                             <p className="leading-relaxed">
-                              {activeQuestion.explanation_ar}
+                              {lang === 'en' && activeQuestion.explanation_en
+                                ? activeQuestion.explanation_en
+                                : activeQuestion.explanation_ar}
                             </p>
                           </div>
                         )}
@@ -770,7 +777,7 @@ export default function Chapter2Practice() {
                     className="px-4 py-2 rounded-xl border border-slate-200 text-slate-600 font-bold text-xs disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 flex items-center gap-1.5 cursor-pointer"
                   >
                     <ArrowRight size={14} className={lang === 'ar' ? '' : 'rotate-180'} />
-                    <span>السابق</span>
+                    <span>{lang === 'ar' ? 'السابق' : 'Previous'}</span>
                   </button>
 
                   <span className="text-xs font-bold text-slate-400">
@@ -782,7 +789,7 @@ export default function Chapter2Practice() {
                     disabled={currentIdx >= totalInFilter - 1}
                     className="px-5 py-2 rounded-xl bg-primary-navy hover:bg-slate-800 text-white font-bold text-xs disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-1.5 cursor-pointer"
                   >
-                    <span>التالي</span>
+                    <span>{lang === 'ar' ? 'التالي' : 'Next'}</span>
                     <ArrowLeft size={14} className={lang === 'ar' ? '' : 'rotate-180'} />
                   </button>
                 </div>
@@ -791,12 +798,14 @@ export default function Chapter2Practice() {
             ) : (
               <div className="bg-white p-12 rounded-3xl border border-slate-200 text-center text-slate-400">
                 <FileText size={40} className="mx-auto mb-3 opacity-30" />
-                <p className="font-bold text-sm">لا توجد أسئلة تطابق معايير الفلترة الحالية.</p>
+                <p className="font-bold text-sm">
+                  {lang === 'ar' ? 'لا توجد أسئلة تطابق معايير الفلترة الحالية.' : 'No questions match the current filter criteria.'}
+                </p>
                 <button
                   onClick={() => { setSelectedPart('ALL'); setSelectedType('ALL'); setSearchQuery(''); }}
                   className="mt-3 px-4 py-2 bg-slate-100 rounded-xl text-xs font-bold text-primary-navy hover:bg-slate-200"
                 >
-                  إعادة ضبط الفلاتر
+                  {lang === 'ar' ? 'إعادة ضبط الفلاتر' : 'Reset Filters'}
                 </button>
               </div>
             )}

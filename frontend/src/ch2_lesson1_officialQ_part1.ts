@@ -12,9 +12,13 @@ export interface Ch2QuizQuestion {
   question_ar: string;
   question_en?: string;          // bilingual support
   options?: string[];          // MCQ فقط
+  options_en?: string[];       // MCQ English options
   answer?: string;             // MCQ فقط — الخيار الصحيح
+  answer_en?: string;          // MCQ English answer
   ideal_answer_ar?: string;    // WRITTEN — نموذج الإجابة
+  ideal_answer_en?: string;    // WRITTEN English model answer
   explanation_ar: string;
+  explanation_en?: string;     // English explanation
   marks?: number;
 }
 
