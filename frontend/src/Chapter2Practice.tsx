@@ -40,6 +40,17 @@ export default function Chapter2Practice() {
   const { lang } = React.useContext(AppContext);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  // New state to control submission
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { lang } = React.useContext(AppContext);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  // New state to control submission
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const { lang } = React.useContext(AppContext);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   // Primary Lesson Switcher: 'L1' (تقنيات التشفير والمصادقة) or 'L2' (تصميم أمان الشبكات)
   const [selectedLesson, setSelectedLesson] = useState<'L1' | 'L2'>(() => {
@@ -55,6 +66,12 @@ export default function Chapter2Practice() {
     const qLesson = searchParams.get('lesson');
     if (qLesson === 'L1' || qLesson === 'L2') {
       setSelectedLesson(qLesson);
+      setCurrentIdx(0);
+    }
+    // Also handle 'section' param for OFFICIAL, HARD, or MIXED
+    const qSection = searchParams.get('section');
+    if (qSection === 'OFFICIAL' || qSection === 'HARD' || qSection === 'MIXED') {
+      setSelectedSection(qSection);
       setCurrentIdx(0);
     }
   }, [searchParams]);
@@ -453,6 +470,20 @@ export default function Chapter2Practice() {
             {/* Questions Navigator Grid */}
             <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
               <div className="flex items-center justify-between text-xs font-bold text-slate-500 mb-2.5">
+            {isSubmitted && (
+              <div className="text-sm font-medium text-primary-navy">
+                {(() => {
+                  const total = filteredQuestions.length;
+                  const correct = filteredQuestions.filter(q => {
+                    if (q.type === 'MCQ') return mcqAnswers[q.id] === q.answer;
+                    return selfGrades[q.id] === 'CORRECT';
+                  }).length;
+                  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+                  return `Score: ${correct} / ${total} (${pct}%)`;
+                })()}
+              </div>
+            )}
+
                 <span>
                   السؤال {totalInFilter > 0 ? currentIdx + 1 : 0} من {totalInFilter}
                 </span>
@@ -552,6 +583,27 @@ export default function Chapter2Practice() {
                         }
 
                         return (
+                    // MCQ options without instant feedback
+                    {(activeQuestion.options || []).map((opt, oIdx) => {
+                      const isSelected = mcqAnswers[activeQuestion.id] === opt;
+                      const btnStyle = isSelected ? 'border-primary-plum bg-primary-plum/5 text-primary-navy shadow-sm ring-1 ring-primary-plum/30' : 'border-slate-200 bg-white hover:border-slate-300 text-slate-700';
+                      return (
+                        <button
+                          key={oIdx}
+                          onClick={() => handleSelectMcq(activeQuestion.id, opt)}
+                          className={`w-full p-4 rounded-2xl border-2 text-right transition-all flex items-center gap-3.5 cursor-pointer ${btnStyle}`}
+                        >
+                          <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs transition-colors ${isSelected ? 'bg-primary-plum text-white' : 'bg-slate-100 text-slate-500'}`}
+                          >
+                            {String.fromCharCode(1571 + oIdx)}
+                          </span>
+                          <span className="text-sm sm:text-base font-semibold flex-1 leading-snug">
+                            {opt}
+                          </span>
+                        </button>
+                      );
+                    })}
+
                           <button
                             key={oIdx}
                             onClick={() => handleSelectMcq(activeQuestion.id, opt)}
@@ -582,7 +634,7 @@ export default function Chapter2Practice() {
                     </div>
 
                     {/* Instant Correction Feedback Box */}
-                    {mcqAnswers[activeQuestion.id] && (
+                    {/* Instant feedback removed; will be shown after submission */}
                       <motion.div
                         initial={{ opacity: 0, y: 5 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -640,7 +692,7 @@ export default function Chapter2Practice() {
                     <div className="flex flex-wrap items-center gap-3">
                       <button
                         type="button"
-                        onClick={() => toggleReveal(activeQuestion.id)}
+                        /* Reveal button removed in quiz mode */
                         className="px-5 py-2.5 rounded-xl text-xs font-bold bg-primary-plum/10 hover:bg-primary-plum/20 text-primary-plum border border-primary-plum/30 flex items-center gap-2 transition-all cursor-pointer"
                       >
                         <Lightbulb size={15} className="text-primary-plum" />
