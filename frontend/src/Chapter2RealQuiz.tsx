@@ -70,7 +70,7 @@ export default function Chapter2RealQuiz() {
       });
     }, 1000);
     return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitted]);
 
   const formatTimer = (seconds: number) => {
@@ -220,12 +220,11 @@ export default function Chapter2RealQuiz() {
                   <span className="block text-[11px] font-bold text-emerald-200 uppercase tracking-widest mb-1">
                     {t('MCQ Score', 'درجة الاختيار', lang)}
                   </span>
-                  <div className={`text-4xl font-black ${
-                    scorePct >= 85 ? 'text-emerald-300'
+                  <div className={`text-4xl font-black ${scorePct >= 85 ? 'text-emerald-300'
                     : scorePct >= 70 ? 'text-blue-300'
-                    : scorePct >= 50 ? 'text-amber-300'
-                    : 'text-rose-300'
-                  }`}>
+                      : scorePct >= 50 ? 'text-amber-300'
+                        : 'text-rose-300'
+                    }`}>
                     {scorePct}%
                   </div>
                   <span className="block text-xs font-bold text-white/80 mt-1">
@@ -241,9 +240,9 @@ export default function Chapter2RealQuiz() {
                 {
                   label: t('Rating', 'التقدير', lang),
                   value: scorePct >= 85 ? t('Excellent', 'ممتاز', lang)
-                       : scorePct >= 70 ? t('Very Good', 'جيد جداً', lang)
-                       : scorePct >= 50 ? t('Passing', 'مقبول', lang)
-                       : t('Needs Review', 'يحتاج مراجعة', lang),
+                    : scorePct >= 70 ? t('Very Good', 'جيد جداً', lang)
+                      : scorePct >= 50 ? t('Passing', 'مقبول', lang)
+                        : t('Needs Review', 'يحتاج مراجعة', lang),
                   color: scorePct >= 85 ? 'text-emerald-600' : scorePct >= 70 ? 'text-blue-600' : scorePct >= 50 ? 'text-amber-600' : 'text-rose-600',
                 },
                 { label: t('Correct MCQ', 'اختيار صحيح', lang), value: `${correctCount} / ${MCQ_TOTAL}`, color: 'text-emerald-600' },
@@ -265,16 +264,15 @@ export default function Chapter2RealQuiz() {
               </h3>
               <div className="flex items-center gap-2">
                 {[
-                  { key: 'ALL',     label: t(`All (${MCQ_TOTAL})`, `الكل (${MCQ_TOTAL})`, lang),                        active: 'bg-primary-navy text-white' },
-                  { key: 'WRONG',   label: t(`Wrong (${MCQ_TOTAL - correctCount})`, `خاطئة (${MCQ_TOTAL - correctCount})`, lang), active: 'bg-rose-600 text-white' },
-                  { key: 'CORRECT', label: t(`Correct (${correctCount})`, `صحيحة (${correctCount})`, lang),              active: 'bg-emerald-600 text-white' },
+                  { key: 'ALL', label: t(`All (${MCQ_TOTAL})`, `الكل (${MCQ_TOTAL})`, lang), active: 'bg-primary-navy text-white' },
+                  { key: 'WRONG', label: t(`Wrong (${MCQ_TOTAL - correctCount})`, `خاطئة (${MCQ_TOTAL - correctCount})`, lang), active: 'bg-rose-600 text-white' },
+                  { key: 'CORRECT', label: t(`Correct (${correctCount})`, `صحيحة (${correctCount})`, lang), active: 'bg-emerald-600 text-white' },
                 ].map(btn => (
                   <button
                     key={btn.key}
                     onClick={() => setReviewFilter(btn.key as 'ALL' | 'WRONG' | 'CORRECT')}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                      reviewFilter === btn.key ? btn.active : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                    }`}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${reviewFilter === btn.key ? btn.active : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      }`}
                   >
                     {btn.label}
                   </button>
@@ -292,11 +290,10 @@ export default function Chapter2RealQuiz() {
                 return (
                   <div
                     key={q.id}
-                    className={`bg-white rounded-2xl border-2 p-5 sm:p-6 shadow-sm transition-all ${
-                      isCorrect ? 'border-emerald-200 bg-emerald-50/20'
+                    className={`bg-white rounded-2xl border-2 p-5 sm:p-6 shadow-sm transition-all ${isCorrect ? 'border-emerald-200 bg-emerald-50/20'
                       : isUnanswered ? 'border-slate-200'
-                      : 'border-rose-200 bg-rose-50/20'
-                    }`}
+                        : 'border-rose-200 bg-rose-50/20'
+                      }`}
                   >
                     {/* Header row */}
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
@@ -355,9 +352,8 @@ export default function Chapter2RealQuiz() {
 
                         return (
                           <div key={opt} className={`p-3.5 rounded-xl border-2 flex items-center gap-3 ${cls}`}>
-                            <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-xs ${
-                              isModelAnswer ? 'bg-emerald-600 text-white' : isStudentPick ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-600'
-                            }`}>{opt}</span>
+                            <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-xs ${isModelAnswer ? 'bg-emerald-600 text-white' : isStudentPick ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-600'
+                              }`}>{opt}</span>
                             <span className="text-sm font-semibold flex-1 leading-snug">{text}</span>
                             {badge}
                           </div>
@@ -495,11 +491,10 @@ export default function Chapter2RealQuiz() {
               </div>
 
               {/* Countdown Timer */}
-              <div className={`flex items-center gap-2.5 px-4 py-2 rounded-2xl border flex-shrink-0 ${
-                timeLeft < 180 ? 'bg-rose-50 border-rose-200 text-rose-700 animate-pulse'
+              <div className={`flex items-center gap-2.5 px-4 py-2 rounded-2xl border flex-shrink-0 ${timeLeft < 180 ? 'bg-rose-50 border-rose-200 text-rose-700 animate-pulse'
                 : timeLeft < 600 ? 'bg-amber-50 border-amber-200 text-amber-700'
-                : 'bg-slate-50 border-slate-200 text-primary-navy'
-              }`}>
+                  : 'bg-slate-50 border-slate-200 text-primary-navy'
+                }`}>
                 <Clock size={16} className={timeLeft < 180 ? 'text-rose-600' : timeLeft < 600 ? 'text-amber-600' : 'text-teal-700'} />
                 <span className="font-mono font-black text-lg tracking-wider">{formatTimer(timeLeft)}</span>
               </div>
@@ -529,12 +524,11 @@ export default function Chapter2RealQuiz() {
                       key={q.id}
                       onClick={() => setCurrentQ(idx)}
                       title={isWritten ? t('Essay', 'مقالي', lang) : 'MCQ'}
-                      className={`w-9 h-9 rounded-xl font-bold text-xs transition-all flex items-center justify-center ${
-                        isCurrent ? 'bg-teal-700 text-white ring-2 ring-teal-400 shadow-md'
+                      className={`w-9 h-9 rounded-xl font-bold text-xs transition-all flex items-center justify-center ${isCurrent ? 'bg-teal-700 text-white ring-2 ring-teal-400 shadow-md'
                         : answered ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                        : isWritten ? 'bg-violet-50 text-violet-600 border border-violet-200 hover:bg-violet-100'
-                        : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-                      }`}
+                          : isWritten ? 'bg-violet-50 text-violet-600 border border-violet-200 hover:bg-violet-100'
+                            : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                        }`}
                     >
                       {idx + 1}
                     </button>
@@ -565,11 +559,10 @@ export default function Chapter2RealQuiz() {
                     {lang === 'ar' ? currentQuestion.lessonName_ar : currentQuestion.lessonName_en}
                   </span>
                 </div>
-                <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md border ${
-                  isMcq
-                    ? 'text-slate-500 bg-slate-50 border-slate-200'
-                    : 'text-violet-700 bg-violet-50 border-violet-200'
-                }`}>
+                <span className={`text-[11px] font-bold px-2.5 py-1 rounded-md border ${isMcq
+                  ? 'text-slate-500 bg-slate-50 border-slate-200'
+                  : 'text-violet-700 bg-violet-50 border-violet-200'
+                  }`}>
                   {isMcq ? t('MCQ', 'اختيار من متعدد', lang) : t('Essay', 'مقالي', lang)}
                 </span>
               </div>
@@ -595,21 +588,18 @@ export default function Chapter2RealQuiz() {
                         <button
                           key={opt}
                           onClick={() => handleSelectMcq(opt)}
-                          className={`w-full p-4 rounded-2xl border-2 text-start transition-all flex items-center gap-3.5 group cursor-pointer ${
-                            isSelected
-                              ? 'border-teal-600 bg-teal-50/60 text-primary-navy shadow-sm ring-1 ring-teal-500/30'
-                              : 'border-slate-200 bg-white hover:border-slate-300 text-slate-700'
-                          }`}
+                          className={`w-full p-4 rounded-2xl border-2 text-start transition-all flex items-center gap-3.5 group cursor-pointer ${isSelected
+                            ? 'border-teal-600 bg-teal-50/60 text-primary-navy shadow-sm ring-1 ring-teal-500/30'
+                            : 'border-slate-200 bg-white hover:border-slate-300 text-slate-700'
+                            }`}
                         >
-                          <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs transition-colors flex-shrink-0 ${
-                            isSelected ? 'bg-teal-700 text-white shadow-sm' : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'
-                          }`}>
+                          <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs transition-colors flex-shrink-0 ${isSelected ? 'bg-teal-700 text-white shadow-sm' : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'
+                            }`}>
                             {opt}
                           </span>
                           <span className="text-sm sm:text-base font-semibold flex-1 leading-snug">{text}</span>
-                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${
-                            isSelected ? 'border-teal-600 bg-teal-600 text-white' : 'border-slate-300'
-                          }`}>
+                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${isSelected ? 'border-teal-600 bg-teal-600 text-white' : 'border-slate-300'
+                            }`}>
                             {isSelected && <span className="w-2 h-2 rounded-full bg-white" />}
                           </div>
                         </button>
@@ -697,9 +687,8 @@ export default function Chapter2RealQuiz() {
                 className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-md w-full p-6 sm:p-7 text-center"
                 dir={dir(lang)}
               >
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
-                  unansweredCount > 0 ? 'bg-amber-50 text-amber-600 border border-amber-200' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'
-                }`}>
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 ${unansweredCount > 0 ? 'bg-amber-50 text-amber-600 border border-amber-200' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+                  }`}>
                   {unansweredCount > 0 ? <AlertTriangle size={24} /> : <CheckCircle size={24} />}
                 </div>
 
@@ -710,15 +699,15 @@ export default function Chapter2RealQuiz() {
                 <p className="text-slate-500 text-sm font-medium mb-6 leading-relaxed">
                   {unansweredCount > 0
                     ? t(
-                        `${unansweredCount} question(s) not answered. Submit anyway?`,
-                        `${unansweredCount} سؤال/أسئلة لم يُجب عليها. هل تريد التسليم الآن؟`,
-                        lang
-                      )
+                      `${unansweredCount} question(s) not answered. Submit anyway?`,
+                      `${unansweredCount} سؤال/أسئلة لم يُجب عليها. هل تريد التسليم الآن؟`,
+                      lang
+                    )
                     : t(
-                        'All questions answered. Ready to submit?',
-                        'تمت الإجابة على جميع الأسئلة. هل تريد التسليم؟',
-                        lang
-                      )
+                      'All questions answered. Ready to submit?',
+                      'تمت الإجابة على جميع الأسئلة. هل تريد التسليم؟',
+                      lang
+                    )
                   }
                 </p>
 

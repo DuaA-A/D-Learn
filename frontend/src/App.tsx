@@ -733,13 +733,13 @@ function StudentDashboard() {
                 <FileText size={15} />
                 <span>{t('Mixed Quiz: L1 + L2 ', 'اختبار شامل: الدرسان معاً', lang)}</span>
               </button>
-            
+
               <button
                 onClick={() => navigate('/chapter2-quiz')}
                 className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 hover:opacity-95 text-white text-xs font-black shadow-md shadow-rose-600/20 transition-all flex items-center gap-2 cursor-pointer"
               >
                 <Award size={15} />
-                <span>{t('Official Quiz — Lessons 1 & 2 🎯', 'الاختبار الرسمي — الدرسان 1 و2 🎯', lang)}</span>
+                <span>{t('Quiz — Lessons 1 & 2', 'اختبار — الدرسان 1 و2', lang)}</span>
               </button>
             </div>
           </div>
@@ -751,7 +751,7 @@ function StudentDashboard() {
               const lessonQuestions = QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, lesson.id));
               const unitColor = 'from-teal-600 to-emerald-700';
 
-              const questionCountDisplay = lesson.id === '2-1' ? '80+' : lesson.id === '2-2' ? '70+' : lessonQuestions.length;
+              const questionCountDisplay = lesson.id === '2-1' ? '80+' : lesson.id === '2-2' ? '70+' : lesson.id === '2-3' ? '68+' : lessonQuestions.length;
 
               return (
                 <motion.div
@@ -815,6 +815,7 @@ function StudentDashboard() {
                           e.stopPropagation();
                           if (lesson.id === '2-1') navigate('/chapter2-practice?lesson=L1');
                           else if (lesson.id === '2-2') navigate('/chapter2-practice?lesson=L2');
+                          else if (lesson.id === '2-3') navigate('/chapter2-practice?lesson=L3');
                           else navigate(`/assessment/${lesson.id}`);
                         }}
                         className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold transition-all bg-slate-100 hover:bg-slate-200 border border-slate-200 text-primary-navy cursor-pointer"
@@ -2927,10 +2928,10 @@ function TutorDashboard() {
           const isRealQuiz = inspectSubmission.lessonId === 'ch2-real-quiz';
           const lessonQuestions = isRealQuiz
             ? ((inspectSubmission as any).questionSnapshot || []).map((s: any) => ({
-                ...s,
-                type: 'MCQ',
-                correct_option: s.correct_option,
-              }))
+              ...s,
+              type: 'MCQ',
+              correct_option: s.correct_option,
+            }))
             : QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, inspectSubmission.lessonId));
           const hasAnswersMap = inspectSubmission.answers && Object.keys(inspectSubmission.answers).length > 0;
 
