@@ -30,6 +30,7 @@ import ComprehensiveExam from './ComprehensiveExam';
 import ComprehensiveExamCh1 from './ComprehensiveExamCh1';
 import Chapter1Workshop from './Chapter1Workshop';
 import Chapter2Practice from './Chapter2Practice';
+import Chapter2RealQuiz from './Chapter2RealQuiz';
 import Lesson1BookletPdf from './Lesson1BookletPdf';
 import Lesson2BookletPdf from './Lesson2BookletPdf';
 
@@ -2292,7 +2293,7 @@ function TutorDashboard() {
     const matchesSearch = !search ||
       r.userName?.toLowerCase().includes(search.toLowerCase()) ||
       r.userEmail?.toLowerCase().includes(search.toLowerCase());
-    const matchesLesson = filterLesson === 'ALL' || matchLessonId(r.lessonId, filterLesson);
+    const matchesLesson = filterLesson === 'ALL' || r.lessonId === filterLesson || matchLessonId(r.lessonId, filterLesson);
     return matchesSearch && matchesLesson;
   });
 
@@ -2914,7 +2915,15 @@ function TutorDashboard() {
       <AnimatePresence>
         {inspectSubmission && (() => {
           const l = lessonLookup(inspectSubmission.lessonId);
-          const lessonQuestions = QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, inspectSubmission.lessonId));
+          // For ch2-real-quiz, use the saved questionSnapshot from Firestore; otherwise use QUIZ_QUESTIONS
+          const isRealQuiz = inspectSubmission.lessonId === 'ch2-real-quiz';
+          const lessonQuestions = isRealQuiz
+            ? ((inspectSubmission as any).questionSnapshot || []).map((s: any) => ({
+                ...s,
+                type: 'MCQ',
+                correct_option: s.correct_option,
+              }))
+            : QUIZ_QUESTIONS.filter(q => matchLessonId(q.lesson, inspectSubmission.lessonId));
           const hasAnswersMap = inspectSubmission.answers && Object.keys(inspectSubmission.answers).length > 0;
 
           return (
@@ -3004,7 +3013,7 @@ function TutorDashboard() {
                     </div>
                   )}
 
-                  {lessonQuestions.map((q, idx) => {
+                  {lessonQuestions.map((q: any, idx: number) => {
                     const studentChoice = inspectSubmission.answers?.[q.id];
                     const isCorrect = q.type === 'MCQ' && studentChoice && studentChoice === q.correct_option;
                     const isWrong = q.type === 'MCQ' && studentChoice && studentChoice !== q.correct_option;
@@ -3643,6 +3652,7 @@ export default function App() {
               <Route path="/comprehensive-exam-ch1" element={<Protected><ComprehensiveExamCh1 /></Protected>} />
               <Route path="/workshop-ch1" element={<Protected><Chapter1Workshop /></Protected>} />
               <Route path="/chapter2-practice" element={<Protected><Chapter2Practice /></Protected>} />
+              <Route path="/chapter2-quiz" element={<Protected><Chapter2RealQuiz /></Protected>} />
             </Routes>
           </AnimatePresence>
         </div>
