@@ -733,6 +733,14 @@ function StudentDashboard() {
                 <FileText size={15} />
                 <span>{t('Mixed Quiz: L1 + L2 ', 'اختبار شامل: الدرسان معاً', lang)}</span>
               </button>
+            
+              <button
+                onClick={() => navigate('/chapter2-quiz')}
+                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-pink-600 hover:opacity-95 text-white text-xs font-black shadow-md shadow-rose-600/20 transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <Award size={15} />
+                <span>{t('Official Quiz — Lessons 1 & 2 🎯', 'الاختبار الرسمي — الدرسان 1 و2 🎯', lang)}</span>
+              </button>
             </div>
           </div>
 

@@ -19,15 +19,15 @@ import {
 import { db } from './firebase';
 import { collection, addDoc, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { AppContext } from './App';
-import { CH2_REAL_QUIZ_QUESTIONS } from './ch2QuizData';
-import type { Ch2QuizQuestion } from './ch2QuizData';
+import { CH2_REAL_QUIZ_MCQ } from './ch2QuizData';
+import type { Ch2McqQuestion } from './ch2QuizData';
 
 // ── helpers ──────────────────────────────────────────────────
 const t = (en: string, ar: string, lang: string) => lang === 'ar' ? ar : en;
 const dir = (lang: string) => lang === 'ar' ? 'rtl' : 'ltr';
 
-const TOTAL = CH2_REAL_QUIZ_QUESTIONS.length; // 10
-const TIMER_SECONDS = 20 * 60; // 20 minutes
+const TOTAL = CH2_REAL_QUIZ_MCQ.length; // 10
+const TIMER_SECONDS = 30 * 60; // 30 minutes
 
 export default function Chapter2RealQuiz() {
   const { user, profile, lang } = React.useContext(AppContext);
@@ -71,17 +71,17 @@ export default function Chapter2RealQuiz() {
   // ── selection ────────────────────────────────────────────
   const handleSelect = (option: 'A' | 'B' | 'C' | 'D') => {
     if (isSubmitted) return;
-    setAnswers(prev => ({ ...prev, [CH2_REAL_QUIZ_QUESTIONS[currentQ].id]: option }));
+    setAnswers(prev => ({ ...prev, [CH2_REAL_QUIZ_MCQ[currentQ].id]: option }));
   };
 
   // ── submit ────────────────────────────────────────────────
   const executeSubmit = async () => {
     setSubmitting(true);
-    const correctCount = CH2_REAL_QUIZ_QUESTIONS.filter(q => answers[q.id] === q.correct_option).length;
+    const correctCount = CH2_REAL_QUIZ_MCQ.filter(q => answers[q.id] === q.correct_option).length;
     const scorePct = Math.round((correctCount / TOTAL) * 100);
 
     // Build per-question snapshot for admin inspection
-    const questionSnapshot = CH2_REAL_QUIZ_QUESTIONS.map(q => ({
+    const questionSnapshot = CH2_REAL_QUIZ_MCQ.map(q => ({
       id: q.id,
       question_ar: q.question_ar,
       question_en: q.question_en,
@@ -139,12 +139,12 @@ export default function Chapter2RealQuiz() {
   };
 
   // ── derived ───────────────────────────────────────────────
-  const currentQuestion: Ch2QuizQuestion = CH2_REAL_QUIZ_QUESTIONS[currentQ];
+  const currentQuestion: Ch2McqQuestion = CH2_REAL_QUIZ_MCQ[currentQ];
   const selectedOption = answers[currentQuestion?.id];
-  const correctCount = CH2_REAL_QUIZ_QUESTIONS.filter(q => answers[q.id] === q.correct_option).length;
+  const correctCount = CH2_REAL_QUIZ_MCQ.filter(q => answers[q.id] === q.correct_option).length;
   const scorePct = Math.round((correctCount / TOTAL) * 100);
 
-  const filteredReview = CH2_REAL_QUIZ_QUESTIONS.filter(q => {
+  const filteredReview = CH2_REAL_QUIZ_MCQ.filter(q => {
     const isCorrect = answers[q.id] === q.correct_option;
     if (reviewFilter === 'CORRECT') return isCorrect;
     if (reviewFilter === 'WRONG') return !isCorrect;
@@ -270,7 +270,7 @@ export default function Chapter2RealQuiz() {
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
                       <div className="flex items-center gap-2">
                         <span className="w-7 h-7 rounded-lg bg-teal-700 text-white text-xs font-black flex items-center justify-center">
-                          {CH2_REAL_QUIZ_QUESTIONS.indexOf(q) + 1}
+                          {CH2_REAL_QUIZ_MCQ.indexOf(q) + 1}
                         </span>
                         <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-teal-50 text-teal-800 border border-teal-200">
                           {lang === 'ar' ? q.lessonName_ar : q.lessonName_en}
@@ -399,7 +399,7 @@ export default function Chapter2RealQuiz() {
                   {t('Chapter 2 Quiz — Lessons 2-1 & 2-2', 'اختبار الفصل الثاني — الدرسان 2-1 و 2-2', lang)}
                 </h1>
                 <p className="text-slate-400 text-xs font-semibold mt-0.5">
-                  {t('10 Questions • Medium & Hard • 20 min', '10 أسئلة • متوسط وصعب • 20 دقيقة', lang)}
+                  {t('10 Questions • Medium & Hard • 30 min', '10 أسئلة • متوسط وصعب • 30 دقيقة', lang)}
                 </p>
               </div>
 
@@ -429,7 +429,7 @@ export default function Chapter2RealQuiz() {
               </div>
               {/* Question pills */}
               <div className="flex flex-wrap gap-2">
-                {CH2_REAL_QUIZ_QUESTIONS.map((q, idx) => {
+                {CH2_REAL_QUIZ_MCQ.map((q, idx) => {
                   const isAnswered = !!answers[q.id];
                   const isCurrent = idx === currentQ;
                   return (
