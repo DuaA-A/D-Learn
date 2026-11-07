@@ -32,6 +32,7 @@ import Chapter1Workshop from './Chapter1Workshop';
 import Chapter2Practice from './Chapter2Practice';
 import Chapter2RealQuiz from './Chapter2RealQuiz';
 import Chapter2UnitExam from './Chapter2UnitExam';
+import Chapter2ReviewBooklet from './Chapter2ReviewBooklet';
 import Lesson1BookletPdf from './Lesson1BookletPdf';
 import Lesson2BookletPdf from './Lesson2BookletPdf';
 
@@ -749,6 +750,13 @@ function StudentDashboard() {
               >
                 <FileText size={15} />
                 <span>{t('Unit 2 Exam — All 3 Lessons', 'امتحان الوحدة 2 — الدروس الثلاثة', lang)}</span>
+              </button>
+
+              <button
+                onClick={() => navigate('/chapter2-review')}
+                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-slate-700 to-slate-800 hover:opacity-95 text-white text-xs font-black shadow-md shadow-slate-700/20 transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <span>{t('Unit 2 Review', 'مراجعة الوحدة 2 الشاملة', lang)}</span>
               </button>
             </div>
           </div>
@@ -3672,6 +3680,7 @@ export default function App() {
               <Route path="/chapter2-practice" element={<Protected><Chapter2Practice /></Protected>} />
               <Route path="/chapter2-quiz" element={<Protected><Chapter2RealQuiz /></Protected>} />
               <Route path="/chapter2-unit-exam" element={<Protected><Chapter2UnitExam /></Protected>} />
+              <Route path="/chapter2-review" element={<Protected><Chapter2ReviewBooklet /></Protected>} />
             </Routes>
           </AnimatePresence>
         </div>
