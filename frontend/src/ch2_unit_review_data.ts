@@ -1,1206 +1,1146 @@
 // ============================================================
-// Chapter 2 — Comprehensive Unit Review Data
-// ملزمة المراجعة المركزة للوحدة الثانية (الدروس 2-1 و2-2 و2-3)
-// خالية تماماً من أي أيقونات أو إيموجي - تعتمد على النص والتنسيق الاحترافي
+// Chapter 2 — Structured Flashcard Notes Data
+// نوتات مراجعة الوحدة الثانية المنظمة كبطاقات وسلايدز
+// خالية تماماً من أي أيقونات أو إيموجي — منظمة في مربعات وكروت سهلة القراءة
 // ============================================================
 
-export interface ReviewCard {
+export interface ReviewMiniBlock {
+  tag_ar: string;
+  tag_en: string;
+  title_ar: string;
+  title_en: string;
+  text_ar: string;
+  text_en: string;
+  highlight_ar?: string;
+  highlight_en?: string;
+}
+
+export interface ReviewComparisonRow {
+  aspect_ar: string;
+  aspect_en: string;
+  col1_ar: string;
+  col1_en: string;
+  col2_ar: string;
+  col2_en: string;
+}
+
+export interface ReviewFlashcard {
   id: string;
+  cardNumber: number;
   lesson: '2-1' | '2-2' | '2-3';
-  type: 'CONCEPT' | 'TABLE' | 'TIP' | 'WARNING' | 'ANALOGY' | 'EXAM_HINT' | 'QUICK_REF';
-  typeLabel_ar: string;
-  typeLabel_en: string;
+  lessonName_ar: string;
+  lessonName_en: string;
+  category_ar: string;
+  category_en: string;
   title_ar: string;
   title_en: string;
   summary_ar: string;
   summary_en: string;
-  content_ar: string;
-  content_en: string;
-  keyTakeaway_ar: string;
-  keyTakeaway_en: string;
-  quickQuestion_ar: string;
-  quickQuestion_en: string;
-  quickAnswer_ar: string;
-  quickAnswer_en: string;
+  
+  // Visual boxes inside the card
+  blocks: ReviewMiniBlock[];
+
+  // Optional structured comparison table
+  comparison?: {
+    header1_ar: string;
+    header1_en: string;
+    header2_ar: string;
+    header2_en: string;
+    rows: ReviewComparisonRow[];
+  };
+
+  // Exam core rule box
+  goldenRule_ar: string;
+  goldenRule_en: string;
+
+  // Interactive self-check
+  checkQuestion_ar: string;
+  checkQuestion_en: string;
+  checkAnswer_ar: string;
+  checkAnswer_en: string;
 }
 
-// ─────────────────────────────────────────────────────────────
-// LESSON 2-1: تقنيات التشفير والمصادقة
-// ─────────────────────────────────────────────────────────────
-export const REVIEW_L1: ReviewCard[] = [
+export const CHAPTER2_REVIEW_FLASHCARDS: ReviewFlashcard[] = [
+
+  // ════════════════════════════════════════════════════════════
+  // LESSON 2-1: تقنيات التشفير والمصادقة
+  // ════════════════════════════════════════════════════════════
+
   {
-    id: 'r2-1-01',
+    id: 'fc-01',
+    cardNumber: 1,
     lesson: '2-1',
-    type: 'CONCEPT',
-    typeLabel_ar: 'مفهوم أساسي',
-    typeLabel_en: 'Core Concept',
-    title_ar: 'بروتوكول HTTPS وضمانات الأمان الثلاث',
-    title_en: 'HTTPS Protocol and the Three Security Guarantees',
-    summary_ar: 'بروتوكول HTTPS هو تطبيق بروتوكول HTTP عبر طبقة أمان النقل TLS، ويوفر السرية والسلامة والمصادقة لقناة الاتصال.',
-    summary_en: 'HTTPS runs HTTP over Transport Layer Security (TLS), providing confidentiality, integrity, and server authentication.',
-    content_ar:
-      'أولاً: معادلة البروتوكول:\n'
-      + 'HTTPS = HTTP + TLS (Transport Layer Security)\n\n'
-      + 'ثانياً: الضمانات الثلاث الأساسية لقناة الاتصال:\n'
-      + '1. السرية (Confidentiality): تشفير كافة البيانات المتبادلة بين المتصفح والخادم بحيث يتعذر على أي طرف وسيط قراءتها أو التنصت عليها.\n'
-      + '2. السلامة (Integrity): الكشف الفوري عن أي تعديل أو تلاعب في البيانات المنقولة أثناء مرورها عبر الشبكة.\n'
-      + '3. المصادقة (Authentication): التحقق من صحة هوية خادم الويب وارتباطه بالنطاق المطلوب عبر الشهادة الرقمية المعتمدة.\n\n'
-      + 'ثالثاً: حدود البروتوكول المهمة امتحانياً:\n'
-      + 'HTTPS يؤمن مسار ونفق الاتصال فقط، لكنه لا يضمن سلامة محتوى الموقع ولا نزاهة صاحبه، حيث تستطيع مواقع التصيد الاحتيالي استخدام HTTPS وشهادات رقمية صالحة.',
-    content_en:
-      'Protocol Formula:\n'
-      + 'HTTPS = HTTP + TLS (Transport Layer Security)\n\n'
-      + 'The Three Core Channel Guarantees:\n'
-      + '1. Confidentiality: Encrypts all data transmitted between browser and server, preventing eavesdropping by third parties.\n'
-      + '2. Integrity: Instantly detects any alteration or tampering with data in transit.\n'
-      + '3. Authentication: Confirms server identity and verified domain ownership via a digital certificate.\n\n'
-      + 'Crucial Exam Boundary:\n'
-      + 'HTTPS only secures the communication tunnel. It does not certify content validity or operator legitimacy; phishing sites frequently operate over valid HTTPS connections.',
-    keyTakeaway_ar: 'قاعدة الامتحان: HTTPS يحمي مسار نقل البيانات فقط (السرية والسلامة والمصادقة)، ولا يمنع وجود مواقع احتيالية تستخدمه.',
-    keyTakeaway_en: 'Exam Rule: HTTPS secures data transmission in transit (confidentiality, integrity, authentication), but does not guarantee the site itself is benign.',
-    quickQuestion_ar: 'سؤال سريع: هل وجود قفل HTTPS يعني بالضرورة أن محتوى الموقع آمن وموثوق؟ علل إجابتك.',
-    quickQuestion_en: 'Quick Check: Does HTTPS necessarily prove the website content is safe and legitimate? Explain.',
-    quickAnswer_ar: 'الإجابة: لا. HTTPS يضمن فقط تشفير الاتصال والتحقق من هوية الخادم، لكنه لا يحكم على نوايا صاحب الموقع؛ فمواقع التصيد يمكنها الحصول على شهادة واستخدام HTTPS.',
-    quickAnswer_en: 'Answer: No. HTTPS only protects the communication channel; phishing sites can register certificates and establish encrypted connections.',
+    lessonName_ar: 'الدرس 2-1: تقنيات التشفير والمصادقة',
+    lessonName_en: 'Lesson 2-1: Cryptography & Authentication',
+    category_ar: 'مفهوم أساسي',
+    category_en: 'Core Concept',
+    title_ar: 'بروتوكول HTTPS والضمانات الثلاث لقناة الاتصال',
+    title_en: 'HTTPS Protocol and the Three Channel Guarantees',
+    summary_ar: 'HTTPS هو تشغيل HTTP عبر طبقة أمان النقل TLS. يؤمن مسار البيانات عبر 3 ضمانات محددة.',
+    summary_en: 'HTTPS runs HTTP over Transport Layer Security (TLS), securing data channels through 3 specific guarantees.',
+    blocks: [
+      {
+        tag_ar: 'المعادلة الأساسية',
+        tag_en: 'Formula',
+        title_ar: 'تركيب البروتوكول',
+        title_en: 'Protocol Composition',
+        text_ar: 'HTTPS = HTTP + TLS (بروتوكول أمان طبقة النقل). بروتوكول HTTP وحده ينقل البيانات كنص صريح مكشوف، بينما TLS يغلف الاتصال بطبقة حماية مشفرة.',
+        text_en: 'HTTPS = HTTP + TLS (Transport Layer Security). Standard HTTP transmits plaintext, while TLS wraps traffic in an encrypted tunnel.',
+      },
+      {
+        tag_ar: 'الضمانة الأولى',
+        tag_en: 'Guarantee 1',
+        title_ar: 'السرية (Confidentiality)',
+        title_en: 'Confidentiality',
+        text_ar: 'تشفير كل البيانات المتبادلة بين المتصفح والخادم حتى يتعذر على أي طرف وسيط قراءتها أو التنصت عليها.',
+        text_en: 'Encrypts all data exchanged between browser and server, completely preventing third-party eavesdropping.',
+      },
+      {
+        tag_ar: 'الضمانة الثانية',
+        tag_en: 'Guarantee 2',
+        title_ar: 'السلامة (Integrity)',
+        title_en: 'Integrity',
+        text_ar: 'الكشف الفوري عن أي تعديل أو تلاعب في البيانات المنقولة أثناء مرورها عبر الشبكة.',
+        text_en: 'Instantly identifies any tampering or alteration of data while traversing network routes.',
+      },
+      {
+        tag_ar: 'الضمانة الثالثة',
+        tag_en: 'Guarantee 3',
+        title_ar: 'المصادقة (Authentication)',
+        title_en: 'Authentication',
+        text_ar: 'التحقق من صحة هوية الخادم وارتباطه بالنطاق الحقيقي عبر الشهادة الرقمية المعتمدة.',
+        text_en: 'Validates authentic server identity and verified domain ownership via a digital certificate.',
+      },
+      {
+        tag_ar: 'تنبيه امتحاني حاسم',
+        tag_en: 'Critical Exam Alert',
+        title_ar: 'حدود أمان HTTPS',
+        title_en: 'HTTPS Security Limits',
+        text_ar: 'HTTPS يؤمن قناة النقل فقط، ولا يضمن أمان محتوى الموقع أو نزاهة صاحبه. مواقع التصيد الاحتيالي يمكنها استخدام HTTPS وشهادات صالحة.',
+        text_en: 'HTTPS protects transit tunnels only. It does not certify content honesty; phishing sites frequently operate over valid HTTPS.',
+        highlight_ar: 'وجود قفل HTTPS لا يعني بالضرورة أن الموقع موثوق النية!',
+        highlight_en: 'An HTTPS padlock does not guarantee site trustworthiness!',
+      },
+    ],
+    goldenRule_ar: 'HTTPS يحمي نفق نقل البيانات فقط (السرية والسلامة والمصادقة)، ولا يمنع وجود مواقع احتيالية تستخدمه.',
+    goldenRule_en: 'HTTPS secures the data in-transit tunnel only; it does not eliminate fraudulent websites operating over it.',
+    checkQuestion_ar: 'سؤال سريع: ما الضمانات الثلاث التي يوفرها بروتوكول TLS لاتصال HTTPS؟',
+    checkQuestion_en: 'Quick Check: What three guarantees does TLS provide for an HTTPS connection?',
+    checkAnswer_ar: 'الإجابة: 1. السرية (تشفير المحتوى)، 2. السلامة (كشف التلاعب)، 3. المصادقة (إثبات هوية الخادم).',
+    checkAnswer_en: 'Answer: 1. Confidentiality (payload encryption), 2. Integrity (tamper detection), 3. Authentication (server identity validation).',
   },
 
   {
-    id: 'r2-1-02',
+    id: 'fc-02',
+    cardNumber: 2,
     lesson: '2-1',
-    type: 'TABLE',
-    typeLabel_ar: 'مقارنة معتمدة',
-    typeLabel_en: 'Comparison Table',
-    title_ar: 'مقارنة حاسمة: التشفير المتماثل مقابل التشفير غير المتماثل',
-    title_en: 'Symmetric versus Asymmetric Encryption Comparison',
-    summary_ar: 'التشفير المتماثل يعتمد على مفتاح واحد مشترك وسريع للبيانات الضخمة، بينما غير المتماثل يعتمد على زوج مفاتيح عام وخاص ويحل مشكلة التبادل الآمن للمفاتيح.',
-    summary_en: 'Symmetric uses a single shared key and is fast for heavy data; asymmetric uses a public/private key pair and solves secure key exchange.',
-    content_ar:
-      'وجه المقارنة 1: عدد المفاتيح المستخدمة\n'
-      + '• المتماثل (المفتاح المشترك): مفتاح واحد فقط للتشفير وفك التشفير.\n'
-      + '• غير المتماثل (المفتاح العام): زوج من المفاتيح (مفتاح عام للتشفير + مفتاح خاص لفك التشفير).\n\n'
-      + 'وجه المقارنة 2: سرعة المعالجة الحسابية\n'
-      + '• المتماثل: سريع جداً ولا يتطلب قدرات حسابية معقدة.\n'
-      + '• غير المتماثل: بطيء نسبياً بسبب العمليات الرياضية الضخمة للأزواج المفتاحية.\n\n'
-      + 'وجه المقارنة 3: الدور الوظيفي في اتصال HTTPS\n'
-      + '• المتماثل: يُستخدم في مرحلة نقل البيانات بعد المصافحة لتشفير محتوى الجلسة بالكامل.\n'
-      + '• غير المتماثل: يُستخدم في مصافحة TLS فقط للتحقق من الشهادة وتبادل مفتاح الجلسة بأمان.\n\n'
-      + 'وجه المقارنة 4: التحدي والميزة الأساسية\n'
-      + '• المتماثل: يواجه معضلة تبادل المفتاح المشترك عبر قناة عامة غير آمنة.\n'
-      + '• غير المتماثل: يحل مشكلة توزيع المفاتيح بنشر المفتاح العام والاحتفاظ بالمفتاح الخاص سراً.',
-    content_en:
-      'Comparison Dimension 1: Key Count\n'
-      + '• Symmetric: Single shared key for both encryption and decryption.\n'
-      + '• Asymmetric: Key pair (Public key for encryption + Private key for decryption).\n\n'
-      + 'Comparison Dimension 2: Computational Speed\n'
-      + '• Symmetric: Extremely fast, ideal for bulk payloads.\n'
-      + '• Asymmetric: Computationally heavy and noticeably slower.\n\n'
-      + 'Comparison Dimension 3: Function in HTTPS\n'
-      + '• Symmetric: Encrypts bulk session payload after handshake completes.\n'
-      + '• Asymmetric: Confined to TLS handshake to verify certificates and exchange the session key.\n\n'
-      + 'Comparison Dimension 4: Core Challenge vs Advantage\n'
-      + '• Symmetric: Challenge is secure key distribution over untrusted channels.\n'
-      + '• Asymmetric: Solves distribution by allowing public key publishing while guarding the private key.',
-    keyTakeaway_ar: 'قاعدة الامتحان: التشفير غير المتماثل يحل مشكلة تبادل المفاتيح، والتشفير المتماثل يحقق سرعة نقل البيانات الضخمة.',
-    keyTakeaway_en: 'Exam Rule: Asymmetric encryption solves key exchange; symmetric encryption delivers high-throughput payload delivery.',
-    quickQuestion_ar: 'سؤال سريع: لماذا لا يعتمد HTTPS على التشفير غير المتماثل طوال الجلسة بدلاً من استخدام التشفير المشترك؟',
-    quickQuestion_en: 'Quick Check: Why does HTTPS not use asymmetric encryption throughout the entire session?',
-    quickAnswer_ar: 'الإجابة: لأن التشفير غير المتماثل بطيء حسابياً ويستهلك موارد المعالجة، فيقتصر استخدامه على مصافحة TLS لتبادل المفتاح المشترك الذي يتولى باقي الجلسة بسرعة.',
-    quickAnswer_en: 'Answer: Asymmetric encryption is computationally slow; limiting it to key exchange allows the faster symmetric cipher to handle ongoing data transmission.',
+    lessonName_ar: 'الدرس 2-1: تقنيات التشفير والمصادقة',
+    lessonName_en: 'Lesson 2-1: Cryptography & Authentication',
+    category_ar: 'مقارنة معتمدة',
+    category_en: 'Comparison Table',
+    title_ar: 'التشفير المتماثل مقابل التشفير غير المتماثل',
+    title_en: 'Symmetric versus Asymmetric Encryption',
+    summary_ar: 'التشفير المتماثل يعتمد على مفتاح واحد وسريع للبيانات الضخمة. غير المتماثل يعتمد على زوج مفاتيح ويحل مشكلة التبادل الآمن.',
+    summary_en: 'Symmetric uses one shared key and is fast for heavy data. Asymmetric uses a key pair and solves secure key exchange.',
+    blocks: [
+      {
+        tag_ar: 'المفهوم الأول',
+        tag_en: 'Concept 1',
+        title_ar: 'التشفير المتماثل (بالمفتاح المشترك)',
+        title_en: 'Symmetric (Common-Key) Encryption',
+        text_ar: 'يستخدم نفس المفتاح السري للتشفير وفك التشفير معاً. يمتاز بسرعة فائقة وقدرة على معالجة البيانات الكبيرة، لكنه يواجه صعوبة مشاركة المفتاح بأمان.',
+        text_en: 'Uses one single key for both encryption and decryption. Very fast for large data, but challenging to distribute securely.',
+      },
+      {
+        tag_ar: 'المفهوم الثاني',
+        tag_en: 'Concept 2',
+        title_ar: 'التشفير غير المتماثل (بالمفتاح العام)',
+        title_en: 'Asymmetric (Public-Key) Encryption',
+        text_ar: 'يستخدم زوجاً من المفاتيح: المفتاح العام يُنشر للجميع للتشفير، والمفتاح الخاص يُحفظ سراً لفك التشفير فقط. بطيء حسابياً لكنه يحل مشكلة تبادل المفاتيح.',
+        text_en: 'Uses a key pair: public key for encryption and private key for decryption. Computationally slower but solves key distribution.',
+      },
+    ],
+    comparison: {
+      header1_ar: 'التشفير المتماثل (المفتاح المشترك)',
+      header1_en: 'Symmetric Encryption',
+      header2_ar: 'التشفير غير المتماثل (المفتاح العام)',
+      header2_en: 'Asymmetric Encryption',
+      rows: [
+        {
+          aspect_ar: 'عدد المفاتيح',
+          aspect_en: 'Key Count',
+          col1_ar: 'مفتاح واحد مشترك للتشفير وفك التشفير',
+          col1_en: 'Single shared key for both operations',
+          col2_ar: 'زوج مفاتيح: مفتاح عام + مفتاح خاص',
+          col2_en: 'Key pair: Public key + Private key',
+        },
+        {
+          aspect_ar: 'السرعة الحسابية',
+          aspect_en: 'Speed',
+          col1_ar: 'سريع جداً وخفيف على المعالجة',
+          col1_en: 'Extremely fast for heavy payloads',
+          col2_ar: 'بطيء نسبياً بسبب العمليات الرياضية المعقدة',
+          col2_en: 'Slower due to heavy mathematical computations',
+        },
+        {
+          aspect_ar: 'الدور في HTTPS',
+          aspect_en: 'HTTPS Role',
+          col1_ar: 'تشفير بيانات الجلسة الفعلية بعد اكتمال المصافحة',
+          col1_en: 'Encrypts payload data after handshake completes',
+          col2_ar: 'يقتصر على مصافحة TLS لتبادل مفتاح الجلسة',
+          col2_en: 'Confined to TLS handshake to exchange session key',
+        },
+        {
+          aspect_ar: 'الميزة الأساسية',
+          aspect_en: 'Key Advantage',
+          col1_ar: 'كفاءة وسرعة نقل أحجام ضخمة من الملفات والصفحات',
+          col1_en: 'Optimal throughput for massive data transmission',
+          col2_ar: 'حل مشكلة تبادل المفاتيح بأمان دون اتفاق مسبق',
+          col2_en: 'Solves key distribution over public channels safely',
+        },
+      ],
+    },
+    goldenRule_ar: 'القاعدة المعتمدة: التشفير غير المتماثل لتبادل المفاتيح بأمان، والتشفير المتماثل لنقل البيانات بسرعة.',
+    goldenRule_en: 'Curriculum Rule: Asymmetric encryption for secure key exchange; symmetric encryption for fast data transport.',
+    checkQuestion_ar: 'سؤال سريع: لماذا يجمع اتصال HTTPS بين نوعي التشفير بدلاً من الاكتفاء بأحدهما؟',
+    checkQuestion_en: 'Quick Check: Why does HTTPS combine both encryption types instead of relying on one?',
+    checkAnswer_ar: 'الإجابة: ليجمع بين ميزتيهما: أمان التشفير غير المتماثل في تبادل المفاتيح دون اتفاق مسبق، وسرعة التشفير المتماثل في نقل كميات البيانات الكبيرة.',
+    checkAnswer_en: 'Answer: To combine asymmetric security for exchanging the shared key safely, with symmetric high speed for bulk data transmission.',
   },
 
   {
-    id: 'r2-1-03',
+    id: 'fc-03',
+    cardNumber: 3,
     lesson: '2-1',
-    type: 'CONCEPT',
-    typeLabel_ar: 'تسلسل خطوات',
-    typeLabel_en: 'Step-by-step Process',
-    title_ar: 'مراحل اتصال ومصافحة TLS الثلاث بالتفصيل',
+    lessonName_ar: 'الدرس 2-1: تقنيات التشفير والمصادقة',
+    lessonName_en: 'Lesson 2-1: Cryptography & Authentication',
+    category_ar: 'تسلسل خطوات',
+    category_en: 'Step-by-step',
+    title_ar: 'المراحل الثلاث لمصافحة ونقل بيانات TLS',
     title_en: 'The Three Stages of TLS Handshake and Communication',
-    summary_ar: 'يمر اتصال HTTPS بثلاث مراحل: الاتصال والتحقق من الشهادة (غير متماثل)، ثم تبادل مفتاح الجلسة (غير متماثل)، ثم نقل البيانات الفعلي (متماثل).',
-    summary_en: 'HTTPS progresses through three phases: connection and certificate verification (asymmetric), session key exchange (asymmetric), and payload transfer (symmetric).',
-    content_ar:
-      'المرحلة الأولى: مرحلة الاتصال والتعريف (Connection & Authentication)\n'
-      + '• يرسل المتصفح طلباً أولياً (Client Hello).\n'
-      + '• يرد خادم الويب بإرسال شهادته الرقمية متضمنة مفتاحه العام.\n'
-      + '• يتحقق المتصفح من صحة الشهادة والجهة المصدرة المعتمدة (CA).\n'
-      + '• أسلوب التشفير المستخدم: التشفير بالمفتاح العام (غير متماثل).\n\n'
-      + 'المرحلة الثانية: مرحلة تبادل المفاتيح (Key Exchange)\n'
-      + '• ينشئ المتصفح مفتاح جلسة سرياً ومشتركاً (Session Key).\n'
-      + '• يُشفر المتصفح مفتاح الجلسة مستخدماً المفتاح العام للخادم ويرسله عبر الشبكة.\n'
-      + '• يستقبل الخادم الرسالة ويفك تشفيرها بمفتاحه الخاص الوحيد القادر على فكها.\n'
-      + '• النتيجة: امتلاك الطرفين لنفس المفتاح السري المشترك بأمان كامل.\n'
-      + '• أسلوب التشفير المستخدم: التشفير بالمفتاح العام (غير متماثل).\n\n'
-      + 'المرحلة الثالثة: مرحلة نقل وتبادل البيانات (Data Communication)\n'
-      + '• يبدأ نقل الصفحات والمعاملات والبيانات الحقيقية بين الطرفين.\n'
-      + '• تُشفر كل حزمة بيانات وتُفك باستخدام مفتاح الجلسة المشترك فقط.\n'
-      + '• أسلوب التشفير المستخدم: التشفير بالمفتاح المشترك (المتماثل) للسرعة العالية.',
-    content_en:
-      'Phase 1: Connection & Authentication\n'
-      + '• Browser initiates with Client Hello.\n'
-      + '• Server returns its digital certificate containing its public key.\n'
-      + '• Browser validates the certificate against trusted Certificate Authorities (CAs).\n'
-      + '• Cryptography: Public-key (asymmetric) cryptography.\n\n'
-      + 'Phase 2: Key Exchange\n'
-      + '• Browser generates a random shared session key.\n'
-      + '• Browser encrypts this session key using the server\'s public key and transmits it.\n'
-      + '• Server decrypts the packet using its matching private key.\n'
-      + '• Outcome: Both endpoints now securely share an identical session key.\n'
-      + '• Cryptography: Public-key (asymmetric) cryptography.\n\n'
-      + 'Phase 3: Data Communication\n'
-      + '• Full bi-directional payload transfer begins.\n'
-      + '• All application traffic is encrypted and decrypted using the shared session key.\n'
-      + '• Cryptography: Common-key (symmetric) cryptography for optimal throughput.',
-    keyTakeaway_ar: 'قاعدة الامتحان: المرحلتان 1 و 2 تستخدمان التشفير غير المتماثل (المفتاح العام)، والمرحلة 3 تستخدم التشفير المتماثل (المفتاح المشترك).',
-    keyTakeaway_en: 'Exam Rule: Phases 1 and 2 employ asymmetric cryptography; Phase 3 transitions exclusively to symmetric encryption.',
-    quickQuestion_ar: 'سؤال سريع: في أي مرحلة من مراحل HTTPS يتم استخدام التشفير المتماثل، ولماذا؟',
-    quickQuestion_en: 'Quick Check: In which phase of HTTPS is symmetric encryption used, and why?',
-    quickAnswer_ar: 'الإجابة: في المرحلة الثالثة (نقل البيانات)؛ لأن التشفير المتماثل يمتاز بالسرعة الفائقة والقدرة على معالجة أحجام البيانات الضخمة دون بطء.',
-    quickAnswer_en: 'Answer: In phase 3 (data transfer), because symmetric ciphers are lightweight and fast enough to handle high volumes without performance degradation.',
+    summary_ar: 'يمر الاتصال بـ 3 مراحل متتالية: الاتصال، ثم تبادل المفاتيح، ثم نقل البيانات الفعلي.',
+    summary_en: 'Connection progresses through 3 stages: Connection, Key Exchange, and Data Communication.',
+    blocks: [
+      {
+        tag_ar: 'المرحلة الأولى',
+        tag_en: 'Stage 1',
+        title_ar: '1. مرحلة الاتصال والتعريف (Connection)',
+        title_en: '1. Connection & Authentication',
+        text_ar: '• يرسل المتصفح طلب اتصال (Client Hello).\n• يرسل الخادم شهادته الرقمية متضمنة مفتاحه العام.\n• يتحقق المتصفح من صحة هوية الخادم عبر سلطة الشهادات (CA).\n• نوع التشفير: بالمفتاح العام (غير متماثل).',
+        text_en: '• Browser initiates with Client Hello.\n• Server responds with its digital certificate containing public key.\n• Browser validates server identity via trusted CA.\n• Cipher: Public-key (asymmetric).',
+      },
+      {
+        tag_ar: 'المرحلة الثانية',
+        tag_en: 'Stage 2',
+        title_ar: '2. مرحلة تبادل المفاتيح (Key Exchange)',
+        title_en: '2. Session Key Exchange',
+        text_ar: '• ينشئ المتصفح مفتاح جلسة سرياً مشتركاً (Session Key).\n• يشفر المتصفح مفتاح الجلسة بالمفتاح العام للخادم ويرسله.\n• يفك الخادم التشفير بمفتاحه الخاص الوحيد القادر على ذلك.\n• نوع التشفير: بالمفتاح العام (غير متماثل).',
+        text_en: '• Browser generates a random shared session key.\n• Browser encrypts session key using server public key and transmits.\n• Server decrypts it with its unique private key.\n• Cipher: Public-key (asymmetric).',
+      },
+      {
+        tag_ar: 'المرحلة الثالثة',
+        tag_en: 'Stage 3',
+        title_ar: '3. مرحلة نقل البيانات (Data Communication)',
+        title_en: '3. Bulk Data Transfer',
+        text_ar: '• يبدأ النقل الفعلي لصفحات الويب والبيانات المتبادلة.\n• يتم تشفير كل حزمة وفكها باستخدام مفتاح الجلسة المشترك فقط.\n• نوع التشفير: بالمفتاح المشترك (المتماثل) لتحقيق السرعة العالية.',
+        text_en: '• Actual payload data communication begins.\n• Traffic packets are encrypted and decrypted using the shared session key.\n• Cipher: Common-key (symmetric) for high-speed delivery.',
+      },
+    ],
+    goldenRule_ar: 'المرحلتان 1 و 2 تستخدمان التشفير غير المتماثل (بالمفتاح العام)، والمرحلة 3 تستخدم التشفير المتماثل (بالمفتاح المشترك).',
+    goldenRule_en: 'Stages 1 and 2 use asymmetric (public-key) cipher; Stage 3 transitions to symmetric (shared-key) cipher.',
+    checkQuestion_ar: 'سؤال سريع: بأي مفتاح يُشفر المتصفح مفتاح الجلسة أثناء مرحلة تبادل المفاتيح؟',
+    checkQuestion_en: 'Quick Check: Which key does the browser use to encrypt the session key during key exchange?',
+    checkAnswer_ar: 'الإجابة: بالمفتاح العام للخادم (Server Public Key)؛ حتى لا يستطيع فك تشفيره سوى الخادم نفسه بمفتاحه الخاص.',
+    checkAnswer_en: 'Answer: The Server Public Key; ensuring only the server holding the private key can decrypt it.',
   },
 
   {
-    id: 'r2-1-04',
+    id: 'fc-04',
+    cardNumber: 4,
     lesson: '2-1',
-    type: 'CONCEPT',
-    typeLabel_ar: 'مفهوم أساسي',
-    typeLabel_en: 'Core Concept',
-    title_ar: 'الشهادة الرقمية ومكوناتها الخمسة وسلسلة الثقة',
-    title_en: 'Digital Certificates, Their Five Components, and Chain of Trust',
-    summary_ar: 'الشهادة الرقمية بمثابة بطاقة هوية إلكترونية للخادم تصدرها سلطة شهادات معتمدة وتتضمن 5 مكونات تثبت الهوية وتمكن التشفير.',
-    summary_en: 'A digital certificate is an electronic server credential issued by a trusted CA, containing five elements that verify identity and enable encryption.',
-    content_ar:
-      'أولاً: تعريف الشهادة الرقمية:\n'
-      + 'وثيقة إلكترونية رسمية تصدرها جهة موثوقة عالمياً تُعرف بسلطة الشهادات (Certificate Authority - CA)، وتُستخدم للتحقق من هوية الخادم وربطه بالمفتاح العام الخاص به.\n\n'
-      + 'ثانياً: المكونات الخمسة المعتمدة في كتاب الوزارة:\n'
-      + '1. اسم النطاق أو المالك (Common Name): النطاق المصرح له بالشهادة (مثل bank.com).\n'
-      + '2. المفتاح العام للخادم (Server Public Key): المفتاح المستخدم في تشفير تبادل مفتاح الجلسة.\n'
-      + '3. بيانات سلطة الشهادات المصدرة (Issuer Information): هوية جهة الاعتماد (مثل DigiCert).\n'
-      + '4. تواريخ الصلاحية (Validity Period): تاريخ بدء السريان وتاريخ انتهاء الصلاحية.\n'
-      + '5. التوقيع الرقمي لسلطة الشهادات (CA Digital Signature): توقيع CA الموثوق الذي يمنع تزوير الشهادة.\n\n'
-      + 'ثالثاً: مفهوم سلسلة الثقة (Chain of Trust):\n'
-      + 'المتصفح يحتوي على قائمة مسبقة بسلطات الشهادات الجذرية الموثوقة (Root CA) ← الجذر يوثق سلطة وسيطة (Intermediate CA) ← السلطة الوسيطة توقع شهادة الموقع الإلكتروني.',
-    content_en:
-      'Definition:\n'
-      + 'An electronic credential issued by a globally trusted Certificate Authority (CA) that authenticates server identity and binds it to its public key.\n\n'
-      + 'The Five Standard Components:\n'
-      + '1. Domain / Subject Name: Registered domain name (e.g., bank.com).\n'
-      + '2. Server Public Key: Used to encrypt session key negotiation.\n'
-      + '3. Issuer Information: Identity of the issuing CA (e.g., DigiCert).\n'
-      + '4. Validity Period: Start and expiration timestamps.\n'
-      + '5. CA Digital Signature: Cryptographic proof by the CA preventing certificate tampering.\n\n'
-      + 'Chain of Trust Mechanism:\n'
-      + 'Pre-installed Root CA in browser/OS validates an Intermediate CA, which in turn issues and signs the domain server certificate.',
-    keyTakeaway_ar: 'قاعدة الامتحان: الشهادة الرقمية تثبت هوية الخادم، وتتضمن المفتاح العام للخادم، وهي نفسها موقعة رقمياً من سلطة CA.',
-    keyTakeaway_en: 'Exam Rule: A digital certificate verifies server domain identity, contains the public key, and is digitally signed by the issuing CA.',
-    quickQuestion_ar: 'سؤال سريع: اذكر اثنين من المكونات الأساسية للشهادة الرقمية، ومن يوقع على هذه الشهادة؟',
-    quickQuestion_en: 'Quick Check: Name two primary components of a digital certificate, and state who signs it.',
-    quickAnswer_ar: 'الإجابة: المكونات مثل المفتاح العام للخادم واسم النطاق، والجهة التي توقع عليها هي سلطة الشهادات المعتمدة (CA) بمفتاحها الخاص.',
-    quickAnswer_en: 'Answer: Server public key and domain name; it is digitally signed by the trusted Certificate Authority (CA) using its private key.',
+    lessonName_ar: 'الدرس 2-1: تقنيات التشفير والمصادقة',
+    lessonName_en: 'Lesson 2-1: Cryptography & Authentication',
+    category_ar: 'مفهوم أساسي',
+    category_en: 'Core Concept',
+    title_ar: 'الشهادة الرقمية: المكونات الخمسة وسلسلة الثقة',
+    title_en: 'Digital Certificates: Five Components and Chain of Trust',
+    summary_ar: 'الشهادة الرقمية بمثابة بطاقة هوية إلكترونية للخادم تصدرها جهة موثوقة (CA) لمنع انتحال الشخصية.',
+    summary_en: 'A digital certificate acts as a server ID card issued by a trusted CA to prevent domain spoofing.',
+    blocks: [
+      {
+        tag_ar: 'التعريف المعتمد',
+        tag_en: 'Definition',
+        title_ar: 'ما هي الشهادة الرقمية؟',
+        title_en: 'What is a Digital Certificate?',
+        text_ar: 'وثيقة إلكترونية رسمية تصدرها سلطة الشهادات (CA) لربط هوية الخادم واسم نطاقه بالمفتاح العام الخاص به، وتتيح للمتصفح التأكد من مصداقية الموقع.',
+        text_en: 'An electronic credential issued by a CA binding server domain identity to its public key, proving server authenticity.',
+      },
+      {
+        tag_ar: 'مكونات الشهادة',
+        tag_en: '5 Elements',
+        title_ar: 'المكونات الخمسة الأساسية في كتاب الوزارة',
+        title_en: 'Five Standard Textbook Components',
+        text_ar: '1. اسم النطاق أو المالك (مثل: bank.com)\n2. المفتاح العام للخادم (Server Public Key)\n3. بيانات سلطة الشهادات المصدرة (مثل: DigiCert)\n4. تواريخ الصلاحية (تاريخ البدء وتاريخ الانتهاء)\n5. التوقيع الرقمي لسلطة الشهادات (يمنع تزوير الشهادة)',
+        text_en: '1. Domain / Subject name (e.g. bank.com)\n2. Server public key\n3. Issuer CA identity (e.g. DigiCert)\n4. Validity period (start and expiration)\n5. CA digital signature (prevents forgery)',
+      },
+      {
+        tag_ar: 'آلية الثقة',
+        tag_en: 'Chain of Trust',
+        title_ar: 'سلسلة الثقة (Chain of Trust)',
+        title_en: 'Chain of Trust Hierarchy',
+        text_ar: 'المتصفح يثق مسبقاً بشهادة الجذر (Root CA) ← الجذر يوثق سلطة وسيطة (Intermediate CA) ← السلطة الوسيطة توقع شهادة موقع الويب.',
+        text_en: 'Browser trusts Root CA → Root validates Intermediate CA → Intermediate signs domain certificate.',
+      },
+    ],
+    goldenRule_ar: 'الشهادة الرقمية تثبت هوية الخادم، وتحتوي على المفتاح العام للخادم، وهي نفسها موقعة رقمياً من سلطة CA.',
+    goldenRule_en: 'A digital certificate authenticates the server, holds its public key, and is digitally signed by the issuing CA.',
+    checkQuestion_ar: 'سؤال سريع: من يوقع على الشهادة الرقمية ليثبت صحتها ويمنع تزويرها؟',
+    checkQuestion_en: 'Quick Check: Who signs the digital certificate to authenticate it and prevent forgery?',
+    checkAnswer_ar: 'الإجابة: سلطة الشهادات المعتمدة (Certificate Authority - CA) باستخدام مفتاحها الخاص.',
+    checkAnswer_en: 'Answer: The trusted Certificate Authority (CA) using its private key.',
   },
 
   {
-    id: 'r2-1-05',
+    id: 'fc-05',
+    cardNumber: 5,
     lesson: '2-1',
-    type: 'CONCEPT',
-    typeLabel_ar: 'مفهوم أساسي',
-    typeLabel_en: 'Core Concept',
+    lessonName_ar: 'الدرس 2-1: تقنيات التشفير والمصادقة',
+    lessonName_en: 'Lesson 2-1: Cryptography & Authentication',
+    category_ar: 'مفهوم أساسي',
+    category_en: 'Core Concept',
     title_ar: 'التوقيع الرقمي: آلية التوليد والخصائص الثلاث',
-    title_en: 'Digital Signatures: Generation Mechanism and Three Properties',
-    summary_ar: 'التوقيع الرقمي يُنشأ بتشفير بصمة البيانات بالمفتاح الخاص للمرسل، ويحقق كشف التلاعب، كشف الانتحال، وعدم التنصل.',
-    summary_en: 'Digital signatures encrypt a document hash with the sender\'s private key, delivering tamper detection, spoofing protection, and non-repudiation.',
-    content_ar:
-      'أولاً: آلية عمل التوقيع الرقمي خطوة بخطوة:\n'
-      + '1. يقوم المرسل بحساب بصمة رقمية (Hash) للبيانات أو المستند.\n'
-      + '2. يُشفر المرسل هذه البصمة باستخدام مفتاحه الخاص السري فقط ← الناتج هو "التوقيع الرقمي".\n'
-      + '3. يرسل المرسل المستند الأصلي ومعه التوقيع الرقمي المرفق.\n'
-      + '4. يستلم المستلم الرسالة، ويفك تشفير التوقيع باستخدام المفتاح العام للمرسل لاستخراج البصمة.\n'
-      + '5. يحسب المستلم بصمة المستند المستلم، ويقارنها بالبصمة المستخرجة:\n'
-      + '   - تطابق البصمتين = المستند أصيل ولم يتم التلاعب به وصادر فعلاً من صاحب المفتاح.\n\n'
-      + 'ثانياً: الخصائص الثلاث التي يضمنها التوقيع الرقمي:\n'
-      + '1. كشف التلاعب (Tamper Detection): أي تغيير في حرف واحد يغير قيمة البصمة فوراً.\n'
-      + '2. كشف انتحال الشخصية (Impersonation Prevention): لا يمكن توليد التوقيع إلا بالمفتاح الخاص للمرسل.\n'
-      + '3. عدم الإنكار أو التنصل (Non-repudiation): لا يستطيع المرسل إنكار قيامه بإرسال الرسالة.',
-    content_en:
-      'Operational Steps:\n'
-      + '1. Sender generates a cryptographic digest (hash) of the message content.\n'
-      + '2. Sender encrypts this digest using their private key, creating the digital signature.\n'
-      + '3. Original payload is transmitted alongside the detached signature.\n'
-      + '4. Recipient decrypts the signature using the sender\'s published public key to retrieve original hash.\n'
-      + '5. Recipient computes hash of received message; exact match confirms validity.\n\n'
-      + 'The Three Guaranteed Properties:\n'
-      + '1. Tamper Detection: Content alterations disrupt cryptographic hash alignment.\n'
-      + '2. Impersonation Prevention: Only the private key holder could have generated the signature.\n'
-      + '3. Non-repudiation: Sender cannot plausibly deny authoring the message.',
-    keyTakeaway_ar: 'قاعدة الامتحان: التوقيع الرقمي يُنشأ بالمفتاح الخاص للمرسل ويُفحص بالمفتاح العام للمرسل، ويضمن كشف التلاعب والانتحال وعدم الإنكار.',
-    keyTakeaway_en: 'Exam Rule: Digital signatures are generated with the sender\'s private key, verified with the public key, and guarantee non-repudiation.',
-    quickQuestion_ar: 'سؤال سريع: بمَ يختلف التوقيع الرقمي عن التشفير التقليدي للبيانات؟',
-    quickQuestion_en: 'Quick Check: How does a digital signature differ from traditional data encryption?',
-    quickAnswer_ar: 'الإجابة: التشفير التقليدي هدفه إخفاء البيانات للحفاظ على السرية، أما التوقيع الرقمي فهدفه إثبات صحة المحتوى وهوية المرسل ومنع الإنكار حتى لو كان المستند غير مشفر.',
-    quickAnswer_en: 'Answer: Encryption conceals payload content for confidentiality; digital signatures authenticate author identity and data integrity.',
+    title_en: 'Digital Signatures: Generation and Three Properties',
+    summary_ar: 'التوقيع الرقمي يُنشأ بتشفير بصمة البيانات بالمفتاح الخاص للمرسل. يضمن كشف التلاعب والانتحال وعدم الإنكار.',
+    summary_en: 'Created by encrypting a hash with the sender\'s private key. Delivers tamper detection, spoofing protection, and non-repudiation.',
+    blocks: [
+      {
+        tag_ar: 'آلية التوليد',
+        tag_en: 'Generation',
+        title_ar: 'كيف يُنشأ التوقيع الرقمي؟',
+        title_en: 'How Signatures are Generated',
+        text_ar: '1. يحسب المرسل بصمة رقمية (Hash) للمستند.\n2. يُشفر البصمة بمفتاحه الخاص السري ← الناتج هو "التوقيع الرقمي".\n3. يرسل المستند مع التوقيع الرقمي المرفق.',
+        text_en: '1. Sender calculates cryptographic hash of document.\n2. Encrypts hash with their private key → creates signature.\n3. Transmits document and attached signature.',
+      },
+      {
+        tag_ar: 'آلية الفحص',
+        tag_en: 'Verification',
+        title_ar: 'كيف يتحقق المستلم من التوقيع؟',
+        title_en: 'How Recipients Verify Signatures',
+        text_ar: '1. يفك المستلم تشفير التوقيع بالمفتاح العام للمرسل لاستخراج البصمة الأصلية.\n2. يحسب بصمة المستند المستلم ويقارنها.\n3. التطابق = المستند أصيل وصادر فعلاً من صاحب المفتاح.',
+        text_en: '1. Recipient decrypts signature using sender public key to retrieve hash.\n2. Computes received document hash and compares.\n3. Match = authentic document from legitimate sender.',
+      },
+      {
+        tag_ar: 'الخصائص الثلاث المعتمدة',
+        tag_en: '3 Properties',
+        title_ar: 'الخصائص الثلاث في كتاب الوزارة',
+        title_en: 'Three Standard Textbook Properties',
+        text_ar: '1. كشف التلاعب (Tamper Detection): أي تعديل في حرف واحد يغير البصمة فوراً.\n2. كشف انتحال الشخصية (Impersonation Prevention): لا يمكن توليد التوقيع إلا بالمفتاح الخاص.\n3. عدم الإنكار أو التنصل (Non-repudiation): لا يستطيع المرسل إنكار إرسال المستند.',
+        text_en: '1. Tamper Detection: Content edits alter hash output.\n2. Impersonation Prevention: Only private key owner can sign.\n3. Non-repudiation: Author cannot deny signing the document.',
+      },
+    ],
+    goldenRule_ar: 'التوقيع الرقمي يُنشأ بالمفتاح الخاص للمرسل ويُفحص بالمفتاح العام للمرسل، ويضمن: كشف التلاعب + كشف الانتحال + عدم الإنكار.',
+    goldenRule_en: 'Digital signatures are generated with sender private key, verified with sender public key, delivering integrity and non-repudiation.',
+    checkQuestion_ar: 'سؤال سريع: ما الفرق بين هدف التشفير وهدف التوقيع الرقمي؟',
+    checkQuestion_en: 'Quick Check: What differentiates the goal of encryption from a digital signature?',
+    checkAnswer_ar: 'الإجابة: التشفير هدفه الحفاظ على السرية (منع القراءة)، بينما التوقيع الرقمي هدفه إثبات صحة المحتوى وهوية الكاتب ومنع الإنكار.',
+    checkAnswer_en: 'Answer: Encryption protects confidentiality (hiding data); digital signatures authenticate content integrity and non-repudiation.',
   },
 
   {
-    id: 'r2-1-06',
+    id: 'fc-06',
+    cardNumber: 6,
     lesson: '2-1',
-    type: 'CONCEPT',
-    typeLabel_ar: 'مفهوم أساسي',
-    typeLabel_en: 'Core Concept',
-    title_ar: 'المصادقة متعددة العوامل (MFA) وفئاتها الثلاث المعتمدة',
-    title_en: 'Multi-Factor Authentication (MFA) and the Three Categories',
-    summary_ar: 'تشترط المصادقة متعددة العوامل الجمع بين عاملين أو أكثر من فئات مختلفة: المعرفة (ما تعرفه)، الحيازة (ما تملكه)، والسمات الحيوية (ما أنت عليه).',
-    summary_en: 'MFA requires combining two or more distinct categories: Knowledge (something you know), Possession (something you have), and Biometrics (something you are).',
-    content_ar:
-      'الفئات الثلاث المعتمدة في كتاب الوزارة:\n'
-      + '1. فئة المعرفة (Knowledge) — شيء تعرفه:\n'
-      + '   الأمثلة المعتمدة: كلمة المرور، الرمز السري الشخصي (PIN)، الإجابة على سؤال الأمان.\n\n'
-      + '2. فئة الحيازة (Possession) — شيء تمتلكه:\n'
-      + '   الأمثلة المعتمدة: الهاتف المحمول لاستقبال رمز التحقق المؤقت (OTP / SMS)، البطاقة الذكية، مفتاح الأمان المادي.\n\n'
-      + '3. فئة السمات الحيوية (Biometrics) — شيء أنت عليه:\n'
-      + '   الأمثلة المعتمدة: بصمة الإصبع، التعرف على الوجه، مسح قزحية العين، التعرف على الصوت.\n\n'
-      + 'الفرق الحاسم بين 2FA و MFA:\n'
-      + '• المصادقة الثنائية (2FA): دمج عاملين اثنين فقط من فئتين مختلفتين.\n'
-      + '• المصادقة متعددة العوامل (MFA): المصطلح الأعم للجمع بين عاملين أو أكثر من الفئات المختلفة.\n\n'
-      + 'أمثلة الامتحان:\n'
-      + '• صحيح: كلمة مرور (معرفة) + رمز هاتف (حيازة) ← مصادقة متعددة العوامل صحيحة.\n'
-      + '• خاطئ: كلمة مرور أولى + كلمة مرور ثانية (أو سؤال سري) ← كلاهما معرفة، فلا يعتبر مصادقة متعددة العوامل.',
-    content_en:
-      'The Three Standard MFA Categories:\n'
-      + '1. Knowledge (Something you know):\n'
-      + '   Standard examples: Password, PIN, security question answer.\n\n'
-      + '2. Possession (Something you have):\n'
-      + '   Standard examples: Mobile phone receiving one-time passcodes (OTP/SMS), smart cards, hardware security tokens.\n\n'
-      + '3. Biometrics (Something you are):\n'
-      + '   Standard examples: Fingerprint scanner, facial recognition, iris scan, voice verification.\n\n'
-      + '2FA versus MFA Distinction:\n'
-      + '• 2FA combines exactly two distinct factor categories.\n'
-      + '• MFA is the broader standard combining two or more factor categories.\n\n'
-      + 'Exam Rule Validation:\n'
-      + '• Valid: Password (Knowledge) + Phone OTP (Possession).\n'
-      + '• Invalid: Password + Security question (Both belong to Knowledge category).',
-    keyTakeaway_ar: 'قاعدة الامتحان: حتى تتحقق المصادقة المتعددة يجب أن تكون العوامل من فئات مختلفة، واستخدام عاملين من نفس الفئة لا يعتبر MFA.',
-    keyTakeaway_en: 'Exam Rule: MFA demands factors originating from different categories; two factors within the same category is never MFA.',
-    quickQuestion_ar: 'سؤال سريع: طلب نظام مصرفي إدخال كلمة المرور ثم اسم أول مدرسة التحقت بها. هل هذا MFA؟ ولماذا؟',
-    quickQuestion_en: 'Quick Check: A bank prompts for a password followed by your first school name. Is this MFA? Why?',
-    quickAnswer_ar: 'الإجابة: ليس MFA؛ لأن كلاً من كلمة المرور وسؤال الأمان ينتميان لنفس الفئة (فئة المعرفة - شيء تعرفه).',
-    quickAnswer_en: 'Answer: No; both credentials belong exclusively to the Knowledge category (something you know).',
+    lessonName_ar: 'الدرس 2-1: تقنيات التشفير والمصادقة',
+    lessonName_en: 'Lesson 2-1: Cryptography & Authentication',
+    category_ar: 'مفهوم أساسي',
+    category_en: 'Core Concept',
+    title_ar: 'المصادقة متعددة العوامل (MFA) وفئاتها الثلاث',
+    title_en: 'Multi-Factor Authentication (MFA) and Three Categories',
+    summary_ar: 'MFA تشترط استخدام عاملين أو أكثر من فئات مختلفة: المعرفة، الحيازة، والسمات الحيوية. استخدام عاملين من نفس الفئة ليس MFA.',
+    summary_en: 'MFA requires credentials across distinct categories: Knowledge, Possession, and Biometrics. Single-category combinations fail MFA.',
+    blocks: [
+      {
+        tag_ar: 'الفئة 1',
+        tag_en: 'Category 1',
+        title_ar: 'فئة المعرفة (Knowledge) — شيء تعرفه',
+        title_en: 'Knowledge (Something you know)',
+        text_ar: 'الأمثلة المعتمدة: كلمة المرور، الرمز السري الشخصي (PIN)، الإجابة على سؤال الأمان السري.',
+        text_en: 'Standard examples: Password, numeric PIN code, security question answers.',
+      },
+      {
+        tag_ar: 'الفئة 2',
+        tag_en: 'Category 2',
+        title_ar: 'فئة الحيازة (Possession) — شيء تملكه',
+        title_en: 'Possession (Something you have)',
+        text_ar: 'الأمثلة المعتمدة: الهاتف المحمول لاستقبال رمز التحقق المؤقت (OTP / SMS)، البطاقة الذكية، مفتاح الأمان المادي.',
+        text_en: 'Standard examples: Mobile phone receiving one-time codes (OTP/SMS), smart card, security hardware token.',
+      },
+      {
+        tag_ar: 'الفئة 3',
+        tag_en: 'Category 3',
+        title_ar: 'فئة السمات الحيوية (Biometrics) — شيء أنت عليه',
+        title_en: 'Biometrics (Something you are)',
+        text_ar: 'الأمثلة المعتمدة: بصمة الإصبع، التعرف على الوجه، مسح قزحية العين، بصمة الصوت.',
+        text_en: 'Standard examples: Fingerprint scanner, facial recognition, iris scan, voice verification.',
+      },
+      {
+        tag_ar: 'قاعدة التمييز',
+        tag_en: 'Validation Rule',
+        title_ar: 'أمثلة صحيحة وخاطئة في الامتحان',
+        title_en: 'Valid vs Invalid Exam Scenarios',
+        text_ar: '• صحيح: كلمة مرور (معرفة) + رمز هاتف (حيازة) = MFA حقيقية.\n• خاطئ: كلمة مرور + سؤال سري = كلاهما معرفة، فلا يعتبر مصادقة متعددة العوامل.',
+        text_en: '• Valid: Password (Knowledge) + Phone OTP (Possession) = MFA.\n• Invalid: Password + Security Question = Both belong to Knowledge (Not MFA).',
+      },
+    ],
+    goldenRule_ar: 'حتى تتحقق المصادقة المتعددة يجب أن تكون العوامل من فئات مختلفة، واستخدام عاملين من نفس الفئة لا يعتبر MFA.',
+    goldenRule_en: 'MFA requires combining factors from different categories; two credentials from the same category never constitute MFA.',
+    checkQuestion_ar: 'سؤال سريع: طلب نظام إدخال كلمة المرور ثم بصمة الإصبع. ما الفئتان المستخدمتان هنا؟',
+    checkQuestion_en: 'Quick Check: A login requires a password and fingerprint. Which two categories are involved?',
+    checkAnswer_ar: 'الإجابة: فئة المعرفة (كلمة المرور) + فئة السمات الحيوية (بصمة الإصبع).',
+    checkAnswer_en: 'Answer: Knowledge category (password) + Biometrics category (fingerprint).',
   },
 
-  {
-    id: 'r2-1-07',
-    lesson: '2-1',
-    type: 'EXAM_HINT',
-    typeLabel_ar: 'سر امتحاني',
-    typeLabel_en: 'Exam Strategy',
-    title_ar: 'الكلمات المفتاحية المعتمدة لأسئلة الدرس الأول في الامتحان',
-    title_en: 'Approved Trigger Keywords for Lesson 2-1 Questions',
-    summary_ar: 'دليل ربط المصطلحات بالكلمات المفتاحية الأكثر تكراراً في نماذج وتقييمات الوزارة الرسمية للدرس 2-1.',
-    summary_en: 'Keyword association mapping for Lesson 2-1 ministry assessment questions and exam prompts.',
-    content_ar:
-      'دليل الكلمات المفتاحية وسرعة الحل:\n\n'
-      + '1. "مشاركة المفاتيح بأمان دون اتفاق مسبق":\n'
-      + '   الحل المباشر: التشفير بالمفتاح العام (غير المتماثل).\n\n'
-      + '2. "نقل وتبادل كميات ضخمة من البيانات بسرعة فائقة":\n'
-      + '   الحل المباشر: التشفير بالمفتاح المشترك (المتماثل).\n\n'
-      + '3. "التحقق من صحة وهوية خادم الويب وارتباطه بالنطاق عبر CA":\n'
-      + '   الحل المباشر: الشهادة الرقمية (Digital Certificate).\n\n'
-      + '4. "كشف التلاعب وانتحال الشخصية وعدم الإنكار":\n'
-      + '   الحل المباشر: التوقيع الرقمي (Digital Signature).\n\n'
-      + '5. "الجمع بين عاملين أو أكثر من فئات مختلفة لمنع الاختراق عند تسرب كلمة المرور":\n'
-      + '   الحل المباشر: المصادقة متعددة العوامل (MFA).',
-    content_en:
-      'Keyword Mapping Matrix:\n\n'
-      + '1. "Secure key distribution without prior shared secrets":\n'
-      + '   Select: Public-Key (Asymmetric) Cryptography.\n\n'
-      + '2. "High-speed transmission of heavy payloads":\n'
-      + '   Select: Common-Key (Symmetric) Cryptography.\n\n'
-      + '3. "Server authentication and verified domain binding via CA":\n'
-      + '   Select: Digital Certificate.\n\n'
-      + '4. "Tamper detection, spoofing prevention, non-repudiation":\n'
-      + '   Select: Digital Signature.\n\n'
-      + '5. "Combining two or more distinct credential categories":\n'
-      + '   Select: Multi-Factor Authentication (MFA).',
-    keyTakeaway_ar: 'قاعدة الامتحان: احفظ الاقتران بين التوقيع الرقمي والخصائص الثلاث (التلاعب، الانتحال، عدم التنصل).',
-    keyTakeaway_en: 'Exam Rule: Link digital signature immediately to tamper detection, identity proof, and non-repudiation.',
-    quickQuestion_ar: 'سؤال سريع: إذا ورد في السؤال مصطلح "عدم التنصل"، فما المفهوم الأمني المقصود مباشرة؟',
-    quickQuestion_en: 'Quick Check: If a prompt specifies "non-repudiation", what security mechanism is targeted?',
-    quickAnswer_ar: 'الإجابة: التوقيع الرقمي (Digital Signature).',
-    quickAnswer_en: 'Answer: Digital Signature.',
-  },
+  // ════════════════════════════════════════════════════════════
+  // LESSON 2-2: تصميم أمان الشبكات
+  // ════════════════════════════════════════════════════════════
 
   {
-    id: 'r2-1-08',
-    lesson: '2-1',
-    type: 'WARNING',
-    typeLabel_ar: 'أخطاء شائعة',
-    typeLabel_en: 'Common Pitfalls',
-    title_ar: 'الأخطاء الخمسة الشائعة في امتحانات الدرس الأول',
-    title_en: 'Five Common Student Traps in Lesson 2-1 Exams',
-    summary_ar: 'تحذيرات من الخلط الشائع بين المفاهيم في أسئلة الاختيار والمقالي الخاصة بالدرس 2-1.',
-    summary_en: 'Warnings against frequent conceptual confusions in Lesson 2-1 multiple-choice and essay questions.',
-    content_ar:
-      'الخطأ الأول: الاعتقاد بأن التشفير غير المتماثل يُشفر صفحات الويب طوال الاتصال.\n'
-      + 'الصواب: التشفير غير المتماثل يقتصر على مرحلة المصافحة فقط، وتشفير البيانات الفعلي يتم بالمفتاح المتماثل.\n\n'
-      + 'الخطأ الثاني: الخلط بين الشهادة الرقمية والتوقيع الرقمي.\n'
-      + 'الصواب: الشهادة تثبت هوية الخادم والنطاق، أما التوقيع الرقمي فيثبت سلامة المحتوى وهوية محرر المستند.\n\n'
-      + 'الخطأ الثالث: الاعتقاد بأن التشفير المتماثل يستخدم مفتاحين متشابهين.\n'
-      + 'الصواب: التشفير المتماثل يستخدم مفتاحاً واحداً مشتركاً فقط، ومفتاحان تعني تشفيراً غير متماثل.\n\n'
-      + 'الخطأ الرابع: اعتبار سؤال الأمان عاملاً ثانياً مع كلمة المرور.\n'
-      + 'الصواب: كلاهما من فئة المعرفة، ولتحقيق MFA يلزم عامل من فئة أخرى كالهاتف أو البصمة.\n\n'
-      + 'الخطأ الخامس: الظن بأن HTTPS يكافح الرسائل الاحتيالية ومواقع التصيد.\n'
-      + 'الصواب: HTTPS يحمي مسار النقل من التنصت فقط، ولا علاقة له بمصداقية ونزاهة صاحب الموقع.',
-    content_en:
-      'Trap 1: Believing asymmetric encryption handles web traffic throughout the whole session.\n'
-      + 'Correction: Asymmetric cipher handles handshake only; symmetric cipher encrypts bulk session data.\n\n'
-      + 'Trap 2: Confusing digital certificates with digital signatures.\n'
-      + 'Correction: Certificates authenticate servers/domains; signatures authenticate document integrity and author.\n\n'
-      + 'Trap 3: Believing symmetric encryption uses two twin keys.\n'
-      + 'Correction: Symmetric uses exactly one shared secret key; two keys denote asymmetric.\n\n'
-      + 'Trap 4: Treating security questions as a valid second factor with passwords.\n'
-      + 'Correction: Both belong to Knowledge; a valid second factor must come from Possession or Biometrics.\n\n'
-      + 'Trap 5: Assuming HTTPS protects against phishing campaigns.\n'
-      + 'Correction: HTTPS only encrypts transmission against wiretapping, regardless of site legitimacy.',
-    keyTakeaway_ar: 'قاعدة الامتحان: راجع تصنيف العامل جيداً قبل الحكم عليه بأنه MFA، وتأكد من اختلاف الفئتين.',
-    keyTakeaway_en: 'Exam Rule: Verify factor categories strictly before validating an MFA implementation.',
-    quickQuestion_ar: 'سؤال سريع: صح أم خطأ؟ التشفير المتماثل يستخدم زوجاً من المفاتيح المتشابهة في التشفير وفك التشفير.',
-    quickQuestion_en: 'Quick Check: True or False? Symmetric encryption uses a pair of identical keys.',
-    quickAnswer_ar: 'الإجابة: خطأ؛ التشفير المتماثل يستخدم مفتاحاً واحداً مفرداً مشتركاً، وزوج المفاتيح خاص بغير المتماثل.',
-    quickAnswer_en: 'Answer: False; symmetric ciphers utilize a single shared key; key pairs are asymmetric.',
-  },
-];
-
-// ─────────────────────────────────────────────────────────────
-// LESSON 2-2: تصميم أمان الشبكات
-// ─────────────────────────────────────────────────────────────
-export const REVIEW_L2: ReviewCard[] = [
-  {
-    id: 'r2-2-01',
+    id: 'fc-07',
+    cardNumber: 7,
     lesson: '2-2',
-    type: 'CONCEPT',
-    typeLabel_ar: 'مفهوم أساسي',
-    typeLabel_en: 'Core Concept',
+    lessonName_ar: 'الدرس 2-2: تصميم أمان الشبكات',
+    lessonName_en: 'Lesson 2-2: Network Security Design',
+    category_ar: 'مفهوم أساسي',
+    category_en: 'Core Concept',
     title_ar: 'جدار الحماية (Firewall) وآلية التصفية وفق القواعد',
-    title_en: 'Firewall Architecture and Rule-Based Traffic Filtering',
-    summary_ar: 'جدار الحماية نظام أمني عند مدخل الشبكة يراقب حركة المرور ويسمح بها أو يحظرها وفق قواعد مسبقة لمنافذ وعناوين IP.',
-    summary_en: 'A firewall operates at the network perimeter, inspecting and filtering packets against predefined IP and port rules.',
-    content_ar:
-      'أولاً: الوظيفة والموقع:\n'
-      + '• نظام برمجي أو جهاز مادي يُثبت عند نقطة الدخول بين الشبكة الخارجية (الإنترنت) والشبكة الداخلية.\n'
-      + '• يراقب ويفحص كل حزم البيانات الواردة والصادرة.\n\n'
-      + 'ثانياً: آلية العمل وفق القواعد المحددة مسبقاً (Rules):\n'
-      + 'يفحص جدار الحماية معلومات ترويسة الحزمة:\n'
-      + '1. عنوان IP للمرسل والوجهة (Source & Destination IP).\n'
-      + '2. أرقام المنافذ (Port Numbers) مثل المنفذ 80 و 443 للويب أو 22 للإدارة.\n'
-      + '3. نوع البروتوكول (TCP / UDP / ICMP).\n'
-      + 'بناءً على مطابقة القواعد: يُسمح للحزمة بالمرور (Allow) أو يتم إسقاطها وحظرها (Block/Drop).\n\n'
-      + 'ثالثاً: دوره في استراتيجية الدفاع في العمق:\n'
-      + 'يمثل الطبقة الأولى المسؤولة عن "مدخل الشبكة" (Network Entry).\n\n'
-      + 'رابعاً: الحدود التقنية لجدار الحماية التقليدي:\n'
-      + 'لا يفحص جدار الحماية محتوى الملفات الداخلية للحزمة للبحث عن الفيروسات؛ هذا دور برامج مكافحة الفيروسات في الأجهزة الطرفية.',
-    content_en:
-      'Function & Placement:\n'
-      + '• Hardware or software system deployed at ingress/egress points between public networks and private subnets.\n'
-      + '• Continuously monitors bidirectional packet streams.\n\n'
-      + 'Rule-Based Evaluation:\n'
-      + 'Evaluates packet headers against predefined policies:\n'
-      + '1. Source and destination IP addresses.\n'
-      + '2. Port numbers (e.g., port 80/443 for web, 22 for SSH).\n'
-      + '3. Transport protocols (TCP, UDP, ICMP).\n'
-      + 'Executes deterministic Allow or Drop directives.\n\n'
-      + 'Defense in Depth Assignment:\n'
-      + 'Anchors the first defense layer: "Network Entry".\n\n'
-      + 'Technical Boundary:\n'
-      + 'Traditional firewalls inspect network headers, not deep file payloads for signature-based malware.',
-    keyTakeaway_ar: 'قاعدة الامتحان: كلما ورد "مراقبة المرور والسماح أو المنع وفق قواعد مسبقة لعناوين IP ومنافذ" فالإجابة هي جدار الحماية (Firewall).',
-    keyTakeaway_en: 'Exam Rule: Filter logic matching predefined IP and port rules always denotes a Firewall.',
-    quickQuestion_ar: 'سؤال سريع: هل يمنع جدار الحماية التقليدي الموظف من تنزيل ملف يحتوي على فيروس عبر منفذ الويب المسموح به؟',
-    quickQuestion_en: 'Quick Check: Does a traditional firewall prevent downloading a virus payload over an allowed HTTP port?',
-    quickAnswer_ar: 'الإجابة: لا؛ لأن جدار الحماية يسمح بمرور حركة المنفذ المعتمد ولا يفحص محتوى الملف الداخلي كبرامج مكافحة الفيروسات.',
-    quickAnswer_en: 'Answer: No; traditional firewalls permit traffic through allowed ports without scanning payload contents for virus signatures.',
+    title_en: 'Firewall Architecture and Rule-Based Filtering',
+    summary_ar: 'نظام يراقب حركة البيانات عند مدخل الشبكة ويسمح أو يمنع الحزم بناءً على قواعد لعناوين IP والمنافذ والبروتوكول.',
+    summary_en: 'Monitors traffic at network boundaries, filtering packets against predefined IP, port, and protocol policies.',
+    blocks: [
+      {
+        tag_ar: 'الموقع والوظيفة',
+        tag_en: 'Placement & Role',
+        title_ar: 'حارس مدخل الشبكة',
+        title_en: 'Perimeter Gatekeeper',
+        text_ar: 'يُثبت عند الحدود الفاصلة بين الإنترنت والشبكة الداخلية. يفحص كل الحزم الواردة والصادرة ويقرر السماح لها بالمرور أو حظرها وإسقاطها.',
+        text_en: 'Deployed between the public internet and private network, inspecting inbound and outbound packets to permit or drop them.',
+      },
+      {
+        tag_ar: 'معايير الفحص',
+        tag_en: 'Inspection Rules',
+        title_ar: 'ماذا يفحص جدار الحماية في كل حزمة؟',
+        title_en: 'What Firewalls Inspect in Headers',
+        text_ar: '1. عنوان IP للمرسل والوجهة (Source & Destination IP)\n2. أرقام المنافذ (Port Numbers مثل 80 للويب و 22 للإدارة)\n3. نوع البروتوكول (TCP / UDP)',
+        text_en: '1. Source and Destination IP addresses\n2. Port numbers (e.g. port 80/443 for web, 22 for SSH)\n3. Transport protocol (TCP / UDP)',
+      },
+      {
+        tag_ar: 'حدود تقنية هامة',
+        tag_en: 'Technical Limit',
+        title_ar: 'ما الذي لا يستطيع جدار الحماية التقليدي فعله؟',
+        title_en: 'What Traditional Firewalls Cannot Do',
+        text_ar: 'جدار الحماية التقليدي لا يفحص محتوى الملفات الداخلية من الفيروسات؛ هذا دور برامج مكافحة الفيروسات في الأجهزة الطرفية.',
+        text_en: 'Traditional firewalls do not inspect payload files for embedded virus signatures; this requires endpoint antivirus.',
+      },
+    ],
+    goldenRule_ar: 'مراقبة حركة المرور والسماح أو المنع وفق قواعد مسبقة لمنافذ وعناوين IP = جدار الحماية (Firewall).',
+    goldenRule_en: 'Traffic monitoring and permit/deny actions matching predefined port and IP rules denotes a Firewall.',
+    checkQuestion_ar: 'سؤال سريع: ما الطبقة التي يمثلها جدار الحماية في استراتيجية الدفاع في العمق؟',
+    checkQuestion_en: 'Quick Check: Which layer does a firewall represent in Defense in Depth?',
+    checkAnswer_ar: 'الإجابة: الطبقة الأولى: مدخل الشبكة (Network Entry).',
+    checkAnswer_en: 'Answer: Layer 1: Network Entry.',
   },
 
   {
-    id: 'r2-2-02',
+    id: 'fc-08',
+    cardNumber: 8,
     lesson: '2-2',
-    type: 'CONCEPT',
-    typeLabel_ar: 'مفهوم أساسي',
-    typeLabel_en: 'Core Concept',
-    title_ar: 'الشبكة الافتراضية الخاصة (VPN) وتأمين الاتصال عن بعد',
-    title_en: 'Virtual Private Networks (VPN) and Remote Tunneling',
-    summary_ar: 'تنشئ VPN نفقاً مشفراً عبر شبكة عامة يمنع التنصت على البيانات ويُمكّن الموظفين عن بعد من الاتصال الآمن بشبكة المؤسسة.',
-    summary_en: 'A VPN establishes an encrypted logical tunnel over public networks, shielding data from interception during remote access.',
-    content_ar:
-      'أولاً: تعريف شبكة VPN:\n'
-      + 'اتصال منطقي آمن يُنشأ عبر بنية تحتية عامة وغير موثوقة كالإنترنت، باستخدام تقنيات النفق المشفر (Encrypted Tunnel).\n\n'
-      + 'ثانياً: الفوائد والوظائف الأساسية:\n'
-      + '1. تشفير كامل البيانات المنقولة، مما يمنع التنصت وهجمات الوسيط (Man-in-the-Middle).\n'
-      + '2. تأمين اتصال الأجهزة عبر شبكات Wi-Fi العامة في الأماكن المفتوحة كالمطارات والمقاهي.\n'
-      + '3. تمكين الموظفين المتواجدين في المنازل أو الفروع من الوصول إلى خوادم وملفات الشركة بأمان كأنهم متصلون محلياً.\n\n'
-      + 'ثالثاً: دورها في الدفاع في العمق:\n'
-      + 'تمثل طبقة "مسار الاتصال" (Communication Path).\n\n'
-      + 'رابعاً: توضيح امتحاني:\n'
-      + 'VPN توفر قناة آمنة لنقل البيانات، لكنها لا تمنع الأجهزة المصابة بالفيروسات من نقل التهديد إذا كانت مخترقة بالفعل.',
-    content_en:
-      'Definition:\n'
-      + 'A secure logical connection created over untrusted public infrastructure using encrypted encapsulation tunnels.\n\n'
-      + 'Primary Functions:\n'
-      + '1. Complete data ciphering preventing packet sniffing and wiretapping.\n'
-      + '2. Protection when accessing services across insecure public Wi-Fi hotspots.\n'
-      + '3. Secure seamless corporate intranet access for distributed and telecommuting staff.\n\n'
-      + 'Defense in Depth Assignment:\n'
-      + 'Occupies layer 2: "Communication Path".\n\n'
-      + 'Exam Distinction:\n'
-      + 'VPN secures data transport; it does not disinfect endpoint hosts infected with malware.',
-    keyTakeaway_ar: 'قاعدة الامتحان: كلما ورد "نفق مشفر عبر شبكة عامة" أو "العمل عن بعد بأمان وحماية Wi-Fi العامة" فالإجابة هي VPN.',
-    keyTakeaway_en: 'Exam Rule: Prompts mentioning encrypted tunnels over public networks or secure telecommuting specify a VPN.',
-    quickQuestion_ar: 'سؤال سريع: ما الدور الذي تؤديه VPN في استراتيجية الدفاع في العمق؟',
-    quickQuestion_en: 'Quick Check: What role does a VPN fulfill within a Defense in Depth strategy?',
-    quickAnswer_ar: 'الإجابة: تمثل طبقة "مسار الاتصال" بتشفير البيانات المنقولة بين الجهاز والشبكة الداخلية وحمايتها من التنصت.',
-    quickAnswer_en: 'Answer: It fulfills the "Communication Path" layer by encrypting transmitted data against interception.',
+    lessonName_ar: 'الدرس 2-2: تصميم أمان الشبكات',
+    lessonName_en: 'Lesson 2-2: Network Security Design',
+    category_ar: 'مفهوم أساسي',
+    category_en: 'Core Concept',
+    title_ar: 'الشبكة الافتراضية الخاصة (VPN): النفق المشفر',
+    title_en: 'Virtual Private Networks (VPN): Encrypted Tunneling',
+    summary_ar: 'اتصال منطقي خاص يُنشأ عبر الإنترنت العام بنفق مشفر يمنع التنصت ويؤمن العمل عن بعد وشبكات Wi-Fi العامة.',
+    summary_en: 'A private logical connection over the public internet using an encrypted tunnel, enabling secure remote access.',
+    blocks: [
+      {
+        tag_ar: 'التعريف والآلية',
+        tag_en: 'Definition',
+        title_ar: 'ما هي الـ VPN؟',
+        title_en: 'What is a VPN?',
+        text_ar: 'شبكة خاصة افتراضية تنشئ نفقاً مشفراً (Encrypted Tunnel) عبر شبكة عامة غير موثوقة كالإنترنت، مما يضمن سرية وسلامة البيانات أثناء النقل.',
+        text_en: 'A virtual private connection establishing an encrypted tunnel across untrusted public networks, protecting in-transit confidentiality.',
+      },
+      {
+        tag_ar: 'الاستخدامات الرئيسية',
+        tag_en: 'Use Cases',
+        title_ar: 'أبرز سيناريوهات الاستخدام في كتاب الوزارة',
+        title_en: 'Standard Curriculum Use Cases',
+        text_ar: '1. تمكين الموظفين من العمل عن بعد والاتصال بموارد الشركة بأمان.\n2. حماية حركة البيانات من التنصت عند استخدام شبكات Wi-Fi العامة في المقاهي والمطارات.\n3. ربط فروع المؤسسة المختلفة مع المقر الرئيسي عبر الإنترنت.',
+        text_en: '1. Enabling telecommuting staff to access corporate files safely.\n2. Protecting data from snooping over public Wi-Fi hotspots.\n3. Connecting remote branch offices to headquarters over the internet.',
+      },
+      {
+        tag_ar: 'موقعه الدفاعي',
+        tag_en: 'Defense Layer',
+        title_ar: 'دورها في الدفاع في العمق',
+        title_en: 'Role in Defense in Depth',
+        text_ar: 'تمثل طبقة "مسار الاتصال" (Communication Path) بتشفير كل ما يسير عبر القناة.',
+        text_en: 'Fulfills layer 2: "Communication Path" by ciphering all packets in transit.',
+      },
+    ],
+    goldenRule_ar: 'نفق مشفر عبر شبكة عامة لتأمين العمل عن بعد وحماية البيانات على Wi-Fi العامة = VPN.',
+    goldenRule_en: 'Encrypted tunnel over public networks for secure telework and public Wi-Fi protection = VPN.',
+    checkQuestion_ar: 'سؤال سريع: هل تحذف شبكة الـ VPN الفيروسات من حاسوب الموظف المصاب؟',
+    checkQuestion_en: 'Quick Check: Does a VPN disinfect malware from an infected employee laptop?',
+    checkAnswer_ar: 'الإجابة: لا؛ الـ VPN تشفر قناة الاتصال فقط ولا تنظف القرص الصلب من الفيروسات.',
+    checkAnswer_en: 'Answer: No; a VPN only encrypts the transit pipe and does not sanitize files on the host disk.',
   },
 
   {
-    id: 'r2-2-03',
+    id: 'fc-09',
+    cardNumber: 9,
     lesson: '2-2',
-    type: 'CONCEPT',
-    typeLabel_ar: 'مفهوم أساسي',
-    typeLabel_en: 'Core Concept',
+    lessonName_ar: 'الدرس 2-2: تصميم أمان الشبكات',
+    lessonName_en: 'Lesson 2-2: Network Security Design',
+    category_ar: 'مفهوم أساسي',
+    category_en: 'Core Concept',
     title_ar: 'المنطقة المعزولة (DMZ) وعزل الخوادم العامة',
-    title_en: 'Demilitarized Zone (DMZ) and Public Server Isolation',
-    summary_ar: 'المنطقة المعزولة هي شبكة فرعية تفصل الخوادم الموجهة للجمهور عن الشبكة الداخلية لحماية قواعد البيانات الحساسة عند اختراق الخادم.',
-    summary_en: 'A DMZ isolates public-facing servers from internal private networks, preventing attackers from reaching internal databases after a web breach.',
-    content_ar:
-      'أولاً: تعريف الـ DMZ:\n'
-      + 'شبكة فرعية معزولة تقع كمنطقة وسيطة ومحمية بجدران نارية بين الإنترنت الخارجي والشبكة الداخلية الخاصة للمؤسسة.\n\n'
-      + 'ثانياً: تصنيف الخوادم وتوزيعها الصحيح:\n'
-      + '• ما يوضع داخل منطقة الـ DMZ: الخوادم التي يحتاج الجمهور للوصول إليها مباشرة (خادم الويب، خادم البريد، خادم DNS الخارجي).\n'
-      + '• ما يُمنع وضعه في الـ DMZ ويوضع في الشبكة الداخلية: قواعد البيانات الحساسة (Database Servers)، ملفات الموظفين، أنظمة الرواتب.\n\n'
-      + 'ثالثاً: الفائدة الدفاعية الجوهرية:\n'
-      + 'في حال تعرض خادم الويب العام للاختراق، يبقى المهاجم محاصراً داخل منطقة الـ DMZ وتمنعه الجدران النارية الداخلية من الوصول إلى قواعد البيانات الحساسة في الشبكة الداخلية.\n\n'
-      + 'رابعاً: دورها في الدفاع في العمق:\n'
-      + 'تمثل طبقة "وضع الخوادم" (Server Placement).',
-    content_en:
-      'Definition:\n'
-      + 'A screened subnetwork bounded by firewalls serving as an intermediate zone between public internet and private intranets.\n\n'
-      + 'Server Placement Architecture:\n'
-      + '• Placed inside DMZ: Publicly accessible endpoints (Web, Mail, External DNS).\n'
-      + '• Strictly confined to internal network: Confidential database servers, financial records, employee directories.\n\n'
-      + 'Core Defensive Mechanism:\n'
-      + 'If an internet-facing web server is compromised, containment rules prevent the intruder from pivoting into the internal subnet hosting sensitive databases.\n\n'
-      + 'Defense in Depth Assignment:\n'
-      + 'Occupies layer 3: "Server Placement".',
-    keyTakeaway_ar: 'قاعدة الامتحان: عزل خوادم الويب العامة عن قواعد البيانات والشبكة الداخلية لحصر أثر الاختراق = المنطقة المعزولة (DMZ).',
-    keyTakeaway_en: 'Exam Rule: Isolating public web servers to insulate internal databases against lateral breach containment = DMZ.',
-    quickQuestion_ar: 'سؤال سريع: لماذا يعد وضع خادم قاعدة البيانات الرئيسية داخل منطقة DMZ خطأً أمنياً فادحاً؟',
-    quickQuestion_en: 'Quick Check: Why is deploying a database server in the DMZ considered a critical architectural failure?',
-    quickAnswer_ar: 'الإجابة: لأن اختراق أي خادم ويب عام في الـ DMZ سيمكن المهاجم من الوصول الفوري لقاعدة البيانات وسرقتها؛ مكانها الصحيح هو الشبكة الداخلية المحمية.',
-    quickAnswer_en: 'Answer: Breaching an adjacent web server would grant immediate lateral access to database files; databases belong inside private zones.',
+    title_en: 'Demilitarized Zone (DMZ): Public Server Isolation',
+    summary_ar: 'شبكة فرعية وسيطة تضم الخوادم الموجهة للجمهور وتعزلها عن الشبكة الداخلية لحماية قواعد البيانات عند الاختراق.',
+    summary_en: 'An intermediate subnet hosting public-facing servers, shielding internal databases if a web server is hacked.',
+    blocks: [
+      {
+        tag_ar: 'المفهوم والتصميم',
+        tag_en: 'Concept & Design',
+        title_ar: 'ما هي منطقة الـ DMZ؟',
+        title_en: 'What is a DMZ?',
+        text_ar: 'منطقة شبكية محايدة تقع بين جدار الحماية الخارجي والشبكة الداخلية للمؤسسة. توضع فيها الخوادم التي يحتاج الجمهور للوصول إليها مباشرة.',
+        text_en: 'A perimeter subnetwork between the outer firewall and the private intranet hosting public-facing servers.',
+      },
+      {
+        tag_ar: 'توزيع الخوادم',
+        tag_en: 'Placement Architecture',
+        title_ar: 'أين نضع كل خادم؟',
+        title_en: 'Where Servers are Deployed',
+        text_ar: '• داخل الـ DMZ: خادم الويب، خادم البريد، خادم DNS الخارجي.\n• داخل الشبكة الداخلية: قواعد البيانات الحساسة، سجلات الموظفين، الحسابات المالية.',
+        text_en: '• Inside DMZ: Web servers, mail servers, external DNS.\n• Inside Internal Subnet: Core database servers, HR ledgers, financial records.',
+      },
+      {
+        tag_ar: 'الفائدة الجوهرية',
+        tag_en: 'Core Benefit',
+        title_ar: 'حصر أثر الاختراق الخارجي',
+        title_en: 'Breach Containment',
+        text_ar: 'إذا نجح مهاجم في اختراق خادم الويب العام، يظل محاصراً داخل الـ DMZ وتمنعه الجدران النارية الداخلية من الوصول لقواعد البيانات الحساسة.',
+        text_en: 'If an adversary compromises a public web server, they are confined to the DMZ and cannot reach private internal databases.',
+      },
+    ],
+    goldenRule_ar: 'عزل الخوادم العامة عن الشبكة الداخلية وقواعد البيانات لحصر الاختراق = المنطقة المعزولة (DMZ).',
+    goldenRule_en: 'Isolating public servers from internal subnets to safeguard databases from breach containment = DMZ.',
+    checkQuestion_ar: 'سؤال سريع: لماذا يمنع وضع خادم قاعدة البيانات الرئيسية داخل منطقة DMZ؟',
+    checkQuestion_en: 'Quick Check: Why should master database servers never reside in a DMZ?',
+    checkAnswer_ar: 'الإجابة: لأن اختراق خادم الويب سيمكن المهاجم من الوصول المباشر لقاعدة البيانات؛ مكانها الآمن دائماً داخل الشبكة الداخلية المحمية.',
+    checkAnswer_en: 'Answer: Breaching an adjacent web server would expose database records directly; databases belong strictly in internal zones.',
   },
 
   {
-    id: 'r2-2-04',
+    id: 'fc-10',
+    cardNumber: 10,
     lesson: '2-2',
-    type: 'TABLE',
-    typeLabel_ar: 'جدول حفظ',
-    typeLabel_en: 'Summary Table',
-    title_ar: 'الطبقات الأربع للدفاع في العمق (Defense in Depth)',
-    title_en: 'The Four Defense in Depth Layers Overview',
-    summary_ar: 'استراتيجية متعددة الطبقات لمنع نقاط الفشل الفردية؛ تتكون من: مدخل الشبكة، مسار الاتصال، وضع الخوادم، والأجهزة الطرفية.',
-    summary_en: 'A multi-layered posture eliminating single points of failure, comprised of entry, path, server placement, and endpoint controls.',
-    content_ar:
-      'المفهوم الأساسي للاستراتيجية:\n'
-      + 'تطبيق ضوابط أمنية متعددة ومتتالية؛ بحيث إذا تم اختراق طبقة معينة أو فشلت، تتولى الطبقات التالية حماية النظام ومنع انهياره، مما يقضي على نقاط الفشل الفردية (Single Point of Failure).\n\n'
-      + 'جدول الطبقات الأربع المعتمدة في منهج الوزارة:\n\n'
-      + 'الطبقة 1: مدخل الشبكة (Network Entry)\n'
-      + '• الإجراء الأمني: جدار الحماية (Firewall).\n'
-      + '• الوظيفة: تصفية الاتصالات ومنع الوصول غير المصرح به عند الحدود الخارجية.\n\n'
-      + 'الطبقة 2: مسار الاتصال (Communication Path)\n'
-      + '• الإجراء الأمني: التشفير وبروتوكول VPN.\n'
-      + '• الوظيفة: حماية البيانات المنقولة عبر الشبكات ومنع التنصت.\n\n'
-      + 'الطبقة 3: وضع الخوادم (Server Placement)\n'
-      + '• الإجراء الأمني: المنطقة المعزولة (DMZ).\n'
-      + '• الوظيفة: عزل الخوادم العامة لمنع تسلل المخترق إلى قواعد البيانات الداخلية.\n\n'
-      + 'الطبقة 4: الأجهزة الطرفية (Endpoints)\n'
-      + '• الإجراء الأمني: برامج مكافحة الفيروسات وتحديثات أنظمة التشغيل.\n'
-      + '• الوظيفة: حماية حواسيب وهواتف الموظفين من البرمجيات الخبيثة والثغرات.',
-    content_en:
-      'Strategic Objective:\n'
-      + 'Layered defensive barriers ensure that single control breaches do not compromise the entire enterprise, eliminating single points of failure.\n\n'
-      + 'The Four Ministry Curriculum Layers:\n\n'
-      + 'Layer 1: Network Entry\n'
-      + '• Control: Firewall.\n'
-      + '• Purpose: Ingress/egress filtering at perimeter boundaries.\n\n'
-      + 'Layer 2: Communication Path\n'
-      + '• Control: Encryption and VPN.\n'
-      + '• Purpose: Cryptographic payload protection over untrusted networks.\n\n'
-      + 'Layer 3: Server Placement\n'
-      + '• Control: Demilitarized Zone (DMZ).\n'
-      + '• Purpose: Isolating public endpoints from core operational repositories.\n\n'
-      + 'Layer 4: Endpoints\n'
-      + '• Control: Antivirus software and OS patch management.\n'
-      + '• Purpose: Safeguarding user workstations, laptops, and mobile assets.',
-    keyTakeaway_ar: 'قاعدة الامتحان: اربط دائماً: مدخل = جدار حماية، مسار = VPN وتشفير، وضع خوادم = DMZ، أجهزة طرفية = مضاد فيروسات وتحديثات.',
-    keyTakeaway_en: 'Exam Rule: Always link: Entry = Firewall, Path = VPN, Placement = DMZ, Endpoints = Antivirus/Updates.',
-    quickQuestion_ar: 'سؤال سريع: ما الطبقة المعنية بحماية أجهزة حواسيب الموظفين في الدفاع في العمق، وما إجراؤها؟',
-    quickQuestion_en: 'Quick Check: Which Defense in Depth layer covers employee laptops, and what control is applied?',
-    quickAnswer_ar: 'الإجابة: طبقة الأجهزة الطرفية (Endpoints)، وإجراؤها هو برامج مكافحة الفيروسات والتحديثات المستمرة لأنظمة التشغيل.',
-    quickAnswer_en: 'Answer: The Endpoints layer, secured via antivirus engines and systematic operating system patching.',
+    lessonName_ar: 'الدرس 2-2: تصميم أمان الشبكات',
+    lessonName_en: 'Lesson 2-2: Network Security Design',
+    category_ar: 'جدول حفظ',
+    category_en: 'Summary Grid',
+    title_ar: 'الطبقات الأربع لاستراتيجية الدفاع في العمق',
+    title_en: 'The Four Layers of Defense in Depth Strategy',
+    summary_ar: 'استراتيجية متعددة الطبقات تمنع نقاط الفشل الفردية. تتوزع عبر 4 مستويات متتالية.',
+    summary_en: 'A multi-layered posture preventing single points of failure across 4 successive architectural tiers.',
+    blocks: [
+      {
+        tag_ar: 'الطبقة الأولى',
+        tag_en: 'Layer 1',
+        title_ar: '1. مدخل الشبكة (Network Entry)',
+        title_en: '1. Network Entry',
+        text_ar: '• الإجراء الأمني المعتمد: جدار الحماية (Firewall).\n• الوظيفة: تصفية حركة البيانات وحظر المنافذ والاتصالات غير المصرح بها عند الحدود الخارجية.',
+        text_en: '• Control: Firewall.\n• Function: Perimeter ingress/egress filtering and unauthorized port blocking.',
+      },
+      {
+        tag_ar: 'الطبقة الثانية',
+        tag_en: 'Layer 2',
+        title_ar: '2. مسار الاتصال (Communication Path)',
+        title_en: '2. Communication Path',
+        text_ar: '• الإجراء الأمني المعتمد: التشفير وبروتوكول VPN.\n• الوظيفة: حماية وتشفير حزم البيانات المنقولة عبر الشبكات لمنع التنصت والتسريب.',
+        text_en: '• Control: Encryption and VPN.\n• Function: Cryptographic protection of packets in transit to prevent sniffing.',
+      },
+      {
+        tag_ar: 'الطبقة الثالثة',
+        tag_en: 'Layer 3',
+        title_ar: '3. وضع الخوادم (Server Placement)',
+        title_en: '3. Server Placement',
+        text_ar: '• الإجراء الأمني المعتمد: المنطقة المعزولة (DMZ).\n• الوظيفة: عزل الخوادم العامة عن الداخلية لمنع انتقال الاختراق لقواعد البيانات.',
+        text_en: '• Control: Demilitarized Zone (DMZ).\n• Function: Isolating public servers to prevent lateral breach escalation into databases.',
+      },
+      {
+        tag_ar: 'الطبقة الرابعة',
+        tag_en: 'Layer 4',
+        title_ar: '4. الأجهزة الطرفية (Endpoints)',
+        title_en: '4. Endpoints',
+        text_ar: '• الإجراء الأمني المعتمد: مكافحة الفيروسات وتحديثات أنظمة التشغيل.\n• الوظيفة: تأمين حواسيب وهواتف الموظفين وسد الثغرات الموضعية.',
+        text_en: '• Control: Antivirus software and OS patch updates.\n• Function: Defending workstations and mobile hosts against local malware exploits.',
+      },
+    ],
+    goldenRule_ar: 'احفظ الربط الرباعي: مدخل = جدار حماية، مسار = VPN وتشفير، وضع خوادم = DMZ، أجهزة طرفية = مضاد فيروسات وتحديثات.',
+    goldenRule_en: 'Memorize the 4-layer map: Entry = Firewall, Path = VPN, Placement = DMZ, Endpoints = Antivirus/Updates.',
+    checkQuestion_ar: 'سؤال سريع: ما المبدأ الفلسفي الذي تحققه استراتيجية الدفاع في العمق؟',
+    checkQuestion_en: 'Quick Check: What core principle does Defense in Depth achieve?',
+    checkAnswer_ar: 'الإجابة: القضاء على نقاط الفشل الفردية (Single Point of Failure)؛ إذا سقطت طبقة تتولى الطبقات التالية احتواء الهجوم.',
+    checkAnswer_en: 'Answer: Eliminating single points of failure; if one defense layer breaches, adjacent tiers contain the hazard.',
   },
 
   {
-    id: 'r2-2-05',
+    id: 'fc-11',
+    cardNumber: 11,
     lesson: '2-2',
-    type: 'CONCEPT',
-    typeLabel_ar: 'مفهوم أساسي',
-    typeLabel_en: 'Core Concept',
-    title_ar: 'أسباب سقوط مفهوم المحيط الأمني التقليدي (Perimeter Security)',
-    title_en: 'Drivers Behind Traditional Perimeter Security Erosion',
-    summary_ar: 'انهار نموذج المحيط الأمني التقليدي الذي يفترض أن داخل المقر آمن بسبب شيوع الحوسبة السحابية وانتشار العمل عن بعد.',
-    summary_en: 'The classic perimeter model assuming internal assets are safe dissolved due to cloud computing adoption and remote workforces.',
-    content_ar:
-      'أولاً: ما هو نموذج المحيط الأمني التقليدي؟\n'
-      + 'نموذج كلاسيكي يفترض وجود حدود واضحة: ما هو داخل مبنى المؤسسة وشبكتها السلكية موثوق وآمن، وما هو بالخارج خطر ومشكوك فيه.\n\n'
-      + 'ثانياً: السببان الرئيسيان لسقوط وطمس هذا النموذج:\n'
-      + '1. انتشار الحوسبة السحابية (Cloud Computing):\n'
-      + '   لم تعد بيانات وخوادم المؤسسة موجودة داخل المقر الجغرافي للشركة، بل أصبحت مستضافة على مراكز بيانات سحابية خارجية عبر الإنترنت.\n'
-      + '2. انتشار العمل عن بعد والاتصال بأجهزة شخصية (BYOD & Remote Work):\n'
-      + '   أصبح الموظفون ينجزون مهامهم من المنازل والمقاهي باستخدام هواتفهم وأجهزتهم المحمولة، مما جعل حماية بوابة المبنى غير مجدية.\n\n'
-      + 'النتيجة المترتبة:\n'
-      + 'الحاجة إلى نهج جديد لا يربط الأمان بالموقع الجغرافي أو كابل الشبكة، وهو نهج انعدام الثقة (Zero Trust).',
-    content_en:
-      'Traditional Perimeter Security Defined:\n'
-      + 'A historic castle-and-moat architecture assuming that whatever resides inside physical corporate walls is inherently trustworthy.\n\n'
-      + 'The Two Primary Catalysts of Perimeter Dissolution:\n'
-      + '1. Cloud Computing Expansion:\n'
-      + '   Enterprise applications, databases, and services transitioned to external multi-tenant cloud data centers.\n'
-      + '2. Remote Workforce and Personal Device Proliferation:\n'
-      + '   Personnel access sensitive records from external residential and mobile connections, rendering fixed perimeter gates obsolete.\n\n'
-      + 'Direct Consequence:\n'
-      + 'Necessitated shifting from physical boundary trust to Zero Trust architecture.',
-    keyTakeaway_ar: 'قاعدة الامتحان: سببا سقوط المحيط الأمني هما الحوسبة السحابية والعمل عن بعد، والحل البديل هو نهج انعدام الثقة (Zero Trust).',
-    keyTakeaway_en: 'Exam Rule: Perimeter security collapsed due to cloud computing and telework, prompting adoption of Zero Trust.',
-    quickQuestion_ar: 'سؤال سريع: اذكر العاملين اللذين تسببا في طمس الحدود الفاصلة بين داخل المؤسسة وخارجها.',
-    quickQuestion_en: 'Quick Check: Name the two factors that blurred traditional enterprise boundaries.',
-    quickAnswer_ar: 'الإجابة: 1. انتشار الحوسبة السحابية، 2. انتشار العمل عن بعد واستخدام الأجهزة الشخصية خارج المقر.',
-    quickAnswer_en: 'Answer: 1. Cloud computing adoption, and 2. Remote telecommuting with mobile endpoints.',
+    lessonName_ar: 'الدرس 2-2: تصميم أمان الشبكات',
+    lessonName_en: 'Lesson 2-2: Network Security Design',
+    category_ar: 'مفهوم أساسي',
+    category_en: 'Core Concept',
+    title_ar: 'سقوط المحيط الأمني التقليدي ونهج انعدام الثقة (Zero Trust)',
+    title_en: 'Perimeter Collapse and the Zero Trust Paradigm',
+    summary_ar: 'طُمست الحدود التقليدية بسبب السحابة والعمل عن بعد، مما فرض الانتقال لشعار "لا تثق بأحد وتحقق دائماً".',
+    summary_en: 'Traditional perimeters dissolved under cloud and remote telework, mandating "Never trust, always verify".',
+    blocks: [
+      {
+        tag_ar: 'سبب الانهيار',
+        tag_en: 'Collapse Drivers',
+        title_ar: 'لماذا سقط نموذج المحيط الأمني التقليدي؟',
+        title_en: 'Why Perimeter Security Dissolved',
+        text_ar: '1. انتشار الحوسبة السحابية: الخوادم والبيانات أصبحت خارج مقر الشركة في مراكز بيانات سحابية.\n2. انتشار العمل عن بعد: الموظفون يتصلون من منازلهم بأجهزة متنوعة، فلم يعد لجدار المبنى معنى دفاعي.',
+        text_en: '1. Cloud adoption: Servers shifted to external hosted providers.\n2. Remote work: Distributed workforces access resources outside physical walls.',
+      },
+      {
+        tag_ar: 'الشعار والمبادئ',
+        tag_en: 'Zero Trust Principles',
+        title_ar: 'شعار ومبادئ نهج Zero Trust',
+        title_en: 'Zero Trust Motto & Principles',
+        text_ar: '• الشعار: "لا تثق بأحد إطلاقاً، وتحقق دائماً من كل شيء" (Never Trust, Always Verify).\n• المبادئ الثلاثة: التحقق المستمر + الحد الأدنى من الصلاحيات (Least Privilege) + افتراض الاختراق الداخلي.',
+        text_en: '• Motto: "Never Trust, Always Verify".\n• 3 Principles: Continuous validation + Least privilege + Assume breach.',
+      },
+      {
+        tag_ar: 'معايير الفحص',
+        tag_en: '3 Criteria',
+        title_ar: 'معايير الفحص الثلاثة عند كل طلب وصول',
+        title_en: 'The Three Access Verification Criteria',
+        text_ar: '1. الهوية (Identity): التحقق بالـ MFA.\n2. الصلاحيات (Permissions): التحقق من أحقية الحساب بالملف.\n3. السياق (Context): فحص صحة الجهاز والموقع الجغرافي وتوقيت الدخول.',
+        text_en: '1. Identity: Validated via MFA.\n2. Permissions: Confined via least privilege.\n3. Context: Evaluated against device health, location, and time.',
+      },
+    ],
+    goldenRule_ar: 'التقليدي = تحقق لمرة واحدة عند الدخول. نهج Zero Trust = تحقق مستمر وصلاحيات محدودة وفحص الهوية والصلاحيات والسياق.',
+    goldenRule_en: 'Traditional = one-time entry challenge. Zero Trust = continuous validation against identity, permissions, and context.',
+    checkQuestion_ar: 'سؤال سريع: اذكر معايير الفحص الثلاثة التي يقيّمها نهج Zero Trust قبل فتح أي مورد.',
+    checkQuestion_en: 'Quick Check: Name the three criteria Zero Trust assesses on every resource request.',
+    checkAnswer_ar: 'الإجابة: 1. الهوية (Identity)، 2. الصلاحيات (Permissions)، 3. السياق (Context).',
+    checkAnswer_en: 'Answer: 1. Identity, 2. Permissions, 3. Context.',
   },
 
-  {
-    id: 'r2-2-06',
-    lesson: '2-2',
-    type: 'CONCEPT',
-    typeLabel_ar: 'مفهوم أساسي',
-    typeLabel_en: 'Core Concept',
-    title_ar: 'نهج انعدام الثقة (Zero Trust): الشعار والمبادئ والمعايير',
-    title_en: 'Zero Trust Architecture: Motto, Principles, and Criteria',
-    summary_ar: 'يقوم نهج انعدام الثقة على شعار "لا تثق بأحد وتحقق دائماً"، ويتحقق من الهوية والصلاحيات والسياق عند كل محاولة وصول.',
-    summary_en: 'Zero Trust operates on "Never trust, always verify", validating identity, permissions, and contextual factors continuously.',
-    content_ar:
-      'أولاً: الشعار الذهبي لنهج Zero Trust:\n'
-      + '"لا تثق بأحد إطلاقاً، وتحقق دائماً من كل شيء" (Never Trust, Always Verify).\n\n'
-      + 'ثانياً: المبادئ الثلاثة الحاكمة:\n'
-      + '1. التحقق المستمر والصريح: فحص المستخدم والجهاز في كل مرة يُطلب فيها الوصول لمورد جديد، وليس لمرة واحدة عند بداية اليوم.\n'
-      + '2. مبدأ الحد الأدنى من الامتيازات (Least Privilege): منح الموظف صلاحية الوصول للملفات والبرامج اللازمة لأداء وظيفته فقط دون صلاحيات إضافية.\n'
-      + '3. افتراض وقوع الاختراق (Assume Breach): التعامل الدائم بافتراض أن الشبكة مخترقة داخلياً، ومراقبة كل الاتصالات المشبوهة وحصر الأثر.\n\n'
-      + 'ثالثاً: معايير الفحص الثلاثة عند كل طلب وصول:\n'
-      + '• الهوية (Identity): التحقق من هوية الشخص باستخدام المصادقة متعددة العوامل (MFA).\n'
-      + '• الصلاحيات (Permissions): التأكد من أحقية الحساب في فتح هذا الملف تحديداً.\n'
-      + '• السياق (Context): فحص حالة الجهاز الأمني، والموقع الجغرافي، وتوقيت طلب الدخول.',
-    content_en:
-      'Strategic Motto:\n'
-      + '"Never Trust, Always Verify".\n\n'
-      + 'The Three Core Principles:\n'
-      + '1. Continuous Explicit Verification: Authenticate identity and host state on every single transaction.\n'
-      + '2. Principle of Least Privilege: Grant strictly the minimal access levels required for job completion.\n'
-      + '3. Assume Breach: Architect systems assuming adversary presence within internal segments.\n\n'
-      + 'The Three Evaluation Criteria:\n'
-      + '• Identity: Validated via robust MFA challenges.\n'
-      + '• Permissions: Checked against role-based authorization policies.\n'
-      + '• Context: Evaluated against device posture, geographic coordinates, and access timeline.',
-    keyTakeaway_ar: 'قاعدة الامتحان: Zero Trust يلغي الثقة التلقائية بالموقع، ويعتمد التحقق المستمر، وأقل الامتيازات، وفحص الهوية والصلاحيات والسياق.',
-    keyTakeaway_en: 'Exam Rule: Zero Trust cancels implicit perimeter trust, enforcing continuous least-privilege context checks.',
-    quickQuestion_ar: 'سؤال سريع: ما معايير الفحص الثلاثة التي يقيّمها نهج Zero Trust عند كل محاولة وصول لملف حساس؟',
-    quickQuestion_en: 'Quick Check: What three criteria does Zero Trust evaluate on every resource access request?',
-    quickAnswer_ar: 'الإجابة: 1. الهوية (التحقق بالـ MFA)، 2. الصلاحيات (أحقية الوصول)، 3. السياق (حالة الجهاز والموقع والوقت).',
-    quickAnswer_en: 'Answer: 1. Identity (via MFA), 2. Permissions (access rights), and 3. Context (device health, location, time).',
-  },
+  // ════════════════════════════════════════════════════════════
+  // LESSON 2-3: الاستجابة للحوادث وإدارة المخاطر
+  // ════════════════════════════════════════════════════════════
 
   {
-    id: 'r2-2-07',
-    lesson: '2-2',
-    type: 'TABLE',
-    typeLabel_ar: 'مقارنة معتمدة',
-    typeLabel_en: 'Comparison Table',
-    title_ar: 'مقارنة شاملة: الأمان التقليدي مقابل نهج انعدام الثقة (Zero Trust)',
-    title_en: 'Traditional Perimeter Security versus Zero Trust Model',
-    summary_ar: 'التقليدي يمنح الثقة التلقائية لمن بداخل المبنى ويتحقق لمرة واحدة، بينما Zero Trust يرفض الثقة التلقائية ويتحقق باستمرار وفق الصلاحيات والسياق.',
-    summary_en: 'Traditional grants implicit trust inside perimeters with single logins; Zero Trust enforces continuous least-privilege verification everywhere.',
-    content_ar:
-      'وجه المقارنة 1: الافتراض الأمني المبدئي\n'
-      + '• الأمان التقليدي: ما بداخل الشبكة موثوق وآمن، وما بالخارج غير موثوق.\n'
-      + '• نهج Zero Trust: الجميع غير موثوق به تلقائياً (سواء كان بداخل المبنى أو خارجه).\n\n'
-      + 'وجه المقارنة 2: آلية التحقق من الهوية\n'
-      + '• الأمان التقليدي: تحقق لمرة واحدة عند نقطة الدخول (تسجيل الدخول الصباحي).\n'
-      + '• نهج Zero Trust: تحقق مستمر وديناميكي عند كل محاولة فتح ملف أو تطبيق.\n\n'
-      + 'وجه المقارنة 3: نطاق الصلاحيات الممنوحة\n'
-      + '• الأمان التقليدي: صلاحيات وصول واسعة وشاملة بمجرد الدخول للشبكة.\n'
-      + '• نهج Zero Trust: صلاحيات مقيدة بدقة وفق مبدأ الحد الأدنى من الامتيازات (Least Privilege).\n\n'
-      + 'وجه المقارنة 4: حركة المهاجم بعد اختراق حساب موظف\n'
-      + '• الأمان التقليدي: يتحرك المهاجم بحرية أفقياً بين أجهزة وخوادم الشبكة الداخلية.\n'
-      + '• نهج Zero Trust: يظل المهاجم محاصراً لأن كل خطوة تتطلب مصادقة وفحص سياق مستقل.',
-    content_en:
-      'Comparison Dimension 1: Trust Assumption\n'
-      + '• Traditional: Internal network hosts are inherently safe; external traffic is untrusted.\n'
-      + '• Zero Trust: No entity or location is trusted by default.\n\n'
-      + 'Comparison Dimension 2: Authentication Frequency\n'
-      + '• Traditional: One-time login challenge at entry boundary.\n'
-      + '• Zero Trust: Continuous, dynamic evaluation on each transactional call.\n\n'
-      + 'Comparison Dimension 3: Access Scope\n'
-      + '• Traditional: Broad lateral visibility and permissions once inside.\n'
-      + '• Zero Trust: Strict Least Privilege permissions matching specific workflow needs.\n\n'
-      + 'Comparison Dimension 4: Lateral Movement Resilience\n'
-      + '• Traditional: Attackers pivot easily across internal resources.\n'
-      + '• Zero Trust: Lateral progression is intercepted by segmented per-request authorization.',
-    keyTakeaway_ar: 'قاعدة الامتحان: الأمان التقليدي = تحقق لمرة واحدة وصلاحيات واسعة. نهج Zero Trust = تحقق مستمر وصلاحيات محدودة وسياق.',
-    keyTakeaway_en: 'Exam Rule: Traditional = one-time entry trust; Zero Trust = continuous validation with strict least privilege.',
-    quickQuestion_ar: 'سؤال سريع: ماذا يحدث عندما يخترق مهاجم حساب موظف في بيئة تطبق Zero Trust مقارنة بالبيئة التقليدية؟',
-    quickQuestion_en: 'Quick Check: How does Zero Trust limit breach blast radius compared to traditional architectures?',
-    quickAnswer_ar: 'الإجابة: في البيئة التقليدية يتحرك المهاجم بحرية داخل الشبكة، أما في Zero Trust فيظل محاصراً لأن صلاحيات الحساب محدودة وكل مورد يتطلب فحص سياق جديد.',
-    quickAnswer_en: 'Answer: Traditional permits free lateral movement; Zero Trust confines attackers because permissions are minimal and micro-checked.',
-  },
-
-  {
-    id: 'r2-2-08',
-    lesson: '2-2',
-    type: 'EXAM_HINT',
-    typeLabel_ar: 'سر امتحاني',
-    typeLabel_en: 'Exam Strategy',
-    title_ar: 'الكلمات المفتاحية المعتمدة لأسئلة الدرس الثاني في الامتحان',
-    title_en: 'Approved Trigger Keywords for Lesson 2-2 Questions',
-    summary_ar: 'دليل ربط المصطلحات بالكلمات المفتاحية الأكثر تكراراً في تقييمات الوزارة الرسمية للدرس 2-2.',
-    summary_en: 'Keyword mapping reference for Lesson 2-2 network security design questions.',
-    content_ar:
-      'دليل الكلمات المفتاحية وسرعة الحل:\n\n'
-      + '1. "مراقبة حركة البيانات والسماح أو المنع وفق قواعد محددة مسبقاً لعناوين ومنافذ":\n'
-      + '   الحل المباشر: جدار الحماية (Firewall).\n\n'
-      + '2. "نفق مشفر عبر شبكة عامة / تأمين العمل عن بعد / حماية Wi-Fi العامة":\n'
-      + '   الحل المباشر: الشبكة الافتراضية الخاصة (VPN).\n\n'
-      + '3. "عزل الخوادم العامة عن الشبكة الداخلية / حماية قواعد البيانات بعد اختراق خادم الويب":\n'
-      + '   الحل المباشر: المنطقة المعزولة (DMZ).\n\n'
-      + '4. "طبقات أمنية متعددة ومتتالية لتفادي نقاط الفشل الفردية":\n'
-      + '   الحل المباشر: الدفاع في العمق (Defense in Depth).\n\n'
-      + '5. "طمس الحدود التقليدية بسبب السحابة والعمل عن بعد":\n'
-      + '   الحل المباشر: سقوط المحيط الأمني التقليدي (Perimeter Security).\n\n'
-      + '6. "لا تثق بأحد وتحقق دائماً / التحقق المستمر والصلاحيات الدنيا":\n'
-      + '   الحل المباشر: نهج انعدام الثقة (Zero Trust).',
-    content_en:
-      'Keyword Mapping Reference:\n\n'
-      + '1. "Traffic filtering against predefined IP/port policies":\n'
-      + '   Select: Firewall.\n\n'
-      + '2. "Encrypted tunnel across untrusted public networks / remote staff access":\n'
-      + '   Select: Virtual Private Network (VPN).\n\n'
-      + '3. "Isolating web servers to safeguard back-end databases from external breach":\n'
-      + '   Select: Demilitarized Zone (DMZ).\n\n'
-      + '4. "Layered defenses mitigating single points of failure":\n'
-      + '   Select: Defense in Depth.\n\n'
-      + '5. "Perimeter dissolution driven by cloud expansion and remote telework":\n'
-      + '   Select: Traditional Perimeter Security Erosion.\n\n'
-      + '6. "Never trust, always verify / continuous verification / least privilege":\n'
-      + '   Select: Zero Trust Architecture.',
-    keyTakeaway_ar: 'قاعدة الامتحان: إذا كان السؤال عن عزل خوادم = DMZ، وإذا كان عن نفق مشفر = VPN، وإذا كان عن قواعد مرور = جدار حماية.',
-    keyTakeaway_en: 'Exam Rule: Server isolation = DMZ, encrypted tunnel = VPN, packet rule filtering = Firewall.',
-    quickQuestion_ar: 'سؤال سريع: ما المكون الأمني الذي يحمي قواعد البيانات الداخلية عند اختراق خادم الويب العام؟',
-    quickQuestion_en: 'Quick Check: Which security component isolates internal databases when public web servers are hacked?',
-    quickAnswer_ar: 'الإجابة: المنطقة المعزولة (DMZ).',
-    quickAnswer_en: 'Answer: Demilitarized Zone (DMZ).',
-  },
-];
-
-// ─────────────────────────────────────────────────────────────
-// LESSON 2-3: الاستجابة للحوادث وإدارة المخاطر
-// ─────────────────────────────────────────────────────────────
-export const REVIEW_L3: ReviewCard[] = [
-  {
-    id: 'r2-3-01',
+    id: 'fc-12',
+    cardNumber: 12,
     lesson: '2-3',
-    type: 'CONCEPT',
-    typeLabel_ar: 'مفهوم أساسي',
-    typeLabel_en: 'Core Concept',
+    lessonName_ar: 'الدرس 2-3: الاستجابة للحوادث وإدارة المخاطر',
+    lessonName_en: 'Lesson 2-3: Incident Response & Risk Management',
+    category_ar: 'مفهوم أساسي',
+    category_en: 'Core Concept',
     title_ar: 'الحادث الأمني (Security Incident) والأمثلة الثلاثة المعتمدة',
-    title_en: 'Security Incident Definition and the Three Standard Examples',
-    summary_ar: 'الحادث الأمني هو موقف يترتب عليه ضرر فعلي للأصول أو الأنظمة، وأمثلته: تسرب المعلومات، التلاعب بالبيانات، وانقطاع الخدمة.',
-    summary_en: 'A security incident involves realized damage to information assets, exemplified by leaks, data tampering, and service outages.',
-    content_ar:
-      'أولاً: تعريف الحادث الأمني بدقة:\n'
-      + 'موقف يحدث فيه ضرر فعلي لأصول المعلومات أو الأنظمة بسبب مشكلة في أمن المعلومات.\n\n'
-      + 'ثانياً: التمييز الامتحاني بين الثغرة والحادث:\n'
-      + '• الثغرة أو الضعف الأمني (Vulnerability): نقطة ضعف محتملة موجودة بالنظام لم تسبب ضرراً بعد.\n'
-      + '• الحادث الأمني (Security Incident): تم استغلال الضعف بالفعل ووقع ضرر حقيقي ملموس على الأصول.\n\n'
-      + 'ثالثاً: الأمثلة الثلاثة المعتمدة في كتاب الوزارة وعلاقتها بمثلث أمان المعلومات (CIA):\n'
-      + '1. تسرب المعلومات (Information Leak):\n'
-      + '   خروج بيانات شخصية أو سرية لأطراف خارجية دون ترخيص ← يمثل خرقاً لركيزة السرية (Confidentiality).\n'
-      + '2. التلاعب بالبيانات (Data Tampering):\n'
-      + '   تعديل وتزوير البيانات أو ملفات النظام دون إذن ← يمثل خرقاً لركيزة السلامة (Integrity).\n'
-      + '3. انقطاع الخدمة (Service Outage):\n'
-      + '   توقف الخادم أو تعطل الموقع عن العمل نتيجة هجمات حجب الخدمة ← يمثل خرقاً لركيزة التوافر (Availability).',
-    content_en:
-      'Exact Definition:\n'
-      + 'An adverse occurrence resulting in actual, realized damage to information assets or operational IT infrastructure.\n\n'
-      + 'Vulnerability versus Incident:\n'
-      + '• Vulnerability: A passive latent flaw or weakness that has not yet caused harm.\n'
-      + '• Incident: An active event where vulnerability exploitation causes tangible damage.\n\n'
-      + 'The Three Ministry Benchmark Examples (Mapped to CIA Triad):\n'
-      + '1. Information Leak:\n'
-      + '   Unauthorized exfiltration of sensitive or personal records ← Breaches Confidentiality.\n'
-      + '2. Data Tampering:\n'
-      + '   Illicit alteration of records or transactional ledgers ← Breaches Integrity.\n'
-      + '3. Service Outage:\n'
-      + '   Downtime preventing legitimate user system access (e.g., DoS) ← Breaches Availability.',
-    keyTakeaway_ar: 'قاعدة الامتحان: الحادث الأمني يشترط وقوع "ضرر فعلي"، وأمثلته الثلاثة تسرب وتلاعب وانقطاع تغطي أركان CIA الثلاثة.',
-    keyTakeaway_en: 'Exam Rule: Incidents require actual damage; leak, tampering, and outage directly map to Confidentiality, Integrity, and Availability.',
-    quickQuestion_ar: 'سؤال سريع: تعرض موقع لهجوم حجب الخدمة (DDoS) وتوقف عن العمل ساعتين. أي ركن من أركان الأمان انهار هنا؟',
-    quickQuestion_en: 'Quick Check: A DDoS attack caused two hours of system downtime. Which CIA pillar was compromised?',
-    quickAnswer_ar: 'الإجابة: ركن التوافر (Availability)؛ لأن الخدمة أصبحت غير متاحة للمستخدمين المصرح لهم.',
-    quickAnswer_en: 'Answer: Availability; authorized users were blocked from accessing the service.',
+    title_en: 'Security Incident Definition and the Three Benchmark Examples',
+    summary_ar: 'الحادث الأمني يشترط وقوع ضرر فعلي. وأمثلته الثلاثة تسرب وتلاعب وانقطاع تمثل ضرباً لمثلث CIA.',
+    summary_en: 'Security incidents require realized damage. Leaks, tampering, and outages breach CIA triad pillars.',
+    blocks: [
+      {
+        tag_ar: 'التعريف المعتمد',
+        tag_en: 'Definition',
+        title_ar: 'ما هو الحادث الأمني؟',
+        title_en: 'What is a Security Incident?',
+        text_ar: 'موقف يحدث فيه ضرر فعلي لأصول المعلومات أو الأنظمة بسبب مشكلة في أمن المعلومات.\nالثغرة (Vulnerability) هي نقطة ضعف محتملة، أما الحادث الأمني فهو استغلال فعلي تسبب في ضرر ملموس.',
+        text_en: 'An event causing realized damage to IT assets. Vulnerabilities are passive flaws; incidents are actualized damage events.',
+      },
+      {
+        tag_ar: 'المثال 1',
+        tag_en: 'Example 1',
+        title_ar: '1. تسرب المعلومات (Information Leak)',
+        title_en: '1. Information Leak',
+        text_ar: 'خروج بيانات سرية أو شخصية لأطراف خارجية غير مصرح لها ← يمثل خرقاً لركيزة السرية (Confidentiality).',
+        text_en: 'Unauthorized exfiltration of sensitive or personal records ← Compromises Confidentiality.',
+      },
+      {
+        tag_ar: 'المثال 2',
+        tag_en: 'Example 2',
+        title_ar: '2. التلاعب بالبيانات (Data Tampering)',
+        title_en: '2. Data Tampering',
+        text_ar: 'تعديل أو حذف السجلات وملفات النظام دون إذن ← يمثل خرقاً لركيزة السلامة والنزاهة (Integrity).',
+        text_en: 'Illicit alteration of records or ledger files ← Compromises Integrity.',
+      },
+      {
+        tag_ar: 'المثال 3',
+        tag_en: 'Example 3',
+        title_ar: '3. انقطاع الخدمة (Service Outage)',
+        title_en: '3. Service Outage',
+        text_ar: 'توقف الخادم أو تعطل الموقع نتيجة هجمات حجب الخدمة ← يمثل خرقاً لركيزة التوافر (Availability).',
+        text_en: 'System downtime caused by DDoS or resource exhaustion ← Compromises Availability.',
+      },
+    ],
+    goldenRule_ar: 'الحادث الأمني يشترط وقوع "ضرر فعلي"، وأمثلته الثلاثة (تسرب، تلاعب، انقطاع) تطابق أركان CIA (سرية، سلامة، توافر).',
+    goldenRule_en: 'An incident requires actual damage; leaks, tampering, and outages map directly to Confidentiality, Integrity, and Availability.',
+    checkQuestion_ar: 'سؤال سريع: دخل مخترق لقاعدة بيانات مصرفية وعدل أرصدة العملاء. أي مثال وأي ركن أمني تضرر هنا؟',
+    checkQuestion_en: 'Quick Check: An intruder altered customer bank balances. Which incident example and CIA pillar was breached?',
+    checkAnswer_ar: 'الإجابة: التلاعب بالبيانات (Data Tampering)، والركن المتضرر هو السلامة والنزاهة (Integrity).',
+    checkAnswer_en: 'Answer: Data Tampering; the breached pillar is Integrity.',
   },
 
   {
-    id: 'r2-3-02',
+    id: 'fc-13',
+    cardNumber: 13,
     lesson: '2-3',
-    type: 'TABLE',
-    typeLabel_ar: 'جدول حفظ',
-    typeLabel_en: 'Ordered Process',
+    lessonName_ar: 'الدرس 2-3: الاستجابة للحوادث وإدارة المخاطر',
+    lessonName_en: 'Lesson 2-3: Incident Response & Risk Management',
+    category_ar: 'تسلسل خطوات',
+    category_en: 'Ordered Stages',
     title_ar: 'المراحل الست للاستجابة للحوادث بالترتيب الإلزامي',
     title_en: 'The Six Ordered Stages of Incident Response',
-    summary_ar: 'دورة الاستجابة بالترتيب: 1. التحضير، 2. الاكتشاف، 3. الاحتواء، 4. الاستئصال، 5. الاستعادة، 6. منع التكرار / الدروس المستفادة.',
-    summary_en: 'Ordered lifecycle: 1. Preparation, 2. Detection, 3. Containment, 4. Eradication, 5. Recovery, 6. Lessons Learned.',
-    content_ar:
-      'جدول المراحل الست والغرض الامتحاني لكل مرحلة:\n\n'
-      + 'المرحلة 1: التحضير (Preparation) — إجراء استباقي قبل الهجوم\n'
-      + '• الغرض: وضع خطط الاستجابة، وتدريب الفريق، وتجهيز وتخزين النسخ الاحتياطية دورياً مسبقاً.\n\n'
-      + 'المرحلة 2: الاكتشاف والتحليل (Detection & Analysis) — لحظة وقوع الهجوم\n'
-      + '• الغرض: رصد مؤشرات الاختراق، والتأكد من وقوع حادث حقيقي، وتحديد نطاقه ومصدره المبدئي.\n\n'
-      + 'المرحلة 3: الاحتواء (Containment) — إيقاف الانتشار\n'
-      + '• الغرض: عزل الأنظمة والأجهزة المتضررة (مثل فصل كابل الشبكة) لمنع انتشار التهديد لباقي أجهزة المؤسسة.\n\n'
-      + 'المرحلة 4: الاستئصال أو إزالة التهديد (Eradication) — تنظيف البيئة\n'
-      + '• الغرض: إزالة السبب الجذري للحادث بالكامل، كحذف البرمجيات الخبيثة وسد الثغرات وإلغاء الحسابات المخترقة.\n\n'
-      + 'المرحلة 5: الاستعادة (Recovery) — العودة للتشغيل\n'
-      + '• الغرض: إعادة تشغيل الأنظمة والخدمات للعمل الطبيعي، واسترجاع البيانات من نسخ احتياطية سليمة مع المراقبة.\n\n'
-      + 'المرحلة 6: منع التكرار والدروس المستفادة (Prevention of Recurrence) — تحصين المستقبل\n'
-      + '• الغرض: تحليل أسباب وقوع الحادث، وتوثيق الدروس، وتحديث الخطط والسياسات الأمنية لضمان عدم تكرار الهجوم.',
-    content_en:
-      'Ordered Six-Stage Incident Framework:\n\n'
-      + 'Stage 1: Preparation (Proactive Pre-Incident)\n'
-      + '• Objective: Formulate response procedures, train responders, and maintain secure offline backups.\n\n'
-      + 'Stage 2: Detection & Analysis (Active Incident Identification)\n'
-      + '• Objective: Identify indicators of compromise, confirm real breach occurrences, and evaluate initial scope.\n\n'
-      + 'Stage 3: Containment (Blast Radius Mitigation)\n'
-      + '• Objective: Segment and isolate infected hosts (e.g., disconnecting network cables) to halt lateral spread.\n\n'
-      + 'Stage 4: Eradication (Root Cause Elimination)\n'
-      + '• Objective: Cleanse environments by purging malware, patching exploited vulnerabilities, and revoking keys.\n\n'
-      + 'Stage 5: Recovery (Operational Restoration)\n'
-      + '• Objective: Bring business services back online safely, restoring integrity from verified clean backups.\n\n'
-      + 'Stage 6: Prevention of Recurrence / Lessons Learned (Post-Incident Hardening)\n'
-      + '• Objective: Conduct retrospective reviews, document takeaways, and reinforce security policies to prevent recurrence.',
-    keyTakeaway_ar: 'قاعدة الامتحان: الترتيب إلزامي: تحضير ← اكتشاف ← احتواء ← استئصال ← استعادة ← منع التكرار (دروس مستفادة).',
-    keyTakeaway_en: 'Exam Rule: Strict order: Preparation → Detection → Containment → Eradication → Recovery → Lessons Learned.',
-    quickQuestion_ar: 'سؤال سريع: في أي مرحلة يتم استرجاع البيانات من النسخ الاحتياطية وإعادة تشغيل الخادم للجمهور؟',
-    quickQuestion_en: 'Quick Check: In which incident stage are databases restored from backups and made accessible?',
-    quickAnswer_ar: 'الإجابة: مرحلة الاستعادة (Recovery).',
-    quickAnswer_en: 'Answer: The Recovery stage.',
+    summary_ar: 'دورة الاستجابة بالترتيب: 1. التحضير، 2. الاكتشاف، 3. الاحتواء، 4. الاستئصال، 5. الاستعادة، 6. الدروس المستفادة.',
+    summary_en: 'Strict lifecycle: 1. Preparation, 2. Detection, 3. Containment, 4. Eradication, 5. Recovery, 6. Lessons Learned.',
+    blocks: [
+      {
+        tag_ar: 'المرحلة 1',
+        tag_en: 'Stage 1',
+        title_ar: '1. التحضير (Preparation) — استباقي قبل الهجوم',
+        title_en: '1. Preparation (Proactive)',
+        text_ar: 'وضع خطط الطوارئ، وتدريب فريق الاستجابة، وتجهيز وتخزين النسخ الاحتياطية دورياً مسبقاً قبل وقوع الحادث.',
+        text_en: 'Formulating disaster plans, running response drills, and archiving offline backups proactively.',
+      },
+      {
+        tag_ar: 'المرحلة 2',
+        tag_en: 'Stage 2',
+        title_ar: '2. الاكتشاف والتحليل (Detection & Analysis)',
+        title_en: '2. Detection & Analysis',
+        text_ar: 'رصد إشارات التهديد، وتأكيد وقوع حادث حقيقي، وتحديد نطاق الأجهزة المصابة ومصدر الهجوم المبدئي.',
+        text_en: 'Identifying anomaly triggers, confirming authentic breaches, and scoping impacted assets.',
+      },
+      {
+        tag_ar: 'المرحلة 3',
+        tag_en: 'Stage 3',
+        title_ar: '3. الاحتواء (Containment) — إيقاف الانتشار',
+        title_en: '3. Containment (Stop Spread)',
+        text_ar: 'عزل الأجهزة المصابة وفصل كابل الشبكة فوراً لوقف انتشار البرمجية الخبيثة لباقي خوادم الشبكة.',
+        text_en: 'Quarantining infected systems and disconnecting network jacks to arrest lateral infection spread.',
+      },
+      {
+        tag_ar: 'المرحلة 4',
+        tag_en: 'Stage 4',
+        title_ar: '4. الاستئصال أو إزالة التهديد (Eradication)',
+        title_en: '4. Eradication (Root Removal)',
+        text_ar: 'حذف وتنظيف البرمجيات الخبيثة بالكامل، وسد الثغرة الأمنية، وإلغاء الحسابات والمفاتيح المخترقة.',
+        text_en: 'Purging malware, patching exploited software holes, and terminating compromised credentials.',
+      },
+      {
+        tag_ar: 'المرحلة 5',
+        tag_en: 'Stage 5',
+        title_ar: '5. الاستعادة (Recovery) — العودة للتشغيل',
+        title_en: '5. Recovery (Restoration)',
+        text_ar: 'استرجاع البيانات من نسخ احتياطية سليمة، وإعادة تشغيل الخوادم للخدمة الطبيعية تدريجياً مع المراقبة.',
+        text_en: 'Restoring data repositories from verified backups and returning services online under monitoring.',
+      },
+      {
+        tag_ar: 'المرحلة 6',
+        tag_en: 'Stage 6',
+        title_ar: '6. منع التكرار والدروس المستفادة (Lessons Learned)',
+        title_en: '6. Prevention of Recurrence',
+        text_ar: 'تحليل أسباب الهجوم، وتوثيق الثغرات، وتحديث السياسات والخطط الأمنية لمنع تكرار نفس الهجوم مستقبلاً.',
+        text_en: 'Conducting root-cause forensics, logging takeaways, and updating defensive playbooks against recurrence.',
+      },
+    ],
+    goldenRule_ar: 'الترتيب إلزامي في الامتحان: تحضير ← اكتشاف ← احتواء ← استئصال ← استعادة ← منع التكرار (دروس مستفادة).',
+    goldenRule_en: 'Sequence is mandatory: Preparation → Detection → Containment → Eradication → Recovery → Lessons Learned.',
+    checkQuestion_ar: 'سؤال سريع: في أي مرحلة يتم فصل الجهاز المصاب عن الشبكة لعزل التهديد؟',
+    checkQuestion_en: 'Quick Check: In which stage is an infected device unplugged from the network to isolate threats?',
+    checkAnswer_ar: 'الإجابة: مرحلة الاحتواء (Containment).',
+    checkAnswer_en: 'Answer: Containment stage.',
   },
 
   {
-    id: 'r2-3-03',
+    id: 'fc-14',
+    cardNumber: 14,
     lesson: '2-3',
-    type: 'WARNING',
-    typeLabel_ar: 'أولوية حرجة',
-    typeLabel_en: 'Critical Rule',
+    lessonName_ar: 'الدرس 2-3: الاستجابة للحوادث وإدارة المخاطر',
+    lessonName_en: 'Lesson 2-3: Incident Response & Risk Management',
+    category_ar: 'سر امتحاني',
+    category_en: 'Critical Precedence',
     title_ar: 'قاعدة الأسبقية: لماذا الاحتواء يسبق الاستئصال دائماً؟',
-    title_en: 'Precedence Rule: Why Containment Must Always Precede Eradication',
-    summary_ar: 'يجب عزل الجهاز المصاب أولاً لمنع البرمجية الخبيثة من الانتشار والهروب؛ والبدء بالحذف قبل العزل يفاقم الضرر.',
-    summary_en: 'Isolating compromised hosts halts lateral malware spread; attempting cleanup without isolation permits malware propagation.',
-    content_ar:
-      'السؤال المقالي الأكثر تكراراً:\n'
-      + 'لماذا يجب تنفيذ مرحلة الاحتواء قبل مرحلة الاستئصال؟ وما العواقب الوخيمة لعكس هذا الترتيب؟\n\n'
-      + 'أولاً: سبب أسبقية الاحتواء:\n'
-      + 'الاحتواء يهدف إلى محاصرة التهديد وقطع اتصاله بالشبكة والإنترنت. والبدء بالاحتواء يوقف فوراً قدرة البرمجية الخبيثة على الانتشار لأجهزة وخوادم أخرى، ويمنع المهاجم من تسريب مزيد من البيانات.\n\n'
-      + 'ثانياً: العواقب الكارثية إذا تم عكس الترتيب (البدء بالاستئصال قبل الاحتواء):\n'
-      + '1. بينما ينشغل الفريق الفني بفحص وحذف الفيروس من جهاز واحد، يستغل الفيروس اتصاله بالشبكة لإصابة عشرات الخوادم الأخرى.\n'
-      + '2. قد يقوم المهاجم أو برمجية الفدية بتشفير بيانات إضافية أو مسح سجلات الأدلة الجنائية أثناء محاولة حذفه.\n'
-      + '3. اتساع نطاق الضرر وتضاعف الخسائر المادية والتشغيلية على المؤسسة.',
-    content_en:
-      'Core Essay Question Focus:\n'
-      + 'Why must Containment precede Eradication, and what transpires if the sequence is reversed?\n\n'
-      + 'Operational Rationale for Prioritizing Containment:\n'
-      + 'Containment severs the adversary\'s network channel. Quarantining the infected node immediately blocks lateral expansion, command-and-control connectivity, and ongoing data exfiltration.\n\n'
-      + 'Catastrophic Fallout of Inverting the Order (Eradicating Before Containing):\n'
-      + '1. While responders attempt local disinfection, the active malware traverses subnet connections to compromise remaining nodes.\n'
-      + '2. Ransomware engines may accelerate encryption or purge forensic audit logs upon detecting remediation efforts.\n'
-      + '3. Damage blast radius expands uncontrollably, multiplying recovery cost and business interruption.',
-    keyTakeaway_ar: 'قاعدة الامتحان: مثل إطفاء الحريق: تحاصر النيران أولاً (الاحتواء) لمنع انتقالها للغرف الأخرى، ثم تبدأ بإخماد السبب وتنظيف المكان (الاستئصال).',
-    keyTakeaway_en: 'Exam Rule: Like firefighting: cordon off the burning perimeter (Containment) before extinguishing the root ignition source (Eradication).',
-    quickQuestion_ar: 'سؤال سريع: لاحظ مهندس أمن أن فيروس فدية بدأ بتشفير حاسوب. هل يبدأ فوراً بفحص مكافح الفيروسات أم بفصل الجهاز عن الشبكة؟ ولماذا؟',
-    quickQuestion_en: 'Quick Check: Ransomware is actively encrypting a workstation. Should the technician run an antivirus scan first or disconnect the Ethernet cable? Why?',
-    quickAnswer_ar: 'الإجابة: يفصل الجهاز عن الشبكة فوراً (الاحتواء)؛ لمنع الفدية من الانتشار وتشفير باقي خوادم المؤسسة أثناء الفحص.',
-    quickAnswer_en: 'Answer: Disconnect the network cable immediately (Containment) to prevent malware spreading to adjacent systems during cleanup.',
+    title_en: 'Precedence Rule: Why Containment Precedes Eradication',
+    summary_ar: 'يجب عزل الجهاز أولاً لوقف انتشار الخطر؛ والبدء بالحذف قبل العزل يسمح للفيروس بإصابة خوادم أخرى.',
+    summary_en: 'Isolating first halts lateral spread; scanning and cleaning while connected allows malware to multiply.',
+    blocks: [
+      {
+        tag_ar: 'التفسير العلمي',
+        tag_en: 'Technical Logic',
+        title_ar: 'لماذا نعزل الجهاز أولاً؟',
+        title_en: 'Why Isolate First?',
+        text_ar: 'الاحتواء يقطع اتصال المهاجم أو البرمجية الخبيثة بالشبكة فوراً، ويمنعها من الهروب أو تشفير أجهزة إضافية أثناء انشغال الفريق الفني بالتعامل معها.',
+        text_en: 'Containment severs network routes instantly, preventing malware from migrating or encrypting more systems during triage.',
+      },
+      {
+        tag_ar: 'الخطر الكارثي',
+        tag_en: 'Hazard Warning',
+        title_ar: 'ماذا يحدث لو بدأنا بالاستئصال قبل الاحتواء؟',
+        title_en: 'What Happens if Eradication is Attempted First?',
+        text_ar: '1. أثناء فحص الجهاز ومحاولة حذفه، يستغل الفيروس اتصاله بالشبكة للانتشار إلى عشرات الخوادم الأخرى.\n2. قد يقوم المهاجم بتسريع تسريب البيانات أو مسح سجلات الأدلة الجنائية فور استشعاره محاولة الحذف.',
+        text_en: '1. While attempting local deletion, the malware traverses live network lines to infect adjacent servers.\n2. Attackers may accelerate data exfiltration or wipe forensic evidence when remediation is detected.',
+      },
+      {
+        tag_ar: 'التشبيه الحياتي',
+        tag_en: 'Real-world Analogy',
+        title_ar: 'تشبيه إطفاء الحريق',
+        title_en: 'Firefighting Analogy',
+        text_ar: 'مثل نشوب حريق في غرفة: تغلق الأبواب أولاً لعزل ألسنة اللهب ومنع انتشارها للغرف المجاورة (الاحتواء)، ثم تبدأ بإخماد النار وتنظيف الرماد (الاستئصال).',
+        text_en: 'Like a building fire: close firedoors to contain the flames (Containment), then extinguish the origin and clean debris (Eradication).',
+      },
+    ],
+    goldenRule_ar: 'قاعدة حاسمة: الاحتواء أولاً لعزل الخطر ووقف انتشاره، ثم الاستئصال لحذف وتنظيف السبب الجذري.',
+    goldenRule_en: 'Decisive Rule: Contain first to quarantine and halt spread, then eradicate to purge the root cause.',
+    checkQuestion_ar: 'سؤال سريع: لاحظ فني تشفير ملفات على حاسوب بواسطة فدية، هل يبدأ بتشغيل برنامج الفحص أم بفصل الكابل؟ ولماذا؟',
+    checkQuestion_en: 'Quick Check: Ransomware is encrypting a machine. Should the technician run an antivirus scan or pull the network plug? Why?',
+    checkAnswer_ar: 'الإجابة: يفصل الكابل فوراً (الاحتواء)؛ لمنع الفدية من تشفير خوادم الشركة الأخرى أثناء الفحص.',
+    checkAnswer_en: 'Answer: Disconnect the network cable immediately (Containment) to stop ransomware spreading to other servers during the scan.',
   },
 
   {
-    id: 'r2-3-04',
+    id: 'fc-15',
+    cardNumber: 15,
     lesson: '2-3',
-    type: 'CONCEPT',
-    typeLabel_ar: 'مفهوم أساسي',
-    typeLabel_en: 'Core Concept',
-    title_ar: 'مفهوم المخاطر ومصفوفة تقييم الأولويات (الاحتمالية × الأثر)',
-    title_en: 'Risk Architecture and the Evaluation Matrix (Likelihood x Impact)',
-    summary_ar: 'المخاطرة نتاج احتمالية حدوث التهديد مضروبة في حجم الأثر الناتج عنه، وتُستخدم مصفوفة المخاطر لترتيب أولويات المعالجة وتوجيه الميزانية.',
-    summary_en: 'Risk equals threat likelihood multiplied by realized impact magnitude; the matrix prioritizes remediations and allocates budgets.',
-    content_ar:
-      'أولاً: معادلة تقييم المخاطرة:\n'
-      + 'المخاطرة (Risk) = الاحتمالية (Likelihood) × الأثر (Impact)\n\n'
-      + 'ثانياً: العامِلان الحاكمان في التقييم:\n'
-      + '1. الاحتمالية (Likelihood): ما مدى احتمال تحقق التهديد واستغلال الضعف؟ (مرتفعة، متوسطة، منخفضة).\n'
-      + '2. الأثر (Impact): ما حجم الضرر المادي أو المعنوي الواقع إذا حدث التهديد؟ (مرتفع، متوسط، منخفض).\n\n'
-      + 'ثالثاً: مصفوفة المخاطر (Risk Matrix) وتصنيف الأولويات:\n'
-      + '• احتمالية مرتفعة + أثر مرتفع: مخاطرة حرجة جداً تمثل "أولوية قصوى" وتتطلب تدخلاً ومعالجة فورية وتخصيص الميزانية.\n'
-      + '• احتمالية مرتفعة + أثر منخفض: مخاطرة معتدلة يمكن إدارتها بضوابط روتينية.\n'
-      + '• احتمالية منخفضة + أثر مرتفع: مخاطرة جسيمة تُعالج عادة بالنقل (كالتأمين الإلكتروني) أو خطط طوارئ.\n'
-      + '• احتمالية منخفضة + أثر منخفض: مخاطرة ضعيفة غالباً ما يتم قبولها ومراقبتها فقط.\n\n'
-      + 'الهدف النهائي من المصفوفة:\n'
-      + 'توجيه الموارد المالية والبشرية المحدودة للمؤسسة نحو المخاطر الأكثر خطورة بدلاً من إهدارها عشوائياً.',
-    content_en:
-      'Risk Calculation Formulation:\n'
-      + 'Risk = Likelihood x Impact\n\n'
-      + 'The Two Primary Variables:\n'
-      + '1. Likelihood: Probability of vulnerability discovery and exploitation (High, Medium, Low).\n'
-      + '2. Impact: Magnitude of financial, legal, or operational loss (High, Medium, Low).\n\n'
-      + 'The Risk Matrix Prioritization Framework:\n'
-      + '• High Likelihood + High Impact: Critical hazard demanding top-priority capital allocation and urgent treatment.\n'
-      + '• High Likelihood + Low Impact: Operational risk manageable through baseline technical controls.\n'
-      + '• Low Likelihood + High Impact: Severe systemic threat often treated via risk transfer (cyber insurance).\n'
-      + '• Low Likelihood + Low Impact: Minor exposure typically addressed via documented risk acceptance.\n\n'
-      + 'Primary Governance Objective:\n'
-      + 'Focusing scarce security budgets and technical teams on the highest-consequence enterprise exposures.',
-    keyTakeaway_ar: 'قاعدة الامتحان: مصفوفة المخاطر تجمع بين الاحتمالية والأثر، والمخاطر ذات الاحتمالية العالية والأثر العالي تُعالج أولاً.',
-    keyTakeaway_en: 'Exam Rule: The risk matrix combines likelihood and impact; high-likelihood/high-impact exposures receive top treatment priority.',
-    quickQuestion_ar: 'سؤال سريع: ما المعياران اللذان تعتمد عليهما مصفوفة المخاطر لتحديد أولوية التعامل مع التهديدات؟',
-    quickQuestion_en: 'Quick Check: What two metrics form the foundation of a risk evaluation matrix?',
-    quickAnswer_ar: 'الإجابة: 1. احتمالية الحدوث (Likelihood)، 2. حجم الأثر والضرر المحتمل (Impact).',
-    quickAnswer_en: 'Answer: 1. Likelihood of occurrence, and 2. Impact magnitude of potential damage.',
+    lessonName_ar: 'الدرس 2-3: الاستجابة للحوادث وإدارة المخاطر',
+    lessonName_en: 'Lesson 2-3: Incident Response & Risk Management',
+    category_ar: 'مفهوم أساسي',
+    category_en: 'Core Concept',
+    title_ar: 'مصفوفة المخاطر: معادلة تقييم الأولويات وتوجيه الميزانية',
+    title_en: 'Risk Matrix: Priority Assessment and Budget Allocation',
+    summary_ar: 'المخاطرة = الاحتمالية × الأثر. تُستخدم مصفوفة المخاطر لترتيب أولويات المعالجة وتوجيه ميزانية الأمن.',
+    summary_en: 'Risk = Likelihood x Impact. The risk matrix prioritizes remediations and allocates defensive spending.',
+    blocks: [
+      {
+        tag_ar: 'معادلة التقييم',
+        tag_en: 'Formula',
+        title_ar: 'معادلة حساب المخاطرة',
+        title_en: 'Risk Evaluation Formula',
+        text_ar: 'المخاطرة (Risk) = الاحتمالية (Likelihood) × الأثر (Impact)\n• الاحتمالية: ما مدى احتمال استغلال الضعف الأمني؟\n• الأثر: ما حجم الخسائر المالية والتشغيلية لو حدث الهجوم؟',
+        text_en: 'Risk = Likelihood x Impact\n• Likelihood: Probability of vulnerability discovery.\n• Impact: Magnitude of realized operational and financial loss.',
+      },
+      {
+        tag_ar: 'مستويات المصفوفة',
+        tag_en: 'Matrix Tiers',
+        title_ar: 'مستويات مصفوفة المخاطر وتصنيفها',
+        title_en: 'Matrix Priority Tiers',
+        text_ar: '• احتمالية مرتفعة + أثر مرتفع: مخاطرة حرجة (أولوية قصوى) تتطلب تدخلاً فورياً وتخصيص الميزانية.\n• احتمالية منخفضة + أثر مرتفع: مخاطرة جسيمة تُعالج غالباً بالنقل (كالتأمين الإلكتروني).\n• احتمالية منخفضة + أثر منخفض: مخاطرة ضعيفة تُقبل وتُراقب فقط.',
+        text_en: '• High Likelihood + High Impact: Critical risk demanding top-priority budget and immediate fix.\n• Low Likelihood + High Impact: Catastrophic risk typically managed via transfer (insurance).\n• Low Likelihood + Low Impact: Minor exposure usually accepted and monitored.',
+      },
+      {
+        tag_ar: 'الهدف النهائي',
+        tag_en: 'Primary Goal',
+        title_ar: 'الهدف الإداري لمصفوفة المخاطر',
+        title_en: 'Administrative Purpose',
+        text_ar: 'توجيه موارد المؤسسة المحدودة وفرق الأمن نحو المخاطر الأكثر تهديداً لمستقبل الشركة بدلاً من إهدار الميزانية عشوائياً.',
+        text_en: 'Channeling limited corporate capital and staff toward high-consequence exposures instead of random ad-hoc spending.',
+      },
+    ],
+    goldenRule_ar: 'مصفوفة المخاطر تجمع بين الاحتمالية والأثر، والمخاطر ذات الاحتمالية العالية والأثر العالي تُعالج أولاً.',
+    goldenRule_en: 'Risk matrices cross-tabulate likelihood and impact; high-likelihood, high-impact risks receive top remediation priority.',
+    checkQuestion_ar: 'سؤال سريع: ما المعياران اللذان تقيسهما مصفوفة المخاطر لتصنيف التهديدات؟',
+    checkQuestion_en: 'Quick Check: What two metrics form the axes of a risk assessment matrix?',
+    checkAnswer_ar: 'الإجابة: 1. احتمالية الحدوث (Likelihood)، 2. حجم الأثر والضرر (Impact).',
+    checkAnswer_en: 'Answer: 1. Likelihood of occurrence, and 2. Impact magnitude of damage.',
   },
 
   {
-    id: 'r2-3-05',
+    id: 'fc-16',
+    cardNumber: 16,
     lesson: '2-3',
-    type: 'TABLE',
-    typeLabel_ar: 'مقارنة معتمدة',
-    typeLabel_en: 'Comparison Table',
+    lessonName_ar: 'الدرس 2-3: الاستجابة للحوادث وإدارة المخاطر',
+    lessonName_en: 'Lesson 2-3: Incident Response & Risk Management',
+    category_ar: 'جدول مقارنة',
+    category_en: 'Strategies Grid',
     title_ar: 'الاستراتيجيات الأربع للتعامل مع المخاطر الأمنية',
     title_en: 'The Four Security Risk Treatment Strategies',
-    summary_ar: 'تتعامل المؤسسات مع المخاطر بأربع استراتيجيات: التجنب (إيقاف النشاط)، التخفيف (تقليل الضرر)، النقل (التأمين)، والقبول (التعايش معه).',
-    summary_en: 'Enterprises manage exposures via four strategies: Avoidance (stopping activity), Mitigation (reducing impact), Transfer (insurance), and Acceptance (retaining risk).',
-    content_ar:
-      'الاستراتيجيات الأربع المعتمدة في كتاب الوزارة:\n\n'
-      + '1. تجنب المخاطر (Risk Avoidance):\n'
-      + '• المعنى: إيقاف النشاط أو إلغاء الخدمة أو عدم استخدام التقنية التي تسبب الخطر بالكامل للتخلص منه.\n'
-      + '• متى تُستخدم؟ عندما تكون المخاطرة جسيمة وتكلفة حمايتها مستحيلة.\n'
-      + '• مثال وزاري معتمد: إيقاف استخدام نظام تشغيل قديم غير مدعوم بتحديثات أمنية واستبداله بالكامل.\n\n'
-      + '2. تخفيف المخاطر (Risk Mitigation):\n'
-      + '• المعنى: تطبيق ضوابط وإجراءات أمنية تقلل من احتمالية وقوع الخطر أو تقلل من حجم الضرر الناتج عنه.\n'
-      + '• متى تُستخدم؟ الاستراتيجية الأكثر شيوعاً في إدارة الأمن اليومية.\n'
-      + '• مثال وزاري معتمد: تثبيت جدار ناري، تفعيل برامج مكافحة الفيروسات، وتدريب الموظفين بانتظام.\n\n'
-      + '3. نقل المخاطر (Risk Transfer):\n'
-      + '• المعنى: تحويل المسؤولية المالية عن الخسائر الناتجة عن الحادث لطرف ثالث خارجي.\n'
-      + '• متى تُستخدم؟ عندما لا يمكن منع الخطر تقنياً بشكل كامل ويمكن تغطية آثاره مالياً.\n'
-      + '• مثال وزاري معتمد: شراء وثيقة تأمين ضد الهجمات الإلكترونية (Cyber Insurance) أو الاستعانة بمزود خدمة سحابي يتكفل بالتعويض.\n\n'
-      + '4. قبول المخاطر (Risk Acceptance):\n'
-      + '• المعنى: الإقرار بوجود الخطر والتعايش معه دون اتخاذ إجراء إضافي بعد دراسة واعية وموافقة الإدارة.\n'
-      + '• متى تُستخدم؟ عندما تكون تكلفة معالجة الخطر وتأمينه أعلى بكثير من قيمة الضرر المحتمل لو وقع الخطر.\n'
-      + '• مثال وزاري معتمد: قبول احتمالية توقف خادم طباعة داخلي لساعات لأن تكلفة توفير خادم احتياطي أعلى من قيمة الضرر.',
-    content_en:
-      'The Four Ministry Curriculum Strategies:\n\n'
-      + '1. Risk Avoidance:\n'
-      + '• Meaning: Terminating the vulnerable process or discarding the risky technology completely.\n'
-      + '• Context: When exposure is critical and effective defense is cost-prohibitive.\n'
-      + '• Example: Decommissioning an end-of-life legacy platform that no longer receives vendor security updates.\n\n'
-      + '2. Risk Mitigation:\n'
-      + '• Meaning: Deploying controls and safeguards to diminish likelihood or blunt impact.\n'
-      + '• Context: Primary routine baseline across corporate operations.\n'
-      + '• Example: Implementing firewalls, mandating MFA, and conducting regular phishing simulation workshops.\n\n'
-      + '3. Risk Transfer:\n'
-      + '• Meaning: Shifting financial liability for loss events onto external third parties.\n'
-      + '• Context: High-consequence risks unmanageable by internal technical mechanisms alone.\n'
-      + '• Example: Procuring a dedicated cyber insurance policy covering breach remediation and legal liabilities.\n\n'
-      + '4. Risk Acceptance:\n'
-      + '• Meaning: Formally acknowledging residual risk and operating without additional countermeasures.\n'
-      + '• Context: When mitigation expenditure substantially exceeds the potential loss value.\n'
-      + '• Example: Accepting brief internal printer server downtime because redundant failover clusters cost more than the delay.',
-    keyTakeaway_ar: 'قاعدة الامتحان: إيقاف النشاط = تجنب، تقليل الضرر = تخفيف، وثيقة تأمين = نقل، التكلفة أعلى من الضرر = قبول.',
-    keyTakeaway_en: 'Exam Rule: Stop activity = Avoidance, reduce impact = Mitigation, insurance policy = Transfer, cost exceeds harm = Acceptance.',
-    quickQuestion_ar: 'سؤال سريع: اشترت شركة وثيقة تأمين مالي ضد هجمات الفدية الإلكترونية. ما استراتيجية معالجة المخاطر المتبعة هنا؟',
-    quickQuestion_en: 'Quick Check: An enterprise purchases an insurance policy covering ransomware extortion. Which strategy is this?',
-    quickAnswer_ar: 'الإجابة: استراتيجية نقل المخاطر (Risk Transfer)؛ لأنها حولت العبء المالي لطرف ثالث (شركة التأمين).',
-    quickAnswer_en: 'Answer: Risk Transfer; the financial liability was transferred to an external third-party insurer.',
+    summary_ar: 'الاستراتيجيات الأربع: التجنب (إيقاف النشاط)، التخفيف (تقليل الضرر)، النقل (التأمين)، والقبول (التعايش معه).',
+    summary_en: 'The 4 strategies: Avoidance (stopping activity), Mitigation (reducing harm), Transfer (insurance), Acceptance (living with it).',
+    blocks: [
+      {
+        tag_ar: 'الاستراتيجية 1',
+        tag_en: 'Strategy 1',
+        title_ar: '1. تجنب المخاطر (Risk Avoidance)',
+        title_en: '1. Risk Avoidance',
+        text_ar: '• المعنى: إيقاف النشاط أو إلغاء الخدمة أو عدم استخدام التقنية المسببة للخطر كلياً.\n• مثال وزاري: إيقاف استخدام نظام تشغيل قديم غير مدعوم بتحديثات واستبداله بالكامل.',
+        text_en: '• Meaning: Ceasing the vulnerable process or discarding risky technology entirely.\n• Example: Retiring an end-of-life operating system that no longer receives security patches.',
+      },
+      {
+        tag_ar: 'الاستراتيجية 2',
+        tag_en: 'Strategy 2',
+        title_ar: '2. تخفيف المخاطر (Risk Mitigation)',
+        title_en: '2. Risk Mitigation',
+        text_ar: '• المعنى: تطبيق ضوابط أمنية تقلل من احتمالية الخطر أو حجم ضرره (الأكثر شيوعاً).\n• مثال وزاري: تثبيت جدار ناري، تفعيل برامج مكافحة الفيروسات، وتدريب الموظفين.',
+        text_en: '• Meaning: Deploying controls that diminish likelihood or blunt damage impact.\n• Example: Installing firewalls, enforcing MFA, and holding employee security training.',
+      },
+      {
+        tag_ar: 'الاستراتيجية 3',
+        tag_en: 'Strategy 3',
+        title_ar: '3. نقل المخاطر (Risk Transfer)',
+        title_en: '3. Risk Transfer',
+        text_ar: '• المعنى: تحويل المسؤولية والعبء المالي عن الخسارة لطرف ثالث خارجي.\n• مثال وزاري: شراء وثيقة تأمين ضد الهجمات الإلكترونية (Cyber Insurance).',
+        text_en: '• Meaning: Shifting financial liability for breach losses to an external third party.\n• Example: Purchasing a commercial cyber insurance policy.',
+      },
+      {
+        tag_ar: 'الاستراتيجية 4',
+        tag_en: 'Strategy 4',
+        title_ar: '4. قبول المخاطر (Risk Acceptance)',
+        title_en: '4. Risk Acceptance',
+        text_ar: '• المعنى: الإقرار بوجود الخطر والتعايش معه دون إجراء إضافي بعد دراسة واعية.\n• متى يُطبق؟ عندما تكون تكلفة معالجة الخطر وتأمينه أعلى من قيمة الضرر المحتمل لو حدث.\n• مثال وزاري: قبول خطر توقف خادم طباعة داخلي لأن توفير خادم احتياطي مكلف جداً مقارنة بالضرر.',
+        text_en: '• Meaning: Formally acknowledging residual risk and operating without extra controls.\n• When used: When remediation cost exceeds the potential loss value.\n• Example: Accepting brief internal printer server downtime because failover hardware costs too much.',
+      },
+    ],
+    goldenRule_ar: 'إيقاف النشاط = تجنب، تطبيق ضوابط = تخفيف، وثيقة تأمين = نقل، التكلفة أعلى من الضرر = قبول.',
+    goldenRule_en: 'Stop activity = Avoidance, apply controls = Mitigation, insurance policy = Transfer, cost exceeds loss = Acceptance.',
+    checkQuestion_ar: 'سؤال سريع: قررت إدارة بنك شراء وثيقة تأمين سيبراني تغطي تعويضات سرقة البيانات. ما الاستراتيجية المتبعة؟',
+    checkQuestion_en: 'Quick Check: A bank buys cyber insurance to cover customer data theft payouts. Which strategy is this?',
+    checkAnswer_ar: 'الإجابة: استراتيجية نقل المخاطر (Risk Transfer)؛ لأنها نقلت العبء المالي لشركة التأمين.',
+    checkAnswer_en: 'Answer: Risk Transfer; financial liability was transferred to the insurance provider.',
   },
 
   {
-    id: 'r2-3-06',
+    id: 'fc-17',
+    cardNumber: 17,
     lesson: '2-3',
-    type: 'CONCEPT',
-    typeLabel_ar: 'مفهوم أساسي',
-    typeLabel_en: 'Core Concept',
-    title_ar: 'التنسيق الخارجي أثناء الاستجابة: فرق CSIRT والهيئات القانونية',
-    title_en: 'External Coordination: CSIRT Teams, Legal Entities, and Providers',
-    summary_ar: 'يتطلب التعامل مع الحوادث الكبرى التنسيق مع جهات خارجية: فرق CSIRT الوطنية، السلطات القانونية والتنظيمية، ومزودي الخدمات التقنية.',
-    summary_en: 'Major incident handling requires coordination with external entities: CSIRTs, law enforcement, regulatory bodies, and service vendors.',
-    content_ar:
-      'أولاً: فرق الاستجابة لحوادث أمن الحاسوب (CSIRT):\n'
-      + '• فرق وطنية أو قطاعية متخصصة تقدم الدعم الفني والاستشاري للمؤسسات أثناء الحوادث الكبرى.\n'
-      + '• دورها: تحليل الهجمات المعقدة، وتنسيق الجهود بين الهيئات المختلفة، ومشاركة معلومات التهديدات المستجدة (Threat Intelligence).\n\n'
-      + 'ثانياً: السلطات القانونية والتنظيمية:\n'
-      + '• إبلاغ الأجهزة الأمنية والقضائية في حالات الجرائم الإلكترونية المنظمة للحفاظ على الأدلة وملاحقة الجناة.\n'
-      + '• الإبلاغ الإلزامي للهيئات الرقابية عند تسرب البيانات الشخصية في القطاعات الحساسة كالبنوك والرعاية الصحية وفق القانون.\n\n'
-      + 'ثالثاً: مزودو الخدمات التقنية (Service Providers):\n'
-      + '• التنسيق مع مزودي خدمة الإنترنت (ISPs) لحظر عناوين IP المهاجمة في هجمات حجب الخدمة (DDoS).\n'
-      + '• التنسيق مع شركات الاستضافة السحابية لعزل الخوادم الافتراضية المخترقة ومراجعة سجلات الاتصال.',
-    content_en:
-      '1. Computer Security Incident Response Teams (CSIRTs):\n'
-      + '• National and sector-level expert squads offering triage, advisory, and coordination during major emergencies.\n'
-      + '• Function: Deep forensic analysis, cross-agency alignment, and threat intelligence distribution.\n\n'
-      + '2. Law Enforcement and Regulatory Authorities:\n'
-      + '• Engaging cybercrime police units to ensure forensic chain of custody for legal prosecution.\n'
-      + '• Satisfying mandatory compliance disclosure windows for regulated banking or health privacy leaks.\n\n'
-      + '3. Technical Service Providers:\n'
-      + '• Teaming with Internet Service Providers (ISPs) to null-route hostile traffic during DDoS saturations.\n'
-      + '• Engaging cloud platform vendors to snapshot compromised virtual appliances and scrutinize access logs.',
-    keyTakeaway_ar: 'قاعدة الامتحان: التنسيق الخارجي ضروري في الحوادث الكبرى لتبادل معلومات التهديد مع CSIRT والالتزام بالقوانين وحظر الهجمات مع مزودي الخدمة.',
-    keyTakeaway_en: 'Exam Rule: External coordination engages CSIRTs for threat intelligence, law enforcement for compliance, and ISPs for traffic mitigation.',
-    quickQuestion_ar: 'سؤال سريع: ما اسم الفرق المتخصصة على المستوى الوطني أو القطاعي التي تقدم الدعم الفني وتشارك معلومات التهديدات أثناء الحوادث؟',
-    quickQuestion_en: 'Quick Check: What is the designation for specialized national incident response teams that coordinate technical aid and threat intelligence?',
-    quickAnswer_ar: 'الإجابة: فرق الاستجابة لحوادث أمن الحاسوب (CSIRT).',
-    quickAnswer_en: 'Answer: Computer Security Incident Response Teams (CSIRT).',
+    lessonName_ar: 'الدرس 2-3: الاستجابة للحوادث وإدارة المخاطر',
+    lessonName_en: 'Lesson 2-3: Incident Response & Risk Management',
+    category_ar: 'مفهوم أساسي',
+    category_en: 'Core Concept',
+    title_ar: 'التنسيق الخارجي: فرق CSIRT والهيئات القانونية ومزودو الخدمة',
+    title_en: 'External Coordination: CSIRTs, Legal Bodies, and Service Providers',
+    summary_ar: 'التعامل مع الحوادث الكبرى يتطلب التنسيق مع 3 جهات خارجية: فرق CSIRT، السلطات القانونية، ومزودو الخدمات.',
+    summary_en: 'Major incident handling requires coordination with CSIRTs, law enforcement, and service vendors.',
+    blocks: [
+      {
+        tag_ar: 'الجهة 1',
+        tag_en: 'Entity 1',
+        title_ar: '1. فرق CSIRT (فرق الاستجابة لحوادث أمن الحاسوب)',
+        title_en: '1. CSIRT Teams',
+        text_ar: 'فرق متخصصة على المستوى الوطني أو القطاعي تقدم الدعم الفني والاستشاري للمؤسسات أثناء الطوارئ، وتشارك معلومات التهديدات المستجدة.',
+        text_en: 'National or sector response squads providing triage advisory and threat intelligence sharing during major emergencies.',
+      },
+      {
+        tag_ar: 'الجهة 2',
+        tag_en: 'Entity 2',
+        title_ar: '2. السلطات القانونية والتنظيمية',
+        title_en: '2. Law Enforcement & Regulators',
+        text_ar: 'إبلاغ أجهزة مكافحة الجرائم الإلكترونية لملاحقة المهاجمين وحفظ الأدلة الجنائية، والامتثال لقوانين حماية البيانات عند تسرب بيانات العملاء.',
+        text_en: 'Engaging cybercrime authorities for forensic evidence custody and fulfilling mandatory regulatory disclosure windows.',
+      },
+      {
+        tag_ar: 'الجهة 3',
+        tag_en: 'Entity 3',
+        title_ar: '3. مزودو الخدمات التقنية (ISPs & Cloud)',
+        title_en: '3. Service Providers',
+        text_ar: 'التنسيق مع مزودي خدمة الإنترنت لحظر عناوين IP في هجمات DDoS، والتنسيق مع شركات الاستضافة السحابية لعزل الخوادم الافتراضية المخترقة.',
+        text_en: 'Coordinating with ISPs to drop DDoS flood packets and engaging cloud hosts to snapshot compromised virtual nodes.',
+      },
+    ],
+    goldenRule_ar: 'التنسيق الخارجي ضروري في الحوادث الكبرى: CSIRT للدعم والمعلومات، السلطات للقانون والأدلة، ومزودو الخدمة لحظر الهجمات.',
+    goldenRule_en: 'External coordination: CSIRT for threat intelligence, law enforcement for legal evidence, ISPs for blocking attacks.',
+    checkQuestion_ar: 'سؤال سريع: ما اسم الفرق المتخصصة وطنياً التي تقدم الدعم الفني وتنسق الاستجابة بين المؤسسات؟',
+    checkQuestion_en: 'Quick Check: What is the designation for national teams providing technical support and threat coordination?',
+    checkAnswer_ar: 'الإجابة: فرق الاستجابة لحوادث أمن الحاسوب (CSIRT).',
+    checkAnswer_en: 'Answer: Computer Security Incident Response Teams (CSIRT).',
   },
 
-  {
-    id: 'r2-3-07',
-    lesson: '2-3',
-    type: 'EXAM_HINT',
-    typeLabel_ar: 'سر امتحاني',
-    typeLabel_en: 'Exam Strategy',
-    title_ar: 'الكلمات المفتاحية المعتمدة لأسئلة الدرس الثالث في الامتحان',
-    title_en: 'Approved Trigger Keywords for Lesson 2-3 Questions',
-    summary_ar: 'دليل ربط المصطلحات بالكلمات المفتاحية الأكثر تكراراً في تقييمات الوزارة الرسمية للدرس 2-3.',
-    summary_en: 'Keyword mapping reference for Lesson 2-3 incident response and risk management questions.',
-    content_ar:
-      'دليل الكلمات المفتاحية وسرعة الحل:\n\n'
-      + '1. "موقف يحدث فيه ضرر فعلي للأصول أو الأنظمة":\n'
-      + '   الحل المباشر: الحادث الأمني (Security Incident).\n\n'
-      + '2. "وضع الخطط وتدريب الفريق وتجهيز النسخ الاحتياطية قبل الهجوم":\n'
-      + '   الحل المباشر: مرحلة التحضير (Preparation).\n\n'
-      + '3. "رصد وتأكيد الحادث وتحديد نطاقه ومصدره المبدئي":\n'
-      + '   الحل المباشر: مرحلة الاكتشاف والتحليل (Detection).\n\n'
-      + '4. "عزل الأجهزة المتضررة وفصل كابل الشبكة لوقف الانتشار":\n'
-      + '   الحل المباشر: مرحلة الاحتواء (Containment).\n\n'
-      + '5. "حذف البرمجيات الخبيثة وسد الثغرة الأمنية بالكامل":\n'
-      + '   الحل المباشر: مرحلة الاستئصال أو إزالة التهديد (Eradication).\n\n'
-      + '6. "استعادة البيانات من نسخ احتياطية سليمة وإعادة التشغيل":\n'
-      + '   الحل المباشر: مرحلة الاستعادة (Recovery).\n\n'
-      + '7. "تحليل الحادث وتحديث السياسات وتدريب الموظفين لمنع تكراره":\n'
-      + '   الحل المباشر: مرحلة منع التكرار / الدروس المستفادة (Lessons Learned).\n\n'
-      + '8. "الاحتمالية × الأثر لتحديد أولوية المعالجة وتوجيه الميزانية":\n'
-      + '   الحل المباشر: مصفوفة المخاطر (Risk Matrix).\n\n'
-      + '9. "إيقاف النشاط تماماً للتخلص من الخطر":\n'
-      + '   الحل المباشر: تجنب المخاطر (Risk Avoidance).\n\n'
-      + '10. "تطبيق ضوابط أمنية لتقليل احتمالية أو حجم الضرر":\n'
-      + '   الحل المباشر: تخفيف المخاطر (Risk Mitigation).\n\n'
-      + '11. "شراء وثيقة تأمين إلكتروني / تحويل العبء المالي":\n'
-      + '   الحل المباشر: نقل المخاطر (Risk Transfer).\n\n'
-      + '12. "التعايش مع الخطر لأن تكلفة معالجته أعلى من قيمة الضرر":\n'
-      + '   الحل المباشر: قبول المخاطر (Risk Acceptance).',
-    content_en:
-      'Keyword Mapping Reference:\n\n'
-      + '1. "Actual damage occurring to information assets":\n'
-      + '   Select: Security Incident.\n\n'
-      + '2. "Proactive plans, team drill training, and backups pre-attack":\n'
-      + '   Select: Preparation stage.\n\n'
-      + '3. "Identifying and confirming adverse event scope":\n'
-      + '   Select: Detection stage.\n\n'
-      + '4. "Isolating infected hosts to stop lateral spread":\n'
-      + '   Select: Containment stage.\n\n'
-      + '5. "Purging malware binaries and patching root flaws":\n'
-      + '   Select: Eradication stage.\n\n'
-      + '6. "Restoring operational databases from verified backups":\n'
-      + '   Select: Recovery stage.\n\n'
-      + '7. "Post-incident analysis updating policies against recurrence":\n'
-      + '   Select: Lessons Learned / Prevention of Recurrence.\n\n'
-      + '8. "Likelihood times impact to prioritize security spend":\n'
-      + '   Select: Risk Matrix.\n\n'
-      + '9. "Ceasing operations completely to eliminate risk":\n'
-      + '   Select: Risk Avoidance.\n\n'
-      + '10. "Deploying controls reducing likelihood or impact":\n'
-      + '   Select: Risk Mitigation.\n\n'
-      + '11. "Purchasing cyber insurance policy":\n'
-      + '   Select: Risk Transfer.\n\n'
-      + '12. "Tolerating exposure because fix costs exceed loss potential":\n'
-      + '   Select: Risk Acceptance.',
-    keyTakeaway_ar: 'قاعدة الامتحان: تأكد دائماً أن مرحلة فصل الكابل وعزل الجهاز هي "الاحتواء"، وأن مرحلة حذف الفيروس هي "الاستئصال".',
-    keyTakeaway_en: 'Exam Rule: Host disconnection is always Containment; purging malware binaries is always Eradication.',
-    quickQuestion_ar: 'سؤال سريع: ما الفرق في التسمية والوظيفة بين مرحلة "الاحتواء" ومرحلة "الاستئصال"؟',
-    quickQuestion_en: 'Quick Check: What differentiates the objective of Containment from Eradication?',
-    quickAnswer_ar: 'الإجابة: الاحتواء يهدف لعزل الجزء المتضرر لوقف انتشار الهجوم، والاستئصال يهدف لحذف وتنظيف السبب الجذري للحادث بالكامل.',
-    quickAnswer_en: 'Answer: Containment isolates infected systems to arrest spread; Eradication eliminates the root vulnerability and malware entirely.',
-  },
-];
+  // ════════════════════════════════════════════════════════════
+  // EXAM NIGHT CAPSULES: كبسولات ليلة الامتحان المركزة
+  // ════════════════════════════════════════════════════════════
 
-// ─────────────────────────────────────────────────────────────
-// QUICK CAPSULES: كبسولات المراجعة المركزة
-// ─────────────────────────────────────────────────────────────
-export const REVIEW_QUICK_REF: ReviewCard[] = [
   {
-    id: 'capsule-2-1',
+    id: 'fc-18',
+    cardNumber: 18,
     lesson: '2-1',
-    type: 'QUICK_REF',
-    typeLabel_ar: 'كبسولة ليلة الامتحان',
-    typeLabel_en: 'Exam Capsule',
-    title_ar: 'كبسولة الدرس 2-1: التشفير والمصادقة',
-    title_en: 'Lesson 2-1 Capsule: Cryptography & Authentication',
-    summary_ar: 'ملخص شامل ومكثف لأهم نقاط الدرس 2-1 للمراجعة السريعة قبل الامتحان.',
-    summary_en: 'High-density review capsule covering all essential Lesson 2-1 concepts.',
-    content_ar:
-      '1. معادلة HTTPS:\n'
-      + 'HTTPS = HTTP + TLS ← يوفر السرية، السلامة، والمصادقة.\n\n'
-      + '2. قواعد التشفير في مصافحة TLS:\n'
-      + '• مرحلة 1 (الاتصال والتعريف) + مرحلة 2 (تبادل مفتاح الجلسة) ← تشفير بالمفتاح العام (غير متماثل).\n'
-      + '• مرحلة 3 (نقل البيانات الضخمة) ← تشفير بالمفتاح المشترك (المتماثل) للسرعة العالية.\n\n'
-      + '3. الشهادة الرقمية:\n'
-      + 'بطاقة هوية الخادم الصادرة من سلطة CA موثوقة، وتحتوي على المفتاح العام للخادم وتوقيع CA.\n\n'
-      + '4. التوقيع الرقمي:\n'
-      + 'يُنشأ بالمفتاح الخاص للمرسل ويُفحص بالمفتاح العام للمرسل، ويضمن: كشف التلاعب + كشف الانتحال + عدم الإنكار.\n\n'
-      + '5. المصادقة متعددة العوامل (MFA):\n'
-      + 'تشترط الجمع بين عاملين أو أكثر من فئات مختلفة: المعرفة (ما تعرفه) + الحيازة (ما تملكه) + السمات الحيوية (ما أنت عليه). استخدام عاملين من نفس الفئة ليس MFA.',
-    content_en:
-      '1. HTTPS Formula:\n'
-      + 'HTTPS = HTTP + TLS delivering Confidentiality, Integrity, and Authentication.\n\n'
-      + '2. TLS Handshake Cryptography Rules:\n'
-      + '• Phases 1 and 2 utilize Public-Key (asymmetric) encryption for identity verification and session key negotiation.\n'
-      + '• Phase 3 utilizes Common-Key (symmetric) encryption for fast, high-volume data payloads.\n\n'
-      + '3. Digital Certificates:\n'
-      + 'Server credentials issued by a trusted CA, containing server public keys and cryptographic CA signatures.\n\n'
-      + '4. Digital Signatures:\n'
-      + 'Created using the sender\'s private key and verified with their public key; delivers tamper detection, sender verification, and non-repudiation.\n\n'
-      + '5. Multi-Factor Authentication (MFA):\n'
-      + 'Requires credentials from two or more distinct categories: Knowledge, Possession, and Biometrics. Two factors from one category fails MFA standards.',
-    keyTakeaway_ar: 'قاعدة ذهبية: المتماثل للسرعة ونقل البيانات، وغير المتماثل لتبادل المفاتيح، والشهادة للخادم، والتوقيع للمستند، و MFA فئات مختلفة.',
-    keyTakeaway_en: 'Golden Rule: Symmetric for payload speed, asymmetric for key exchange, certificates for servers, signatures for documents, MFA across different categories.',
-    quickQuestion_ar: 'سؤال سريع: اذكر نوع التشفير المستخدم في كل من: أ) مصافحة تبادل مفتاح الجلسة، ب) نقل بيانات الجلسة بعد المصافحة.',
-    quickQuestion_en: 'Quick Check: Identify the cipher type used in: a) session key handshake, b) payload transmission post-handshake.',
-    quickAnswer_ar: 'الإجابة: أ) التشفير غير المتماثل (بالمفتاح العام)، ب) التشفير المتماثل (بالمفتاح المشترك).',
-    quickAnswer_en: 'Answer: a) Asymmetric (public-key) cipher, b) Symmetric (common-key) cipher.',
+    lessonName_ar: 'الدرس 2-1: تقنيات التشفير والمصادقة',
+    lessonName_en: 'Lesson 2-1: Cryptography & Authentication',
+    category_ar: 'كبسولة ليلة الامتحان',
+    category_en: 'Exam Capsule',
+    title_ar: 'كبسولة ملخص الدرس 2-1 ليلة الامتحان',
+    title_en: 'Lesson 2-1 Night Before Exam Summary Capsule',
+    summary_ar: 'خلاصة مركزة في 5 نقاط رئيسية تغطي كل أسئلة الدرس الأول المحتملة في الامتحان.',
+    summary_en: 'Five high-density bullet points covering all high-probability Lesson 2-1 exam questions.',
+    blocks: [
+      {
+        tag_ar: 'النقطة 1',
+        tag_en: 'Point 1',
+        title_ar: 'HTTPS وضماناته الثلاث',
+        title_en: 'HTTPS & 3 Guarantees',
+        text_ar: 'HTTPS = HTTP + TLS. يوفر: السرية (تشفير) + السلامة (كشف التلاعب) + المصادقة (إثبات هوية الخادم).',
+        text_en: 'HTTPS = HTTP + TLS delivering Confidentiality (encryption) + Integrity (tamper check) + Authentication (server identity).',
+      },
+      {
+        tag_ar: 'النقطة 2',
+        tag_en: 'Point 2',
+        title_ar: 'نوع التشفير في مراحل TLS',
+        title_en: 'TLS Cipher Rules',
+        text_ar: 'المرحلة 1 و 2 (الاتصال وتبادل المفتاح) = تشفير غير متماثل (مفتاح عام). المرحلة 3 (نقل البيانات) = تشفير متماثل (مفتاح مشترك للسرعة).',
+        text_en: 'Stages 1 & 2 (connect/exchange) = asymmetric public-key. Stage 3 (data transfer) = symmetric common-key for speed.',
+      },
+      {
+        tag_ar: 'النقطة 3',
+        tag_en: 'Point 3',
+        title_ar: 'الشهادة الرقمية مقابل التوقيع الرقمي',
+        title_en: 'Certificate vs Signature',
+        text_ar: '• الشهادة الرقمية: تثبت هوية الخادم وتصدرها CA.\n• التوقيع الرقمي: يثبت صحة المستند وهوية المرسل وعدم الإنكار.',
+        text_en: '• Certificate: Authenticates server identity issued by CA.\n• Signature: Authenticates document integrity, author, and non-repudiation.',
+      },
+      {
+        tag_ar: 'النقطة 4',
+        tag_en: 'Point 4',
+        title_ar: 'فئات المصادقة متعددة العوامل (MFA)',
+        title_en: 'MFA Categories',
+        text_ar: '1. المعرفة (كلمة مرور / PIN)، 2. الحيازة (هاتف / بطاقة ذكية)، 3. السمات الحيوية (بصمة إصبع / وجه). استخدام عاملين من نفس الفئة ليس MFA.',
+        text_en: '1. Knowledge (password/PIN), 2. Possession (phone/card), 3. Biometrics (fingerprint/face). Single-category pairs fail MFA.',
+      },
+    ],
+    goldenRule_ar: 'خلاصة الدرس 1: المتماثل للسرعة، وغير المتماثل لتبادل المفاتيح، والشهادة للخادم، والتوقيع للوثيقة، و MFA فئات مختلفة.',
+    goldenRule_en: 'Lesson 1 Digest: Symmetric for speed, asymmetric for keys, certificates for servers, signatures for documents, MFA across categories.',
+    checkQuestion_ar: 'سؤال سريع: هل يعتبر إدخال كلمة مرور ثم رقم PIN مصادقة متعددة العوامل؟ ولماذا؟',
+    checkQuestion_en: 'Quick Check: Does entering a password followed by a PIN constitute MFA? Why?',
+    checkAnswer_ar: 'الإجابة: لا؛ لأن كلاهما ينتمي لفئة المعرفة (شيء تعرفه).',
+    checkAnswer_en: 'Answer: No; both belong to the Knowledge category (something you know).',
   },
 
   {
-    id: 'capsule-2-2',
+    id: 'fc-19',
+    cardNumber: 19,
     lesson: '2-2',
-    type: 'QUICK_REF',
-    typeLabel_ar: 'كبسولة ليلة الامتحان',
-    typeLabel_en: 'Exam Capsule',
-    title_ar: 'كبسولة الدرس 2-2: تصميم أمان الشبكات',
-    title_en: 'Lesson 2-2 Capsule: Network Security Design',
-    summary_ar: 'ملخص شامل ومكثف لأهم نقاط الدرس 2-2 للمراجعة السريعة قبل الامتحان.',
-    summary_en: 'High-density review capsule covering all essential Lesson 2-2 concepts.',
-    content_ar:
-      '1. جدار الحماية (Firewall):\n'
-      + 'يتحكم في حركة المرور عند مدخل الشبكة ويسمح أو يمنع وفق قواعد مسبقة لمنافذ وعناوين IP، ولا يفحص محتوى الملفات من الفيروسات.\n\n'
-      + '2. الشبكة الافتراضية الخاصة (VPN):\n'
-      + 'نفق مشفر عبر شبكة عامة يمنع التنصت ويؤمن العمل عن بعد والاتصال عبر شبكات Wi-Fi المفتوحة.\n\n'
-      + '3. المنطقة المعزولة (DMZ):\n'
-      + 'شبكة وسيطة تضم الخوادم العامة (ويب، بريد) وتعزلها عن الشبكة الداخلية لحماية قواعد البيانات الحساسة عند اختراق الخادم.\n\n'
-      + '4. الدفاع في العمق (Defense in Depth):\n'
-      + 'طبقات متتالية لمنع نقاط الفشل الفردية:\n'
-      + '• مدخل الشبكة = Firewall\n'
-      + '• مسار الاتصال = VPN والتشفير\n'
-      + '• وضع الخوادم = DMZ\n'
-      + '• الأجهزة الطرفية = مضاد الفيروسات والتحديثات\n\n'
-      + '5. نهج انعدام الثقة (Zero Trust):\n'
-      + 'الشعار: "لا تثق بأحد، وتحقق دائماً". المبادئ: التحقق المستمر + الحد الأدنى من الصلاحيات + افتراض الاختراق. معايير الفحص: الهوية، الصلاحيات، والسياق.',
-    content_en:
-      '1. Firewalls:\n'
-      + 'Inspect and filter packet headers at network ingress using predefined IP and port rules; does not disinfect payload files.\n\n'
-      + '2. Virtual Private Networks (VPN):\n'
-      + 'Encrypted tunnels across public networks preventing wiretapping for remote work and public Wi-Fi security.\n\n'
-      + '3. Demilitarized Zones (DMZ):\n'
-      + 'Intermediate screened subnets hosting public servers, insulating internal databases against lateral compromise.\n\n'
-      + '4. Defense in Depth Framework:\n'
-      + 'Eliminates single points of failure via layered controls:\n'
-      + '• Entry = Firewall\n'
-      + '• Path = VPN & Encryption\n'
-      + '• Placement = DMZ\n'
-      + '• Endpoints = Antivirus & Updates\n\n'
-      + '5. Zero Trust Architecture:\n'
-      + 'Motto: "Never Trust, Always Verify". Enforces continuous verification, least privilege, and assumed breach against identity, permissions, and context.',
-    keyTakeaway_ar: 'قاعدة ذهبية: جدار الحماية يفرز، و VPN يشفر النفق، و DMZ تعزل الخوادم، و الدفاع في العمق 4 طبقات، و Zero Trust يلغي الثقة التلقائية.',
-    keyTakeaway_en: 'Golden Rule: Firewalls filter, VPN tunnels encrypt, DMZ isolates, Defense in Depth layers four controls, Zero Trust eliminates implicit trust.',
-    quickQuestion_ar: 'سؤال سريع: اذكر الطبقات الأربع لاستراتيجية الدفاع في العمق مع الإجراء الأمني المعتمد لكل طبقة.',
-    quickQuestion_en: 'Quick Check: List the four Defense in Depth layers alongside their assigned security controls.',
-    quickAnswer_ar: 'الإجابة: 1. مدخل الشبكة (جدار الحماية)، 2. مسار الاتصال (VPN والتشفير)، 3. وضع الخوادم (المنطقة المعزولة DMZ)، 4. الأجهزة الطرفية (مكافحة الفيروسات والتحديثات).',
-    quickAnswer_en: 'Answer: 1. Entry (Firewall), 2. Path (VPN/Encryption), 3. Placement (DMZ), 4. Endpoints (Antivirus/Patching).',
+    lessonName_ar: 'الدرس 2-2: تصميم أمان الشبكات',
+    lessonName_en: 'Lesson 2-2: Network Security Design',
+    category_ar: 'كبسولة ليلة الامتحان',
+    category_en: 'Exam Capsule',
+    title_ar: 'كبسولة ملخص الدرس 2-2 ليلة الامتحان',
+    title_en: 'Lesson 2-2 Night Before Exam Summary Capsule',
+    summary_ar: 'خلاصة مركزة في 5 نقاط رئيسية تغطي كل أسئلة الدرس الثاني المحتملة في الامتحان.',
+    summary_en: 'Five high-density bullet points covering all high-probability Lesson 2-2 exam questions.',
+    blocks: [
+      {
+        tag_ar: 'النقطة 1',
+        tag_en: 'Point 1',
+        title_ar: 'جدار الحماية (Firewall)',
+        title_en: 'Firewall',
+        text_ar: 'يتحكم في حركة المرور عند مدخل الشبكة ويسمح أو يمنع وفق قواعد لمنافذ وعناوين IP، ولا يفحص محتوى الملفات من الفيروسات.',
+        text_en: 'Filters ingress/egress packets at network entry matching port/IP rules; does not inspect file payloads for viruses.',
+      },
+      {
+        tag_ar: 'النقطة 2',
+        tag_en: 'Point 2',
+        title_ar: 'الشبكة الافتراضية الخاصة (VPN)',
+        title_en: 'VPN',
+        text_ar: 'نفق مشفر عبر شبكة عامة يمنع التنصت ويؤمن العمل عن بعد والاتصال بشبكات Wi-Fi المفتوحة.',
+        text_en: 'Encrypted tunnel over public networks preventing wiretapping for remote work and open Wi-Fi safety.',
+      },
+      {
+        tag_ar: 'النقطة 3',
+        tag_en: 'Point 3',
+        title_ar: 'المنطقة المعزولة (DMZ)',
+        title_en: 'DMZ',
+        text_ar: 'شبكة وسيطة تضم خوادم الويب والبريد العامة وتعزلها عن الشبكة الداخلية لحماية قواعد البيانات عند الاختراق.',
+        text_en: 'Screened subnet hosting public web/mail servers, isolating internal databases if perimeter servers are compromised.',
+      },
+      {
+        tag_ar: 'النقطة 4',
+        tag_en: 'Point 4',
+        title_ar: 'الطبقات الأربع للدفاع في العمق',
+        title_en: '4 Layers of Defense in Depth',
+        text_ar: '1. مدخل الشبكة = Firewall، 2. مسار الاتصال = VPN، 3. وضع الخوادم = DMZ، 4. الأجهزة الطرفية = مكافحة الفيروسات.',
+        text_en: '1. Entry = Firewall, 2. Path = VPN, 3. Placement = DMZ, 4. Endpoints = Antivirus/Patching.',
+      },
+      {
+        tag_ar: 'النقطة 5',
+        tag_en: 'Point 5',
+        title_ar: 'نهج انعدام الثقة (Zero Trust)',
+        title_en: 'Zero Trust',
+        text_ar: 'الشعار: "لا تثق بأحد، وتحقق دائماً". التحقق المستمر + أقل الامتيازات + فحص الهوية والصلاحيات والسياق.',
+        text_en: 'Motto: "Never Trust, Always Verify". Enforces continuous verification, least privilege, and context assessment.',
+      },
+    ],
+    goldenRule_ar: 'خلاصة الدرس 2: جدار الحماية يفرز، و VPN يشفر، و DMZ تعزل، والدفاع في العمق 4 طبقات، و Zero Trust يلغي الثقة التلقائية.',
+    goldenRule_en: 'Lesson 2 Digest: Firewalls filter, VPNs encrypt, DMZs isolate, Defense in Depth layers 4 controls, Zero Trust ends implicit trust.',
+    checkQuestion_ar: 'سؤال سريع: ما المكون الأمني الذي يحمي قواعد البيانات الداخلية إذا تم اختراق خادم الويب العام؟',
+    checkQuestion_en: 'Quick Check: Which security component shields internal databases if a public web server is breached?',
+    checkAnswer_ar: 'الإجابة: المنطقة المعزولة (DMZ).',
+    checkAnswer_en: 'Answer: Demilitarized Zone (DMZ).',
   },
 
   {
-    id: 'capsule-2-3',
+    id: 'fc-20',
+    cardNumber: 20,
     lesson: '2-3',
-    type: 'QUICK_REF',
-    typeLabel_ar: 'كبسولة ليلة الامتحان',
-    typeLabel_en: 'Exam Capsule',
-    title_ar: 'كبسولة الدرس 2-3: الاستجابة للحوادث وإدارة المخاطر',
-    title_en: 'Lesson 2-3 Capsule: Incident Response & Risk Management',
-    summary_ar: 'ملخص شامل ومكثف لأهم نقاط الدرس 2-3 للمراجعة السريعة قبل الامتحان.',
-    summary_en: 'High-density review capsule covering all essential Lesson 2-3 concepts.',
-    content_ar:
-      '1. الحادث الأمني (Security Incident):\n'
-      + 'ضرر فعلي واقع على الأصول. أمثلته الثلاثة: تسرب المعلومات (سرية) + التلاعب بالبيانات (سلامة) + انقطاع الخدمة (توافر).\n\n'
-      + '2. المراحل الست بالترتيب الإلزامي:\n'
-      + '1. التحضير (استباقي مسبقاً) ← 2. الاكتشاف والتحليل (رصد الحادث) ← 3. الاحتواء (عزل وفصل الجهاز) ← 4. الاستئصال (حذف الفيروس وسد الثغرة) ← 5. الاستعادة (استرجاع النسخ الاحتياطية) ← 6. منع التكرار / الدروس المستفادة (تحليل وتطوير).\n\n'
-      + '3. قاعدة الأسبقية الحرجة:\n'
-      + 'الاحتواء يسبق الاستئصال حتماً؛ اعزل أولاً لوقف انتشار الحريق، ثم احذف السبب الجذري.\n\n'
-      + '4. مصفوفة المخاطر:\n'
-      + 'المخاطرة = الاحتمالية × الأثر. المخاطر ذات الاحتمالية العالية والأثر العالي هي الأولوية القصوى لمعالجة الميزانية.\n\n'
-      + '5. استراتيجيات معالجة المخاطر الأربع:\n'
-      + '• تجنب المخاطر: إيقاف النشاط المسبب للخطر كلياً.\n'
-      + '• تخفيف المخاطر: تطبيق ضوابط لتقليل الاحتمالية أو الأثر.\n'
-      + '• نقل المخاطر: تحويل المسؤولية المالية لطرف ثالث (شراء وثيقة تأمين).\n'
-      + '• قبول المخاطر: التعايش مع الخطر لأن تكلفة معالجته أعلى من قيمة الضرر المحتمل.\n\n'
-      + '6. التنسيق الخارجي: فرق CSIRT للدعم الفني وتبادل معلومات التهديد، والهيئات القانونية للامتثال الجنائي، ومزودو الخدمة لحظر الهجمات.',
-    content_en:
-      '1. Security Incident:\n'
-      + 'Realized harm to assets. The three examples: Leaks (Confidentiality), Tampering (Integrity), Outages (Availability).\n\n'
-      + '2. The Six Ordered Lifecycle Stages:\n'
-      + '1. Preparation (proactive drills) → 2. Detection (identification) → 3. Containment (isolation/quarantine) → 4. Eradication (root cleanup) → 5. Recovery (backup restore) → 6. Lessons Learned (policy updates).\n\n'
-      + '3. Critical Precedence Rule:\n'
-      + 'Containment must precede Eradication; isolate to halt infection spread before purging malware.\n\n'
-      + '4. Risk Evaluation Matrix:\n'
-      + 'Risk = Likelihood x Impact. High-likelihood, high-impact risks receive top-priority remediation.\n\n'
-      + '5. Four Risk Handling Strategies:\n'
-      + '• Avoidance: Ceasing the risky process.\n'
-      + '• Mitigation: Applying technical controls reducing likelihood/impact.\n'
-      + '• Transfer: Shifting financial liability to insurers.\n'
-      + '• Acceptance: Retaining risk because remediation cost exceeds loss value.\n\n'
-      + '6. External Incident Alignment: CSIRTs for technical and threat intelligence, law enforcement for legal compliance, ISPs for bandwidth defense.',
-    keyTakeaway_ar: 'قاعدة ذهبية: الحادث = ضرر فعلي، الاحتواء قبل الاستئصال، المصفوفة = احتمالية × أثر، والاستراتيجيات: تجنب (إيقاف) وتخفيف (تقليل) ونقل (تأمين) وقبول (تعايش).',
-    keyTakeaway_en: 'Golden Rule: Incidents require actual damage, Containment precedes Eradication, Risk equals Likelihood x Impact, Strategies are Avoid, Mitigate, Transfer, Accept.',
-    quickQuestion_ar: 'سؤال سريع: ما الاستراتيجية المناسبة عندما تقرر إدارة المؤسسة عدم ترقية برنامج قديم لأن تكلفة الترقية تفوق أي خسارة محتملة؟',
-    quickQuestion_en: 'Quick Check: Which risk strategy applies when management chooses not to patch an old tool because patch costs exceed loss potential?',
-    quickAnswer_ar: 'الإجابة: قبول المخاطر (Risk Acceptance).',
-    quickAnswer_en: 'Answer: Risk Acceptance.',
+    lessonName_ar: 'الدرس 2-3: الاستجابة للحوادث وإدارة المخاطر',
+    lessonName_en: 'Lesson 2-3: Incident Response & Risk Management',
+    category_ar: 'كبسولة ليلة الامتحان',
+    category_en: 'Exam Capsule',
+    title_ar: 'كبسولة ملخص الدرس 2-3 ليلة الامتحان',
+    title_en: 'Lesson 2-3 Night Before Exam Summary Capsule',
+    summary_ar: 'خلاصة مركزة في 5 نقاط رئيسية تغطي كل أسئلة الدرس الثالث المحتملة في الامتحان.',
+    summary_en: 'Five high-density bullet points covering all high-probability Lesson 2-3 exam questions.',
+    blocks: [
+      {
+        tag_ar: 'النقطة 1',
+        tag_en: 'Point 1',
+        title_ar: 'الحادث الأمني وأمثلته الثلاثة',
+        title_en: 'Security Incident & 3 Examples',
+        text_ar: 'ضرر فعلي واقع على الأصول: 1. تسرب المعلومات (سرية)، 2. التلاعب بالبيانات (سلامة)، 3. انقطاع الخدمة (توافر).',
+        text_en: 'Realized harm to assets: 1. Leak (Confidentiality), 2. Tampering (Integrity), 3. Outage (Availability).',
+      },
+      {
+        tag_ar: 'النقطة 2',
+        tag_en: 'Point 2',
+        title_ar: 'المراحل الست بالترتيب الإلزامي',
+        title_en: 'Six Ordered Stages',
+        text_ar: '1. تحضير ← 2. اكتشاف ← 3. احتواء ← 4. استئصال ← 5. استعادة ← 6. منع التكرار (دروس مستفادة).',
+        text_en: '1. Preparation → 2. Detection → 3. Containment → 4. Eradication → 5. Recovery → 6. Lessons Learned.',
+      },
+      {
+        tag_ar: 'النقطة 3',
+        tag_en: 'Point 3',
+        title_ar: 'قاعدة الأسبقية',
+        title_en: 'Precedence Rule',
+        text_ar: 'الاحتواء (عزل وفصل الجهاز) يسبق الاستئصال (حذف الفيروس) حتماً لوقف انتشار الهجوم لباقي الأجهزة.',
+        text_en: 'Containment (quarantine/unplug) strictly precedes Eradication (cleanup) to halt lateral infection propagation.',
+      },
+      {
+        tag_ar: 'النقطة 4',
+        tag_en: 'Point 4',
+        title_ar: 'مصفوفة المخاطر والاستراتيجيات الأربع',
+        title_en: 'Risk Matrix & 4 Strategies',
+        text_ar: 'المخاطرة = الاحتمالية × الأثر. الاستراتيجيات: تجنب (إيقاف النشاط)، تخفيف (ضوابط)، نقل (تأمين)، قبول (التعايش معه).',
+        text_en: 'Risk = Likelihood x Impact. Strategies: Avoidance (stop), Mitigation (controls), Transfer (insurance), Acceptance (retain).',
+      },
+      {
+        tag_ar: 'النقطة 5',
+        tag_en: 'Point 5',
+        title_ar: 'التنسيق الخارجي',
+        title_en: 'External Coordination',
+        text_ar: 'فرق CSIRT للدعم الفني والمعلومات، السلطات القانونية للأدلة والامتثال، ومزودو الخدمة لحظر الهجمات.',
+        text_en: 'CSIRTs for technical triage and threat intel, law enforcement for compliance, ISPs for blocking flood traffic.',
+      },
+    ],
+    goldenRule_ar: 'خلاصة الدرس 3: الحادث = ضرر فعلي، الاحتواء قبل الاستئصال، المصفوفة = احتمالية × أثر، والاستراتيجيات: تجنب وتخفيف ونقل وقبول.',
+    goldenRule_en: 'Lesson 3 Digest: Incidents require actual damage, Containment precedes Eradication, Risk = Likelihood x Impact, 4 strategies: Avoid, Mitigate, Transfer, Accept.',
+    checkQuestion_ar: 'سؤال سريع: اذكر الترتيب الصحيح للمرحلتين 3 و 4 في دورة الاستجابة للحوادث.',
+    checkQuestion_en: 'Quick Check: State the correct order between stages 3 and 4 in incident response.',
+    checkAnswer_ar: 'الإجابة: مرحلة الاحتواء (3) تسبق مرحلة الاستئصال وإزالة التهديد (4).',
+    checkAnswer_en: 'Answer: Containment (Stage 3) strictly precedes Eradication (Stage 4).',
   },
-];
-
-// ─────────────────────────────────────────────────────────────
-// Combined export
-// ─────────────────────────────────────────────────────────────
-export const ALL_REVIEW_CARDS: ReviewCard[] = [
-  ...REVIEW_L1,
-  ...REVIEW_L2,
-  ...REVIEW_L3,
-  ...REVIEW_QUICK_REF,
 ];
