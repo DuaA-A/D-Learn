@@ -235,8 +235,8 @@ export const CH2_REAL_QUIZ_MCQ: Ch2McqQuestion[] = [
     option_d_ar: 'تعميق برامج التوعية الأمنية كبديل عن الأدوات التقنية',
     option_d_en: 'Deepening security awareness programs as a substitute for technical tools',
     correct_option: 'C',
-    explanation_ar: 'الدفاع في العمق: لا توجد نقطة فشل وحيدة. المهاجم يواجه جدار حماية ثم IDS ثم MFA ثم تشفير ثم مراقبة مستمرة — كل طبقة تزيد التكلفة والصعوبة عليه.',
-    explanation_en: 'Defense in Depth: no single point of failure. If an attacker breaches the firewall, they then face an IDS, then MFA, then encryption, then continuous monitoring — each layer increases the attacker\'s cost and difficulty.',
+    explanation_ar: 'الدفاع في العمق: لا توجد نقطة فشل وحيدة. المهاجم يواجه طبقات متتالية (جدار حماية ثم تشفير وVPN ثم منطقة معزولة DMZ ثم برامج مكافحة الفيروسات للأجهزة) — كل طبقة تزيد التكلفة والصعوبة عليه.',
+    explanation_en: 'Defense in Depth: no single point of failure. The attacker faces successive layers (firewall, VPN encryption, DMZ server placement, endpoint antivirus) — each layer increases the attacker\'s cost and difficulty.',
   },
   {
     id: 'rq-2-2-05',

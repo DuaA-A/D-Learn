@@ -162,7 +162,7 @@ export default function Chapter2ReviewBooklet() {
     <div className="min-h-screen bg-slate-50 text-primary-navy pb-24" dir={dir(lang)}>
       {/* ── TOP HEADER (Clean, Professional, No Icons) ────────── */}
       <div className="bg-slate-900 text-white border-b border-slate-800">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8">
           <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
             <button
               onClick={() => navigate('/dashboard')}
@@ -213,7 +213,7 @@ export default function Chapter2ReviewBooklet() {
       </div>
 
       {/* ── TOOLBAR: LESSON FILTER & VIEW MODE ────────────────── */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <div className="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-sm mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Lesson Filter Pills */}
           <div className="flex gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-hide">
@@ -312,17 +312,24 @@ export default function Chapter2ReviewBooklet() {
               {filteredCards.map((card, idx) => {
                 const isCurrent = idx === currentIndex;
                 const isMastered = !!masteredCards[card.id];
+                const lessonBorder =
+                  card.lesson === '2-1'
+                    ? 'border-blue-300 bg-blue-50/60 text-blue-900 hover:bg-blue-100'
+                    : card.lesson === '2-2'
+                      ? 'border-teal-300 bg-teal-50/60 text-teal-900 hover:bg-teal-100'
+                      : 'border-purple-300 bg-purple-50/60 text-purple-900 hover:bg-purple-100';
+
                 return (
                   <button
                     key={card.id}
                     onClick={() => setCurrentIndex(idx)}
                     title={card.title_ar}
-                    className={`w-9 h-9 rounded-xl text-xs font-black transition-all flex items-center justify-center flex-shrink-0 border ${
+                    className={`w-9 h-9 rounded-xl text-xs font-black transition-all flex items-center justify-center flex-shrink-0 border cursor-pointer ${
                       isCurrent
-                        ? 'bg-slate-900 text-white border-slate-900 ring-2 ring-slate-400'
+                        ? 'bg-slate-900 text-white border-slate-900 ring-2 ring-slate-400 shadow-sm scale-105'
                         : isMastered
-                          ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
-                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
+                          ? 'bg-emerald-600 text-white border-emerald-600 shadow-2xs'
+                          : lessonBorder
                     }`}
                   >
                     {idx + 1}
@@ -445,6 +452,140 @@ export default function Chapter2ReviewBooklet() {
 }
 
 // ══════════════════════════════════════════════════════════════
+// COLOR PALETTES & DYNAMIC GRID FOR MINI-CARDS
+// ══════════════════════════════════════════════════════════════
+export type BlockColorVariant = 'blue' | 'emerald' | 'violet' | 'amber' | 'rose' | 'cyan' | 'slate';
+
+interface BlockThemeStyle {
+  cardBg: string;
+  cardBorder: string;
+  topBorder: string;
+  badgeBg: string;
+  tagBg: string;
+  tagText: string;
+  tagBorder: string;
+  titleColor: string;
+  highlightBg: string;
+  highlightText: string;
+  highlightBorder: string;
+}
+
+const BLOCK_COLOR_STYLES: Record<BlockColorVariant, BlockThemeStyle> = {
+  blue: {
+    cardBg: 'bg-gradient-to-b from-blue-50/90 to-white hover:from-blue-100/60',
+    cardBorder: 'border-blue-200/90 hover:border-blue-300',
+    topBorder: 'border-t-blue-600',
+    badgeBg: 'bg-blue-600 text-white shadow-xs',
+    tagBg: 'bg-blue-100 text-blue-900',
+    tagText: 'text-blue-900',
+    tagBorder: 'border-blue-200',
+    titleColor: 'text-blue-950',
+    highlightBg: 'bg-blue-100/70',
+    highlightText: 'text-blue-950',
+    highlightBorder: 'border-blue-200',
+  },
+  emerald: {
+    cardBg: 'bg-gradient-to-b from-emerald-50/90 to-white hover:from-emerald-100/60',
+    cardBorder: 'border-emerald-200/90 hover:border-emerald-300',
+    topBorder: 'border-t-emerald-600',
+    badgeBg: 'bg-emerald-600 text-white shadow-xs',
+    tagBg: 'bg-emerald-100 text-emerald-900',
+    tagText: 'text-emerald-900',
+    tagBorder: 'border-emerald-200',
+    titleColor: 'text-emerald-950',
+    highlightBg: 'bg-emerald-100/70',
+    highlightText: 'text-emerald-950',
+    highlightBorder: 'border-emerald-200',
+  },
+  violet: {
+    cardBg: 'bg-gradient-to-b from-purple-50/90 to-white hover:from-purple-100/60',
+    cardBorder: 'border-purple-200/90 hover:border-purple-300',
+    topBorder: 'border-t-purple-600',
+    badgeBg: 'bg-purple-600 text-white shadow-xs',
+    tagBg: 'bg-purple-100 text-purple-900',
+    tagText: 'text-purple-900',
+    tagBorder: 'border-purple-200',
+    titleColor: 'text-purple-950',
+    highlightBg: 'bg-purple-100/70',
+    highlightText: 'text-purple-950',
+    highlightBorder: 'border-purple-200',
+  },
+  amber: {
+    cardBg: 'bg-gradient-to-b from-amber-50/90 to-white hover:from-amber-100/60',
+    cardBorder: 'border-amber-200/90 hover:border-amber-300',
+    topBorder: 'border-t-amber-500',
+    badgeBg: 'bg-amber-500 text-white shadow-xs',
+    tagBg: 'bg-amber-100 text-amber-900',
+    tagText: 'text-amber-900',
+    tagBorder: 'border-amber-200',
+    titleColor: 'text-amber-950',
+    highlightBg: 'bg-amber-100/70',
+    highlightText: 'text-amber-950',
+    highlightBorder: 'border-amber-200',
+  },
+  rose: {
+    cardBg: 'bg-gradient-to-b from-rose-50/90 to-white hover:from-rose-100/60',
+    cardBorder: 'border-rose-200/90 hover:border-rose-300',
+    topBorder: 'border-t-rose-500',
+    badgeBg: 'bg-rose-500 text-white shadow-xs',
+    tagBg: 'bg-rose-100 text-rose-900',
+    tagText: 'text-rose-900',
+    tagBorder: 'border-rose-200',
+    titleColor: 'text-rose-950',
+    highlightBg: 'bg-rose-100/70',
+    highlightText: 'text-rose-950',
+    highlightBorder: 'border-rose-200',
+  },
+  cyan: {
+    cardBg: 'bg-gradient-to-b from-cyan-50/90 to-white hover:from-cyan-100/60',
+    cardBorder: 'border-cyan-200/90 hover:border-cyan-300',
+    topBorder: 'border-t-cyan-600',
+    badgeBg: 'bg-cyan-600 text-white shadow-xs',
+    tagBg: 'bg-cyan-100 text-cyan-900',
+    tagText: 'text-cyan-900',
+    tagBorder: 'border-cyan-200',
+    titleColor: 'text-cyan-950',
+    highlightBg: 'bg-cyan-100/70',
+    highlightText: 'text-cyan-950',
+    highlightBorder: 'border-cyan-200',
+  },
+  slate: {
+    cardBg: 'bg-gradient-to-b from-slate-100/90 to-white hover:from-slate-200/60',
+    cardBorder: 'border-slate-300/90 hover:border-slate-400',
+    topBorder: 'border-t-slate-600',
+    badgeBg: 'bg-slate-700 text-white shadow-xs',
+    tagBg: 'bg-slate-200 text-slate-800',
+    tagText: 'text-slate-800',
+    tagBorder: 'border-slate-300',
+    titleColor: 'text-slate-900',
+    highlightBg: 'bg-slate-200/70',
+    highlightText: 'text-slate-900',
+    highlightBorder: 'border-slate-300',
+  },
+};
+
+const DEFAULT_COLOR_ORDER: BlockColorVariant[] = ['blue', 'emerald', 'violet', 'amber', 'rose', 'cyan'];
+
+function getGridColsClass(count: number): string {
+  switch (count) {
+    case 1:
+      return 'grid-cols-1';
+    case 2:
+      return 'grid-cols-1 md:grid-cols-2';
+    case 3:
+      return 'grid-cols-1 md:grid-cols-3';
+    case 4:
+      return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
+    case 5:
+      return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-5';
+    case 6:
+      return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6';
+    default:
+      return 'grid-cols-1 md:grid-cols-3';
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
 // STANDALONE FLASHCARD CARD COMPONENT (Clean Visual Boxes)
 // ══════════════════════════════════════════════════════════════
 function FlashcardCardView({
@@ -469,20 +610,20 @@ function FlashcardCardView({
   return (
     <div className={`bg-white rounded-3xl border ${theme.cardBorder} p-6 sm:p-8 shadow-sm transition-all`}>
       {/* ── CARD HEADER ── */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-5 border-b border-slate-100">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-100">
+        <div className="flex flex-wrap items-center gap-2">
           {/* Card Number Badge */}
-          <span className="w-8 h-8 rounded-xl bg-slate-900 text-white text-xs font-black flex items-center justify-center">
-            {indexNumber ?? card.cardNumber}
+          <span className="px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-black flex items-center justify-center shadow-xs">
+            {t('Card', 'بطاقة', lang)} {indexNumber ?? card.cardNumber} / {CHAPTER2_REVIEW_FLASHCARDS.length}
           </span>
 
           {/* Lesson Code Pill */}
-          <span className={`px-2.5 py-1 rounded-lg text-[11px] font-black border uppercase tracking-wider ${theme.badge}`}>
-            {theme.code}
+          <span className={`px-3 py-1.5 rounded-xl text-xs font-black border uppercase tracking-wider ${theme.badge}`}>
+            {lang === 'ar' ? theme.short_ar : theme.short_en}
           </span>
 
           {/* Category Tag */}
-          <span className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+          <span className="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
             {lang === 'ar' ? card.category_ar : card.category_en}
           </span>
         </div>
@@ -490,78 +631,98 @@ function FlashcardCardView({
         {/* Mastered Status Button */}
         <button
           onClick={onToggleMastery}
-          className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all border ${
+          className={`px-4 py-2 rounded-xl text-xs font-black transition-all border ${
             isMastered
-              ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
-              : 'bg-slate-50 hover:bg-slate-100 text-slate-500 border-slate-200'
+              ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+              : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-300 shadow-2xs'
           }`}
         >
           {isMastered
-            ? t('Mastered', 'تم الإتقان', lang)
-            : t('Mark as Mastered', 'تحديد كمتقن', lang)}
+            ? t('Mastered', 'تم إتقان البطاقة', lang)
+            : t('Mark as Mastered', 'تحديد كبطاقة متقنة', lang)}
         </button>
       </div>
 
       {/* ── TITLE & SUMMARY ── */}
-      <h2 className="text-lg sm:text-2xl font-black text-primary-navy mb-2 leading-tight">
-        {lang === 'ar' ? card.title_ar : card.title_en}
-      </h2>
-      <p className="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed mb-6">
-        {lang === 'ar' ? card.summary_ar : card.summary_en}
-      </p>
-
-      {/* ── MINI-CARDS GRID (Visual Boxes for each idea) ── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 mb-6">
-        {card.blocks.map((block, bIdx) => (
-          <div
-            key={bIdx}
-            className={`p-4 rounded-2xl border ${theme.boxBorder} ${theme.subtleBg} flex flex-col justify-between`}
-          >
-            <div>
-              {/* Box Tag Pill */}
-              <span className={`inline-block px-2 py-0.5 rounded-md text-[10px] font-black mb-2 ${theme.tagBg}`}>
-                {lang === 'ar' ? block.tag_ar : block.tag_en}
-              </span>
-
-              {/* Box Title */}
-              <h4 className="text-sm font-black text-primary-navy mb-1.5 leading-snug">
-                {lang === 'ar' ? block.title_ar : block.title_en}
-              </h4>
-
-              {/* Box Text */}
-              <p className="text-xs sm:text-sm font-medium text-slate-700 leading-relaxed whitespace-pre-wrap">
-                {lang === 'ar' ? block.text_ar : block.text_en}
-              </p>
-            </div>
-
-            {/* Optional Highlight note */}
-            {(block.highlight_ar || block.highlight_en) && (
-              <div className="mt-3 pt-2.5 border-t border-slate-200/60 text-[11px] font-bold text-rose-700">
-                {lang === 'ar' ? block.highlight_ar : block.highlight_en}
-              </div>
-            )}
-          </div>
-        ))}
+      <div className="mb-6">
+        <h2 className="text-xl sm:text-3xl font-black text-slate-950 mb-2 leading-tight">
+          {lang === 'ar' ? card.title_ar : card.title_en}
+        </h2>
+        <div className="p-3.5 rounded-2xl bg-slate-100/70 border border-slate-200 text-xs sm:text-sm font-semibold text-slate-700 leading-relaxed">
+          {lang === 'ar' ? card.summary_ar : card.summary_en}
+        </div>
       </div>
 
-      {/* ── COMPARISON TABLE (If present) ── */}
+      {/* ── OPTIONAL STEP FLOW HEADER (If 6 Sequential Stages) ── */}
+      {card.blocks.length === 6 && (
+        <div className="mb-3 px-3 py-2 rounded-xl bg-violet-50 border border-violet-200 text-xs font-black text-violet-900 flex items-center justify-between">
+          <span>{t('Sequential Stages (1 to 6 in order):', 'المراحل المتتابعة بالترتيب الإلزامي من 1 إلى 6 (صف واحد متتابع):', lang)}</span>
+          <span className="text-[11px] font-bold text-violet-700">{t('Strict Order', 'ترتيب إجباري بالامتحان', lang)}</span>
+        </div>
+      )}
+
+      {/* ── MINI-CARDS GRID (Side-by-side in one row with semantic colors) ── */}
+      <div className={`grid ${getGridColsClass(card.blocks.length)} gap-4 mb-6`}>
+        {card.blocks.map((block, bIdx) => {
+          const colorKey = (block.colorVariant as BlockColorVariant) || DEFAULT_COLOR_ORDER[bIdx % DEFAULT_COLOR_ORDER.length];
+          const color = BLOCK_COLOR_STYLES[colorKey] || BLOCK_COLOR_STYLES.blue;
+
+          return (
+            <div
+              key={bIdx}
+              className={`p-4 sm:p-5 rounded-2xl border ${color.cardBorder} ${color.cardBg} border-t-4 ${color.topBorder} flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-200`}
+            >
+              <div>
+                {/* Box Header: Number badge + Tag Pill */}
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <span className={`w-7 h-7 rounded-xl ${color.badgeBg} text-xs font-black flex items-center justify-center shrink-0`}>
+                    {bIdx + 1}
+                  </span>
+                  <span className={`inline-block px-2.5 py-1 rounded-lg text-[11px] font-black border ${color.tagBg} ${color.tagText} ${color.tagBorder}`}>
+                    {lang === 'ar' ? block.tag_ar : block.tag_en}
+                  </span>
+                </div>
+
+                {/* Box Title */}
+                <h4 className={`text-sm sm:text-base font-black ${color.titleColor} mb-2 leading-snug`}>
+                  {lang === 'ar' ? block.title_ar : block.title_en}
+                </h4>
+
+                {/* Box Text */}
+                <p className="text-xs sm:text-sm font-medium text-slate-700 leading-relaxed whitespace-pre-wrap">
+                  {lang === 'ar' ? block.text_ar : block.text_en}
+                </p>
+              </div>
+
+              {/* Optional Highlight note */}
+              {(block.highlight_ar || block.highlight_en) && (
+                <div className={`mt-4 pt-2.5 border-t ${color.highlightBorder} ${color.highlightBg} -mx-1 px-3 py-2 rounded-xl text-[11px] font-black ${color.highlightText}`}>
+                  {lang === 'ar' ? block.highlight_ar : block.highlight_en}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ── COMPARISON TABLE (If present, with clear colored columns) ── */}
       {card.comparison && (
         <div className="mb-6 rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-          <div className="grid grid-cols-3 bg-slate-800 text-white text-xs font-black p-3 text-center">
-            <span className="text-start ps-2">{t('Aspect', 'وجه المقارنة', lang)}</span>
-            <span>{lang === 'ar' ? card.comparison.header1_ar : card.comparison.header1_en}</span>
-            <span>{lang === 'ar' ? card.comparison.header2_ar : card.comparison.header2_en}</span>
+          <div className="grid grid-cols-3 bg-slate-900 text-white text-xs font-black p-3.5 text-center">
+            <span className="text-start ps-3 text-slate-400">{t('Aspect', 'وجه المقارنة', lang)}</span>
+            <span className="bg-blue-800/80 py-1 px-2 rounded-lg text-blue-100">{lang === 'ar' ? card.comparison.header1_ar : card.comparison.header1_en}</span>
+            <span className="bg-purple-800/80 py-1 px-2 rounded-lg text-purple-100">{lang === 'ar' ? card.comparison.header2_ar : card.comparison.header2_en}</span>
           </div>
           <div className="divide-y divide-slate-100 bg-white">
             {card.comparison.rows.map((row, rIdx) => (
-              <div key={rIdx} className="grid grid-cols-3 p-3 text-xs font-medium text-slate-700 hover:bg-slate-50/50">
-                <span className="font-bold text-primary-navy text-start ps-2">
+              <div key={rIdx} className="grid grid-cols-3 p-3.5 text-xs font-medium text-slate-700 hover:bg-slate-50/70">
+                <span className="font-bold text-slate-900 text-start ps-3">
                   {lang === 'ar' ? row.aspect_ar : row.aspect_en}
                 </span>
-                <span className="text-center px-2">
+                <span className="text-center px-2 font-medium text-blue-950 bg-blue-50/40 rounded-lg py-1">
                   {lang === 'ar' ? row.col1_ar : row.col1_en}
                 </span>
-                <span className="text-center px-2">
+                <span className="text-center px-2 font-medium text-purple-950 bg-purple-50/40 rounded-lg py-1">
                   {lang === 'ar' ? row.col2_ar : row.col2_en}
                 </span>
               </div>
@@ -570,25 +731,31 @@ function FlashcardCardView({
         </div>
       )}
 
-      {/* ── EXAM GOLDEN RULE BOX ── */}
-      <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 mb-6">
-        <span className="block text-[10px] font-black uppercase tracking-wider text-amber-800 mb-1">
-          {t('Golden Exam Rule', 'القاعدة الذهبية في الامتحان', lang)}
-        </span>
-        <p className="text-xs sm:text-sm font-black text-primary-navy leading-relaxed">
+      {/* ── EXAM GOLDEN RULE BOX (High-contrast Key Takeaway) ── */}
+      <div className="p-5 rounded-2xl bg-gradient-to-r from-amber-50 via-amber-100/50 to-amber-50 border-2 border-amber-300 mb-6 shadow-xs">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+          <span className="text-[11px] font-black uppercase tracking-wider text-amber-900">
+            {t('Golden Exam Rule', 'القاعدة الذهبية في الامتحان (مفتاح الحل الأسرع)', lang)}
+          </span>
+        </div>
+        <p className="text-sm sm:text-base font-black text-amber-950 leading-relaxed">
           {lang === 'ar' ? card.goldenRule_ar : card.goldenRule_en}
         </p>
       </div>
 
       {/* ── INTERACTIVE QUICK-CHECK BOX ── */}
-      <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200">
-        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-          <span className="text-xs font-black uppercase tracking-wider text-indigo-700">
-            {t('Quick Self-Check Question', 'سؤال تطبيق سريع (تأكد من فهمك)', lang)}
-          </span>
+      <div className="bg-slate-900 text-white p-5 sm:p-6 rounded-2xl border border-slate-800 shadow-md">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-teal-400"></span>
+            <span className="text-xs font-black uppercase tracking-wider text-teal-300">
+              {t('Quick Self-Check Question', 'سؤال تطبيق سريع (تأكد من فهمك للبطاقة)', lang)}
+            </span>
+          </div>
           <button
             onClick={onToggleAnswer}
-            className="px-3 py-1 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-800 text-xs font-black transition-colors border border-indigo-200 cursor-pointer"
+            className="px-4 py-1.5 rounded-xl bg-teal-400 hover:bg-teal-300 text-slate-950 text-xs font-black transition-colors cursor-pointer shadow-sm"
           >
             {isAnswerRevealed
               ? t('Hide Answer', 'إخفاء الإجابة', lang)
@@ -596,19 +763,19 @@ function FlashcardCardView({
           </button>
         </div>
 
-        <p className="text-xs sm:text-sm font-bold text-primary-navy mb-2 leading-relaxed">
+        <p className="text-sm sm:text-base font-bold text-slate-100 mb-2 leading-relaxed">
           {lang === 'ar' ? card.checkQuestion_ar : card.checkQuestion_en}
         </p>
 
         <AnimatePresence>
           {isAnswerRevealed && (
             <motion.div
-              initial={{ opacity: 0, y: -4 }}
+              initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              className="mt-3 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm font-medium text-emerald-950 leading-relaxed"
+              exit={{ opacity: 0, y: -6 }}
+              className="mt-4 p-4 rounded-xl bg-slate-800 border-2 border-teal-500/50 text-xs sm:text-sm font-semibold text-teal-100 leading-relaxed"
             >
-              <span className="block font-black text-[11px] text-emerald-800 uppercase mb-1">
+              <span className="block font-black text-xs text-teal-300 uppercase mb-1">
                 {t('Model Answer', 'نموذج الإجابة المعتمد', lang)}
               </span>
               {lang === 'ar' ? card.checkAnswer_ar : card.checkAnswer_en}
