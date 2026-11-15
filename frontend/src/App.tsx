@@ -33,6 +33,9 @@ import Chapter2Practice from './Chapter2Practice';
 import Chapter2RealQuiz from './Chapter2RealQuiz';
 import Chapter2UnitExam from './Chapter2UnitExam';
 import Chapter2ReviewBooklet from './Chapter2ReviewBooklet';
+import Chapter3Practice from './Chapter3Practice';
+import Chapter3RealQuiz from './Chapter3RealQuiz';
+import Chapter3ReviewBooklet from './Chapter3ReviewBooklet';
 import Lesson1BookletPdf from './Lesson1BookletPdf';
 import Lesson2BookletPdf from './Lesson2BookletPdf';
 
@@ -479,6 +482,7 @@ function StudentDashboard() {
 
   const chapter1Lessons = filteredLessons.filter(l => l.unit === 1);
   const chapter2Lessons = filteredLessons.filter(l => l.unit === 2);
+  const chapter3Lessons = filteredLessons.filter(l => l.unit === 3);
 
   const completedCount = profile?.completedLessons?.length || 0;
   const totalLessons = LESSONS.length;
@@ -845,6 +849,110 @@ function StudentDashboard() {
                 </motion.div>
               );
             })}
+          </div>
+
+          {/* Chapter 3 Section */}
+          <div className="mt-14 mb-8">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="px-2.5 py-0.5 rounded-md bg-sky-50 text-sky-700 border border-sky-200 text-[11px] font-black uppercase tracking-wider">
+                    {t('Chapter 3', 'الفصل الثالث', lang)}
+                  </span>
+                  <span className="text-xs font-bold text-slate-400">
+                    ({chapter3Lessons.length} {t('Lessons', 'دروس', lang)})
+                  </span>
+                </div>
+                <h2 className="text-2xl font-black text-primary-navy">
+                  {t('Web Applications Architecture & Technologies', 'تطبيقات الويب والبنية العامة', lang)}
+                </h2>
+              </div>
+
+              {/* Quick Action Pills for Chapter 3 */}
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  onClick={() => navigate('/chapter3-review')}
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-teal-600 hover:opacity-95 text-white text-xs font-black shadow-md shadow-sky-600/20 transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <FileText size={15} />
+                  <span>{t('Lesson 3-1 Review Notes', 'ملزمة ونوتات الدرس 3-1', lang)}</span>
+                </button>
+
+                <button
+                  onClick={() => navigate('/chapter3-practice')}
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-95 text-white text-xs font-black shadow-md shadow-purple-600/20 transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <Shield size={15} />
+                  <span>{t('Ministry Practice Bank', 'بنك أسئلة الوزارة للدرس 3-1', lang)}</span>
+                </button>
+
+                <button
+                  onClick={() => navigate('/chapter3-quiz')}
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 hover:opacity-95 text-white text-xs font-black shadow-md shadow-amber-600/20 transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <Award size={15} />
+                  <span>{t('Real Quiz — Lesson 3-1', 'كويز تفاعلي — الدرس 3-1', lang)}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Chapter 3 Lessons Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {chapter3Lessons.map((lesson, idx) => {
+                const isCompleted = profile?.completedLessons?.includes(lesson.id);
+
+                return (
+                  <motion.div
+                    key={lesson.id}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className="group bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between"
+                  >
+                    <div className="p-6">
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-slate-100 text-slate-700">
+                          {t('Lesson', 'الدرس', lang)} {lesson.lesson_number}
+                        </span>
+                        {isCompleted && (
+                          <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            {t('Completed', 'مكتمل', lang)}
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="text-lg font-black text-primary-navy mb-2 group-hover:text-sky-600 transition-colors">
+                        {lang === 'ar' ? lesson.title_ar : lesson.title_en}
+                      </h3>
+                      <p className="text-slate-500 text-xs font-medium line-clamp-2 mb-4 leading-relaxed">
+                        {lang === 'ar' ? lesson.learning_objectives_ar[0] : lesson.learning_objectives_en[0]}
+                      </p>
+                    </div>
+
+                    <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center gap-2">
+                      <button
+                        onClick={() => navigate('/chapter3-review')}
+                        className="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-sky-600 hover:bg-sky-500 text-white shadow-xs cursor-pointer text-center"
+                      >
+                        {t('Notes & Review', 'شرح ونوتس', lang)}
+                      </button>
+                      <button
+                        onClick={() => navigate('/chapter3-practice')}
+                        className="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 cursor-pointer text-center"
+                      >
+                        {t('Practice', 'تدريبات', lang)}
+                      </button>
+                      <button
+                        onClick={() => navigate('/chapter3-quiz')}
+                        className="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-900 hover:bg-slate-800 text-white cursor-pointer text-center"
+                      >
+                        {t('Quiz', 'كويز', lang)}
+                      </button>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -3681,6 +3789,9 @@ export default function App() {
               <Route path="/chapter2-quiz" element={<Protected><Chapter2RealQuiz /></Protected>} />
               <Route path="/chapter2-unit-exam" element={<Protected><Chapter2UnitExam /></Protected>} />
               <Route path="/chapter2-review" element={<Protected><Chapter2ReviewBooklet /></Protected>} />
+              <Route path="/chapter3-practice" element={<Protected><Chapter3Practice /></Protected>} />
+              <Route path="/chapter3-quiz" element={<Protected><Chapter3RealQuiz /></Protected>} />
+              <Route path="/chapter3-review" element={<Protected><Chapter3ReviewBooklet /></Protected>} />
             </Routes>
           </AnimatePresence>
         </div>

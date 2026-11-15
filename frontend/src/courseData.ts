@@ -1374,6 +1374,98 @@ $$\text{حجم الخطر} = \text{التأثير} \times \text{الاحتمال
     ],
   },
 
+  // ==================== UNIT 3: WEB APPLICATIONS ====================
+  {
+    id: "3-1",
+    unit: 3,
+    lesson_number: "3-1",
+    title_en: "The Overall Structure of Web Applications",
+    title_ar: "البنية العامة لتطبيقات الويب",
+    learning_objectives_en: [
+      "Explain what a web application is and describe the roles of its three tiers: frontend, backend, and database.",
+      "Trace how the three tiers cooperate to turn a user's action into a result, using familiar services as examples.",
+    ],
+    learning_objectives_ar: [
+      "شرح مفهوم تطبيق الويب ووصف وظائف طبقاته الثلاث: الواجهة الأمامية، والواجهة الخلفية، وقاعدة البيانات.",
+      "تتبع كيفية تعاون الطبقات الثلاث لتحويل إجراء المستخدم إلى نتيجة، مع ذكر أمثلة على خدمات مألوفة كالمتجر والفيديو وشبكات التواصل.",
+    ],
+    key_terms: [
+      {
+        term_en: "Web Application",
+        term_ar: "تطبيق الويب",
+        def_en: "An application used through a web browser with no dedicated software to install.",
+        def_ar: "برنامج يتم تشغيله والوصول إليه واستخدامه عبر متصفح الويب دون الحاجة لتثبيت برامج مخصصة محلياً.",
+      },
+      {
+        term_en: "Frontend",
+        term_ar: "الواجهة الأمامية",
+        def_en: "The screen component that users see directly. It runs on the browser and accepts user input.",
+        def_ar: "الجزء المرئي الذي يراه المستخدم مباشرة على المتصفح ويستقبل مدخلاته وإجراءاته ونقرات الأزرار.",
+      },
+      {
+        term_en: "Backend",
+        term_ar: "الواجهة الخلفية",
+        def_en: "The server-side processing that users do not see. It processes data and makes decisions.",
+        def_ar: "خادم المعالجة الخفي الذي لا يراه المستخدم، مسؤول عن معالجة البيانات واتخاذ القرارات والمصادقة والتحقق.",
+      },
+      {
+        term_en: "Database",
+        term_ar: "قاعدة البيانات",
+        def_en: "A system that organizes, stores, and manages data permanently and retrieves it upon request.",
+        def_ar: "نظام ينظم ويخزن البيانات وسجلات المستخدمين بشكل دائم ومؤمن ويسترجعها عند طلب الواجهة الخلفية.",
+      },
+      {
+        term_en: "Three-Tier Architecture",
+        term_ar: "الهيكل ثلاثي الطبقات",
+        def_en: "A software architecture comprising three cooperating layers: presentation, business logic, and data storage.",
+        def_ar: "بنية برمجية تتكون من ثلاث طبقات رئيسة متعاونة: العرض (أمامية)، والمعالجة (خلفية)، والتخزين (قاعدة بيانات).",
+      },
+    ],
+    sections: [
+      {
+        heading_en: "1. What is a Web Application?",
+        heading_ar: "1. مفهوم تطبيق الويب ومقارنته بالتطبيقات المكتبية",
+        content_en: "A web application is software accessed through a web browser (e.g. YouTube, Amazon, Google Maps, Gmail) without installing dedicated local programs. Traditional desktop software requires local installation.",
+        content_ar: "تطبيق الويب هو برنامج يعمل داخل متصفح الإنترنت دون الحاجة لتثبيت برامج على الجهاز (مثل: يوتيوب، أمازون، خرائط جوجل، جيميل)، بينما التطبيقات المكتبية كالمشغل والآلة الحاسبة تحتاج لتثبيت محلي.",
+      },
+      {
+        heading_en: "2. The Three Tiers of a Web Application",
+        heading_ar: "2. الطبقات الثلاث لتطبيقات الويب وأدوارها",
+        content_en: "Frontend (presentation & user input capture) + Backend (server processing, logic, authentication & payments) + Database (permanent data persistence & query retrieval).",
+        content_ar: "الواجهة الأمامية (عرض الشاشات وجمع المدخلات) + الواجهة الخلفية (المعالجة والقرارات والمصادقة والدفع) + قاعدة البيانات (التخزين الدائم واسترجاع السجلات).",
+      },
+      {
+        heading_en: "3. The Flow of How the Three Tiers Cooperate",
+        heading_ar: "3. دورة تدفق الطلب المعتمدة في 6 خطوات",
+        content_en: "1. User enters keywords in frontend -> 2. Frontend dispatches request to backend -> 3. Backend queries database -> 4. Database returns records -> 5. Backend formats response -> 6. Frontend displays result.",
+        content_ar: "1. يدخل المستخدم كلمة البحث في الأمامية -> 2. ترسل الأمامية الطلب للخلفية -> 3. تستعلم الخلفية من قاعدة البيانات -> 4. تعيد قاعدة البيانات السجلات للخلفية -> 5. تنظم الخلفية النتائج -> 6. تعرض الأمامية النتائج للمستخدم.",
+      },
+    ],
+    pause_and_think: [
+      {
+        q_en: "When you type in a search box and see results, which tier collected your input, and which tier found the answer?",
+        q_ar: "عندما تكتب في مربع البحث وترى النتائج، أي طبقة جمعت مدخلاتك، وأي طبقة عثرت على الإجابة؟",
+        remember_en: "Remember: The frontend collects inputs; the backend queries; the database stores and retrieves the records.",
+        remember_ar: "تذكّر: الواجهة الأمامية تجمع المدخلات، الواجهة الخلفية تعالج وتستعلم، وقاعدة البيانات تبحث وتسترجع السجلات.",
+        be_careful_en: "Be careful: The frontend never queries the database directly; it must always communicate through the backend.",
+        be_careful_ar: "انتبه: الواجهة الأمامية لا تتصل بقاعدة البيانات مباشرة لأسباب أمنية، بل تمر دائماً عبر الواجهة الخلفية.",
+        a_en: "The frontend collected the input via the browser, while the backend and database searched and retrieved the answer.",
+        a_ar: "الواجهة الأمامية جمعت المدخلات عبر شاشة المتصفح، بينما الواجهة الخلفية وقاعدة البيانات بحثتا واسترجعتا النتيجة.",
+      },
+    ],
+    exam_style_questions: [
+      {
+        q_en: "Explain the roles of the three tiers of a web application and trace their cooperation when searching for a product in an online store.",
+        q_ar: "اشرح وظائف الطبقات الثلاث لتطبيق الويب وتتبع كيفية تعاونها عند البحث عن منتج في متجر إلكتروني.",
+        type: "WRITTEN",
+      },
+      {
+        q_en: "Which tier is responsible for aggregating view counts and selecting recommended videos in a video sharing site? A) Frontend, B) Backend, C) Database, D) Network.",
+        q_ar: "أي طبقة مسؤولة عن تجميع عدد المشاهدات واختيار الفيديوهات المقترحة في موقع مشاركة الفيديو؟ أ) الواجهة الأمامية، ب) الواجهة الخلفية، ج) قاعدة البيانات، د) شبكة الاتصال.",
+        type: "MCQ",
+      },
+    ],
+  },
 ];
 
 // ==================== ALL QUIZ QUESTIONS ====================

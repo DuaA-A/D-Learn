@@ -1,0 +1,528 @@
+// ============================================================
+// Chapter 3 · Lesson 1 — Official Ministry Practice Question Bank
+// بنك أسئلة وتدريبات تقييمات الوزارة الرسمية للدرس 3-1: البنية العامة لتطبيقات الويب
+// مأخوذ بالكامل من كتاب التقييمات المعتمد (ص 48-52) وكتاب الوزارة
+// نسخة عربية + إنجليزية كاملة بنماذج إجابة واقعية سهلة الفهم للطلبة
+// ============================================================
+
+export interface Ch3PracticeQuestion {
+  id: string;
+  lesson: '3-1';
+  type: 'MCQ' | 'WRITTEN';
+  difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+  source_ar: string;
+  source_en: string;
+  question_ar: string;
+  question_en: string;
+  options_ar?: { key: 'A' | 'B' | 'C' | 'D'; text: string }[];
+  options_en?: { key: 'A' | 'B' | 'C' | 'D'; text: string }[];
+  correct_option?: 'A' | 'B' | 'C' | 'D';
+  ideal_answer_ar: string;
+  ideal_answer_en: string;
+  explanation_ar?: string;
+  explanation_en?: string;
+  keywords?: string[];
+}
+
+export const CH3_L1_PRACTICE_QUESTIONS: Ch3PracticeQuestion[] = [
+  // ════════════════════════════════════════════════════════════
+  // SECTION 1: OBJECTIVE QUESTIONS (MCQ) — أسئلة الاختيار من متعدد
+  // ════════════════════════════════════════════════════════════
+
+  {
+    id: 'c3-l1-mcq-01',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'EASY',
+    source_ar: 'المهام الأدائية - ص 48',
+    source_en: 'Classroom Tasks - Page 48',
+    question_ar: 'يُبنى عادة تطبيق الويب من:',
+    question_en: 'A web application is typically built from:',
+    options_ar: [
+      { key: 'A', text: 'ثلاث طبقات تتعاون معاً' },
+      { key: 'B', text: 'طبقتين منفصلتين' },
+      { key: 'C', text: 'طبقة واحدة فقط' },
+      { key: 'D', text: 'عدة طبقات غير محددة' },
+    ],
+    options_en: [
+      { key: 'A', text: 'Three tiers cooperating together' },
+      { key: 'B', text: 'Two separate tiers' },
+      { key: 'C', text: 'Only a single tier' },
+      { key: 'D', text: 'Indefinite multiple tiers' },
+    ],
+    correct_option: 'A',
+    ideal_answer_ar: 'الإجابة الصحيحة: (أ) ثلاث طبقات (الواجهة الأمامية، الواجهة الخلفية، وقاعدة البيانات).',
+    ideal_answer_en: 'Correct Answer: (A) Three tiers (Frontend, Backend, and Database).',
+    explanation_ar: 'الهيكل القياسي المعتمد لتطبيقات الويب هو الهيكل ثلاثي الطبقات (Three-Tier Architecture).',
+    explanation_en: 'The standard architectural paradigm for web applications is the Three-Tier model.',
+  },
+
+  {
+    id: 'c3-l1-mcq-02',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'EASY',
+    source_ar: 'المهام الأدائية - ص 48',
+    source_en: 'Classroom Tasks - Page 48',
+    question_ar: 'الطبقة المسؤولة عن عرض الشاشات وتجمع بيانات وإجراءات المستخدم هي:',
+    question_en: 'The tier responsible for displaying screens and collecting user data and actions is:',
+    options_ar: [
+      { key: 'A', text: 'الواجهة الخلفية' },
+      { key: 'B', text: 'قاعدة البيانات' },
+      { key: 'C', text: 'الواجهة الأمامية' },
+      { key: 'D', text: 'خادم المعالجة' },
+    ],
+    options_en: [
+      { key: 'A', text: 'The Backend tier' },
+      { key: 'B', text: 'The Database tier' },
+      { key: 'C', text: 'The Frontend tier' },
+      { key: 'D', text: 'The Processing Server' },
+    ],
+    correct_option: 'C',
+    ideal_answer_ar: 'الإجابة الصحيحة: (ج) الواجهة الأمامية (Frontend).',
+    ideal_answer_en: 'Correct Answer: (C) The Frontend tier.',
+    explanation_ar: 'الواجهة الأمامية تعمل داخل المتصفح، ودورها الأساسي هو تقديم الشاشات واستقبال إدخال ونقرات المستخدم.',
+    explanation_en: 'The frontend operates within the browser, dedicated to presenting UI views and capturing user interactions.',
+  },
+
+  {
+    id: 'c3-l1-mcq-03',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'MEDIUM',
+    source_ar: 'الأداءات المنزلية - ص 49',
+    source_en: 'Homework Tasks - Page 49',
+    question_ar: 'في موقع مشاركة الفيديو، تتبع عملية تجميع عدد المشاهدات واختيار الفيديوهات الموصى بها لـ:',
+    question_en: 'On a video sharing site, aggregating view counts and selecting recommended videos is the job of:',
+    options_ar: [
+      { key: 'A', text: 'الواجهة الأمامية' },
+      { key: 'B', text: 'الواجهة الخلفية' },
+      { key: 'C', text: 'قاعدة البيانات' },
+      { key: 'D', text: 'شبكة الاتصال' },
+    ],
+    options_en: [
+      { key: 'A', text: 'The Frontend tier' },
+      { key: 'B', text: 'The Backend tier' },
+      { key: 'C', text: 'The Database tier' },
+      { key: 'D', text: 'The Network infrastructure' },
+    ],
+    correct_option: 'B',
+    ideal_answer_ar: 'الإجابة الصحيحة: (ب) الواجهة الخلفية (Backend).',
+    ideal_answer_en: 'Correct Answer: (B) The Backend tier.',
+    explanation_ar: 'تجميع المشاهدات وتشغيل خوارزميات التوصية هما عمليات معالجة وحساب وقرارات، وهو الدور الأصيل للواجهة الخلفية.',
+    explanation_en: 'Tallying views and computing recommendations represent business logic and analytics, handled strictly by the backend.',
+  },
+
+  {
+    id: 'c3-l1-mcq-04',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'MEDIUM',
+    source_ar: 'الأداءات المنزلية - ص 49',
+    source_en: 'Homework Tasks - Page 49',
+    question_ar: 'تخزين بيانات المنشورات وعلاقات المتابعة والرسائل في شبكة تواصل اجتماعي هي وظيفة:',
+    question_en: 'Storing posts data, follow relationships, and direct messages in a social network is the role of:',
+    options_ar: [
+      { key: 'A', text: 'خادم المعالجة' },
+      { key: 'B', text: 'قاعدة البيانات' },
+      { key: 'C', text: 'الواجهة الأمامية' },
+      { key: 'D', text: 'الواجهة الخلفية' },
+    ],
+    options_en: [
+      { key: 'A', text: 'Processing Server' },
+      { key: 'B', text: 'The Database tier' },
+      { key: 'C', text: 'The Frontend tier' },
+      { key: 'D', text: 'The Backend tier' },
+    ],
+    correct_option: 'B',
+    ideal_answer_ar: 'الإجابة الصحيحة: (ب) قاعدة البيانات (Database).',
+    ideal_answer_en: 'Correct Answer: (B) The Database tier.',
+    explanation_ar: 'أي حفظ واستبقاء دائم للسجلات والبيانات (مثل المنشورات، قائمة المتابعين، الرسائل) يقع حصرياً في طبقة قاعدة البيانات.',
+    explanation_en: 'Permanent persistence of relational records (posts, follow graphs, messages) belongs to the database tier.',
+  },
+
+  {
+    id: 'c3-l1-mcq-05',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'HARD',
+    source_ar: 'المهام الأدائية - ص 50',
+    source_en: 'Classroom Tasks - Page 50',
+    question_ar: 'إرسال طلبات الدفع الإلكتروني والتعامل مع نتائجها في موقع التجارة الإلكترونية هو عمل مشترك بين المعالجة والتحكم في:',
+    question_en: 'Dispatching payment requests and handling their outcome in e-commerce is a core responsibility of:',
+    options_ar: [
+      { key: 'A', text: 'الواجهة الأمامية' },
+      { key: 'B', text: 'قاعدة البيانات' },
+      { key: 'C', text: 'الواجهة الخلفية' },
+      { key: 'D', text: 'متصفح المستخدم' },
+    ],
+    options_en: [
+      { key: 'A', text: 'The Frontend tier' },
+      { key: 'B', text: 'The Database tier' },
+      { key: 'C', text: 'The Backend tier' },
+      { key: 'D', text: 'User Browser' },
+    ],
+    correct_option: 'C',
+    ideal_answer_ar: 'الإجابة الصحيحة: (ج) الواجهة الخلفية (Backend).',
+    ideal_answer_en: 'Correct Answer: (C) The Backend tier.',
+    explanation_ar: 'التواصل مع بوابات الدفع البنكية، والتحقق من أمان العملية، وتسجيل النتيجة هي مسؤولية خادم المعالجة والتحكم (الواجهة الخلفية).',
+    explanation_en: 'Interfacing with bank payment gateways, validating tokens, and processing checkout logic is executed by the backend.',
+  },
+
+  {
+    id: 'c3-l1-mcq-06',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'EASY',
+    source_ar: 'المهام الأدائية - ص 50',
+    source_en: 'Classroom Tasks - Page 50',
+    question_ar: 'الدور الرئيسي لطبقة قاعدة البيانات في تطبيقات الويب هو:',
+    question_en: 'The primary role of the database tier in web applications is:',
+    options_ar: [
+      { key: 'A', text: 'استقبال إجراءات المستخدم' },
+      { key: 'B', text: 'تخزين البيانات واسترجاعها' },
+      { key: 'C', text: 'معالجة العمليات الحسابية' },
+      { key: 'D', text: 'عرض الشاشات والواجهات' },
+    ],
+    options_en: [
+      { key: 'A', text: 'Receiving user actions' },
+      { key: 'B', text: 'Storing and retrieving data' },
+      { key: 'C', text: 'Computing mathematical operations' },
+      { key: 'D', text: 'Displaying screens and UI' },
+    ],
+    correct_option: 'B',
+    ideal_answer_ar: 'الإجابة الصحيحة: (ب) تخزين البيانات واسترجاعها.',
+    ideal_answer_en: 'Correct Answer: (B) Storing and retrieving data.',
+    explanation_ar: 'الهدف الأساسي لقاعدة البيانات هو الحفظ الدائم للبيانات وتنظيمها في جداول ليسهل استرجاعها.',
+    explanation_en: 'The foundational role of the database tier is persistent storage and rapid query retrieval.',
+  },
+
+  {
+    id: 'c3-l1-mcq-07',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'MEDIUM',
+    source_ar: 'التقييم الأسبوعي - ص 50',
+    source_en: 'Weekly Assessment - Page 50',
+    question_ar: 'التحكم في الإشعارات الفورية وتحديد الجمهور المستهدف للمنشورات يتم عبر:',
+    question_en: 'Controlling push notifications and determining the target audience for posts is handled via:',
+    options_ar: [
+      { key: 'A', text: 'الواجهة الخلفية' },
+      { key: 'B', text: 'الواجهة الأمامية' },
+      { key: 'C', text: 'قاعدة البيانات' },
+      { key: 'D', text: 'شاشة الخط الزمني' },
+    ],
+    options_en: [
+      { key: 'A', text: 'The Backend tier' },
+      { key: 'B', text: 'The Frontend tier' },
+      { key: 'C', text: 'The Database tier' },
+      { key: 'D', text: 'The Timeline Screen' },
+    ],
+    correct_option: 'A',
+    ideal_answer_ar: 'الإجابة الصحيحة: (أ) الواجهة الخلفية (Backend).',
+    ideal_answer_en: 'Correct Answer: (A) The Backend tier.',
+    explanation_ar: 'تحديد مَن يرى المنشور وإرسال تنبيهات على أجهزة المستخدمين يمثل قواعد عمل (Business Logic) تنفذها الواجهة الخلفية.',
+    explanation_en: 'Audience access filtering and dispatching push alerts are business logic functions managed by the backend.',
+  },
+
+  {
+    id: 'c3-l1-mcq-08',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'EASY',
+    source_ar: 'التقييم الأسبوعي (نموذج A) - ص 50',
+    source_en: 'Model A Assessment - Page 50',
+    question_ar: 'أي مما يأتي يمثل دور الواجهة الأمامية في تطبيق الويب؟',
+    question_en: 'Which of the following represents the role of the frontend in a web app?',
+    options_ar: [
+      { key: 'A', text: 'معالجة الطلبات' },
+      { key: 'B', text: 'عرض المحتوى واستقبال إدخال المستخدم' },
+      { key: 'C', text: 'تخزين البيانات' },
+      { key: 'D', text: 'التحقق من تسجيل الدخول' },
+    ],
+    options_en: [
+      { key: 'A', text: 'Processing server requests' },
+      { key: 'B', text: 'Displaying content and capturing user input' },
+      { key: 'C', text: 'Storing database records' },
+      { key: 'D', text: 'Verifying user login credentials' },
+    ],
+    correct_option: 'B',
+    ideal_answer_ar: 'الإجابة الصحيحة: (ب) عرض المحتوى واستقبال إدخال المستخدم.',
+    ideal_answer_en: 'Correct Answer: (B) Displaying content and capturing user input.',
+    explanation_ar: 'الواجهة الأمامية مسؤولة عن الجانب المرئي والتفاعلي المباشر مع المستخدم.',
+    explanation_en: 'The frontend handles visual rendering and direct user interaction.',
+  },
+
+  {
+    id: 'c3-l1-mcq-09',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'MEDIUM',
+    source_ar: 'التقييم الأسبوعي (نموذج A) - ص 50',
+    source_en: 'Model A Assessment - Page 50',
+    question_ar: 'عند البحث عن منتج في متجر إلكتروني، أي طبقة تُرسل الاستعلام والطلب إلى قاعدة البيانات؟',
+    question_en: 'When searching for a product in an online store, which tier dispatches the query to the database?',
+    options_ar: [
+      { key: 'A', text: 'الواجهة الأمامية' },
+      { key: 'B', text: 'الواجهة الخلفية' },
+      { key: 'C', text: 'متصفح المستخدم' },
+      { key: 'D', text: 'قاعدة البيانات نفسها' },
+    ],
+    options_en: [
+      { key: 'A', text: 'The Frontend tier' },
+      { key: 'B', text: 'The Backend tier' },
+      { key: 'C', text: 'User Browser' },
+      { key: 'D', text: 'The Database itself' },
+    ],
+    correct_option: 'B',
+    ideal_answer_ar: 'الإجابة الصحيحة: (ب) الواجهة الخلفية (Backend).',
+    ideal_answer_en: 'Correct Answer: (B) The Backend tier.',
+    explanation_ar: 'الواجهة الأمامية ترسل الطلب للواجهة الخلفية، ثم تقوم الواجهة الخلفية بصياغة الاستعلام وإرساله لقاعدة البيانات.',
+    explanation_en: 'The frontend contacts the backend; the backend parses the query and questions the database.',
+  },
+
+  {
+    id: 'c3-l1-mcq-10',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'EASY',
+    source_ar: 'التقييم الأسبوعي (نموذج A) - ص 50',
+    source_en: 'Model A Assessment - Page 50',
+    question_ar: 'أي من التالي يُعتبر مثالاً على البيانات المخزنة في قاعدة بيانات موقع تجارة إلكترونية؟',
+    question_en: 'Which of the following is an example of data stored in an e-commerce database?',
+    options_ar: [
+      { key: 'A', text: 'شاشة البحث' },
+      { key: 'B', text: 'سجل الطلبات السابقة' },
+      { key: 'C', text: 'التحقق من تسجيل الدخول' },
+      { key: 'D', text: 'واجهة المستخدم' },
+    ],
+    options_en: [
+      { key: 'A', text: 'The Search screen' },
+      { key: 'B', text: 'Past customer order history' },
+      { key: 'C', text: 'Login credential verification' },
+      { key: 'D', text: 'User Interface layout' },
+    ],
+    correct_option: 'B',
+    ideal_answer_ar: 'الإجابة الصحيحة: (ب) سجل الطلبات السابقة (Order History).',
+    ideal_answer_en: 'Correct Answer: (B) Past customer order history.',
+    explanation_ar: 'شاشة البحث وواجهة المستخدم تخص الواجهة الأمامية، والتحقق يخص الواجهة الخلفية، وسجل الطلبات هو بيانات مخزنة في قاعدة البيانات.',
+    explanation_en: 'Screens are frontend, authentication is backend, and order records are stored in the database.',
+  },
+
+  {
+    id: 'c3-l1-mcq-11',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'EASY',
+    source_ar: 'التقييم الأسبوعي (النماذج A و B و C) - ص 50-52',
+    source_en: 'Models A, B, C Assessment - Pages 50-52',
+    question_ar: 'الفكرة الرئيسة للبنية العامة لتطبيقات الويب هي:',
+    question_en: 'The core architectural concept of web applications is:',
+    options_ar: [
+      { key: 'A', text: 'بناء التطبيق من طبقة واحدة فقط' },
+      { key: 'B', text: 'تعاون ثلاث طبقات: واجهة أمامية، واجهة خلفية، قاعدة بيانات' },
+      { key: 'C', text: 'استخدام متصفح الويب فقط دون خوادم' },
+      { key: 'D', text: 'أن كل طبقة تعمل منفردة دون تعاون' },
+    ],
+    options_en: [
+      { key: 'A', text: 'Building the app from a single monolithic tier' },
+      { key: 'B', text: 'Cooperation of three tiers: Frontend, Backend, Database' },
+      { key: 'C', text: 'Relying exclusively on the browser without servers' },
+      { key: 'D', text: 'Each tier operating in total isolation without synergy' },
+    ],
+    correct_option: 'B',
+    ideal_answer_ar: 'الإجابة الصحيحة: (ب) تعاون ثلاث طبقات: واجهة أمامية، واجهة خلفية، قاعدة بيانات.',
+    ideal_answer_en: 'Correct Answer: (B) Cooperation of three tiers: Frontend, Backend, Database.',
+    explanation_ar: 'السؤال تكرر في النماذج الثلاثة لأن الفكرة الجوهرية للدرس هي التعاون بين الطبقات الثلاث.',
+    explanation_en: 'Repeated across all assessment models as the foundational thesis of web application architecture.',
+  },
+
+  {
+    id: 'c3-l1-mcq-12',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'EASY',
+    source_ar: 'التقييم الأسبوعي (نموذج B و C) - ص 51-52',
+    source_en: 'Model B & C Assessment - Pages 51-52',
+    question_ar: 'أي من التالي يُعتبر مثالاً حقيقياً على تطبيق ويب (Web Application)؟',
+    question_en: 'Which of the following is a genuine example of a web application?',
+    options_ar: [
+      { key: 'A', text: 'برنامج تشغيل فيديو مثبت على الحاسوب' },
+      { key: 'B', text: 'موقع خرائط على الإنترنت' },
+      { key: 'C', text: 'تطبيق آلة حاسبة محلي على سطح المكتب' },
+      { key: 'D', text: 'برنامج تحرير صور مكتبي' },
+    ],
+    options_en: [
+      { key: 'A', text: 'Media player installed locally on PC' },
+      { key: 'B', text: 'Online web mapping service' },
+      { key: 'C', text: 'Desktop calculator application' },
+      { key: 'D', text: 'Local desktop photo editor' },
+    ],
+    correct_option: 'B',
+    ideal_answer_ar: 'الإجابة الصحيحة: (ب) موقع خرائط على الإنترنت (مثل Google Maps).',
+    ideal_answer_en: 'Correct Answer: (B) Online web mapping service (e.g. Google Maps).',
+    explanation_ar: 'موقع الخرائط يعمل عبر المتصفح ويتصل بالخادم دون تثبيت، أما الخيارات الأخرى فتطبيقات مكتبية مثبتة محلياً.',
+    explanation_en: 'Online maps run through browsers querying remote servers; others are locally installed desktop apps.',
+  },
+
+  {
+    id: 'c3-l1-mcq-13',
+    lesson: '3-1',
+    type: 'MCQ',
+    difficulty: 'MEDIUM',
+    source_ar: 'التقييم الأسبوعي (نموذج B و C) - ص 51-52',
+    source_en: 'Model B & C Assessment - Pages 51-52',
+    question_ar: 'أي من التالي يُمثل إحدى الوظائف الأساسية للواجهة الخلفية (Backend) في تطبيق ويب؟',
+    question_en: 'Which of the following represents a primary function of the Backend in a web app?',
+    options_ar: [
+      { key: 'A', text: 'عرض صفحات المنتجات' },
+      { key: 'B', text: 'عرض مربع البحث للمستخدم' },
+      { key: 'C', text: 'التحقق من تسجيل الدخول والمصادقة' },
+      { key: 'D', text: 'تخزين سجل الطلبات بشكل دائم' },
+    ],
+    options_en: [
+      { key: 'A', text: 'Displaying product listing pages' },
+      { key: 'B', text: 'Rendering the search bar to the user' },
+      { key: 'C', text: 'Login credential verification & authentication' },
+      { key: 'D', text: 'Permanently retaining order logs' },
+    ],
+    correct_option: 'C',
+    ideal_answer_ar: 'الإجابة الصحيحة: (ج) التحقق من تسجيل الدخول والمصادقة.',
+    ideal_answer_en: 'Correct Answer: (C) Login credential verification & authentication.',
+    explanation_ar: 'الخيارات (أ) و (ب) تخص الواجهة الأمامية، والخيار (د) يخص قاعدة البيانات، والتحقق يخص الواجهة الخلفية.',
+    explanation_en: 'Displaying screens belongs to frontend; storage belongs to database; authentication is handled by the backend.',
+  },
+
+  // ════════════════════════════════════════════════════════════
+  // SECTION 2: WRITTEN / ESSAY QUESTIONS — الأسئلة المقالية
+  // ════════════════════════════════════════════════════════════
+
+  {
+    id: 'c3-l1-w-01',
+    lesson: '3-1',
+    type: 'WRITTEN',
+    difficulty: 'EASY',
+    source_ar: 'المهام الأدائية - ص 48',
+    source_en: 'Classroom Tasks - Page 48',
+    question_ar: 'عرّف تطبيق الويب (Web Application) واذكر ميزته الجوهرية مقارنة بالتطبيقات التقليدية.',
+    question_en: 'Define a Web Application and state its core advantage over traditional desktop applications.',
+    ideal_answer_ar: '• تعريف تطبيق الويب: هو برنامج يتم تشغيله واستخدامه والوصول إليه عبر متصفح الويب (Web Browser) بواسطة شبكة الإنترنت أو شبكة محلية.\n• ميزته الجوهرية: لا يحتاج إلى تثبيت برامج مخصصة محلياً على جهاز المستخدم، بل يمكن فتحه واستخدامه فوراً من أي جهاز متصل بالإنترنت.',
+    ideal_answer_en: '• Web Application Definition: Software executed, accessed, and operated through a standard web browser over the Internet or local network.\n• Core Advantage: It requires zero local installation of dedicated software; users can access it instantly from any connected device.',
+    explanation_ar: 'إجابة مختصرة ومركزة ومطابقة لنص كتاب الوزارة.',
+    explanation_en: 'Concise and accurate definition adhering directly to the curriculum.',
+    keywords: ['متصفح الويب', 'دون تثبيت', 'الإنترنت'],
+  },
+
+  {
+    id: 'c3-l1-w-02',
+    lesson: '3-1',
+    type: 'WRITTEN',
+    difficulty: 'EASY',
+    source_ar: 'المهام الأدائية - ص 48',
+    source_en: 'Classroom Tasks - Page 48',
+    question_ar: 'عدّد الطبقات الرئيسة الثلاث التي يتكون منها تطبيق الويب، واذكر وظيفة كل طبقة بجملة واحدة.',
+    question_en: 'List the three main tiers of a web application and summarize each tier\'s role in one sentence.',
+    ideal_answer_ar: 'يتكون تطبيق الويب من ثلاث طبقات رئيسة متعاونة:\n1. الواجهة الأمامية (Frontend): مسؤولة عن عرض الشاشات والواجهات واستقبال مدخلات وإجراءات المستخدم.\n2. الواجهة الخلفية (Backend): مسؤولة عن معالجة البيانات، تطبيق قواعد العمل، التحقق من تسجيل الدخول، وإجراء العمليات الحسابية.\n3. قاعدة البيانات (Database): مسؤولة عن تنظيم وحفظ البيانات بشكل دائم واسترجاعها عند الطلب.',
+    ideal_answer_en: 'A web app is built from three collaborating tiers:\n1. Frontend: Renders visual UI screens and captures user keystrokes and clicks.\n2. Backend: Handles server-side processing, business logic, authentication, and calculations.\n3. Database: Organizes, permanently stores, and retrieves data records upon request.',
+    explanation_ar: 'هذه الإجابة هي الركيزة الأساسية للوحدة الثالثة ويجب حفظها بالترتيب.',
+    explanation_en: 'The core foundational response required for Unit 3 exams.',
+    keywords: ['واجهة أمامية', 'واجهة خلفية', 'قاعدة بيانات', 'عرض', 'معالجة', 'تخزين'],
+  },
+
+  {
+    id: 'c3-l1-w-03',
+    lesson: '3-1',
+    type: 'WRITTEN',
+    difficulty: 'MEDIUM',
+    source_ar: 'الأداءات المنزلية - ص 48',
+    source_en: 'Homework Tasks - Page 48',
+    question_ar: 'قارن بين دور الواجهة الأمامية ودور الواجهة الخلفية في تطبيق شبكة التواصل الاجتماعي.',
+    question_en: 'Compare the roles of the Frontend and Backend tiers in a Social Media application.',
+    ideal_answer_ar: '• دور الواجهة الأمامية (Frontend):\n  1. عرض شاشة الخط الزمني (Timeline) والمنشورات والصور.\n  2. توفير مربع إدخال لكتابة المنشورات وأزرار الإعجاب والتعليق.\n  3. عرض شاشة الإشعارات وصندوق المحادثات.\n\n• دور الواجهة الخلفية (Backend):\n  1. معالجة وتحديد الجمهور المستهدف للمنشور (عام / أصدقاء).\n  2. معالجة وتوليد الإشعارات الفورية عند تفاعل الآخرين مع المنشورات.\n  3. التحقق من تسجيل دخول المستخدم وصلاحياته.',
+    ideal_answer_en: '• Frontend Role:\n  1. Renders the feed timeline, photos, and formatted posts.\n  2. Provides textboxes for composing updates, liking, and commenting.\n  3. Displays notification drawers and chat bubbles.\n\n• Backend Role:\n  1. Determines audience visibility filters (Public vs Friends).\n  2. Triggers push notifications on user interactions.\n  3. Authenticates logins and validates user permissions.',
+    explanation_ar: 'مقارنة عملية من واقع منهج الوزارة بين العرض المرئي ومنطق المعالجة في السوشيال ميديا.',
+    explanation_en: 'Practical comparison of presentation vs logic in social networking apps.',
+    keywords: ['الخط الزمني', 'الجمهور المستهدف', 'الإشعارات', 'التحقق'],
+  },
+
+  {
+    id: 'c3-l1-w-04',
+    lesson: '3-1',
+    type: 'WRITTEN',
+    difficulty: 'HARD',
+    source_ar: 'الأداءات المنزلية - ص 48',
+    source_en: 'Homework Tasks - Page 48',
+    question_ar: 'كيف تتعامل الواجهة الخلفية مع البيانات الواردة من الواجهة الأمامية والبيانات المخزنة في قاعدة البيانات في موقع للتجارة الإلكترونية؟',
+    question_en: 'How does the Backend mediate between frontend inputs and database records in an e-commerce platform?',
+    ideal_answer_ar: 'تعمل الواجهة الخلفية كحلقة وصل ومعالجة أمنية من خلال الخطوات التالية:\n1. استقبال مدخلات الواجهة الأمامية (مثل: اسم المنتج المطلوب أو بيانات بطاقة الدفع).\n2. فحص وتدقيق البيانات والتأكد من صحتها وصلاحيات المستخدم.\n3. إرسال استعلام لقاعدة البيانات للتأكد من توفر المخزون وسعر المنتج.\n4. استلام النتائج من قاعدة البيانات وتطبيق حسابات الفاتورة والضرائب أو إرسال طلب الدفع للبنك.\n5. تحديث قاعدة البيانات ببيانات الطلب الجديد، وإرسال النتيجة النهائية للواجهة الأمامية لعرضها.',
+    ideal_answer_en: 'The backend acts as an intelligent intermediary:\n1. Receives input parameters from the frontend (search terms or payment payloads).\n2. Validates input integrity and user authorization.\n3. Dispatches queries to the database to inspect inventory and live pricing.\n4. Processes database query results, totals cart amounts, and communicates with payment gateways.\n5. Commits new purchase records to the database and dispatches confirmed outcomes back to the frontend.',
+    explanation_ar: 'الواجهة الخلفية هي العقل المدبر الذي يتحكم في تدفق وتدقيق البيانات قبل قراءتها أو حفظها في قاعدة البيانات.',
+    explanation_en: 'The backend is the secure brain controlling data flow between clients and raw databases.',
+    keywords: ['حلقة وصل', 'فحص وتدقيق', 'استعلام', 'تحديث قاعدة البيانات'],
+  },
+
+  {
+    id: 'c3-l1-w-05',
+    lesson: '3-1',
+    type: 'WRITTEN',
+    difficulty: 'MEDIUM',
+    source_ar: 'المهام الأدائية - ص 49',
+    source_en: 'Classroom Tasks - Page 49',
+    question_ar: 'ناقش أهمية طبقة قاعدة البيانات في مواقع التجارة الإلكترونية، واذكر 3 أمثلة على البيانات المخزنة فيها.',
+    question_en: 'Discuss the importance of the Database tier in e-commerce websites, and list 3 examples of stored data.',
+    ideal_answer_ar: '• أهمية طبقة قاعدة البيانات:\n  تُمثل المستودع الرقمي الدائم للمتجر؛ فبدونها يفقد المتجر كافة بياناته بمجرد إغلاق الموقع، كما تضمن سلامة واستقرار المعاملات التجارية وتسمح بالبحث السريع والفوري في آلاف المنتجات.\n\n• ثلاثة أمثلة على البيانات المخزنة:\n  1. بيانات المنتجات والأسعار وكميات المخزون المتاحة.\n  2. بيانات حسابات العملاء وعناوين الشحن وكلمات المرور المشفرة.\n  3. سجل الطلبات والفواتير ومعاملات الدفع السابقة.',
+    ideal_answer_en: '• Importance of Database Tier:\n  Serves as the permanent data anchor for the business. Without it, transactions and inventory vanish when sessions end. It ensures transactional consistency and fast product catalog lookups.\n\n• Three Examples of Stored Data:\n  1. Product specifications, active prices, and real-time stock levels.\n  2. Customer profiles, hashed credentials, and shipping addresses.\n  3. Historical customer orders, purchase logs, and payment receipts.',
+    explanation_ar: 'سؤال وزاري مباشر يختبر فهم الطالب لأهمية التخزين الدائم وأمثلته في المتاجر الإلكترونية.',
+    explanation_en: 'Core exam question assessing comprehension of persistence in retail web apps.',
+    keywords: ['تخزين دائم', 'سجل الطلبات', 'بيانات المنتجات', 'حسابات العملاء'],
+  },
+
+  {
+    id: 'c3-l1-w-06',
+    lesson: '3-1',
+    type: 'WRITTEN',
+    difficulty: 'HARD',
+    source_ar: 'التقييم الأسبوعي (نموذج A) - ص 50',
+    source_en: 'Model A Assessment - Page 50',
+    question_ar: 'تتبع خطوات تدفق طلب البحث عن منتج في متجر إلكتروني عبر الطبقات الثلاث، وبيّن دور كل طبقة في كل خطوة.',
+    question_en: 'Trace the steps of a product search request across the three tiers in an online store, stating each tier\'s role.',
+    ideal_answer_ar: 'يتدفق طلب البحث عبر 6 خطوات متتابعة:\n1. الواجهة الأمامية: يستقبل مربع البحث كلمة البحث المدخلة من المستخدم (مثل: "هاتف ذكي").\n2. الواجهة الأمامية ← الخلفية: تُرسل كلمة البحث في طلب (HTTP Request) إلى خادم الواجهة الخلفية.\n3. الواجهة الخلفية: تستلم الطلب وتصيغ استعلاماً للبحث عن المنتجات المطابقة وترسله لقاعدة البيانات.\n4. قاعدة البيانات: تبحث في جدول المنتجات وتُعيد بيانات المنتجات المطابقة إلى الواجهة الخلفية.\n5. الواجهة الخلفية: تُعالج النتائج وترتبها وتنسقها استجابةً للطلب.\n6. الواجهة الخلفية ← الأمامية: تعرض الواجهة الأمامية المنتجات وصورها وأسعارها للمستخدم بشكل منسق.',
+    ideal_answer_en: 'The search lifecycle traverses 6 ordered steps:\n1. Frontend: Collects user search keywords typed into the search bar.\n2. Frontend → Backend: Dispatches the query payload to the backend server.\n3. Backend: Parses input and executes a search query against the database.\n4. Database: Searches product tables and returns matching records to the backend.\n5. Backend: Sorts, formats, and packages results into an organized response payload.\n6. Backend → Frontend: The frontend receives data and renders product cards cleanly on screen.',
+    explanation_ar: 'السؤال الأكثر شمولاً في تقييمات الوزارة؛ يوضح تدفق الطلب ذهاباً وإياباً بين الطبقات الثلاث.',
+    explanation_en: 'The most comprehensive ministry assessment question illustrating full bidirectional request flow.',
+    keywords: ['تدفق الطلب', 'استعلام', 'معالجة', 'عرض النتائج'],
+  },
+
+  {
+    id: 'c3-l1-w-07',
+    lesson: '3-1',
+    type: 'WRITTEN',
+    difficulty: 'MEDIUM',
+    source_ar: 'التقييم الأسبوعي (نموذج B) - ص 51',
+    source_en: 'Model B Assessment - Page 51',
+    question_ar: 'ناقش أهمية وفائدة تقسيم تطبيق الويب إلى ثلاث طبقات رئيسة بدلاً من بنائه في برنامج واحد.',
+    question_en: 'Discuss the benefits of dividing a web app into three tiers rather than building it in a single program.',
+    ideal_answer_ar: '1. سهولة الصيانة والتطوير المستقل: يمكن لفريق التصميم تحديث الواجهة الأمامية دون تعديل كود الخادم أو قواعد البيانات.\n2. تعزيز الأمان: عزل قاعدة البيانات خلف الواجهة الخلفية يمنع وصول المستخدمين المباشر إليها، مما يحمي السجلات الحساسة.\n3. قابلية التوسع (Scalability): يمكن ترقية خوادم المعالجة أو قواعد البيانات بشكل مستقل عند زيادة أعداد المستخدمين.\n4. إعادة الاستخدام: يمكن استخدام نفس الواجهة الخلفية وقاعدة البيانات لتغذية تطبيق ويب وتطبيق هاتف في نفس الوقت.',
+    ideal_answer_en: '1. Independent Maintenance: Frontend UI can be refreshed without touching backend code or database schemas.\n2. Enhanced Security: Isolating the database behind business logic prevents unauthorized direct client access.\n3. Scalability: Server or database capacity can be scaled independently under heavy load.\n4. Reusability: A single backend and database can serve web, mobile, and third-party clients simultaneously.',
+    explanation_ar: 'سؤال فلسفة التصميم وفصل المسؤوليات (Separation of Concerns).',
+    explanation_en: 'Architecture rationale question focusing on separation of concerns.',
+    keywords: ['تطوير مستقل', 'أمان', 'قابلية التوسع', 'سهولة الصيانة'],
+  },
+
+  {
+    id: 'c3-l1-w-08',
+    lesson: '3-1',
+    type: 'WRITTEN',
+    difficulty: 'HARD',
+    source_ar: 'كتاب الوزارة - تدريب التفكير الهندسي ص 60',
+    source_en: 'Textbook - Think as an Engineer Page 60',
+    question_ar: 'في تطبيق حجز مواعيد عيادة طبية: فتحت صفحة الحجز بنجاح على الشاشة، ولكن لم تظهر أي مواعيد متاحة للمريض. أي طبقة تعمل بنجاح وأي طبقة حدث فيها العطل على الأرجح؟ علل إجابتك.',
+    question_en: 'In a clinic booking app: the booking page opens fine, but no available appointment slots appear. Which tier is working and which failed? Explain.',
+    ideal_answer_ar: '• الطبقة التي تعمل بنجاح: الواجهة الأمامية (Frontend)؛ والدليل أن صفحة الويب وعناصرها وتصميمها فُتحت وعُرضت على شاشة المتصفح دون مشاكل.\n• الطبقة التي حدث فيها العطل غالباً: الواجهة الخلفية (Backend) أو قاعدة البيانات (Database)؛ لأن فشل ظهور المواعيد ناتج إما عن عطل في خادم المعالجة في جلب البيانات، أو عطل في قاعدة البيانات في استعلام واسترجاع جدول المواعيد المتاحة.',
+    ideal_answer_en: '• Tier working: Frontend tier; evidenced by the browser successfully downloading and rendering page layouts and design.\n• Tier failed: Backend or Database tier; because missing appointment slots indicates an inability to query or retrieve free slot records from persistence storage.',
+    explanation_ar: 'تدريب تطبيقي مميز من كتاب الوزارة يختبر قدرة الطالب على تشخيص الأعطال وفق نموذج الطبقات.',
+    explanation_en: 'High-order diagnostic question from the official textbook testing applied systems thinking.',
+    keywords: ['الواجهة الأمامية تعمل', 'الواجهة الخلفية تعطلت', 'استرجاع المواعيد'],
+  },
+];
+
