@@ -36,6 +36,7 @@ import Chapter2ReviewBooklet from './Chapter2ReviewBooklet';
 import Chapter3Practice from './Chapter3Practice';
 import Chapter3RealQuiz from './Chapter3RealQuiz';
 import Chapter3ReviewBooklet from './Chapter3ReviewBooklet';
+import SprixArrayInteractive from './SprixArrayInteractive';
 import Lesson1BookletPdf from './Lesson1BookletPdf';
 import Lesson2BookletPdf from './Lesson2BookletPdf';
 
@@ -573,6 +574,32 @@ function StudentDashboard() {
             placeholder={t('Search lessons...', 'ابحث عن الدروس...', lang)}
             className="w-full bg-white border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-primary-navy text-sm font-medium shadow-sm focus:outline-none focus:border-accent-pink focus:ring-2 focus:ring-accent-pink/20 transition-all placeholder-slate-400"
           />
+        </div>
+
+        {/* Sprix Interactive Coding Lab Banner */}
+        <div className="mb-8 p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border border-indigo-900/60">
+          <div>
+            <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 inline-block mb-1.5">
+              {t('Sprix Programming Curriculum · Chapters 15 & 16', 'منهج البرمجة العملي Sprix · الفصول 15 و 16', lang)}
+            </span>
+            <h3 className="text-xl font-black mb-1">
+              {t('Interactive Lab: Lists, For Loops & 2D Arrays', 'معمل البرمجة التفاعلي: القوائم، التكرار for، والمصفوفات', lang)}
+            </h3>
+            <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-2xl leading-relaxed">
+              {t(
+                'Step-by-step visualizer for memory lockers, zero-based indexing, len() boundaries, and live for loop traversals.',
+                'شرح تفاعلي بالصناديق المرئية لفهرسة القوائم من الصفر، حلقة التكرار for خطوة بخطوة، وحساب طول القائمة وتفادي الأخطاء.',
+                lang
+              )}
+            </p>
+          </div>
+
+          <button
+            onClick={() => navigate('/sprix-arrays')}
+            className="px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:opacity-95 text-slate-950 text-xs font-black transition-all shadow-lg shadow-emerald-500/20 cursor-pointer shrink-0"
+          >
+            {t('Open Interactive Lab', 'فتح المعمل التفاعلي', lang)}
+          </button>
         </div>
 
         {/* ============================================================ */}
@@ -3792,6 +3819,7 @@ export default function App() {
               <Route path="/chapter3-practice" element={<Protected><Chapter3Practice /></Protected>} />
               <Route path="/chapter3-quiz" element={<Protected><Chapter3RealQuiz /></Protected>} />
               <Route path="/chapter3-review" element={<Protected><Chapter3ReviewBooklet /></Protected>} />
+              <Route path="/sprix-arrays" element={<Protected><SprixArrayInteractive /></Protected>} />
             </Routes>
           </AnimatePresence>
         </div>
