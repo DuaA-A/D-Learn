@@ -4,12 +4,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // ============================================================
 // SPRIX CODING LAB: LISTS & 2D ARRAYS (CHAPTERS 15 & 16)
-// Interactive visual pedagogy for 2nd Secondary & Sprix learners
+// Interactive visual pedagogy for Egyptian Public High School
+// Full bilingual support: Arabic (عربي) & English (EN)
 // Zero icons, zero emojis — pure visual cards, memory boxes & code
 // ============================================================
 
 export default function SprixArrayInteractive() {
   const navigate = useNavigate();
+
+  // ── Language Toggle: Default to 'AR' for Egyptian Public Secondary Students
+  const [lang, setLang] = useState<'AR' | 'EN'>('AR');
 
   // ── Tab: '1D_LISTS' (Chapter 15) vs '2D_MATRICES' (Chapter 16) vs 'CHALLENGES'
   const [activeTab, setActiveTab] = useState<'1D_LISTS' | '2D_MATRICES' | 'CHALLENGES'>('1D_LISTS');
@@ -43,22 +47,28 @@ export default function SprixArrayInteractive() {
       }, 1200);
     }
     return () => clearTimeout(timer);
-  }, [isAutoPlaying, loopIndex, listItems]);
+  }, [isAutoPlaying, loopIndex, listItems, lang]);
 
   const handleStepForward = () => {
     if (loopIndex === null) {
       setLoopIndex(0);
-      setLoopConsole([`>>> for item in fruits:`, `Iteration 1: item = "${listItems[0]}" at index [0]`]);
+      const log0 = lang === 'AR'
+        ? [`>>> for item in fruits:`, `الدورة 1: item = "${listItems[0]}" عند الفهرس [0]`]
+        : [`>>> for item in fruits:`, `Iteration 1: item = "${listItems[0]}" at index [0]`];
+      setLoopConsole(log0);
     } else if (loopIndex < listItems.length - 1) {
       const nextIdx = loopIndex + 1;
       setLoopIndex(nextIdx);
-      setLoopConsole(prev => [
-        ...prev,
-        `Iteration ${nextIdx + 1}: item = "${listItems[nextIdx]}" at index [${nextIdx}]`,
-      ]);
+      const logNext = lang === 'AR'
+        ? `الدورة ${nextIdx + 1}: item = "${listItems[nextIdx]}" عند الفهرس [${nextIdx}]`
+        : `Iteration ${nextIdx + 1}: item = "${listItems[nextIdx]}" at index [${nextIdx}]`;
+      setLoopConsole(prev => [...prev, logNext]);
     } else {
       setIsAutoPlaying(false);
-      setLoopConsole(prev => [...prev, `Loop finished! Traversed all ${listItems.length} elements.`]);
+      const logEnd = lang === 'AR'
+        ? `انتهى التكرار! تم المرور على جميع العناصر (${listItems.length}).`
+        : `Loop finished! Traversed all ${listItems.length} elements.`;
+      setLoopConsole(prev => [...prev, logEnd]);
     }
   };
 
@@ -71,7 +81,7 @@ export default function SprixArrayInteractive() {
   const handleAddItem = () => {
     if (!newItemValue.trim()) return;
     if (listItems.length >= 8) {
-      alert('Maximum 8 items allowed for optimal screen visualization.');
+      alert(lang === 'AR' ? 'الحد الأقصى للعناصر هو 8 لضمان وضوح الشاشة.' : 'Maximum 8 items allowed for optimal screen visualization.');
       return;
     }
     setListItems(prev => [...prev, newItemValue.trim()]);
@@ -80,7 +90,7 @@ export default function SprixArrayInteractive() {
 
   const handleRemoveItem = (idxToRemove: number) => {
     if (listItems.length <= 1) {
-      alert('Keep at least 1 element to maintain the list structure.');
+      alert(lang === 'AR' ? 'يجب الاحتفاظ بعنصر واحد على الأقل للحفاظ على بنية القائمة.' : 'Keep at least 1 element to maintain the list structure.');
       return;
     }
     setListItems(prev => prev.filter((_, i) => i !== idxToRemove));
@@ -120,30 +130,62 @@ export default function SprixArrayInteractive() {
     if (challengeStep === 1) {
       // Question: What is the index of 'Cherry' in ['Apple', 'Banana', 'Cherry', 'Date']?
       if (userAnswer.trim() === '2') {
-        setChallengeFeedback({ correct: true, message: 'CORRECT! "Cherry" is at index [2] because indexing starts at 0 (0: Apple, 1: Banana, 2: Cherry).' });
+        setChallengeFeedback({
+          correct: true,
+          message: lang === 'AR'
+            ? 'إجابة صحيحة تماماً! "Cherry" تقع في الفهرس [2] لأن الترقيم في بايثون يبدأ من الصفر (0: Apple, 1: Banana, 2: Cherry).'
+            : 'CORRECT! "Cherry" is at index [2] because indexing starts at 0 (0: Apple, 1: Banana, 2: Cherry).'
+        });
       } else {
-        setChallengeFeedback({ correct: false, message: 'INCORRECT. Remember zero-based indexing: 0 is first, 1 is second, 2 is third.' });
+        setChallengeFeedback({
+          correct: false,
+          message: lang === 'AR'
+            ? 'إجابة غير صحيحة. تذكر قاعدة الفهرسة من الصفر: العنصر الأول فِهْرسه 0، الثاني 1، والثالث 2.'
+            : 'INCORRECT. Remember zero-based indexing: 0 is first, 1 is second, 2 is third.'
+        });
       }
     } else if (challengeStep === 2) {
       // Question: If len(data) == 5, what is the index of the last element?
       if (userAnswer.trim() === '4') {
-        setChallengeFeedback({ correct: true, message: 'EXCELLENT! The last valid index is always len(data) - 1, which is 5 - 1 = 4.' });
+        setChallengeFeedback({
+          correct: true,
+          message: lang === 'AR'
+            ? 'ممتاز جداً! آخر فهرس متاح في القائمة دائماً يساوي len - 1، أي 5 - 1 = 4.'
+            : 'EXCELLENT! The last valid index is always len(data) - 1, which is 5 - 1 = 4.'
+        });
       } else {
-        setChallengeFeedback({ correct: false, message: 'Remember: Length is 5, but indices are 0, 1, 2, 3, 4. So the last element is at index 4.' });
+        setChallengeFeedback({
+          correct: false,
+          message: lang === 'AR'
+            ? 'تذكر دائماً: طول القائمة 5، لكن الفهارس المتاحة هي 0، 1، 2، 3، 4 فقط. العنصر الأخير فِهْرسه 4.'
+            : 'Remember: Length is 5, but indices are 0, 1, 2, 3, 4. So the last element is at index 4.'
+        });
       }
     } else if (challengeStep === 3) {
-      // Question: In matrix = [[1, 2], [3, 4]], how do you access value 4?
+      // Question: In matrix = [[10, 20], [30, 40]], how do you access value 40?
       const clean = userAnswer.replace(/\s+/g, '');
       if (clean === 'matrix[1][1]' || clean === '[1][1]') {
-        setChallengeFeedback({ correct: true, message: 'PERFECT! Row 1 (second row) and Column 1 (second column) accesses matrix[1][1] = 4.' });
+        setChallengeFeedback({
+          correct: true,
+          message: lang === 'AR'
+            ? 'رائع ومثالي! الصف الثاني فِهْرسه 1 والعمود الثاني فِهْرسه 1، لذا يتم الوصول للقيمة 40 عبر matrix[1][1].'
+            : 'PERFECT! Row 1 (second row) and Column 1 (second column) accesses matrix[1][1] = 40.'
+        });
       } else {
-        setChallengeFeedback({ correct: false, message: 'Hint: Row index comes first, column index comes second: matrix[row][col]. Both are index 1.' });
+        setChallengeFeedback({
+          correct: false,
+          message: lang === 'AR'
+            ? 'تلميح: رقم الصف أولاً ثم رقم العمود ثانياً: matrix[row][col]. الصف الثاني فِهْرسه [1] والعمود الثاني فِهْرسه [1].'
+            : 'Hint: Row index comes first, column index comes second: matrix[row][col]. Both are index 1.'
+        });
       }
     }
   };
 
+  const isAr = lang === 'AR';
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 pb-24 font-sans">
+    <div className={`min-h-screen bg-slate-50 text-slate-900 pb-24 font-sans ${isAr ? 'text-right' : 'text-left'}`} dir={isAr ? 'rtl' : 'ltr'}>
       {/* ── TOP NAV HEADER ── */}
       <div className="bg-slate-900 text-white border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-6">
@@ -152,24 +194,46 @@ export default function SprixArrayInteractive() {
               onClick={() => navigate('/dashboard')}
               className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 hover:text-white transition-colors border border-slate-700 cursor-pointer"
             >
-              Back to Dashboard
+              {isAr ? 'العودة للوحة التحكم' : 'Back to Dashboard'}
             </button>
+
+            {/* Language Switcher Pill */}
+            <div className="flex items-center gap-1.5 bg-slate-800 p-1 rounded-2xl border border-slate-700">
+              <button
+                onClick={() => setLang('AR')}
+                className={`px-3 py-1 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                  isAr ? 'bg-emerald-500 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                عربي (حكومي)
+              </button>
+              <button
+                onClick={() => setLang('EN')}
+                className={`px-3 py-1 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                  !isAr ? 'bg-sky-500 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                English
+              </button>
+            </div>
 
             <div className="flex items-center gap-2">
               <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
-                Sprix Programming Curriculum
+                {isAr ? 'منهج Sprix للبرمجة' : 'Sprix Curriculum'}
               </span>
               <span className="px-3 py-1 rounded-full text-[11px] font-black bg-slate-800 text-slate-300 border border-slate-700">
-                Chapters 15 & 16
+                {isAr ? 'الفصل 15 و 16' : 'Chapters 15 & 16'}
               </span>
             </div>
           </div>
 
           <h1 className="text-xl sm:text-3xl font-black mb-1.5 tracking-tight">
-            Interactive Array & List Visualizer
+            {isAr ? 'المعمل التفاعلي: القوائم والمصفوفات (منهج Sprix)' : 'Interactive Array & List Visualizer'}
           </h1>
           <p className="text-slate-300 text-xs sm:text-sm font-medium max-w-3xl leading-relaxed">
-            Hands-on visual laboratory explaining zero-based indexing, list memory structure, <code className="text-sky-300 font-mono font-bold">for</code> loop traversal, <code className="text-sky-300 font-mono font-bold">len()</code> boundaries, and 2D matrices.
+            {isAr
+              ? 'معمل برمجيات بصري تفاعلي لطلاب الثانوية العامة (بكالوريا) يشرح بنية القوائم في الذاكرة، الفهرسة من الصفر، حلقة for التكرارية، قياس طول القائمة len()، والمصفوفات ثنائية الأبعاد.'
+              : 'Hands-on visual laboratory explaining zero-based indexing, list memory structure, for loop traversal, len() boundaries, and 2D matrices.'}
           </p>
 
           {/* Module Selector Tabs */}
@@ -182,7 +246,7 @@ export default function SprixArrayInteractive() {
                   : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'
               }`}
             >
-              Chapter 15: 1D Lists & For Loops
+              {isAr ? 'الفصل 15: القوائم الأحادية وجملة for' : 'Chapter 15: 1D Lists & For Loops'}
             </button>
             <button
               onClick={() => setActiveTab('2D_MATRICES')}
@@ -192,7 +256,7 @@ export default function SprixArrayInteractive() {
                   : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'
               }`}
             >
-              Chapter 16: 2D Arrays & Matrices
+              {isAr ? 'الفصل 16: المصفوفات ثنائية الأبعاد (2D Arrays)' : 'Chapter 16: 2D Arrays & Matrices'}
             </button>
             <button
               onClick={() => setActiveTab('CHALLENGES')}
@@ -202,7 +266,7 @@ export default function SprixArrayInteractive() {
                   : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'
               }`}
             >
-              Interactive Practice Challenges
+              {isAr ? 'تحديات وتدريبات تفاعلية (تقييم فوري)' : 'Interactive Practice Challenges'}
             </button>
           </div>
         </div>
@@ -221,29 +285,31 @@ export default function SprixArrayInteractive() {
             <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                 <span className="px-3 py-1 rounded-lg text-xs font-black bg-blue-100 text-blue-900 border border-blue-200 uppercase">
-                  Lesson 1: What is a List?
+                  {isAr ? 'الدرس 1: ما هي القائمة؟' : 'Lesson 1: What is a List?'}
                 </span>
-                <span className="text-xs font-bold text-slate-500 font-mono">
+                <span className="text-xs font-bold text-slate-500 font-mono" dir="ltr">
                   Syntax: variable_name = [item0, item1, item2, ...]
                 </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-2">
-                1. The "Lockers" Mental Model & Zero-Based Indexing
+                {isAr ? '1. نموذج "خزائن الذاكرة" والفهرسة من الصفر (Zero-Based Indexing)' : '1. The "Lockers" Mental Model & Zero-Based Indexing'}
               </h2>
               <p className="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed mb-6">
-                Instead of creating separate variables (<code className="text-blue-700 font-mono font-bold">item1, item2, item3</code>), a List stores multiple values inside a single continuous block in memory. Each locker has an address called an <strong>Index</strong>.
+                {isAr
+                  ? 'بدلاً من إنشاء متغيرات منفصلة لكل عنصر، تسمح القائمة (List) بتخزين عدة قيم متتالية في الذاكرة تحت اسم متغير واحد. كل خزانة تمتلك عنواناً رقمياً يُسمى الفهرس (Index) ويبدأ دائماً من الرقم 0.'
+                  : 'Instead of creating separate variables (item1, item2, item3), a List stores multiple values inside a single continuous block in memory. Each locker has an address called an Index.'}
               </p>
 
               {/* ── Interactive Memory Visualization Strip ── */}
               <div className="p-6 rounded-2xl bg-slate-900 text-white mb-6 overflow-x-auto shadow-inner">
                 <div className="text-xs font-mono font-bold text-slate-400 mb-3 flex items-center justify-between">
-                  <span>MEMORY VISUALIZATION (CLICK ANY LOCKER TO INSPECT OR EDIT)</span>
-                  <span className="text-sky-400">Total Length len(fruits) = {listItems.length}</span>
+                  <span>{isAr ? 'تمثيل الذاكرة التفاعلي (اضغط على أي خزانة لمعاينتها أو تعديلها)' : 'MEMORY VISUALIZATION (CLICK ANY LOCKER TO INSPECT OR EDIT)'}</span>
+                  <span className="text-sky-400 font-mono" dir="ltr">len(fruits) = {listItems.length}</span>
                 </div>
 
                 {/* Lockers Grid in a Single Row */}
-                <div className="flex items-center gap-3 min-w-max pb-2">
+                <div className="flex items-center gap-3 min-w-max pb-2" dir="ltr">
                   {listItems.map((val, idx) => {
                     const isSelected = selectedIndex === idx;
                     const isLoopActive = loopIndex === idx;
@@ -265,7 +331,7 @@ export default function SprixArrayInteractive() {
                             Index [{idx}]
                           </span>
                           <span className="text-[10px] text-slate-500 mt-0.5 font-mono">
-                            {idx === 0 ? 'First (0)' : idx === listItems.length - 1 ? 'Last (len-1)' : `Slot ${idx + 1}`}
+                            {idx === 0 ? (isAr ? 'الأول (0)' : 'First (0)') : idx === listItems.length - 1 ? (isAr ? 'الأخير (len-1)' : 'Last (len-1)') : `${isAr ? 'خانة' : 'Slot'} ${idx + 1}`}
                           </span>
                         </div>
 
@@ -287,7 +353,7 @@ export default function SprixArrayInteractive() {
                               e.stopPropagation();
                               handleRemoveItem(idx);
                             }}
-                            title="Remove element"
+                            title={isAr ? 'حذف العنصر' : 'Remove element'}
                             className="absolute top-1.5 right-1.5 w-5 h-5 rounded-md bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white text-[10px] font-bold flex items-center justify-center border border-rose-500/30 transition-colors cursor-pointer"
                           >
                             X
@@ -300,11 +366,13 @@ export default function SprixArrayInteractive() {
                   {/* Out of bounds ghost box for teaching IndexError */}
                   <div className="flex flex-col items-center opacity-40 ml-2">
                     <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-md bg-rose-950 text-rose-300 border border-rose-800 mb-2">
-                      Index [{listItems.length}] (OUT OF BOUNDS!)
+                      Index [{listItems.length}] {isAr ? '(خارج النطاق!)' : '(OUT OF BOUNDS!)'}
                     </span>
                     <div className="w-28 h-24 rounded-2xl border-2 border-dashed border-rose-500 bg-rose-950/20 flex flex-col items-center justify-center p-2 text-rose-300">
                       <span className="text-xs font-mono font-bold text-center">IndexError</span>
-                      <span className="text-[10px] text-rose-400 text-center mt-1">Out of range!</span>
+                      <span className="text-[10px] text-rose-400 text-center mt-1">
+                        {isAr ? 'فهرس غير موجود!' : 'Out of range!'}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -315,7 +383,7 @@ export default function SprixArrayInteractive() {
                 {/* Modifier for Selected Locker */}
                 <div>
                   <span className="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">
-                    Inspect / Modify Selected Slot: fruits[{selectedIndex}]
+                    {isAr ? `معاينة وتعديل الخانة المحددة: fruits[${selectedIndex}]` : `Inspect / Modify Selected Slot: fruits[${selectedIndex}]`}
                   </span>
                   <div className="flex items-center gap-2">
                     <input
@@ -326,12 +394,12 @@ export default function SprixArrayInteractive() {
                     />
                     <button
                       onClick={handleUpdateItem}
-                      className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-black transition-colors cursor-pointer"
+                      className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-black transition-colors cursor-pointer shrink-0"
                     >
-                      Update Value
+                      {isAr ? 'تحديث القيمة' : 'Update Value'}
                     </button>
                   </div>
-                  <span className="text-[11px] font-mono text-slate-500 mt-1.5 block">
+                  <span className="text-[11px] font-mono text-slate-500 mt-1.5 block" dir="ltr">
                     Code: fruits[{selectedIndex}] = "{editValue}"
                   </span>
                 </div>
@@ -339,24 +407,24 @@ export default function SprixArrayInteractive() {
                 {/* Append New Locker */}
                 <div>
                   <span className="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">
-                    Append New Element to End of List:
+                    {isAr ? 'إضافة عنصر جديد لنهاية القائمة (append):' : 'Append New Element to End of List:'}
                   </span>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
                       value={newItemValue}
                       onChange={e => setNewItemValue(e.target.value)}
-                      placeholder='e.g. "Fig"'
+                      placeholder={isAr ? 'مثال: "Fig"' : 'e.g. "Fig"'}
                       className="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 font-mono text-xs font-bold bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     />
                     <button
                       onClick={handleAddItem}
-                      className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black transition-colors cursor-pointer"
+                      className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black transition-colors cursor-pointer shrink-0"
                     >
                       fruits.append()
                     </button>
                   </div>
-                  <span className="text-[11px] font-mono text-slate-500 mt-1.5 block">
+                  <span className="text-[11px] font-mono text-slate-500 mt-1.5 block" dir="ltr">
                     Code: fruits.append("{newItemValue || 'item'}")
                   </span>
                 </div>
@@ -367,31 +435,33 @@ export default function SprixArrayInteractive() {
             <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                 <span className="px-3 py-1 rounded-lg text-xs font-black bg-purple-100 text-purple-900 border border-purple-200 uppercase">
-                  Lesson 3: Lists & For Loops
+                  {isAr ? 'الدرس 3: القوائم وجملة for' : 'Lesson 3: Lists & For Loops'}
                 </span>
-                <span className="text-xs font-bold text-slate-500 font-mono">
+                <span className="text-xs font-bold text-slate-500 font-mono" dir="ltr">
                   Syntax: for item in list:
                 </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-2">
-                2. Live Step-by-Step For Loop Traversal
+                {isAr ? '2. محاكاة حركة جملة for خطوة بخطوة' : '2. Live Step-by-Step For Loop Traversal'}
               </h2>
               <p className="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed mb-6">
-                A <code className="text-purple-700 font-mono font-bold">for</code> loop acts like a robotic scanner. In each repetition (iteration), it retrieves one element from left to right, loads it into the loop variable, and executes your code.
+                {isAr
+                  ? 'تعمل جملة for كأنها ماسح ضوئي ذكي أو روبوت يزور الخزائن بالترتيب من اليسار إلى اليمين. في كل دورة (Iteration)، يتم أخذ القيمة المخزنة ووضعها في متغير الدورة (item) وتنفيذ الأوامر.'
+                  : 'A for loop acts like a robotic scanner. In each repetition (iteration), it retrieves one element from left to right, loads it into the loop variable, and executes your code.'}
               </p>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Code Editor Preview */}
-                <div className="rounded-2xl bg-slate-950 p-5 text-white font-mono text-xs border border-slate-800 flex flex-col justify-between">
+                <div className="rounded-2xl bg-slate-950 p-5 text-white font-mono text-xs border border-slate-800 flex flex-col justify-between" dir="ltr">
                   <div>
                     <span className="text-[10px] text-slate-400 font-black uppercase tracking-wider block mb-3 border-b border-slate-800 pb-2">
                       Python Source Code
                     </span>
                     <pre className="text-slate-300 leading-loose">
-                      <span className="text-slate-500"># 1. Define the list</span>{'\n'}
+                      <span className="text-slate-500">{isAr ? '# 1. تعريف القائمة' : '# 1. Define the list'}</span>{'\n'}
                       <span className="text-sky-400">fruits</span> = [{listItems.map(x => `"${x}"`).join(', ')}]{'\n\n'}
-                      <span className="text-slate-500"># 2. Iterate using a for loop</span>{'\n'}
+                      <span className="text-slate-500">{isAr ? '# 2. التكرار باستخدام حلقة for' : '# 2. Iterate using a for loop'}</span>{'\n'}
                       <span className={`block px-2 py-1 rounded transition-colors ${loopIndex !== null ? 'bg-purple-900/60 border border-purple-500 text-purple-200' : ''}`}>
                         <span className="text-purple-400">for</span> <span className="text-amber-300">item</span> <span className="text-purple-400">in</span> <span className="text-sky-400">fruits</span>:
                       </span>
@@ -402,31 +472,35 @@ export default function SprixArrayInteractive() {
                   </div>
 
                   {/* Stepper Controls */}
-                  <div className="pt-4 border-t border-slate-800 flex flex-wrap items-center gap-2 mt-4">
+                  <div className="pt-4 border-t border-slate-800 flex flex-wrap items-center gap-2 mt-4" dir={isAr ? 'rtl' : 'ltr'}>
                     <button
                       onClick={handleStepForward}
                       disabled={loopIndex === listItems.length - 1}
                       className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 disabled:opacity-30 disabled:cursor-not-allowed text-white text-xs font-black transition-colors cursor-pointer"
                     >
-                      {loopIndex === null ? 'Start Loop (Iteration 1)' : 'Step Forward (Next Item)'}
+                      {loopIndex === null
+                        ? (isAr ? 'بدء التكرار (الدورة 1)' : 'Start Loop (Iteration 1)')
+                        : (isAr ? 'الخطوة التالية (العنصر التالي)' : 'Step Forward (Next Item)')}
                     </button>
                     <button
                       onClick={() => setIsAutoPlaying(!isAutoPlaying)}
                       className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-black transition-colors border border-slate-700 cursor-pointer"
                     >
-                      {isAutoPlaying ? 'Pause Auto-Play' : 'Auto-Play Loop'}
+                      {isAutoPlaying
+                        ? (isAr ? 'إيقاف مؤقت' : 'Pause Auto-Play')
+                        : (isAr ? 'تشغيل تلقائي' : 'Auto-Play Loop')}
                     </button>
                     <button
                       onClick={handleResetLoop}
                       className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition-colors border border-slate-700 cursor-pointer"
                     >
-                      Reset
+                      {isAr ? 'إعادة ضبط' : 'Reset'}
                     </button>
                   </div>
                 </div>
 
                 {/* Real-time Output Terminal */}
-                <div className="rounded-2xl bg-slate-900 p-5 text-white font-mono text-xs border border-slate-800 flex flex-col justify-between">
+                <div className="rounded-2xl bg-slate-900 p-5 text-white font-mono text-xs border border-slate-800 flex flex-col justify-between" dir="ltr">
                   <div>
                     <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
                       <span className="text-[10px] text-slate-400 font-black uppercase tracking-wider">
@@ -441,7 +515,9 @@ export default function SprixArrayInteractive() {
 
                     <div className="min-h-40 max-h-48 overflow-y-auto space-y-1.5 text-xs text-slate-300">
                       {loopConsole.length === 0 ? (
-                        <span className="text-slate-500 italic">Press "Start Loop" to watch elements execute step-by-step.</span>
+                        <span className="text-slate-500 italic">
+                          {isAr ? 'اضغط على "بدء التكرار" لمشاهدة التنفيذ خطوة بخطوة.' : 'Press "Start Loop" to watch elements execute step-by-step.'}
+                        </span>
                       ) : (
                         loopConsole.map((line, lIdx) => (
                           <div key={lIdx} className="font-mono text-emerald-400">
@@ -463,25 +539,37 @@ export default function SprixArrayInteractive() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-5 rounded-2xl border-t-4 border-t-blue-600 bg-blue-50/70 border border-blue-200">
                 <span className="w-6 h-6 rounded-lg bg-blue-600 text-white text-xs font-black flex items-center justify-center mb-2">1</span>
-                <h4 className="text-sm font-black text-blue-950 mb-1">Index Always Starts at 0</h4>
+                <h4 className="text-sm font-black text-blue-950 mb-1">
+                  {isAr ? 'الفهرس يبدأ دائماً من 0' : 'Index Always Starts at 0'}
+                </h4>
                 <p className="text-xs text-slate-700 font-medium leading-relaxed">
-                  In computer science, indexing starts at <code className="font-bold">0</code>, not 1. The first element is always accessed via <code className="font-bold">list[0]</code>.
+                  {isAr
+                    ? 'في علوم الحاسب، يبدأ ترقيم العناصر دائماً من 0 وليس 1. يتم استخراج العنصر الأول عبر list[0].'
+                    : 'In computer science, indexing starts at 0, not 1. The first element is always accessed via list[0].'}
                 </p>
               </div>
 
               <div className="p-5 rounded-2xl border-t-4 border-t-amber-500 bg-amber-50/70 border border-amber-200">
                 <span className="w-6 h-6 rounded-lg bg-amber-500 text-white text-xs font-black flex items-center justify-center mb-2">2</span>
-                <h4 className="text-sm font-black text-amber-950 mb-1">The Last Index is len() - 1</h4>
+                <h4 className="text-sm font-black text-amber-950 mb-1">
+                  {isAr ? 'آخر فهرس مسموح هو len() - 1' : 'The Last Index is len() - 1'}
+                </h4>
                 <p className="text-xs text-slate-700 font-medium leading-relaxed">
-                  If <code className="font-bold">len(data) == 5</code>, the valid indices are 0, 1, 2, 3, and 4. Accessing <code className="font-bold">data[5]</code> will crash your program with an <code className="font-bold">IndexError</code>!
+                  {isAr
+                    ? 'إذا كان عدد العناصر len = 5، فالفهارس المتاحة هي 0، 1، 2، 3، 4 فقط. استدعاء العنصر رقم 5 سيوقف البرنامج فوراً بخطأ IndexError.'
+                    : 'If len(data) == 5, the valid indices are 0, 1, 2, 3, and 4. Accessing data[5] will crash your program with an IndexError!'}
                 </p>
               </div>
 
               <div className="p-5 rounded-2xl border-t-4 border-t-emerald-600 bg-emerald-50/70 border border-emerald-200">
                 <span className="w-6 h-6 rounded-lg bg-emerald-600 text-white text-xs font-black flex items-center justify-center mb-2">3</span>
-                <h4 className="text-sm font-black text-emerald-950 mb-1">Lists are Mutable</h4>
+                <h4 className="text-sm font-black text-emerald-950 mb-1">
+                  {isAr ? 'القوائم قابلة للتعديل (Mutable)' : 'Lists are Mutable'}
+                </h4>
                 <p className="text-xs text-slate-700 font-medium leading-relaxed">
-                  Unlike strings or tuples, you can change individual elements inside a list anytime using reassignment: <code className="font-bold">list[index] = new_value</code>.
+                  {isAr
+                    ? 'على عكس النصوص، يمكنك تغيير أي قيمة داخل القائمة مباشرة دون إعادة إنشائها عبر إعادة التعيين: list[index] = new_value.'
+                    : 'Unlike strings or tuples, you can change individual elements inside a list anytime using reassignment: list[index] = new_value.'}
                 </p>
               </div>
             </div>
@@ -497,25 +585,27 @@ export default function SprixArrayInteractive() {
             <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                 <span className="px-3 py-1 rounded-lg text-xs font-black bg-purple-100 text-purple-900 border border-purple-200 uppercase">
-                  Chapter 16: Two-Dimensional Arrays (Matrices)
+                  {isAr ? 'الفصل 16: المصفوفات ثنائية الأبعاد (2D Arrays)' : 'Chapter 16: Two-Dimensional Arrays (Matrices)'}
                 </span>
-                <span className="text-xs font-bold text-slate-500 font-mono">
+                <span className="text-xs font-bold text-slate-500 font-mono" dir="ltr">
                   Syntax: matrix[row][column]
                 </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-2">
-                Understanding 2D Grids: Rows and Columns
+                {isAr ? 'فهم المصفوفة: شبكة الصفوف والأعمدة' : 'Understanding 2D Grids: Rows and Columns'}
               </h2>
               <p className="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed mb-6">
-                A 2D array is simply a <strong>List of Lists</strong> (like an Excel sheet or a chessboard). Every cell is addressed by two indices: first the <strong>Row index</strong>, then the <strong>Column index</strong>.
+                {isAr
+                  ? 'المصفوفة ثنائية الأبعاد هي ببساطة "قائمة تحتوي على قوائم فرعية" (مثل جدول إكسل أو رقعة الشطرنج). يتم تحديد موقع أي عنصر داخلها برقمين: رقم الصف (Row) أولاً، ثم رقم العمود (Column) ثانياً.'
+                  : 'A 2D array is simply a List of Lists (like an Excel sheet or a chessboard). Every cell is addressed by two indices: first the Row index, then the Column index.'}
               </p>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 {/* 2D Matrix Table Grid */}
-                <div className="p-6 rounded-3xl bg-slate-900 text-white flex flex-col items-center">
-                  <span className="text-[11px] font-mono font-bold text-slate-400 mb-4 tracking-wider">
-                    CLICK ANY CELL TO VIEW ITS TWO COORDINATES
+                <div className="p-6 rounded-3xl bg-slate-900 text-white flex flex-col items-center" dir="ltr">
+                  <span className="text-[11px] font-mono font-bold text-slate-400 mb-4 tracking-wider text-center">
+                    {isAr ? 'اضغط على أي خلية لعرض إحداثياتها الثنائية' : 'CLICK ANY CELL TO VIEW ITS TWO COORDINATES'}
                   </span>
 
                   {/* Matrix Header Columns */}
@@ -563,27 +653,31 @@ export default function SprixArrayInteractive() {
                 <div className="space-y-4">
                   <div className="p-5 rounded-2xl bg-purple-50 border border-purple-200">
                     <span className="text-xs font-black text-purple-900 uppercase block mb-1">
-                      Active Selected Cell Coordinates:
+                      {isAr ? 'إحداثيات الخلية المحددة حالياً:' : 'Active Selected Cell Coordinates:'}
                     </span>
-                    <h3 className="text-xl font-mono font-black text-purple-950 mb-2">
+                    <h3 className="text-xl font-mono font-black text-purple-950 mb-2" dir="ltr">
                       matrix[{selectedCell.row}][{selectedCell.col}] = {matrixData[selectedCell.row][selectedCell.col]}
                     </h3>
                     <div className="grid grid-cols-2 gap-2 text-xs font-medium text-slate-700">
                       <div className="p-2.5 rounded-xl bg-white border border-purple-100">
-                        <span className="block font-bold text-sky-800">1st Index: Row</span>
-                        <span>Row {selectedCell.row + 1} (index [{selectedCell.row}])</span>
+                        <span className="block font-bold text-sky-800">
+                          {isAr ? 'الفهرس الأول: الصف' : '1st Index: Row'}
+                        </span>
+                        <span>{isAr ? `الصف ${selectedCell.row + 1} (فهرس [${selectedCell.row}])` : `Row ${selectedCell.row + 1} (index [${selectedCell.row}])`}</span>
                       </div>
                       <div className="p-2.5 rounded-xl bg-white border border-purple-100">
-                        <span className="block font-bold text-purple-800">2nd Index: Column</span>
-                        <span>Column {selectedCell.col + 1} (index [{selectedCell.col}])</span>
+                        <span className="block font-bold text-purple-800">
+                          {isAr ? 'الفهرس الثاني: العمود' : '2nd Index: Column'}
+                        </span>
+                        <span>{isAr ? `العمود ${selectedCell.col + 1} (فهرس [${selectedCell.col}])` : `Column ${selectedCell.col + 1} (index [${selectedCell.col}])`}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Nested Loop Code Template */}
-                  <div className="p-5 rounded-2xl bg-slate-950 text-white font-mono text-xs border border-slate-800">
+                  <div className="p-5 rounded-2xl bg-slate-950 text-white font-mono text-xs border border-slate-800" dir="ltr">
                     <span className="text-slate-400 text-[10px] font-black uppercase block mb-2">
-                      How to Traverse a 2D Array with Nested Loops:
+                      {isAr ? '# كيفية المرور على المصفوفة بحلقتين متداخلتين (Nested Loops):' : 'How to Traverse a 2D Array with Nested Loops:'}
                     </span>
                     <pre className="text-slate-300 leading-relaxed">
                       <span className="text-purple-400">for</span> row <span className="text-purple-400">in</span> matrix:{'\n'}
@@ -607,9 +701,9 @@ export default function SprixArrayInteractive() {
               {/* Challenge Header */}
               <div className="flex flex-wrap items-center justify-between gap-2 mb-4 border-b border-slate-100 pb-3">
                 <span className="px-3 py-1 rounded-lg text-xs font-black bg-emerald-100 text-emerald-900 border border-emerald-200 uppercase">
-                  Sprix Mastery Check: Level {challengeStep} of 3
+                  {isAr ? `تحديات إتقان Sprix: المستوى ${challengeStep} من 3` : `Sprix Mastery Check: Level ${challengeStep} of 3`}
                 </span>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5" dir="ltr">
                   {[1, 2, 3].map(step => (
                     <button
                       key={step}
@@ -634,11 +728,20 @@ export default function SprixArrayInteractive() {
               {challengeStep === 1 && (
                 <div>
                   <h3 className="text-base sm:text-lg font-black text-slate-900 mb-2">
-                    Challenge 1: Zero-Based Element Lookup
+                    {isAr ? 'التحدي 1: استخراج العنصر بالفهرسة من الصفر' : 'Challenge 1: Zero-Based Element Lookup'}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 font-medium mb-4">
-                    Consider the following list: <code className="bg-slate-100 px-2 py-1 rounded font-bold font-mono text-blue-700">fruits = ["Apple", "Banana", "Cherry", "Date"]</code>.
-                    What is the numerical index to access <strong>"Cherry"</strong>?
+                    {isAr ? (
+                      <>
+                        تأمل القائمة التالية: <code className="bg-slate-100 px-2 py-1 rounded font-bold font-mono text-blue-700" dir="ltr">fruits = ["Apple", "Banana", "Cherry", "Date"]</code>.
+                        ما هو رقم الفهرس (Index) الصحيح للوصول إلى العنصر <strong>"Cherry"</strong>؟
+                      </>
+                    ) : (
+                      <>
+                        Consider the following list: <code className="bg-slate-100 px-2 py-1 rounded font-bold font-mono text-blue-700">fruits = ["Apple", "Banana", "Cherry", "Date"]</code>.
+                        What is the numerical index to access <strong>"Cherry"</strong>?
+                      </>
+                    )}
                   </p>
                 </div>
               )}
@@ -647,10 +750,18 @@ export default function SprixArrayInteractive() {
               {challengeStep === 2 && (
                 <div>
                   <h3 className="text-base sm:text-lg font-black text-slate-900 mb-2">
-                    Challenge 2: The Length Boundary Rule
+                    {isAr ? 'التحدي 2: قاعدة حدود طول القائمة (len)' : 'Challenge 2: The Length Boundary Rule'}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 font-medium mb-4">
-                    If a list contains 5 items (<code className="bg-slate-100 px-2 py-1 rounded font-bold font-mono text-amber-700">len(scores) == 5</code>), what is the index of the <strong>last</strong> element in this list?
+                    {isAr ? (
+                      <>
+                        إذا كانت هناك قائمة تحتوي على 5 عناصر (<code className="bg-slate-100 px-2 py-1 rounded font-bold font-mono text-amber-700" dir="ltr">len(scores) == 5</code>)، فما هو رقم الفهرس لآخر عنصر في هذه القائمة؟
+                      </>
+                    ) : (
+                      <>
+                        If a list contains 5 items (<code className="bg-slate-100 px-2 py-1 rounded font-bold font-mono text-amber-700">len(scores) == 5</code>), what is the index of the <strong>last</strong> element in this list?
+                      </>
+                    )}
                   </p>
                 </div>
               )}
@@ -659,11 +770,20 @@ export default function SprixArrayInteractive() {
               {challengeStep === 3 && (
                 <div>
                   <h3 className="text-base sm:text-lg font-black text-slate-900 mb-2">
-                    Challenge 3: 2D Matrix Cell Coordinates
+                    {isAr ? 'التحدي 3: إحداثيات المصفوفة ثنائية الأبعاد' : 'Challenge 3: 2D Matrix Cell Coordinates'}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 font-medium mb-4">
-                    Given <code className="bg-slate-100 px-2 py-1 rounded font-bold font-mono text-purple-700">matrix = [[10, 20], [30, 40]]</code>.
-                    Write the exact Python expression to retrieve value <strong>40</strong> (which is in the 2nd row and 2nd column):
+                    {isAr ? (
+                      <>
+                        بالنظر إلى المصفوفة: <code className="bg-slate-100 px-2 py-1 rounded font-bold font-mono text-purple-700" dir="ltr">matrix = [[10, 20], [30, 40]]</code>.
+                        اكتب التعبير البرمجي الدقيق لاستخراج القيمة <strong>40</strong> (الموجودة في الصف الثاني والعمود الثاني):
+                      </>
+                    ) : (
+                      <>
+                        Given <code className="bg-slate-100 px-2 py-1 rounded font-bold font-mono text-purple-700">matrix = [[10, 20], [30, 40]]</code>.
+                        Write the exact Python expression to retrieve value <strong>40</strong> (which is in the 2nd row and 2nd column):
+                      </>
+                    )}
                   </p>
                 </div>
               )}
@@ -674,14 +794,14 @@ export default function SprixArrayInteractive() {
                   type="text"
                   value={userAnswer}
                   onChange={e => setUserAnswer(e.target.value)}
-                  placeholder="Type your answer here..."
+                  placeholder={isAr ? 'اكتب إجابتك هنا...' : 'Type your answer here...'}
                   className="px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-xs sm:text-sm font-bold bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64"
                 />
                 <button
                   onClick={checkChallenge}
                   className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black transition-colors cursor-pointer shadow-sm"
                 >
-                  Verify My Answer
+                  {isAr ? 'التحقق من إجابتي' : 'Verify My Answer'}
                 </button>
               </div>
 
